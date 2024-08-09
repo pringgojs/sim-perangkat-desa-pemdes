@@ -20,7 +20,6 @@ class OptionSeeder extends Seeder
         self::statusData();
         self::positionType();
         self::villageType();
-        self::village();
 
     }
 
@@ -108,38 +107,7 @@ class OptionSeeder extends Seeder
         }
     }
 
-    public function village()
-    {
-        $string = 'BrotoCalukCrabakDuriGalakGombangGundikJantiJebengKambengMenggareMojopituNailanNgilo-iloNgloningPlancunganSenepoSimoSlahungTrunengTugurejoWates';
-        $options = self::splitByCapitalLetters($string);
     
-        $district = Option::whereName('Slahung')->first();
-        $type = Option::whereName('Desa Swakarya')->first();
-
-        $data = collect($options)->map(fn($value) => [
-            'id' => Str::uuid(),
-            'name' => $value,
-            'district_id' => $district->id,
-            'type_id' => $type->id,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ])->toArray();
-    
-        Village::insert($data);
-    }
-
-    function splitByCapitalLetters($string)
-    {
-        // Menyisipkan spasi sebelum huruf kapital dan karakter non-huruf
-        $result = preg_split('/(?=[A-Z])/', $string, -1, PREG_SPLIT_NO_EMPTY);
-        
-        // Menghilangkan karakter non-huruf dan mengubah array menjadi string
-        $result = array_map(function($item) {
-            return trim(preg_replace('/[^A-Za-z]/', '', $item));
-        }, $result);
-        
-        return $result;
-    }
 
 
 }

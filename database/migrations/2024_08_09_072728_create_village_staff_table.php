@@ -23,7 +23,7 @@ return new class extends Migration
             $table->uuid('position_type_id')->nullable(); // Relation to options table
             $table->boolean('is_active')->default(true);
             $table->string('position_name')->nullable();
-            $table->string('data_status')->nullable();
+            $table->uuid('data_status_id');
             $table->string('sk_number')->nullable();
             $table->date('sk_tmt')->nullable();
             $table->date('sk_date')->nullable();
@@ -33,6 +33,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('village_id')->references('id')->on('villages')->onDelete('cascade');
             $table->foreign('position_type_id')->references('id')->on('options')->onDelete('cascade');
+            $table->foreign('data_status_id')->references('id')->on('options')->onDelete('cascade');
         });
     }
 
