@@ -8,6 +8,7 @@ use App\Livewire\Pages\Database\UserAccount;
 use App\Livewire\Pages\Village\Index as VillageIndex;
 use App\Livewire\Pages\Database\Index as DatabaseIndex;
 use App\Livewire\Pages\Dashboard\Index as DashboardIndex;
+use App\Livewire\Pages\VillageType\Index as VillageTypeIndex;
 use App\Livewire\Pages\Tools\RemoveBacklinks\Index as RemoveBacklinksIndex;
 
 Route::get('/', function () {
@@ -25,6 +26,7 @@ Route::middleware([
     Route::middleware([
         'role:administrator'
     ])->group(function () {
+        Route::get('village-type', VillageTypeIndex::class)->name('village-type.index');
         Route::get('village', VillageIndex::class)->name('village.index');
         Route::get('user', Index::class)->name('user.index');
         Route::get('database/account', UserAccount::class)->name('database.account');

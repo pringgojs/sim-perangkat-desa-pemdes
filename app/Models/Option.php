@@ -27,6 +27,11 @@ class Option extends Model
         return $this->hasMany(Village::class, 'district_id');
     }
 
+    public function villageTypeDetail()
+    {
+        return $this->hasOne(VillageTypeDetail::class, 'type_id');
+    }
+    
     // Relasi ke tabel village_staff (jika diperlukan)
     public function villageStaff()
     {
@@ -51,5 +56,13 @@ class Option extends Model
     public function scopeStatusData($q)
     {
         $q->where('type', 'status_data')->orderBy('name');
+    }
+
+    
+    public function scopeSearch($q, $search = null)
+    {
+        if (!$search) return;
+
+        $q->where('name', 'like', '%'.$search.'%');
     }
 }

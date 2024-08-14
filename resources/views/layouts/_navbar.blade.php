@@ -98,9 +98,9 @@
                                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Village</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('remove-backlinks.index') }}"
-                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Remove
-                                        Backlinks</a>
+                                    <a href="{{ route('village-type.index') }}"
+                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Village
+                                        Type</a>
                                 </li>
                             </ul>
                         </div>
