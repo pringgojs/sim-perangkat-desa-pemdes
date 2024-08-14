@@ -32,4 +32,24 @@ class Option extends Model
     {
         return $this->hasMany(VillageStaff::class, 'position_type_id');
     }
+
+    public function scopeDistricts($q)
+    {
+        $q->where('type', 'district')->orderBy('name');
+    }
+
+    public function scopeVillageTypes($q)
+    {
+        $q->where('type', 'village_type')->orderBy('name');
+    }
+
+    public function scopePositionTypes($q)
+    {
+        $q->where('type', 'position_type')->orderBy('name');
+    }
+
+    public function scopeStatusData($q)
+    {
+        $q->where('type', 'status_data')->orderBy('name');
+    }
 }

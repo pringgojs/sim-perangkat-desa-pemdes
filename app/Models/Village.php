@@ -20,7 +20,7 @@ class Village extends Model
         'district_id',
         'address',
         'phone',
-        'type',
+        'type_id',
         'no_sotk',
     ];
 
@@ -32,12 +32,25 @@ class Village extends Model
 
     public function type()
     {
-        return $this->belongsTo(Option::class, 'type');
+        return $this->belongsTo(Option::class, 'type_id');
     }
 
     // Relasi ke tabel village_staff
     public function staff()
     {
         return $this->hasMany(VillageStaff::class, 'village_id');
+    }
+    
+    public function scopeSearch($q, $search = null)
+    {
+        if (!$search) return;
+
+        $q->where('name', 'like', '%'.$search.'%')
+            ->orWhere('address', 'like', '%' . $search . '%');
+    }
+
+    public function scopeOrderByDefault($q)
+    {
+        $q->orderBy('name');
     }
 }

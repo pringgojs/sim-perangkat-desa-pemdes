@@ -13,7 +13,7 @@
         @endsession
         <h3 class="text-green-500 font-semibold">Sign in</h3>
         <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-            Cpanel Administrator
+            {{ env('APP_NAME') }}
         </h1>
         <form method="POST" action="{{ route('login') }}" class="space-y-4 md:space-y-6">
             @csrf
