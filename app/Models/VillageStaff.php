@@ -50,4 +50,28 @@ class VillageStaff extends Model
     {
         return $this->belongsTo(Option::class, 'position_type_id');
     }
+
+    // Relasi ke tabel options
+    public function dataStatus()
+    {
+        return $this->belongsTo(Option::class, 'data_status_id');
+    }
+
+    public function scopeType($q, $type)
+    {
+        $q->where('position_type_id', $type);
+    }
+    
+    public function scopeSearch($q, $search = null)
+    {
+        if (!$search) return;
+
+        $q->where('name', 'like', '%'.$search.'%')
+            ->orWhere('address', 'like', '%' . $search . '%');
+    }
+
+    public function scopeOrderByDefault($q)
+    {
+        $q->orderBy('name');
+    }
 }

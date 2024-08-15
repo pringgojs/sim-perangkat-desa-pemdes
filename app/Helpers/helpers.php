@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Option;
+
 /** initials */
 function initials($name) {
     $nameParts = explode(' ', trim($name));
@@ -9,4 +11,10 @@ function initials($name) {
         mb_substr($firstName,0,1) .
         mb_substr($lastName,0,1)
     );
+}
+
+function key_option($key) {
+    $option = Option::where('key', $key)->first();
+    return $option ? $option->id : null;
+    
 }
