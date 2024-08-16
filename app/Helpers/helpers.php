@@ -16,5 +16,9 @@ function initials($name) {
 function key_option($key) {
     $option = Option::where('key', $key)->first();
     return $option ? $option->id : null;
-    
+}
+
+/* cek  */
+function option_is_match($key, $id) {
+    return key_option($key) === $id;
 }

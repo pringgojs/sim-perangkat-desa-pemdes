@@ -5,6 +5,7 @@ namespace App\Livewire\Modals;
 use App\Models\Option;
 use App\Models\Village;
 use Livewire\Component;
+use App\Models\VillageStaff;
 use Livewire\Attributes\Computed;
 use Illuminate\Support\Facades\DB;
 use LivewireUI\Modal\ModalComponent;
@@ -26,8 +27,9 @@ class FormVillageStaff extends ModalComponent
         $this->position_types = Option::positionTypes()->get();
         $this->districts = Option::districts()->get();
         if ($this->id) {
-            $model = Option::find($this->id);
+            $model = VillageStaff::find($this->id);
             $this->form->setModel($model);
+            self::getVillages(); // memanggil list desa
         }
     }
 

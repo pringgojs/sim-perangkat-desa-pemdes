@@ -1,7 +1,7 @@
 <div>
     <div class="sm:flex sm:items-center mb-5">
         <div class="sm:flex-auto">
-            <h1 class="text-base font-semibold leading-6 text-gray-900">Village Staffs</h1>
+            <h1 class="text-base font-semibold leading-6 text-gray-900">Village Staff - {{ $option->name }}</h1>
             {{-- <p class="mt-2 text-sm text-gray-700">Daftar program dan kegiatan yang telah diimport ke sistem.</p> --}}
         </div>
         <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
@@ -48,7 +48,7 @@
                     </div>
 
                     <div class="flex flex-none items-center gap-x-2">
-                        <a onclick="Livewire.dispatch('openModal', { component: 'modals.form-village', arguments: {id: '{{ $item->id }}'} })"
+                        <a onclick="Livewire.dispatch('openModal', { component: 'modals.form-village-staff', arguments: {id: '{{ $item->id }}'} })"
                             class="inline-flex rounded-lg p-2 bg-purple-50 text-purple-700 ring-4 ring-white">
                             <x-heroicon-o-pencil class="h-5 w-5" />
                         </a>
@@ -64,7 +64,7 @@
                                 class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
 
                                 <p class="mb-3 font-normal text-sm text-gray-500 dark:text-gray-400">Are you sure you
-                                    want to delete <b>{{ ucwords(strtolower($item->name)) }}</b>?</p>
+                                    want to delete <b>{{ ucwords(strtolower($item->user->name)) }}</b>?</p>
                                 <a wire:key="item-{{ $item->id }}" wire:click="delete('{{ $item->id }}')"
                                     class="cursor-pointer item-right rounded-md bg-red-50 px-2.5 py-1.5 text-sm font-semibold text-red-900 shadow-sm ring-1 ring-inset ring-red-300 hover:bg-red-50">
                                     Yes, delete!

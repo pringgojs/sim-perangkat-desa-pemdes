@@ -3,6 +3,7 @@
 namespace App\Livewire\Pages\VillageStaff;
 
 use App\Models\User;
+use App\Models\Option;
 use Livewire\Component;
 use App\Models\VillageStaff;
 use Livewire\WithPagination;
@@ -13,6 +14,7 @@ class Index extends Component
     use LivewireAlert;
     use WithPagination;
 
+    public $option;
     public $search;
     public $type;
     protected $listeners = ['refreshComponent' => '$refresh'];
@@ -21,6 +23,7 @@ class Index extends Component
     {
         /* tampilkan data staff berdasarkan jenis. jika kosong maka defaultkan skretaris desa */
         $this->type = request()->type ?? key_option('sekretaris_desa');
+        $this->option = Option::find($this->type);
     }
 
     public function render()
