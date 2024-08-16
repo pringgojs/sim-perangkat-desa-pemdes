@@ -9,6 +9,7 @@ use App\Models\VillageStaff;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Validate;
 use Spatie\Permission\Models\Role;
+use App\Rules\UniqueStaffPositionInVillage;
 
 class VillageStaffForm extends Form
 {
@@ -47,7 +48,11 @@ class VillageStaffForm extends Form
             // 'place_of_birth' => $this->place_of_birth ? 'required|max:250' : 'nullable',
             // 'date_of_birth' => $this->date_of_birth ? 'required' : 'nullable',
             //'ktp_scan' => $this->id ? 'nullable' : 'required|image|mimes:jpeg,png|max:100', // 100 KB
-            'position_type' => 'required',
+            'position_type' => [
+                'required',
+                'exists:options,id',
+                new UniqueStaffPositionInVillage($this->village, $this->position_type, $this->id),
+            ],
             'district' => 'required',
             'village' => 'required',
             // 'position_name' => 'nullable',
