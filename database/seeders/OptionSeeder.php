@@ -79,8 +79,10 @@ class OptionSeeder extends Seeder
     public function villageType()
     {
         $options = [
-            'Desa Tradisional', 'Desa Swadaya', 'Desa Swakarya', 'Desa Swasembada'];
+            'Desa Swadaya', 'Desa Swakarya', 'Desa Swasembada'];
     
+        $max_kasi = [2,3,3];
+
         $data = collect($options)->map(fn($value) => [
             'id' => Str::uuid(),
             'name' => $value,
@@ -95,13 +97,14 @@ class OptionSeeder extends Seeder
         $options = Option::where('type', 'village_type')->get();
 
 
-        foreach ($options as $item) {
+        foreach ($options as $i => $item) {
             $model = VillageTypeDetail::insert(
                 [
                     'id' => Str::uuid(),
                     'type_id' => $item->id,
-                    'max_kasi' => 2, // TODO: perlu disesuaikan 
-                    'max_kaur' => 2, // TODO: perlu disesuaikan 
+                    'max_kasi' => $max_kasi[$i], // TODO: perlu disesuaikan 
+                    'max_kaur' => $max_kasi[$i], // TODO: perlu disesuaikan 
+                    'is_swakarya' => $i == 1 ? true : false
                 ]
             );
         }

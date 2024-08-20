@@ -99,6 +99,8 @@ class VillageStaffForm extends Form
     {
         $this->validate();
  
+        info('lolos validasi');
+
         $payload = [
             'name' => $this->name,
             'username' => $this->username,
@@ -114,7 +116,8 @@ class VillageStaffForm extends Form
             'id' => $this->user->id ?? null
         ], $payload);
 
-        $user->assignRole('perangkat');
+        $user->assignRole('operator');
+        info($user);
 
         $payload = [
             'user_id' => $user->id,
@@ -138,6 +141,7 @@ class VillageStaffForm extends Form
             'id' => $this->id
         ], $payload);
 
+        info($model);
         return $model;
     }
 

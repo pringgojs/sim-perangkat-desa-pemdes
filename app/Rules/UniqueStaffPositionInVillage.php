@@ -3,7 +3,10 @@
 namespace App\Rules;
 
 use Closure;
+use App\Models\Option;
+use App\Models\Village;
 use App\Models\VillageStaff;
+use App\Models\VillageTypeDetail;
 use Illuminate\Contracts\Validation\ValidationRule;
 
 class UniqueStaffPositionInVillage implements ValidationRule
@@ -21,6 +24,85 @@ class UniqueStaffPositionInVillage implements ValidationRule
 
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
+        $is_kasi = option_is_match('kasi', $this->staff_position_id);
+        $is_kaur = option_is_match('kaur', $this->staff_position_id);
+        info('mulai');
+        /* cek jumlah kasi dan kaur didesa tersebut. */
+        $positions = [
+            key_option('kasi'),
+            key_option('kaur'),
+        ];
+
+        if (in_array($this->staff_position_id, $positions)) {
+            info('iya kasi');
+
+            $village = Village::find($this->village_id);
+            $village_type_detail = $village->type->villageTypeDetail;
+
+            /* hitung total kasi dan kaur */
+            $total_kasi = self::countVillageStaff('kasi');
+            $total_kaur = self::countVillageStaff('kaur');
+
+            info('total kasi' . $total_kasi);
+            /* cek apakah desa swakarya, jika iya kasi/kaur bisa 2/3. Tetapi tidak boleh keduanya sama-sama 3 atau sama-sama 2*/
+            /* berarti cek jumlah maksimal kasi dan kaur adalah 5. */
+            if ($village_type_detail->is_swakarya) {
+                info('desa swakarya');
+
+                /* validasi maksimal jumlah kasi/kaur adalah 3 */
+                if ($is_kasi) {
+                    info('is kasi');
+
+                    if ($total_kasi == 3) {
+                        info("1");
+                        $fail('Untuk jabatan ini di desa ini sudah melebihi maksimal.');
+                        return;
+                    }
+
+                }
+
+                if ($is_kaur) {
+                    info('is kaur');
+
+                    if ($total_kaur == 3) {
+                        info("2");
+
+                        $fail('Untuk jabatan ini di desa ini sudah melebihi maksimal.');
+                        return;
+                    }
+                }
+
+                /* maksimal jumlah kasi dan kaur adalah 5 */
+                if (($total_kasi + $total_kaur) >= 5 ) {
+                    info("3");
+
+                    $fail('Untuk jabatan ini di desa ini sudah melebihi maksimal.');
+                    return;
+                }
+
+            } else {
+                /* desa biasa sesuai jumlah maksimal */
+                if ($is_kasi && $total_kasi == $village_type_detail->max_kasi) {
+                    info('4');
+                    $fail('Untuk jabatan ini di desa ini sudah melebihi maksimal.');
+                    return;
+                }
+
+                if ($is_kaur && $total_kaur == $village_type_detail->max_kaur) {
+                    info(5);
+                    $fail('Untuk jabatan ini di desa ini sudah melebihi maksimal.');
+                    return;
+                }
+
+                info('done bukan swakarya');
+
+                return;
+            }
+
+            return;
+        }
+
+        info('jabatan sekdes');
         /* jika jabatan selain sekretaris dan kepala, maka bebaskan */
         $positions = [
             key_option('sekretaris_desa'),
@@ -28,18 +110,43 @@ class UniqueStaffPositionInVillage implements ValidationRule
         ];
 
         if (!in_array($this->staff_position_id, $positions)) {
+            info('bukan jabatan sekdes');
             return;
         }
     
-        $query = VillageStaff::where('village_id', $this->village_id)
-                                ->where('position_type_id', $this->staff_position_id);
+        /* jika jabatan sekdes, kepala. pastikan hanya ada 1 */
+        $query = VillageStaff::active()
+            ->where('village_id', $this->village_id)
+            ->where('position_type_id', $this->staff_position_id);
 
         if ($this->ignore_id) {
             $query->where('id', '!=', $this->ignore_id);
         }
 
         if ($query->exists()) {
-            $fail('The selected staff position is already taken in this village.');
+            $fail('Untuk jabatan ini di desa ini sudah terisi.');
         }
+
+        info('done');
+
+    }
+
+    public function countVillageStaff($key = null)
+    {
+        $position_type = key_option($key);
+
+        $ignore_id = $this->ignore_id;
+        $query = VillageStaff::active()
+            ->where('village_id', $this->village_id)
+            ->where('position_type_id', $position_type)
+            ->where(function ($q) use ($ignore_id) {
+                if ($ignore_id) {
+                    $q->where('id', '!=', $ignore_id);
+                }
+            })->get()
+            ->count();
+
+
+        return $query;
     }
 }

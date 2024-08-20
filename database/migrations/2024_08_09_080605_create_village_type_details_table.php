@@ -16,6 +16,7 @@ return new class extends Migration
             $table->uuid('type_id');
             $table->integer('max_kasi')->default(0); // max kasi
             $table->integer('max_kaur')->default(0); // max kaur
+            $table->integer('is_swakarya')->default(0); // jika desa swakarya, maka buat 1. 
             $table->timestamps();
             
             $table->foreign('type_id')->references('id')->on('options')->onDelete('cascade');

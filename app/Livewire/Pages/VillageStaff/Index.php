@@ -29,7 +29,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.pages.village-staff.index', [
-            'staffs' => VillageStaff::search($this->search)->type($this->type)->paginate()
+            'staffs' => VillageStaff::search($this->search)->type($this->type)->with(['village', 'positionType'])->paginate()
         ]);
     }
 

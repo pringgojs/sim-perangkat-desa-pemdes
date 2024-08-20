@@ -61,6 +61,16 @@ class VillageStaff extends Model
     {
         $q->where('position_type_id', $type);
     }
+
+    public function scopeActive($q)
+    {
+        $q->where('is_active', true);
+    }
+
+    public function scopeInActive($q)
+    {
+        $q->where('is_active', false);
+    }
     
     public function scopeSearch($q, $search = null)
     {
