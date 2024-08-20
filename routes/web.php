@@ -22,7 +22,6 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-
     /** admin */
     Route::middleware([
         'role:administrator'
@@ -37,5 +36,13 @@ Route::middleware([
         Route::get('dashboard', DashboardIndex::class)->name('dashboard.index');
         Route::get('/phpmyadmin', [SSOTokenController::class, 'phpMyAdmin'])->name('phpmyadmin');
 
+    });
+
+    /** para perangkat desa */
+    Route::middleware([
+        'role:operator'
+    ])->group(function () {
+        Route::get('village-staff', VillageStaffIndex::class)->name('village-staff.index');
+        Route::get('dashboard', DashboardIndex::class)->name('dashboard.index');
     });
 });

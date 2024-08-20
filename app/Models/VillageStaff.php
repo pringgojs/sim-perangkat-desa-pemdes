@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\AutoUuid;
 use App\Traits\GenerateUuid;
+use App\Scopes\VillageStaffScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,6 +13,11 @@ class VillageStaff extends Model
 {
     use HasFactory, HasUuids, GenerateUuid;
 
+    protected static function booted()
+    {
+        static::addGlobalScope(new VillageStaffScope);
+    }
+    
     // UUID sebagai primary key
     protected $keyType = 'string';
     public $incrementing = false;
@@ -83,5 +89,13 @@ class VillageStaff extends Model
     public function scopeOrderByDefault($q)
     {
         $q->orderBy('name');
+    }
+
+    public static function empty(): array
+    {
+        return [
+            "id" => '',
+            'user_id' => 0,
+        ];
     }
 }
