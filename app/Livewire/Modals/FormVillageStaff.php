@@ -31,6 +31,9 @@ class FormVillageStaff extends ModalComponent
             $this->form->setModel($model);
             self::getVillages(); // memanggil list desa
         }
+
+        /* jika yang login adalah operator desa, seting village dan district otomatis terisi */
+        self::ifOperator();
     }
 
     public function render()
@@ -66,7 +69,8 @@ class FormVillageStaff extends ModalComponent
 
     
     #[Computed]
-    public function generatePassword($length = 18){
+    public function generatePassword($length = 18)
+    {
         $chars =  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.
                   '0123456789-=~!@#$%^&*()_+/<>?;:[]{}\|';
       
@@ -84,5 +88,19 @@ class FormVillageStaff extends ModalComponent
     {
         $this->villages = Village::where('district_id', $this->form->district)->get();
     }
+
+    public function ifOperator()
+    {
+        $user = auth()->user(); 
+        if ($user->hasRole('operator')) {
+            $village = $user->staff()->village;
+            $this->form->village = $village->id;
+            $this->form->district = $village->district_id;
+
+            self::getVillages();
+        }
+    }
+
+
 
 }

@@ -75,40 +75,42 @@
                         @enderror
                     </div>
                 </div>
-                <div>
-                    <label for="districts"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">District</label>
-                    <select id="districts" wire:model="form.district" wire:change="getVillages"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
-                        <option selected>Choose a district</option>
-                        @foreach ($districts as $item)
-                            <option value="{{ $item->id }}">{{ ucfirst($item->name) }}</option>
-                        @endforeach
-                    </select>
-                    <div>
-                        @error('form.district')
-                            <span class="text-red-500">{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
+                @if (auth()->user()->hasRole('administrator'))
 
-                <div>
-                    <label for="villages"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Village</label>
-                    <select id="villages" wire:model="form.village"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
-                        <option selected>Choose a village</option>
-                        @foreach ($villages as $item)
-                            <option value="{{ $item->id }}">{{ ucfirst($item->name) }}</option>
-                        @endforeach
-                    </select>
                     <div>
-                        @error('form.village')
-                            <span class="text-red-500">{{ $message }}</span>
-                        @enderror
+                        <label for="districts"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">District</label>
+                        <select id="districts" wire:model="form.district" wire:change="getVillages"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
+                            <option selected>Choose a district</option>
+                            @foreach ($districts as $item)
+                                <option value="{{ $item->id }}">{{ ucfirst($item->name) }}</option>
+                            @endforeach
+                        </select>
+                        <div>
+                            @error('form.district')
+                                <span class="text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
                     </div>
-                </div>
 
+                    <div>
+                        <label for="villages"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Village</label>
+                        <select id="villages" wire:model="form.village"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
+                            <option selected>Choose a village</option>
+                            @foreach ($villages as $item)
+                                <option value="{{ $item->id }}">{{ ucfirst($item->name) }}</option>
+                            @endforeach
+                        </select>
+                        <div>
+                            @error('form.village')
+                                <span class="text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                @endif
                 {{-- generate password --}}
                 <div x-data="{
                     cpanelpassword: $wire.entangle('form.password').live,
