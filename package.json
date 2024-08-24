@@ -17,6 +17,7 @@
     },
     "dependencies": {
         "@ryangjchandler/alpine-clipboard": "^2.3.0",
-        "flowbite": "^2.3.0"
+        "flowbite": "^2.3.0",
+        "preline": "^2.4.1"
     }
 }
