@@ -19,7 +19,7 @@ class VillageStaffForm extends Form
     public $address = '';
     public $place_of_birth = '';
     public $date_of_birth = null;
-    public $ktp_scan = '';
+    public $ktp = '';
     public $phone = '';
     public $position_name = '';
     public $sk_number = '';
@@ -28,9 +28,11 @@ class VillageStaffForm extends Form
     public $username = '';
     public $password = '';
     public $email = '';
+    public $gender = '';
     // #[Validate('required_with:password|same:password|min:6')]
     // public $repassword = '';
 
+    public $tmpUrl = ''; // temporary URL img upload
     public $district;
     public $village;
     public $village_staff;
@@ -47,7 +49,7 @@ class VillageStaffForm extends Form
             // 'phone' => $this->phone ? 'required|max:20' : 'nullable',
             // 'place_of_birth' => $this->place_of_birth ? 'required|max:250' : 'nullable',
             // 'date_of_birth' => $this->date_of_birth ? 'required' : 'nullable',
-            //'ktp_scan' => $this->id ? 'nullable' : 'required|image|mimes:jpeg,png|max:100', // 100 KB
+            'ktp' => $this->id ? 'nullable' : 'required|image|mimes:jpeg,png|max:100', // 100 KB
             'position_type' => [
                 'required',
                 'exists:options,id',
@@ -169,5 +171,12 @@ class VillageStaffForm extends Form
 
         $this->username = $this->user->username;
         $this->email = $this->user->email;
+    }
+
+    public function validateFilePhoto()
+    {
+        $this->tmpUrl = '';
+        $this->validateOnly('ktp');
+        $this->tmpUrl = $this->ktp->temporaryUrl();
     }
 }

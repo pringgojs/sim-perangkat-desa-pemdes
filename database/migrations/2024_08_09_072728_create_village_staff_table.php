@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->uuid('position_type_id')->nullable(); // Relation to options table
             $table->boolean('is_active')->default(true);
+            $table->boolean('gender')->default(true); // default L
             $table->string('position_name')->nullable();
             $table->uuid('data_status_id');
             $table->string('sk_number')->nullable();

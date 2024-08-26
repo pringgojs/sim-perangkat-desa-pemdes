@@ -12,7 +12,7 @@
                 </p>
             </div>
 
-            <form>
+            <form wire:submit="store">
                 <!-- Grid -->
                 <div class="grid sm:grid-cols-12 gap-2 sm:gap-6">
                     <div class="sm:col-span-3">
@@ -24,11 +24,26 @@
 
                     <div class="sm:col-span-9">
                         <div class="flex items-center gap-5">
-                            <img class="inline-block size-16 rounded ring-2 ring-white dark:ring-neutral-900"
-                                src="{{ asset('images/ktp.png') }}" alt="Avatar">
+                            {{-- @if ($form->ktp && $form->ktp->temporaryUrl())
+                                @dd($form->ktp->temporaryUrl())
+                            @endif --}}
+                            <x-modal id="exampleModal" maxWidth="lg" wire:model="false">
+                                <div class="p-6">
+                                    <img id="preview-modal"
+                                        class="inline-block w-auto h-72 rounded ring-2 ring-white dark:ring-neutral-900"
+                                        src="{{ $form->tmpUrl ? $form->tmpUrl : asset('images/ktp.png') }}"
+                                        alt="Avatar">
+                                </div>
+                            </x-modal>
+                            <img id="preview"
+                                onclick="document.getElementById('exampleModal')._x_dataStack[0].show = true"
+                                class="inline-block size-16 rounded ring-2 ring-white cursor-pointer dark:ring-neutral-900"
+                                src="{{ $form->tmpUrl ? $form->tmpUrl : asset('images/ktp.png') }}" alt="Avatar">
                             <div class="flex gap-x-2">
                                 <div>
-                                    <button type="button"
+                                    <input type="file" wire:model="form.ktp" id="imageInput" style="display: none"
+                                        accept="image/*">
+                                    <div id="uploadBtn"
                                         class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
                                         <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
                                             height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -38,10 +53,13 @@
                                             <line x1="12" x2="12" y1="3" y2="15" />
                                         </svg>
                                         Upload scan KTP
-                                    </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        @error('form.ktp')
+                            <span class="text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                     <!-- End Col -->
 
@@ -52,13 +70,15 @@
                         </label>
                     </div>
                     <!-- End Col -->
-
                     <div class="sm:col-span-9">
                         <div class="sm:flex">
-                            <input id="af-account-full-name" type="text"
+                            <input wire:model="form.name" id="af-account-full-name" type="text"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
                                 placeholder="Ex. Maria">
                         </div>
+                        @error('form.name')
+                            <span class="text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="sm:col-span-3">
                         <label for="af-account-full-name"
@@ -70,13 +90,21 @@
                         <div class="mt-2 flex rounded-md shadow-sm">
                             {{-- <span
                                 class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 px-3 text-gray-500 sm:text-sm">http://</span> --}}
-                            <input type="text" name="company-website"
+                            <input type="text" wire.model="form.place_of_birth" name="company-website"
                                 class="inline-flex w-2/3 min-w-0 bg-gray-50 rounded-l-md border-r-0 border-gray-300 p-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-green-500 focus:border-green-500 sm:text-sm "
                                 placeholder="Ex. Ponorogo">
-                            <input type="date" name="company-website"
+                            <input type="date" wire.model="form.date_of_birth" name="company-website"
                                 class="block w-1/3 min-w-0 flex-1 bg-gray-50 rounded-none rounded-r-md border-0 p-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-green-500 focus:border-green-500 sm:text-sm "
                                 placeholder="03-08-1986">
+
                         </div>
+                        @error('form.place_of_birth')
+                            <span class="text-red-500">{{ '$message' }}</span>
+                        @enderror
+
+                        @error('form.date_of_birth')
+                            <span class="text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                     <!-- End Col -->
 
@@ -90,6 +118,8 @@
                                 {{-- (Optional) --}}
                             </span>
                         </div>
+
+
                     </div>
                     <!-- End Col -->
 
@@ -99,7 +129,7 @@
                             focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
                             dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500
                             dark:focus:border-green-500 --}}
-                            <input id="af-account-phone" type="text"
+                            <input id="af-account-phone" wire.model="form.phone" type="text"
                                 class="pe-11 bg-gray-50 border-gray-300 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
                                 placeholder="Ex. +62 85736 8888 999">
                             <select
@@ -109,7 +139,11 @@
                                 <option>Work</option>
                                 <option>Fax</option> --}}
                             </select>
+
                         </div>
+                        @error('form.phone')
+                            <span class="text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                     <!-- End Col -->
 
@@ -125,7 +159,8 @@
                         <div class="sm:flex">
                             <label for="af-account-gender-checkbox"
                                 class="flex py-2 px-3 w-full border border-gray-200 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
-                                <input type="radio" name="af-account-gender-checkbox"
+                                <input type="radio" wire.model="form.gender" value="1"
+                                    name="af-account-gender-checkbox"
                                     class="shrink-0 mt-0.5 border-gray-300 rounded-full text-green-600 focus:ring-green-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-500 dark:checked:bg-green-500 dark:checked:border-green-500 dark:focus:ring-offset-gray-800"
                                     id="af-account-gender-checkbox" checked>
                                 <span class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Male</span>
@@ -133,12 +168,16 @@
 
                             <label for="af-account-gender-checkbox-female"
                                 class="flex py-2 px-3 w-full border border-gray-200 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
-                                <input type="radio" name="af-account-gender-checkbox"
+                                <input type="radio" wire.model="form.gender" value="0"
+                                    name="af-account-gender-checkbox"
                                     class="shrink-0 mt-0.5 border-gray-300 rounded-full text-green-600 focus:ring-green-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-500 dark:checked:bg-green-500 dark:checked:border-green-500 dark:focus:ring-offset-gray-800"
                                     id="af-account-gender-checkbox-female">
                                 <span class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Female</span>
                             </label>
                         </div>
+                        @error('form.gender')
+                            <span class="text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                     <!-- End Col -->
 
@@ -151,9 +190,12 @@
                     <!-- End Col -->
 
                     <div class="sm:col-span-9">
-                        <textarea id="af-account-bio"
+                        <textarea id="af-account-bio" wire.model="form.address"
                             class="py-2 px-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
                             rows="6" placeholder="Type your address..."></textarea>
+                        @error('form.address')
+                            <span class="text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                     <!-- End Col -->
 
@@ -182,9 +224,12 @@
                     </div>
 
                     <div class="sm:col-span-9">
-                        <input id="af-account-bio"
+                        <input id="af-account-bio" wire.model="form.position_name"
                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
                             placeholder="Ex. Kaur Pemerintahan"></input>
+                        @error('form.position_name')
+                            <span class="text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     {{-- sk --}}
@@ -196,9 +241,12 @@
                     </div>
 
                     <div class="sm:col-span-9">
-                        <input id="af-account-bio"
+                        <input id="af-account-bio" wire.model="form.sk_number"
                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
                             placeholder="Ex. 182/XXX"></input>
+                        @error('form.sk_number')
+                            <span class="text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="sm:col-span-3">
                         <label for="af-account-bio"
@@ -208,9 +256,12 @@
                     </div>
 
                     <div class="sm:col-span-9">
-                        <input id="af-account-bio" type="date"
+                        <input id="af-account-bio" wire.model="form.sk_tmt" type="date"
                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
                             placeholder=""></input>
+                        @error('form.sk_tmt')
+                            <span class="text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="sm:col-span-3">
                         <label for="af-account-bio"
@@ -220,9 +271,12 @@
                     </div>
 
                     <div class="sm:col-span-9">
-                        <input id="af-account-bio" type="date"
+                        <input id="af-account-bio" wire.model="form.sk_date" type="date"
                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
                             placeholder=""></input>
+                        @error('form.sk_date')
+                            <span class="text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 <!-- End Grid -->
@@ -242,4 +296,37 @@
         <!-- End Card -->
     </div>
     <!-- End Card Section -->
+    <script>
+        const uploadBtn = document.getElementById('uploadBtn');
+        const imageInput = document.getElementById('imageInput');
+        const preview = document.getElementById('preview');
+        const previewModal = document.getElementById('preview-modal');
+
+        uploadBtn.addEventListener('click', function() {
+            imageInput.click();
+        });
+
+        imageInput.addEventListener('change', function(event) {
+            event.preventDefault();
+
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+
+                    previewModal.src = e.target.result;
+                    previewModal.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = '';
+                preview.style.display = 'none';
+
+                previewModal.src = '';
+                previewModal.style.display = 'none';
+            }
+        });
+    </script>
 </div>
