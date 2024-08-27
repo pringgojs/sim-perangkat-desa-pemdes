@@ -22,29 +22,38 @@
                     </div>
                     <!-- End Col -->
 
+                    @php
+                        $sourceImg = null;
+                        if ($form->tmpUrl) {
+                            $sourceImg = $form->tmpUrl;
+                        } else {
+                            if (is_string($form->ktp)) {
+                                $sourceImg = asset('storage/' . $form->ktp);
+                            } else {
+                                $sourceImg = asset('images/ktp.png');
+                            }
+                        }
+                    @endphp
+
                     <div class="sm:col-span-9">
                         <div class="flex items-center gap-5">
-                            {{-- @if ($form->ktp && $form->ktp->temporaryUrl())
-                                @dd($form->ktp->temporaryUrl())
-                            @endif --}}
-                            <x-modal id="exampleModal" maxWidth="lg" wire:model="false">
+                            <x-modal id="exampleModal" maxWidth="lg" wire:model="isOpen">
                                 <div class="p-6">
                                     <img id="preview-modal"
                                         class="inline-block w-auto h-72 rounded ring-2 ring-white dark:ring-neutral-900"
-                                        src="{{ $form->tmpUrl ? $form->tmpUrl : asset('images/ktp.png') }}"
-                                        alt="Avatar">
+                                        src="{{ $sourceImg }}" alt="Avatar">
                                 </div>
                             </x-modal>
                             <img id="preview"
                                 onclick="document.getElementById('exampleModal')._x_dataStack[0].show = true"
                                 class="inline-block size-16 rounded ring-2 ring-white cursor-pointer dark:ring-neutral-900"
-                                src="{{ $form->tmpUrl ? $form->tmpUrl : asset('images/ktp.png') }}" alt="Avatar">
+                                src="{{ $sourceImg }}" alt="Avatar">
                             <div class="flex gap-x-2">
                                 <div>
                                     <input type="file" wire:model="form.ktp" id="imageInput" style="display: none"
                                         accept="image/*">
                                     <div id="uploadBtn"
-                                        class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
+                                        class="py-2 px-3 inline-flex items-center cursor-pointer gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
                                         <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
                                             height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -72,7 +81,7 @@
                     <!-- End Col -->
                     <div class="sm:col-span-9">
                         <div class="sm:flex">
-                            <input wire:model="form.name" id="af-account-full-name" type="text"
+                            <input wire:model="form.name" type="text"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
                                 placeholder="Ex. Maria">
                         </div>
@@ -88,25 +97,22 @@
                     </div>
                     <div class="sm:col-span-9">
                         <div class="mt-2 flex rounded-md shadow-sm">
-                            {{-- <span
-                                class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 px-3 text-gray-500 sm:text-sm">http://</span> --}}
-                            <input type="text" wire.model="form.place_of_birth" name="company-website"
+                            <input type="text" wire:model="form.place_of_birth"
                                 class="inline-flex w-2/3 min-w-0 bg-gray-50 rounded-l-md border-r-0 border-gray-300 p-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-green-500 focus:border-green-500 sm:text-sm "
                                 placeholder="Ex. Ponorogo">
-                            <input type="date" wire.model="form.date_of_birth" name="company-website"
+                            <input type="date" wire:model="form.date_of_birth"
                                 class="block w-1/3 min-w-0 flex-1 bg-gray-50 rounded-none rounded-r-md border-0 p-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-green-500 focus:border-green-500 sm:text-sm "
                                 placeholder="03-08-1986">
 
                         </div>
                         @error('form.place_of_birth')
-                            <span class="text-red-500">{{ '$message' }}</span>
+                            <span class="text-red-500">{{ $message }}</span>
                         @enderror
 
                         @error('form.date_of_birth')
                             <span class="text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
-                    <!-- End Col -->
 
                     <div class="sm:col-span-3">
                         <div class="inline-block">
@@ -125,19 +131,12 @@
 
                     <div class="sm:col-span-9">
                         <div class="sm:flex">
-                            {{-- bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500
-                            focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
-                            dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500
-                            dark:focus:border-green-500 --}}
-                            <input id="af-account-phone" wire.model="form.phone" type="text"
+                            <input type="text" wire:model="form.phone"
                                 class="pe-11 bg-gray-50 border-gray-300 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
                                 placeholder="Ex. +62 85736 8888 999">
                             <select
                                 class="py-2 px-3 pe-9 sm:w-auto border-gray-200 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
                                 <option selected>Mobile</option>
-                                {{-- <option>Home</option>
-                                <option>Work</option>
-                                <option>Fax</option> --}}
                             </select>
 
                         </div>
@@ -159,7 +158,7 @@
                         <div class="sm:flex">
                             <label for="af-account-gender-checkbox"
                                 class="flex py-2 px-3 w-full border border-gray-200 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
-                                <input type="radio" wire.model="form.gender" value="1"
+                                <input type="radio" wire:model="form.gender" value="1"
                                     name="af-account-gender-checkbox"
                                     class="shrink-0 mt-0.5 border-gray-300 rounded-full text-green-600 focus:ring-green-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-500 dark:checked:bg-green-500 dark:checked:border-green-500 dark:focus:ring-offset-gray-800"
                                     id="af-account-gender-checkbox" checked>
@@ -168,7 +167,7 @@
 
                             <label for="af-account-gender-checkbox-female"
                                 class="flex py-2 px-3 w-full border border-gray-200 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
-                                <input type="radio" wire.model="form.gender" value="0"
+                                <input type="radio" wire:model="form.gender" value="0"
                                     name="af-account-gender-checkbox"
                                     class="shrink-0 mt-0.5 border-gray-300 rounded-full text-green-600 focus:ring-green-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-500 dark:checked:bg-green-500 dark:checked:border-green-500 dark:focus:ring-offset-gray-800"
                                     id="af-account-gender-checkbox-female">
@@ -184,13 +183,13 @@
                     <div class="sm:col-span-3">
                         <label for="af-account-bio"
                             class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
-                            Address
+                            Address {{ $form->address }}
                         </label>
                     </div>
                     <!-- End Col -->
 
                     <div class="sm:col-span-9">
-                        <textarea id="af-account-bio" wire.model="form.address"
+                        <textarea type="text" wire:model="form.address"
                             class="py-2 px-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
                             rows="6" placeholder="Type your address..."></textarea>
                         @error('form.address')
@@ -224,7 +223,7 @@
                     </div>
 
                     <div class="sm:col-span-9">
-                        <input id="af-account-bio" wire.model="form.position_name"
+                        <input id="af-account-bio" wire:model="form.position_name"
                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
                             placeholder="Ex. Kaur Pemerintahan"></input>
                         @error('form.position_name')
@@ -241,7 +240,7 @@
                     </div>
 
                     <div class="sm:col-span-9">
-                        <input id="af-account-bio" wire.model="form.sk_number"
+                        <input id="af-account-bio" wire:model="form.sk_number"
                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
                             placeholder="Ex. 182/XXX"></input>
                         @error('form.sk_number')
@@ -256,7 +255,7 @@
                     </div>
 
                     <div class="sm:col-span-9">
-                        <input id="af-account-bio" wire.model="form.sk_tmt" type="date"
+                        <input id="af-account-bio" wire:model="form.sk_tmt" type="date"
                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
                             placeholder=""></input>
                         @error('form.sk_tmt')
@@ -271,7 +270,7 @@
                     </div>
 
                     <div class="sm:col-span-9">
-                        <input id="af-account-bio" wire.model="form.sk_date" type="date"
+                        <input id="af-account-bio" wire:model="form.sk_date" type="date"
                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
                             placeholder=""></input>
                         @error('form.sk_date')
@@ -282,14 +281,18 @@
                 <!-- End Grid -->
 
                 <div class="mt-5 flex justify-end gap-x-2">
+                    <div class="justify-end flex-initial ml-5 -mt-5" wire:loading wire:target='store'>
+                        @livewire('utils.loading')
+                    </div>
                     <button type="button"
                         class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
                         Cancel
                     </button>
-                    <button type="button"
+                    <button type="submit" wire:loading.attr="disabled" wire:target='store'
                         class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-green-600 text-white hover:bg-green-700 focus:outline-none focus:bg-green-700 disabled:opacity-50 disabled:pointer-events-none">
                         Save changes
                     </button>
+
                 </div>
             </form>
         </div>
@@ -307,8 +310,6 @@
         });
 
         imageInput.addEventListener('change', function(event) {
-            event.preventDefault();
-
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();

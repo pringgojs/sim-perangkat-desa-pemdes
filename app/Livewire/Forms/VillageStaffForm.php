@@ -9,30 +9,29 @@ use App\Models\VillageStaff;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Validate;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Storage;
 use App\Rules\UniqueStaffPositionInVillage;
 
 class VillageStaffForm extends Form
 {
     public $id; // digunakan untuk edit
 
-    public $name = '';
-    public $address = '';
-    public $place_of_birth = '';
-    public $date_of_birth = null;
-    public $ktp = '';
-    public $phone = '';
-    public $position_name = '';
-    public $sk_number = '';
-    public $sk_tmt = null;
-    public $sk_date = null;
-    public $username = '';
-    public $password = '';
-    public $email = '';
-    public $gender = '';
-    // #[Validate('required_with:password|same:password|min:6')]
-    // public $repassword = '';
+    public $name;
+    public $address;
+    public $place_of_birth;
+    public $date_of_birth;
+    public $ktp;
+    public $phone;
+    public $position_name;
+    public $sk_number;
+    public $sk_tmt;
+    public $sk_date;
+    public $username;
+    public $password;
+    public $email;
+    public $gender;
 
-    public $tmpUrl = ''; // temporary URL img upload
+    public $tmpUrl; // temporary URL img upload
     public $district;
     public $village;
     public $village_staff;
@@ -45,11 +44,12 @@ class VillageStaffForm extends Form
         return [
             'username' => 'required|max:250',
             'name' => 'required|max:250',
-            // 'address' => $this->address ? 'required|max:250' : 'nullable',
-            // 'phone' => $this->phone ? 'required|max:20' : 'nullable',
-            // 'place_of_birth' => $this->place_of_birth ? 'required|max:250' : 'nullable',
-            // 'date_of_birth' => $this->date_of_birth ? 'required' : 'nullable',
-            'ktp' => $this->id ? 'nullable' : 'required|image|mimes:jpeg,png|max:100', // 100 KB
+            'gender' => $this->isMyAccount() ? 'required' : 'nullable',
+            'address' => $this->isMyAccount() ? 'required|max:250' : 'nullable',
+            'phone' => $this->isMyAccount() ? 'required|max:20' : 'nullable',
+            'place_of_birth' => $this->isMyAccount() ? 'required|max:250' : 'nullable',
+            'date_of_birth' => $this->isMyAccount() ? 'required' : 'nullable',
+            'ktp' => $this->isMyAccount() && !$this->ktp ? 'required|image|mimes:jpeg,png|max:100' : 'nullable', // 100 KB
             'position_type' => [
                 'required',
                 'exists:options,id',
@@ -57,10 +57,10 @@ class VillageStaffForm extends Form
             ],
             'district' => 'required',
             'village' => 'required',
-            // 'position_name' => 'nullable',
-            // 'sk_number' => 'nullable',
-            // 'sk_tmt' => 'nullable',
-            // 'sk_date' => 'nullable',
+            'position_name' => $this->isMyAccount() ? 'required|max:250': 'nullable',
+            'sk_number' => $this->isMyAccount() && $this->isBPD() ? 'required|max:250' : 'nullable',
+            'sk_tmt' => $this->isMyAccount() && $this->isBPD() ? 'required|max:250' : 'nullable',
+            'sk_date' => $this->isMyAccount() && $this->isBPD() ? 'required|max:250' : 'nullable',
             'password' => $this->user ? 'nullable' : 'required|string|regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/',
             'email' => [
                 'required',
@@ -82,25 +82,25 @@ class VillageStaffForm extends Form
             'username.max' => 'Username tidak boleh lebih dari 250 karakter.',
             'name.required' => 'Nama wajib diisi.',
             'name.max' => 'Nama tidak boleh lebih dari 250 karakter.',
-            // 'address.required' => 'Alamat wajib diisi.',
-            // 'address.max' => 'Alamat tidak boleh lebih dari 255 karakter.',
-            // 'phone.required' => 'Nomor telepon wajib diisi.',
-            // 'phone.max' => 'Nomor telepon tidak boleh lebih dari 20 karakter.',
-            // 'place_of_birth.required' => 'Tempat lahir wajib diisi.',
-            // 'date_of_birth.required' => 'Tanggal lahir wajib diisi.',
-            // 'place_of_birth.required' => 'Tempat lahir wajib diisi.',
-            // 'position_name.required' => 'Jabatan wajib diisi.',
-            // 'ktp_scan.required' => 'Gambar harus diunggah.',
-            // 'ktp_scan.image' => 'File yang diunggah harus berupa gambar.',
-            // 'ktp_scan.mimes' => 'Gambar harus berformat JPEG atau PNG.',
-            // 'ktp_scan.max' => 'Ukuran gambar tidak boleh lebih dari 100KB.',
+            'address.required' => 'Alamat wajib diisi.',
+            'address.max' => 'Alamat tidak boleh lebih dari 255 karakter.',
+            'phone.required' => 'Nomor telepon wajib diisi.',
+            'phone.max' => 'Nomor telepon tidak boleh lebih dari 20 karakter.',
+            'place_of_birth.required' => 'Tempat lahir wajib diisi.',
+            'date_of_birth.required' => 'Tanggal lahir wajib diisi.',
+            'place_of_birth.required' => 'Tempat lahir wajib diisi.',
+            'position_name.required' => 'Jabatan wajib diisi.',
+            'ktp.required' => 'Gambar harus diunggah.',
+            'ktp.image' => 'File yang diunggah harus berupa gambar.',
+            'ktp.mimes' => 'Gambar harus berformat JPEG atau PNG.',
+            'ktp.max' => 'Ukuran gambar tidak boleh lebih dari 100KB.',
         ];
     }
 
     public function store() 
     {
         $this->validate();
- 
+        
         info('lolos validasi');
 
         $payload = [
@@ -121,13 +121,14 @@ class VillageStaffForm extends Form
         $user->assignRole('operator');
         info($user);
 
+
         $payload = [
             'user_id' => $user->id,
             'name' => $this->name,
             'district_id' => $this->district,
             'village_id' => $this->village,
             'address' => $this->address ?? null,
-            'phone' => $this->phone ?? null,
+            'phone_number' => $this->phone ?? null,
             'position_type_id' => $this->position_type,
             'date_of_birth' => $this->date_of_birth ?? null,
             'place_of_birth' => $this->place_of_birth ?? null,
@@ -138,12 +139,22 @@ class VillageStaffForm extends Form
             'data_status_id' => key_option('draft')
         ];
 
+        if ($this->ktp) {
+            // TODO: remove file
+            // Storage::delete('path/to/file.jpg');
+
+            /* jika ktp is string, maka data ktp di load dari DB, kalau bukan, berarti dari Object Livewire Upload */
+            if (!is_string($this->ktp)) {
+                $path = $this->ktp->store('ktp', 'public');
+                $payload['ktp_scan'] = $path;
+            }
+        }
+
         /* proses simpan */
         $model = VillageStaff::updateOrCreate([
             'id' => $this->id
         ], $payload);
 
-        info($model);
         return $model;
     }
 
@@ -160,9 +171,10 @@ class VillageStaffForm extends Form
         $this->name = $village_staff->user->name;
         $this->address = $village_staff->address;
         $this->phone = $village_staff->phone_number;
+        $this->gender = $village_staff->gender;
         $this->date_of_birth = $village_staff->date_of_birth;
         $this->place_of_birth = $village_staff->place_of_birth;
-        $this->ktp_scan = $village_staff->ktp_scan;
+        $this->ktp = $village_staff->ktp_scan;
         $this->position_name = $village_staff->place_of_birth;
         $this->sk_number = $village_staff->sk_number;
         $this->sk_tmt = $village_staff->sk_tmt;
@@ -179,4 +191,16 @@ class VillageStaffForm extends Form
         $this->validateOnly('ktp');
         $this->tmpUrl = $this->ktp->temporaryUrl();
     }
+
+    /* validasi untuk beberapa field yang required adalah jika dia mengedit data dia sendiri */
+    public function isMyAccount()
+    {
+        return $this->user->id == auth()->user()->id;
+    }
+
+    public function isBPD()
+    {
+        return option_is_match('bpd', $this->position_type);
+    }
+
 }

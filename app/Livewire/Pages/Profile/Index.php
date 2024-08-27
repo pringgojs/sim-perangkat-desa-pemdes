@@ -4,6 +4,7 @@ namespace App\Livewire\Pages\Profile;
 
 use App\Models\Option;
 use Livewire\Component;
+use App\Models\VillageStaff;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use App\Livewire\Forms\VillageStaffForm;
@@ -15,11 +16,16 @@ class Index extends Component
     use WithFileUploads;
     public VillageStaffForm $form; 
 
+    public $isOpen = false;
     public $position_types;
 
     public function mount()
     {
         $this->position_types = Option::positionTypes()->get();
+
+        /* isi variable user */
+        $staff = auth()->user()->staff();
+        $this->form->setModel($staff);
     }
 
     public function render()
@@ -35,7 +41,7 @@ class Index extends Component
         
         DB::commit();
         
-        $this->form->reset();
+        // $this->form->reset();
         $this->alert('success', 'Success!');
         $this->dispatch('refreshComponent'); 
     }
