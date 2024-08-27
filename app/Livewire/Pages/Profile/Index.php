@@ -17,14 +17,14 @@ class Index extends Component
     public VillageStaffForm $form; 
 
     public $isOpen = false;
-    public $position_types;
+    public $position_type;
 
     public function mount()
     {
-        $this->position_types = Option::positionTypes()->get();
-
         /* isi variable user */
         $staff = auth()->user()->staff();
+        $this->position_type = Option::find($staff->position_type_id);
+        
         $this->form->setModel($staff);
     }
 

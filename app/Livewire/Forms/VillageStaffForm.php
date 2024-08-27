@@ -101,8 +101,6 @@ class VillageStaffForm extends Form
     {
         $this->validate();
         
-        info('lolos validasi');
-
         $payload = [
             'name' => $this->name,
             'username' => $this->username,
@@ -119,8 +117,6 @@ class VillageStaffForm extends Form
         ], $payload);
 
         $user->assignRole('operator');
-        info($user);
-
 
         $payload = [
             'user_id' => $user->id,

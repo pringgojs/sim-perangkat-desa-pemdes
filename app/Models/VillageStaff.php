@@ -98,4 +98,36 @@ class VillageStaff extends Model
             'user_id' => 0,
         ];
     }
+
+    public function labelDataStatus()
+    {
+        $status = $this->dataStatus;
+        if ($status->key == 'draft') {
+            return '<span class="inline-flex items-center rounded-md bg-red-100 px-2 py-1 text-xs font-medium text-red-700">'.$status->name.'</span>';
+        }
+
+        if ($status->key == 'diajukan') {
+            return '<span class="inline-flex items-center rounded-md bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700">'.$status->name.'</span>';
+        }
+
+        if ($status->key == 'final') {
+            return '<span class="inline-flex items-center rounded-md bg-green-100 px-2 py-1 text-xs font-medium text-green-700">'.$status->name.'</span>';
+        }
+    }
+
+    public function colorDataStatus()
+    {
+        $status = $this->dataStatus;
+        if ($status->key == 'draft') {
+            return ['label' => $status->name, 'color' => 'red'];
+        }
+
+        if ($status->key == 'diajukan') {
+            return ['label' => $status->name, 'color' => 'blue'];
+        }
+
+        if ($status->key == 'final') {
+            return ['label' => $status->name, 'color' => 'green'];
+        }
+    }
 }

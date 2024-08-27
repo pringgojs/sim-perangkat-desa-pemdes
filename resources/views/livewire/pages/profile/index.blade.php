@@ -1,15 +1,52 @@
 <div>
     {{-- To attain knowledge, add things every day; To attain wisdom, subtract things every day. --}}
-    <!-- Card Section -->
+    {{-- <div class="p-6 max-w-lg mx-auto bg-white rounded-lg shadow-lg relative overflow-hidden">
+        <!-- Badge di Pojok Kanan Atas -->
+        <div
+            class="absolute top-0 right-0 bg-gray-300 text-gray-700 text-xs font-semibold px-4 py-2 rounded-bl-md rounded-tr-md">
+            Badge
+        </div>
+
+        <!-- Title dan Deskripsi -->
+        <div class="flex justify-between items-start">
+            <div>
+                <h2 class="text-xl font-semibold text-gray-800">Profile</h2>
+                <p class="mt-2 text-gray-600">Deskripsi profile singkat ditampilkan di sini.</p>
+            </div>
+        </div>
+
+        <!-- Content Page -->
+        <div class="mt-8">
+            <p class="text-gray-700">
+                Konten halaman Anda akan ditampilkan di sini. Anda dapat menambahkan teks, gambar, atau elemen lain yang
+                diperlukan.
+            </p>
+        </div>
+    </div> --}}
+
+
+
     <div class="max-w-4xl px-4 sm:px-6 lg:px-8 mx-auto"><!-- Card -->
-        <div class="bg-white rounded-sm shadow p-4 sm:p-7 dark:bg-neutral-800">
-            <div class="mb-8">
-                <h2 class="text-xl font-bold text-gray-800 dark:text-neutral-200">
-                    Profile
-                </h2>
-                <p class="text-sm text-gray-600 dark:text-neutral-400">
-                    Manage your name, password and account settings.
-                </p>
+        <div class="bg-white rounded-sm shadow p-4 sm:p-7 relative overflow-hidden dark:bg-neutral-800">
+            @php
+                $color = $form->village_staff->colorDataStatus();
+            @endphp
+            <div
+                class="absolute top-0 right-0 bg-{{ $color['color'] }}-200 text-{{ $color['color'] }}-500 text-lg font-semibold px-4 py-2 rounded-bl-md rounded-tr-md">
+                {{ $color['label'] }}
+            </div>
+            <div class="flex">
+                <div class="mb-8 flex-auto">
+                    <h2 class="text-xl font-bold text-gray-800 dark:text-neutral-200">
+                        Form Profile
+                    </h2>
+                    <p class="text-sm text-gray-600 dark:text-neutral-400">
+                        Manage your name, password and account settings.
+                    </p>
+                </div>
+                <div>
+                    {{-- {!! $form->village_staff->labelDataStatus() !!} --}}
+                </div>
             </div>
 
             <form wire:submit="store">
@@ -23,14 +60,12 @@
                     <!-- End Col -->
 
                     @php
-                        $sourceImg = null;
+                        $sourceImg = asset('images/ktp.png');
                         if ($form->tmpUrl) {
                             $sourceImg = $form->tmpUrl;
                         } else {
                             if (is_string($form->ktp)) {
                                 $sourceImg = asset('storage/' . $form->ktp);
-                            } else {
-                                $sourceImg = asset('images/ktp.png');
                             }
                         }
                     @endphp
@@ -208,29 +243,41 @@
                     <div class="sm:col-span-9">
                         <select id="positionTypes" wire:model="form.position_type"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
-                            <option selected>Choose a position type</option>
-                            @foreach ($position_types as $item)
-                                <option value="{{ $item->id }}">{{ ucfirst($item->name) }}</option>
-                            @endforeach
+                            {{-- <option selected>Choose a position type</option> --}}
+                            {{-- @foreach ($position_types as $item) --}}
+                            <option value="{{ $position_type->id }}">{{ ucfirst($position_type->name) }}</option>
+                            {{-- @endforeach --}}
                         </select>
                     </div>
-                    <!-- End Col -->
-                    <div class="sm:col-span-3">
-                        <label for="af-account-bio"
-                            class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
-                            Position Name
-                        </label>
-                    </div>
 
-                    <div class="sm:col-span-9">
-                        <input id="af-account-bio" wire:model="form.position_name"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
-                            placeholder="Ex. Kaur Pemerintahan"></input>
-                        @error('form.position_name')
-                            <span class="text-red-500">{{ $message }}</span>
-                        @enderror
-                    </div>
+                    @php
+                        $positions = [
+                            key_option('sekretaris_desa'),
+                            key_option('kepala_desa'),
+                            key_option('kepala_wilayah'),
+                            key_option('bpd'),
+                        ];
+                    @endphp
 
+                    @if (!in_array($position_type->id, $positions))
+                        {{-- jika posisi sekretaris  --}}
+                        <!-- End Col -->
+                        <div class="sm:col-span-3">
+                            <label for="af-account-bio"
+                                class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
+                                Position Name
+                            </label>
+                        </div>
+
+                        <div class="sm:col-span-9">
+                            <input id="af-account-bio" wire:model="form.position_name"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+                                placeholder="Ex. Kaur Pemerintahan"></input>
+                            @error('form.position_name')
+                                <span class="text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    @endif
                     {{-- sk --}}
                     <div class="sm:col-span-3">
                         <label for="af-account-bio"
