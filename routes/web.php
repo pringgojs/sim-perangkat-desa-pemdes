@@ -27,14 +27,11 @@ Route::middleware([
     // Route::middleware([
     //     'role:administrator'
     // ])->group(function () {
-        Route::get('profile', ProfileIndex::class)->name('profile.index');
+        Route::get('profile', ProfileIndex::class)->name('profile.index')->middleware('role:operator');
         Route::get('village-staff', VillageStaffIndex::class)->name('village-staff.index');
         Route::get('village-type', VillageTypeIndex::class)->name('village-type.index');
         Route::get('village', VillageIndex::class)->name('village.index');
-        Route::get('user', Index::class)->name('user.index');
-        Route::get('database/account', UserAccount::class)->name('database.account');
-        Route::get('database', DatabaseIndex::class)->name('database.index');
-        Route::get('remove-backlinks', RemoveBacklinksIndex::class)->name('remove-backlinks.index');
+        Route::get('user', Index::class)->name('user.index')->middleware('role:administrator');
         Route::get('dashboard', DashboardIndex::class)->name('dashboard.index');
         Route::get('/phpmyadmin', [SSOTokenController::class, 'phpMyAdmin'])->name('phpmyadmin');
 

@@ -22,3 +22,9 @@ function key_option($key) {
 function option_is_match($key, $id) {
     return key_option($key) === $id;
 }
+
+/* user */
+function is_administrator() {
+    $user = auth()->user();
+    return $user->hasRole('adminsitrator');
+}

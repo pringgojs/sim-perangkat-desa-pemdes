@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('place_of_birth')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->string('address')->nullable();
+            $table->string('name')->nullable();
             $table->string('ktp_scan')->nullable();
             $table->string('phone_number')->nullable();
             $table->uuid('position_type_id')->nullable(); // Relation to options table

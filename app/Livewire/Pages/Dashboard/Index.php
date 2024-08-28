@@ -4,6 +4,7 @@ namespace App\Livewire\Pages\Dashboard;
 
 use Livewire\Component;
 use App\Constants\Constants;
+use App\Models\VillageStaff;
 use Illuminate\Http\Request;
 use Livewire\WithPagination;
 use App\Exports\EntitlementExport;
@@ -19,41 +20,19 @@ class Index extends Component
 {
 
     // use WithPagination;
-    public $state, $plan, $search;
-    public $headers = [];
-    public $list_entitlement = [];
-    protected $listeners = ['refreshComponent' => '$refresh', 'filter' => 'filter', 'export' => 'export', 'submit' => 'submit'];
+    public $search;
+    protected $listeners = ['refreshComponent' => '$refresh'];
     
     public function mount()
     {
-        $this->headers = [
-            'Name',
-            'Username',
-            'Subdomain',
-            'Email',
-        ];
+        
     }
 
     public function render()
     {
-        $params = [
-            'state' => $this->state,
-            'plan' => $this->plan,
-            'search' => $this->search,
-        ];
-
-        // $service = new EcmpCustomerService;
-        return view('livewire.pages.dashboard.index');
-    }
-
-    public function filter($state = null, $plan = null)
-    {
-        $this->state = $state;
-        $this->plan = $plan;
-    }
-
-    public function export()
-    {
-        // return Excel::download(new EntitlementExport($collections), $name.'.xlsx');
+        return view('livewire.pages.dashboard.index',
+        [
+            'staffs' => VillageStaff::active()->pending()->search($this->search)->with(['village', 'positionType'])->paginate()
+        ]);
     }
 }
