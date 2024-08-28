@@ -13,7 +13,7 @@ class Table extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public $staffs, public $staff)
+    public function __construct(public $staffs, public $staff = null)
     {
         //
     }
