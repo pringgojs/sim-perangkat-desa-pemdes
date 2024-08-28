@@ -7,6 +7,7 @@ use App\Models\Option;
 use Livewire\Component;
 use App\Models\VillageStaff;
 use Livewire\WithPagination;
+use App\Livewire\Forms\VillageStaffForm;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Index extends Component
@@ -14,9 +15,14 @@ class Index extends Component
     use LivewireAlert;
     use WithPagination;
 
+    public VillageStaffForm $form; 
     public $option;
     public $search;
     public $type;
+    public $modalPreview = false;
+    public $modalConfirm = false;
+    public $staff;
+
     protected $listeners = ['refreshComponent' => '$refresh'];
 
     public function mount()
@@ -43,5 +49,11 @@ class Index extends Component
         
         $this->alert('success', 'Success!');
         $this->dispatch('refreshComponent')->self();
+    }
+
+    public function detail($id)
+    {
+        $this->staff = VillageStaff::find($id);
+        $this->form->setModel($this->staff);
     }
 }

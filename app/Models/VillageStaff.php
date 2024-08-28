@@ -135,4 +135,9 @@ class VillageStaff extends Model
             return ['label' => $status->name, 'color' => 'green'];
         }
     }
+
+    public function isPending()
+    {
+        return $this->data_status_id == key_option('diajukan');
+    }
 }

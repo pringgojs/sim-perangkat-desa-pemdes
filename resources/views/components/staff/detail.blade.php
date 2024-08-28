@@ -2,10 +2,10 @@
     <div x-data="{ open: false }" @set-open-detail.window="open = $event.detail" x-show="open" @click.away="open = false"
         class="fixed inset-0 flex z-50 justify-end">
         <!-- Background overlay -->
-        <div x-show="open" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
-            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
-            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
-            class="fixed inset-0 bg-black bg-opacity-50"></div>
+        <div x-show="open" @click="open = false" x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0" class="fixed inset-0 bg-black bg-opacity-50"></div>
 
         <!-- Drawer -->
         <div x-show="open" x-transition:enter="transition ease-out duration-300 transform"
@@ -31,7 +31,10 @@
                     </div>
                 </div>
                 <!-- Main -->
-                <div>
+                <div wire:loading wire:target='detail'>
+                    <x-staff.skeleton-detail />
+                </div>
+                <div wire:loading.remove>
                     <div class="pb-1 sm:pb-6">
                         <div>
                             @php
@@ -65,19 +68,23 @@
                                         </div>
                                         <p class="text-sm text-gray-500">{{ $staff->position_name ?? '' }}</p>
                                     </div>
-                                    <div class="mt-5 flex flex-wrap space-y-3 sm:space-x-3 sm:space-y-0">
-                                        <button type="button"
-                                            onclick="document.getElementById('modalConfirm')._x_dataStack[0].show = true"
-                                            class="inline-flex w-full flex-shrink-0 items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:flex-1">Setujui</button>
-                                        <button type="button"
-                                            class="inline-flex w-full flex-1 items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Minta
-                                            Perbaikan</button>
-                                        <div class="ml-3 inline-flex sm:ml-0">
-                                            <div class="relative inline-block text-left">
+                                    @if ($staff)
+                                        @if ($staff->isPending())
+                                            <div class="mt-5 flex flex-wrap space-y-3 sm:space-x-3 sm:space-y-0">
+                                                <button type="button"
+                                                    onclick="document.getElementById('modalConfirm')._x_dataStack[0].show = true"
+                                                    class="inline-flex w-full flex-shrink-0 items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:flex-1">Setujui</button>
+                                                <button type="button"
+                                                    class="inline-flex w-full flex-1 items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Minta
+                                                    Perbaikan</button>
+                                                <div class="ml-3 inline-flex sm:ml-0">
+                                                    <div class="relative inline-block text-left">
 
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                        @endif
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -87,45 +94,45 @@
                             <div>
                                 <dt class="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Address</dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
-                                    <p>{{ $staff->address ?? '' }}</p>
+                                    <p>{{ $staff->address ?? '-' }}</p>
                                 </dd>
                             </div>
                             <div>
                                 <dt class="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Place, Date of
                                     birth</dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">{{ $staff->place_of_birth ?? '' }},
-                                    {{ $staff->date_of_birth ?? '' }}</dd>
+                                    {{ $staff->date_of_birth ?? '-' }}</dd>
                             </div>
                             <div>
                                 <dt class="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Position Type
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
-                                    {{ $staff->positionType->name ?? '' }}</dd>
+                                    {{ $staff->positionType->name ?? '-' }}</dd>
                             </div>
                             <div>
                                 <dt class="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Phone Number
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
-                                    {{ $staff->phone_number ?? '' }}</dd>
+                                    {{ $staff->phone_number ?? '-' }}</dd>
                             </div>
                         </dl>
                     </div>
 
-                    <div class="p-5">
+                    <div class="p-6">
                         <h3 class="font-medium text-gray-900">SK Information</h3>
                         <dl class="mt-2 divide-y divide-gray-200 border-b border-t border-gray-200">
 
                             <div class="flex justify-between py-3 text-sm font-medium">
                                 <dt class="text-gray-500">SK number</dt>
-                                <dd class="text-gray-900">{{ $staff->sk_number ?? '' }}</dd>
+                                <dd class="text-gray-900">{{ $staff->sk_number ?? '-' }}</dd>
                             </div>
                             <div class="flex justify-between py-3 text-sm font-medium">
                                 <dt class="text-gray-500">SK TMT</dt>
-                                <dd class="text-gray-900">{{ $staff->sk_tmt ?? '' }}</dd>
+                                <dd class="text-gray-900">{{ $staff->sk_tmt ?? '-' }}</dd>
                             </div>
                             <div class="flex justify-between py-3 text-sm font-medium">
                                 <dt class="text-gray-500">SK Date</dt>
-                                <dd class="text-gray-900">{{ $staff->sk_date ?? '' }}</dd>
+                                <dd class="text-gray-900">{{ $staff->sk_date ?? '-' }}</dd>
                             </div>
 
                             {{-- @if (key_option('bpd')) --}}
