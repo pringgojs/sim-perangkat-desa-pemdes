@@ -38,5 +38,5 @@
     </div>
 
     {{-- @livewire('pages.dashboard.section.filter') --}}
-    <x-table.staff :$staffs />
+    <x-staff.table :$staffs />
 </div>

@@ -41,9 +41,14 @@
 
                     <div class="flex flex-none items-center gap-x-2">
                         <a onclick="Livewire.dispatch('openModal', { component: 'modals.form-village-staff', arguments: {id: '{{ $item->id }}'} })"
+                            class="inline-flex rounded-lg p-2 bg-green-50 text-green-700 ring-4 ring-white">
+                            <x-heroicon-o-document-text class="h-5 w-5" />
+                        </a>
+                        <a onclick="Livewire.dispatch('openModal', { component: 'modals.form-village-staff', arguments: {id: '{{ $item->id }}'} })"
                             class="inline-flex rounded-lg p-2 bg-purple-50 text-purple-700 ring-4 ring-white">
                             <x-heroicon-o-pencil class="h-5 w-5" />
                         </a>
+
                         <a id="dropdownDefaultButton-{{ $item->id }}"
                             data-dropdown-toggle="dropdown-{{ $item->id }}"
                             class="inline-flex rounded-lg p-2 bg-red-50 text-red-700 ring-4 ring-white cursor-pointer">

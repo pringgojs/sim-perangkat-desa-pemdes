@@ -15,5 +15,5 @@
     <div class="bg-green-200 text-green-500"></div>
 
     {{-- panggil component table.staff --}}
-    <x-table.staff :$staffs />
+    <x-staff.table :$staffs />
 </div>
