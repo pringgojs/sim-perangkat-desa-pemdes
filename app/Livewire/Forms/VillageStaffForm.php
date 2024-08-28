@@ -171,7 +171,7 @@ class VillageStaffForm extends Form
         $this->date_of_birth = $village_staff->date_of_birth;
         $this->place_of_birth = $village_staff->place_of_birth;
         $this->ktp = $village_staff->ktp_scan;
-        $this->position_name = $village_staff->place_of_birth;
+        $this->position_name = $village_staff->position_name;
         $this->sk_number = $village_staff->sk_number;
         $this->sk_tmt = $village_staff->sk_tmt;
         $this->sk_date = $village_staff->sk_date;

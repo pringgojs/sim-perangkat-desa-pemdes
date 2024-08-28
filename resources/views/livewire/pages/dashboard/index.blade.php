@@ -38,5 +38,6 @@
     </div>
 
     {{-- @livewire('pages.dashboard.section.filter') --}}
-    <x-staff.table :$staffs />
+    <x-staff.table :$staffs :$staff />
+    {{-- <livewire:pages.village-staff.section.table :staffs="$staffs" /> --}}
 </div>

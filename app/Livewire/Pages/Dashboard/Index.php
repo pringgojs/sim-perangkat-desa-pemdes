@@ -19,9 +19,10 @@ use Illuminate\Support\Facades\Request as FacadeRequest;
 class Index extends Component
 {
 
+    public $staff;
     // use WithPagination;
     public $search;
-    protected $listeners = ['refreshComponent' => '$refresh'];
+    protected $listeners = ['refreshComponent' => '$refresh', 'detail'];
     
     public function mount()
     {
@@ -34,5 +35,10 @@ class Index extends Component
         [
             'staffs' => VillageStaff::active()->pending()->search($this->search)->with(['village', 'positionType'])->paginate()
         ]);
+    }
+
+    public function detail($id)
+    {
+        $this->staff = VillageStaff::find($id);
     }
 }

@@ -77,5 +77,5 @@
         {{ $staffs->links() }}
 
     </div>
-    <x-staff.detail :staff="$staff" />
+    <x-staff.detail />
 </div>

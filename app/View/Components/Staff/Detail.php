@@ -8,12 +8,15 @@ use Illuminate\View\Component;
 
 class Detail extends Component
 {
+    public $staff;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($staff = null)
     {
-        //
+        if ($staff) {
+            $this->staff = $staff;
+        }
     }
 
     /**

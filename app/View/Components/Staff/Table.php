@@ -8,10 +8,12 @@ use Illuminate\View\Component;
 
 class Table extends Component
 {
+    protected $listeners = ['refreshComponent' => '$refresh'];
+
     /**
      * Create a new component instance.
      */
-    public function __construct(public $staffs)
+    public function __construct(public $staffs, public $staff)
     {
         //
     }
