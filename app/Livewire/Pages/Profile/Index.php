@@ -15,10 +15,12 @@ class Index extends Component
     use LivewireAlert;
     use WithFileUploads;
     public VillageStaffForm $form; 
+    protected $listeners = ['refreshComponent' => '$refresh'];
 
     public $modalPreview = false;
     public $modalConfirm = false;
     public $position_type;
+    public $isReadonly;
 
     public function mount()
     {
@@ -27,6 +29,10 @@ class Index extends Component
         $this->position_type = Option::find($staff->position_type_id);
         
         $this->form->setModel($staff);
+        /* mode readonly diaktifkna ketika status != draft */
+        if (option_is_match('draft', $staff->data_status_id) === false) {
+            $this->isReadonly = true;
+        }
     }
 
     public function render()
@@ -56,6 +62,7 @@ class Index extends Component
     public function processFinal()
     {
         $this->form->sendToVerification();
+        $this->isReadonly = true;
         $this->alert('success', 'Success!');
         $this->dispatch('refreshComponent'); // semua yg punya refresh component akan ke trigger
     }
