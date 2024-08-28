@@ -18,6 +18,19 @@ export default {
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
             },
+            keyframes: {
+                "border-gradient": {
+                    "0%, 100%": {
+                        "border-color": "rgba(0, 143, 255, 1)",
+                    },
+                    "50%": {
+                        "border-color": "rgba(255, 0, 143, 1)",
+                    },
+                },
+            },
+            animation: {
+                "border-gradient": "border-gradient 3s infinite",
+            },
         },
     },
 

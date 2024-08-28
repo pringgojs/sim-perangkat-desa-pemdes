@@ -16,7 +16,8 @@ class Index extends Component
     use WithFileUploads;
     public VillageStaffForm $form; 
 
-    public $isOpen = false;
+    public $modalPreview = false;
+    public $modalConfirm = false;
     public $position_type;
 
     public function mount()
@@ -49,5 +50,13 @@ class Index extends Component
     public function updatedFormKtp()
     {
         $this->form->validateFilePhoto(); // Memvalidasi hanya field file_photo
+    }
+
+    /* proses tombol ajuan data */
+    public function processFinal()
+    {
+        $this->form->sendToVerification();
+        $this->alert('success', 'Success!');
+        $this->dispatch('refreshComponent'); // semua yg punya refresh component akan ke trigger
     }
 }

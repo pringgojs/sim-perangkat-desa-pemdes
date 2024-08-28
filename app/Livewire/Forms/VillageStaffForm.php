@@ -199,4 +199,11 @@ class VillageStaffForm extends Form
         return option_is_match('bpd', $this->position_type);
     }
 
+    public function sendToVerification()
+    {
+        $status = key_option('diajukan');
+        $this->village_staff->data_status_id = $status;
+        $this->village_staff->save();
+    }
+
 }
