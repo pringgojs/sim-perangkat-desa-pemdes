@@ -415,10 +415,10 @@
     </div>
     <!-- End Card Section -->
     <script>
-        const uploadBtn = document.getElementById('uploadBtn');
-        const imageInput = document.getElementById('imageInput');
-        const preview = document.getElementById('preview');
-        const previewModal = document.getElementById('preview-modal');
+        var uploadBtn = document.getElementById('uploadBtn');
+        var imageInput = document.getElementById('imageInput');
+        var preview = document.getElementById('preview');
+        var previewModal = document.getElementById('preview-modal');
 
         uploadBtn.addEventListener('click', function() {
             imageInput.click();

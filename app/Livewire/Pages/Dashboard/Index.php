@@ -53,7 +53,8 @@ class Index extends Component
     /* proses tombol finalisasi data */
     public function processFinal()
     {
-        $this->form->processToApprve();
+        // $this->form->processToApprve();
+        $this->modalConfirm = false;
         $this->alert('success', 'Success!');
         $this->dispatch('refreshComponent'); // semua yg punya refresh component akan ke trigger
     }
