@@ -108,15 +108,22 @@
                 </div>
             </div>
 
-            <form wire:submit="store" x-data="{ isReadonly: @entangle('isReadonly') }" x-init="if (isReadonly) {
-                document.querySelectorAll('input, textarea, select').forEach(el => el.setAttribute('readonly', true));
-                document.querySelectorAll('input[type=radio]').forEach(el => el.disabled = true);
-            }">
+            <form wire:submit="store" x-data="{
+                isReadonly: @entangle('isReadonly'),
+                setReadonly() {
+                    console.log('ini kepanggil gak ya');
+                    document.querySelectorAll('input, textarea, select').forEach(el => el.setAttribute('readonly', true));
+                    document.querySelectorAll('input[type=radio]').forEach(el => el.disabled = true);
+                }
+            }" x-init="if (isReadonly) {
+                setReadonly()
+            }"
+                x-on:re-init-alpine.window="setReadonly()">
                 <!-- Grid -->
                 <div class="grid sm:grid-cols-12 gap-2 sm:gap-6">
                     <div class="sm:col-span-3">
                         <label class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
-                            Scan KTP
+                            Scan KTP <strong x-text="isReadonly"></strong>
                         </label>
                     </div>
                     <!-- End Col -->

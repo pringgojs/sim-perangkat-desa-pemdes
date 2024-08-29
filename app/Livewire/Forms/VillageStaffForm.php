@@ -49,7 +49,7 @@ class VillageStaffForm extends Form
             'phone' => $this->isMyAccount() ? 'required|max:20' : 'nullable',
             'place_of_birth' => $this->isMyAccount() ? 'required|max:250' : 'nullable',
             'date_of_birth' => $this->isMyAccount() ? 'required' : 'nullable',
-            'ktp' => $this->ktp ? 'required|image|mimes:jpeg,png|max:100' : 'nullable', // 100 KB
+            'ktp' => (!is_string($this->ktp) && $this->ktp) ? 'required|image|mimes:jpeg,png|max:100' : 'nullable', // 100 KB
             'position_type' => [
                 'required',
                 'exists:options,id',

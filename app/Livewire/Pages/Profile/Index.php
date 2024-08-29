@@ -65,5 +65,7 @@ class Index extends Component
         $this->isReadonly = true;
         $this->alert('success', 'Success!');
         $this->dispatch('refreshComponent'); // semua yg punya refresh component akan ke trigger
+        $this->dispatch('re-init-alpine'); // re init alpine supaya menjadi readonly
+
     }
 }
