@@ -30,7 +30,7 @@ class Index extends Component
     public $modalConfirm = false;
     public $modalConfirmRevisi = false;
     
-    protected $listeners = ['refreshComponent' => '$refresh', 'detail', 'processDraft'];
+    protected $listeners = ['refreshComponent' => '$refresh', 'detail', 'processToUpdateStatus'];
     
     public function mount()
     {
@@ -52,17 +52,11 @@ class Index extends Component
     }
 
     /* proses tombol finalisasi data */
-    public function processFinal()
+    public function processToUpdateStatus($key, $reason = null)
     {
-        $this->form->processToApprve();
+        info($reason);
+        $this->form->processToApprve($key, $reason);
         $this->modalConfirm = false;
-        $this->alert('success', 'Success!');
-        $this->dispatch('refreshComponent'); // semua yg punya refresh component akan ke trigger
-    }
-
-    public function processDraft($reason)
-    {
-        $this->form->processToRevision($reason);
         $this->modalConfirmRevisi = false;
         $this->alert('success', 'Success!');
         $this->dispatch('refreshComponent'); // semua yg punya refresh component akan ke trigger
