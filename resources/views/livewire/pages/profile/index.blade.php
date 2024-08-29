@@ -148,9 +148,9 @@
                             <div class="flex gap-x-2">
                                 <template x-if="!isReadonly">
                                     <div>
-                                        <input type="file" wire:model="form.ktp" id="imageInput"
+                                        <input x-ref="fileInput" type="file" wire:model="form.ktp" id="imageInput"
                                             style="display: none" accept="image/*">
-                                        <div id="uploadBtn"
+                                        <div id="uploadBtn" @click="$refs.fileInput.click()"
                                             class="py-2 px-3 inline-flex items-center cursor-pointer gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
                                             <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg"
                                                 width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -283,7 +283,7 @@
                     <div class="sm:col-span-3">
                         <label for="af-account-bio"
                             class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
-                            Address {{ $form->address }}
+                            Address
                         </label>
                     </div>
                     <!-- End Col -->
@@ -414,35 +414,4 @@
         <!-- End Card -->
     </div>
     <!-- End Card Section -->
-    <script>
-        var uploadBtn = document.getElementById('uploadBtn');
-        var imageInput = document.getElementById('imageInput');
-        var preview = document.getElementById('preview');
-        var previewModal = document.getElementById('preview-modal');
-
-        uploadBtn.addEventListener('click', function() {
-            imageInput.click();
-        });
-
-        imageInput.addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-
-                    previewModal.src = e.target.result;
-                    previewModal.style.display = 'block';
-                }
-                reader.readAsDataURL(file);
-            } else {
-                preview.src = '';
-                preview.style.display = 'none';
-
-                previewModal.src = '';
-                previewModal.style.display = 'none';
-            }
-        });
-    </script>
 </div>
