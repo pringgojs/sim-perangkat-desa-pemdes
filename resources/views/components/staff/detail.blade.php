@@ -75,6 +75,7 @@
                                                     onclick="document.getElementById('modalConfirm')._x_dataStack[0].show = true"
                                                     class="inline-flex w-full flex-shrink-0 items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:flex-1">Setujui</button>
                                                 <button type="button"
+                                                    onclick="document.getElementById('modalConfirmRevisi')._x_dataStack[0].show = true"
                                                     class="inline-flex w-full flex-1 items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Minta
                                                     Perbaikan</button>
                                                 <div class="ml-3 inline-flex sm:ml-0">
@@ -177,4 +178,79 @@
         </div>
         {{-- </div> --}}
     </x-modal>
+
+    <x-modal id="modalConfirmRevisi" maxWidth="md" wire:model="modalConfirmRevisi">
+        {{-- <div
+            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"> --}}
+        <div x-data="reasonHandler()">
+
+            <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                    <div
+                        class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                        <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                        </svg>
+                    </div>
+                    <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                        <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Tuliskan alasan
+                            revisi pada kolom dibawah ini</h3>
+                        <span x-text="reason"></span>
+                        <div class="mt-2">
+                            <textarea x-model="reason" type="text"
+                                class="py-2 px-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+                                rows="6" placeholder="Type your reason..."></textarea>
+                            <span x-show="error" class="text-red-600" x-text="error"></span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <button @click="submitReason" type="button"
+                    class="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 sm:ml-3 sm:w-auto">Submit</button>
+                <div class="justify-end flex-initial ml-5 -mt-5" wire:loading wire:target='processDraft'>
+                    @livewire('utils.loading')
+                </div>
+            </div>
+        </div>
+    </x-modal>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('reasonHandler', () => ({
+                reason: '',
+                error: '',
+
+                validateReason() {
+                    this.error = '';
+
+                    if (!this.reason) {
+                        this.error = 'Reason cannot be empty';
+                        return false;
+                    }
+
+                    if (this.reason.length < 5) {
+                        this.error = 'Reason must be at least 5 characters long';
+                        return false;
+                    }
+
+                    return true;
+                },
+
+                submitReason() {
+                    if (this.validateReason()) {
+                        console.log('ini diproses reason ya');
+                        console.log(this.reason);
+                        // Dispatch the Livewire event to send the reason
+                        Livewire.dispatch('processDraft', {
+                            reason: this.reason
+                        });
+                    }
+                }
+            }));
+        });
+    </script>
 </div>

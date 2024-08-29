@@ -213,4 +213,13 @@ class VillageStaffForm extends Form
         $this->village_staff->save();
     }
 
+    /* method ini dipanggil dari detail staff */
+    public function processToRevision($reason)
+    {
+        $status = key_option('final');
+        $this->village_staff->data_status_id = $status;
+        $this->village_staff->reason_note = $reason;
+        $this->village_staff->save();
+    }
+
 }

@@ -14,9 +14,9 @@ class Index extends Component
 {
     use LivewireAlert;
     use WithFileUploads;
-    public VillageStaffForm $form; 
     protected $listeners = ['refreshComponent' => '$refresh'];
-
+    
+    public VillageStaffForm $form; 
     public $modalPreview = false;
     public $modalConfirm = false;
     public $position_type;
@@ -63,9 +63,10 @@ class Index extends Component
     {
         $this->form->sendToVerification();
         $this->isReadonly = true;
+
         $this->alert('success', 'Success!');
-        $this->dispatch('refreshComponent'); // semua yg punya refresh component akan ke trigger
-        $this->dispatch('re-init-alpine'); // re init alpine supaya menjadi readonly
+        // $this->dispatch('$refresh'); // semua yg punya refresh component akan ke trigger
+        // $this->dispatch('re-init-alpine'); // re init alpine supaya menjadi readonly
 
     }
 }

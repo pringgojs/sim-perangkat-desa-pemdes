@@ -25,6 +25,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->boolean('gender')->default(true); // default L
             $table->string('position_name')->nullable();
+            $table->text('reason_note')->nullable();
             $table->uuid('data_status_id');
             $table->string('sk_number')->nullable();
             $table->date('sk_tmt')->nullable();

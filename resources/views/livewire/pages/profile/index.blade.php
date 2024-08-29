@@ -112,17 +112,25 @@
                 isReadonly: @entangle('isReadonly'),
                 setReadonly() {
                     console.log('ini kepanggil gak ya');
-                    document.querySelectorAll('input, textarea, select').forEach(el => el.setAttribute('readonly', true));
-                    document.querySelectorAll('input[type=radio]').forEach(el => el.disabled = true);
+                    $el.querySelectorAll('input, select, textarea').forEach(element => {
+                        console.log('jumlah element:' + element);
+                        element.setAttribute('readonly', true);
+                        if (element.tagName === 'SELECT' || element.type === 'checkbox') {
+                            element.setAttribute('disabled', true);
+                        }
+                    });
+            
                 }
             }" x-init="if (isReadonly) {
                 setReadonly()
-            }"
+            };
+            $watch('isReadonly', value => $refs.labelKtp.click())"
                 x-on:re-init-alpine.window="setReadonly()">
                 <!-- Grid -->
                 <div class="grid sm:grid-cols-12 gap-2 sm:gap-6">
                     <div class="sm:col-span-3">
-                        <label class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
+                        <label x-ref="labelKtp" @click="setReadonly()"
+                            class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
                             Scan KTP <strong x-text="isReadonly"></strong>
                         </label>
                     </div>
@@ -421,4 +429,5 @@
         <!-- End Card -->
     </div>
     <!-- End Card Section -->
+
 </div>

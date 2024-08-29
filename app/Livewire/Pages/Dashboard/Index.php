@@ -28,8 +28,9 @@ class Index extends Component
     public $search;
     public $modalPreview = false;
     public $modalConfirm = false;
+    public $modalConfirmRevisi = false;
     
-    protected $listeners = ['refreshComponent' => '$refresh', 'detail'];
+    protected $listeners = ['refreshComponent' => '$refresh', 'detail', 'processDraft'];
     
     public function mount()
     {
@@ -53,8 +54,16 @@ class Index extends Component
     /* proses tombol finalisasi data */
     public function processFinal()
     {
-        // $this->form->processToApprve();
+        $this->form->processToApprve();
         $this->modalConfirm = false;
+        $this->alert('success', 'Success!');
+        $this->dispatch('refreshComponent'); // semua yg punya refresh component akan ke trigger
+    }
+
+    public function processDraft($reason)
+    {
+        $this->form->processToRevision($reason);
+        $this->modalConfirmRevisi = false;
         $this->alert('success', 'Success!');
         $this->dispatch('refreshComponent'); // semua yg punya refresh component akan ke trigger
     }
