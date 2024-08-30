@@ -45,7 +45,7 @@ class OptionSeeder extends Seeder
     public function statusData()
     {
         $options = [
-            'Draft', 'Diajukan', 'Final'];
+            'Draft', 'Diajukan', 'Revisi', 'Final'];
     
         $data = collect($options)->map(fn($value) => [
             'id' => Str::uuid(),

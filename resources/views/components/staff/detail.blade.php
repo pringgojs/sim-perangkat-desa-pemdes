@@ -180,6 +180,7 @@
         {{-- </div> --}}
     </x-modal>
 
+    {{-- modal confirmasi revisi --}}
     <x-modal id="modalConfirmRevisi" maxWidth="md" wire:model="modalConfirmRevisi">
         {{-- <div
             class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"> --}}
@@ -218,9 +219,11 @@
             </div>
         </div>
     </x-modal>
+    <div x-data="reasonHandler()"></div>
 
     <script>
         document.addEventListener('alpine:init', () => {
+            console.log('alpine init');
             Alpine.data('reasonHandler', () => ({
                 reason: '',
                 error: '',
@@ -247,7 +250,7 @@
                         console.log(this.reason);
                         // Dispatch the Livewire event to send the reason
                         Livewire.dispatch('processToUpdateStatus', {
-                            key: 'draft',
+                            key: 'revisi',
                             reason: this.reason
                         });
                     }
@@ -255,4 +258,5 @@
             }));
         });
     </script>
+
 </div>

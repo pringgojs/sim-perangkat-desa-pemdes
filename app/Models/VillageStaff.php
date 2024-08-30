@@ -115,6 +115,10 @@ class VillageStaff extends Model
             return '<span class="inline-flex items-center rounded-md bg-blue-200 px-2 py-1 text-xs font-medium text-blue-700">'.$status->name.'</span>';
         }
 
+        if ($status->key == 'revisi') {
+            return '<span class="inline-flex items-center rounded-md bg-yellow-200 px-2 py-1 text-xs font-medium text-yellow-700">'.$status->name.'</span>';
+        }
+
         if ($status->key == 'final') {
             return '<span class="inline-flex items-center rounded-md bg-green-200 px-2 py-1 text-xs font-medium text-green-700">'.$status->name.'</span>';
         }
@@ -129,6 +133,10 @@ class VillageStaff extends Model
 
         if ($status->key == 'diajukan') {
             return ['label' => $status->name, 'color' => 'blue'];
+        }
+
+        if ($status->key == 'revisi') {
+            return ['label' => $status->name, 'color' => 'yellow'];
         }
 
         if ($status->key == 'final') {

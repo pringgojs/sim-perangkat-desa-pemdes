@@ -210,7 +210,9 @@ class VillageStaffForm extends Form
     {
         $status = key_option($key);
         $this->village_staff->data_status_id = $status;
-        $this->village_staff->reason_note = $reason;
+        if ($reason) {
+            $this->village_staff->reason_note = $reason;
+        }
         $this->village_staff->save();
     }
 

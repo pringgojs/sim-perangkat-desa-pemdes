@@ -1,88 +1,71 @@
 <div>
-    {{-- To attain knowledge, add things every day; To attain wisdom, subtract things every day. --}}
-    {{-- <div class="p-6 max-w-lg mx-auto bg-white rounded-lg shadow-lg relative overflow-hidden">
-        <!-- Badge di Pojok Kanan Atas -->
-        <div
-            class="absolute top-0 right-0 bg-gray-300 text-gray-700 text-xs font-semibold px-4 py-2 rounded-bl-md rounded-tr-md">
-            Badge
-        </div>
-
-        <!-- Title dan Deskripsi -->
-        <div class="flex justify-between items-start">
-            <div>
-                <h2 class="text-xl font-semibold text-gray-800">Profile</h2>
-                <p class="mt-2 text-gray-600">Deskripsi profile singkat ditampilkan di sini.</p>
-            </div>
-        </div>
-
-        <!-- Content Page -->
-        <div class="mt-8">
-            <p class="text-gray-700">
-                Konten halaman Anda akan ditampilkan di sini. Anda dapat menambahkan teks, gambar, atau elemen lain yang
-                diperlukan.
-            </p>
-        </div>
-    </div> --}}
-
-
-
     <div class="max-w-4xl px-4 sm:px-6 lg:px-8 mx-auto"><!-- Card -->
         {{-- supaya bisa dirender oleh tailwind --}}
         <div class="bg-red-200 text-red-500"></div>
         <div class="bg-blue-200 text-blue-500"></div>
+        <div class="bg-yellow-200 text-yellow-500"></div>
         <div class="bg-green-200 text-green-500"></div>
-        @if ($form->village_staff->dataStatus->key == 'draft')
-            <x-modal id="modalConfirm" maxWidth="md" wire:model="modalConfirm">
-                {{-- <div
+        @if ($form->village_staff->dataStatus->key == 'draft' || $form->village_staff->dataStatus->key == 'revisi')
+            <div wire:key="{{ str()->random(50) }}">
+                <x-modal id="modalConfirm" maxWidth="md" wire:model="modalConfirm">
+                    {{-- <div
                     class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"> --}}
-                <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-start">
-                        <div
-                            class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                            <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-                            </svg>
-                        </div>
-                        <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                            <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Konfirmasi</h3>
-                            <div class="mt-2">
-                                <p class="text-sm text-gray-500">Anda yakin ingin data sudah benar ? Data akan terkunci
-                                    selama proses pengajuan.</p>
+
+                    <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                            <div
+                                class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                                <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                                </svg>
+                            </div>
+                            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                                <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Konfirmasi
+                                </h3>
+                                <div class="mt-2">
+                                    <p class="text-sm text-gray-500">Anda yakin ingin data sudah benar ? Data akan
+                                        terkunci selama proses pengajuan.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                    <button wire:click="processFinal" type="button" wire:loading.attr="disabled"
-                        wire:target='processFinal'
-                        class="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 sm:ml-3 sm:w-auto">Ya,
-                        Ajukan sekarang</button>
-                    <div class="justify-end flex-initial ml-5 -mt-5" wire:loading wire:target='processFinal'>
-                        @livewire('utils.loading')
+                    <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                        <button wire:click="processFinal" type="button"
+                            class="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 sm:ml-3 sm:w-auto">Ya,
+                            Ajukan sekarang</button>
+                        <div wire:key="{{ str()->random(50) }}" class="justify-end flex-initial ml-5 -mt-5" wire:loading
+                            wire:target='processFinal'>
+                            @livewire('utils.loading')
+                        </div>
                     </div>
-                </div>
-                {{-- </div> --}}
-            </x-modal>
-            <div
-                class="flex flex-col bg-white border shadow-sm rounded-xl mb-10 border-gradient animate-border-gradient dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
-                <div class="p-4 md:p-7">
-                    <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-                        Penting!
-                    </h3>
-                    <p class="mt-2 text-gray-500 dark:text-neutral-400">
-                        Status data Anda saat ini masih Draft, segera ajukan untuk difinalisasi oleh Pemdes.
-                    </p>
-                    <a class="mt-3 inline-flex cursor-pointer items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-600 dark:focus:text-blue-600"
-                        onclick="document.getElementById('modalConfirm')._x_dataStack[0].show = true">
-                        Ajukan Finalisasi
-                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m9 18 6-6-6-6"></path>
-                        </svg>
-                    </a>
+                    {{-- </div> --}}
+                </x-modal>
+                <div
+                    class="flex flex-col bg-white border shadow-sm rounded-xl mb-10 border-gradient animate-border-gradient dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+                    <div class="p-4 md:p-7">
+                        <h3 class="text-lg font-bold text-gray-800 dark:text-white">
+                            Penting!
+                        </h3>
+                        <p class="mt-2 text-gray-500 dark:text-neutral-400">
+                            Status data Anda saat ini masih <b>{{ $form->village_staff->dataStatus->name }}</b>, segera
+                            ajukan untuk difinalisasi oleh Pemdes.
+                        </p>
+                        @if ($form->village_staff->dataStatus->key == 'revisi')
+                            <p>Catatan revisi: <span class="text-red-600">{{ $form->village_staff->reason_note }}</span>
+                            </p>
+                        @endif
+                        <a class="mt-3 inline-flex cursor-pointer items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-600 dark:focus:text-blue-600"
+                            onclick="document.getElementById('modalConfirm')._x_dataStack[0].show = true">
+                            Ajukan Finalisasi
+                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m9 18 6-6-6-6"></path>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </div>
         @endif
@@ -342,20 +325,22 @@
                     @if (!in_array($position_type->id, $positions))
                         {{-- jika posisi sekretaris  --}}
                         <!-- End Col -->
-                        <div class="sm:col-span-3">
-                            <label for="af-account-bio"
-                                class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
-                                Position Name
-                            </label>
-                        </div>
+                        <div>
+                            <div class="sm:col-span-3">
+                                <label for="af-account-bio"
+                                    class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
+                                    Position Name
+                                </label>
+                            </div>
 
-                        <div class="sm:col-span-9">
-                            <input id="af-account-bio" wire:model="form.position_name"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
-                                placeholder="Ex. Kaur Pemerintahan"></input>
-                            @error('form.position_name')
-                                <span class="text-red-500">{{ $message }}</span>
-                            @enderror
+                            <div class="sm:col-span-9">
+                                <input id="af-account-bio" wire:model="form.position_name"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+                                    placeholder="Ex. Kaur Pemerintahan"></input>
+                                @error('form.position_name')
+                                    <span class="text-red-500">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
                     @endif
                     {{-- sk --}}
@@ -410,7 +395,8 @@
 
                 <template x-if="!isReadonly">
                     <div class="mt-5 flex justify-end gap-x-2">
-                        <div class="justify-end flex-initial ml-5 -mt-5" wire:loading wire:target='store'>
+                        <div wire:key="{{ str()->random(50) }}" class="justify-end flex-initial ml-5 -mt-5"
+                            wire:loading wire:target='store'>
                             @livewire('utils.loading')
                         </div>
                         <button type="button"
@@ -426,8 +412,5 @@
                 </template>
             </form>
         </div>
-        <!-- End Card -->
     </div>
-    <!-- End Card Section -->
-
 </div>

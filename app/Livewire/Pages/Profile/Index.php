@@ -29,9 +29,13 @@ class Index extends Component
         $this->position_type = Option::find($staff->position_type_id);
         
         $this->form->setModel($staff);
-        /* mode readonly diaktifkna ketika status != draft */
-        if (option_is_match('draft', $staff->data_status_id) === false) {
-            $this->isReadonly = true;
+        /* mode readonly diaktifkna ketika status bukan draft dan revisi */
+        $filter = [
+            key_option('draft'),
+            key_option('revisi'),
+        ];
+        if (in_array($staff->data_status_id, $filter)) {
+            $this->isReadonly = false;
         }
     }
 
@@ -65,8 +69,7 @@ class Index extends Component
         $this->isReadonly = true;
 
         $this->alert('success', 'Success!');
-        // $this->dispatch('$refresh'); // semua yg punya refresh component akan ke trigger
-        // $this->dispatch('re-init-alpine'); // re init alpine supaya menjadi readonly
+        $this->dispatch('$refresh');
 
     }
 }
