@@ -184,7 +184,37 @@
     <x-modal id="modalConfirmRevisi" maxWidth="md" wire:model="modalConfirmRevisi">
         {{-- <div
             class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"> --}}
-        <div x-data="reasonHandler()">
+        <div x-data="{
+            reason: '',
+            error: '',
+            validateReason() {
+                this.error = '';
+        
+                if (!this.reason) {
+                    this.error = 'Kolom alasan wajib diisi';
+                    return false;
+                }
+        
+                if (this.reason.length < 5) {
+                    this.error = 'Alasan setidaknya harus terdiri dari 5 karakter';
+                    return false;
+                }
+        
+                return true;
+            },
+        
+            submitReason() {
+                if (this.validateReason()) {
+                    console.log('ini diproses reason ya');
+                    console.log(this.reason);
+                    // Dispatch the Livewire event to send the reason
+                    Livewire.dispatch('processToUpdateStatus', {
+                        key: 'revisi',
+                        reason: this.reason
+                    });
+                }
+            }
+        }">
 
             <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                 <div class="sm:flex sm:items-start">
@@ -199,7 +229,6 @@
                     <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                         <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Tuliskan alasan
                             revisi pada kolom dibawah ini</h3>
-                        <span x-text="reason"></span>
                         <div class="mt-2">
                             <textarea x-model="reason" type="text"
                                 class="py-2 px-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
@@ -219,44 +248,4 @@
             </div>
         </div>
     </x-modal>
-    <div x-data="reasonHandler()"></div>
-
-    <script>
-        document.addEventListener('alpine:init', () => {
-            console.log('alpine init');
-            Alpine.data('reasonHandler', () => ({
-                reason: '',
-                error: '',
-
-                validateReason() {
-                    this.error = '';
-
-                    if (!this.reason) {
-                        this.error = 'Reason cannot be empty';
-                        return false;
-                    }
-
-                    if (this.reason.length < 5) {
-                        this.error = 'Reason must be at least 5 characters long';
-                        return false;
-                    }
-
-                    return true;
-                },
-
-                submitReason() {
-                    if (this.validateReason()) {
-                        console.log('ini diproses reason ya');
-                        console.log(this.reason);
-                        // Dispatch the Livewire event to send the reason
-                        Livewire.dispatch('processToUpdateStatus', {
-                            key: 'revisi',
-                            reason: this.reason
-                        });
-                    }
-                }
-            }));
-        });
-    </script>
-
 </div>

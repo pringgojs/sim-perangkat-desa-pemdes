@@ -94,11 +94,10 @@
             <form wire:submit="store" x-data="{
                 isReadonly: @entangle('isReadonly'),
                 setReadonly() {
-                    console.log('ini kepanggil gak ya');
                     $el.querySelectorAll('input, select, textarea').forEach(element => {
                         console.log('jumlah element:' + element);
                         element.setAttribute('readonly', true);
-                        if (element.tagName === 'SELECT' || element.type === 'checkbox') {
+                        if (element.tagName === 'SELECT' || element.type === 'checkbox' || element.type === 'radio') {
                             element.setAttribute('disabled', true);
                         }
                     });

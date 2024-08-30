@@ -34,8 +34,8 @@ class Index extends Component
             key_option('draft'),
             key_option('revisi'),
         ];
-        if (in_array($staff->data_status_id, $filter)) {
-            $this->isReadonly = false;
+        if (!in_array($staff->data_status_id, $filter)) {
+            $this->isReadonly = true;
         }
     }
 
