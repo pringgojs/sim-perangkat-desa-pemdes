@@ -40,32 +40,32 @@ class Index extends Component
         ]);
     }
 
-    public function delete($id)
-    {
-        $model = VillageStaff::findOrFail($id);
-        $userId = $model->user_id;
-        $model->delete();
-        $user = User::findOrFail($userId);
-        $user->delete();
+    // public function delete($id)
+    // {
+    //     $model = VillageStaff::findOrFail($id);
+    //     $userId = $model->user_id;
+    //     $model->delete();
+    //     $user = User::findOrFail($userId);
+    //     $user->delete();
         
-        $this->alert('success', 'Success!');
-        $this->dispatch('refreshComponent')->self();
-    }
+    //     $this->alert('success', 'Success!');
+    //     $this->dispatch('refreshComponent')->self();
+    // }
 
-    public function detail($id)
-    {
-        $this->staff = VillageStaff::find($id);
-        $this->form->setModel($this->staff);
-    }
+    // public function detail($id)
+    // {
+    //     $this->staff = VillageStaff::find($id);
+    //     $this->form->setModel($this->staff);
+    // }
 
-    /* proses tombol finalisasi data */
-    public function processToUpdateStatus($key, $reason = null)
-    {
-        info($reason);
-        $this->form->processToApprve($key, $reason);
-        $this->modalConfirm = false;
-        $this->modalConfirmRevisi = false;
-        $this->alert('success', 'Success!');
-        $this->dispatch('refreshComponent'); // semua yg punya refresh component akan ke trigger
-    }
+    // /* proses tombol finalisasi data */
+    // public function processToUpdateStatus($key, $reason = null)
+    // {
+    //     info($reason);
+    //     $this->form->processToApprve($key, $reason);
+    //     $this->modalConfirm = false;
+    //     $this->modalConfirmRevisi = false;
+    //     $this->alert('success', 'Success!');
+    //     $this->dispatch('refreshComponent'); // semua yg punya refresh component akan ke trigger
+    // }
 }

@@ -68,6 +68,21 @@ class VillageStaff extends Model
         $q->where('position_type_id', $type);
     }
 
+    public function scopeVillage($q, $village = null)
+    {
+        if ($village) {
+            $q->where('village_id', $village);
+        }
+    }
+
+    public function scopeDistrict($q, $district = null)
+    {
+        if ($district) {
+            $villages = Village::where('district_id', $district)->pluck('id')->toArray();
+            $q->whereIn('village_id', $villages);
+        }
+    }
+
     public function scopePending($q)
     {
         $q->where('data_status_id', key_option('diajukan') );

@@ -15,5 +15,6 @@
     <div class="bg-green-200 text-green-500"></div>
 
     {{-- panggil component table.staff --}}
-    <x-staff.table :$staffs :$staff />
+    {{-- <x-staff.table :$staffs :$staff /> --}}
+    @livewire('pages.village-staff.section.table', ['type' => $type])
 </div>
