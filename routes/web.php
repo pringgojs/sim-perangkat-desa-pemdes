@@ -5,6 +5,7 @@ use App\Livewire\Pages\User\Index;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SSOTokenController;
 use App\Livewire\Pages\Database\UserAccount;
+use App\Http\Controllers\CheckRoleController;
 use App\Livewire\Pages\Profile\Index as ProfileIndex;
 use App\Livewire\Pages\Village\Index as VillageIndex;
 use App\Livewire\Pages\Database\Index as DatabaseIndex;
@@ -28,6 +29,7 @@ Route::middleware([
     // Route::middleware([
     //     'role:administrator'
     // ])->group(function () {
+        Route::get('check-role', [CheckRoleController::class, 'index'])->name('check-role');
         Route::get('notification', NotificationIndex::class)->name('notification.index');
         Route::get('profile', ProfileIndex::class)->name('profile.index')->middleware('role:operator');
         Route::get('village-staff', VillageStaffIndex::class)->name('village-staff.index');

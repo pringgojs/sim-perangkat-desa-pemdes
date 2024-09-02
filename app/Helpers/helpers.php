@@ -28,3 +28,14 @@ function is_administrator() {
     $user = auth()->user();
     return $user->hasRole('adminsitrator');
 }
+
+function is_sekdes() {
+    $user = auth()->user();
+    if ($user->hasRole('operator')) {
+        if ($user->staff()->position_type_id == key_option('sekretaris_desa')) {
+            return true;
+        }
+
+    }
+    return false;
+}
