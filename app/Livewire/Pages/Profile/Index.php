@@ -20,7 +20,7 @@ class Index extends Component
     public $modalPreview = false;
     public $modalConfirm = false;
     public $position_type;
-    public $isReadonly;
+    public $isReadonly = false;
 
     public function mount()
     {

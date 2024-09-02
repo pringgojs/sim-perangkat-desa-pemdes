@@ -37,7 +37,7 @@
                             Ajukan sekarang</button>
                         <div wire:key="{{ str()->random(50) }}" class="justify-end flex-initial ml-5 -mt-5" wire:loading
                             wire:target='processFinal'>
-                            @livewire('utils.loading')
+                            <x-loading />
                         </div>
                     </div>
                     {{-- </div> --}}
@@ -396,7 +396,7 @@
                     <div class="mt-5 flex justify-end gap-x-2">
                         <div wire:key="{{ str()->random(50) }}" class="justify-end flex-initial ml-5 -mt-5"
                             wire:loading wire:target='store'>
-                            @livewire('utils.loading')
+                            <x-loading />
                         </div>
                         <button type="button"
                             class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
