@@ -19,46 +19,10 @@ use Illuminate\Support\Facades\Request as FacadeRequest;
 
 class Index extends Component
 {
-    use LivewireAlert;
-
-    public VillageStaffForm $form; 
-
-    public $staff;
-    // use WithPagination;
-    public $search;
-    public $modalPreview = false;
-    public $modalConfirm = false;
-    public $modalConfirmRevisi = false;
+    protected $listeners = ['refreshComponent' => '$refresh'];
     
-    protected $listeners = ['refreshComponent' => '$refresh', 'detail', 'processToUpdateStatus'];
-    
-    public function mount()
-    {
-        
-    }
-
     public function render()
     {
-        return view('livewire.pages.dashboard.index',
-        [
-            'staffs' => VillageStaff::active()->pending()->search($this->search)->with(['village', 'positionType'])->paginate()
-        ]);
-    }
-
-    public function detail($id)
-    {
-        $this->staff = VillageStaff::find($id);
-        $this->form->setModel($this->staff);
-    }
-
-    /* proses tombol finalisasi data */
-    public function processToUpdateStatus($key, $reason = null)
-    {
-        info($reason);
-        $this->form->processToApprve($key, $reason);
-        $this->modalConfirm = false;
-        $this->modalConfirmRevisi = false;
-        $this->alert('success', 'Success!');
-        $this->dispatch('refreshComponent'); // semua yg punya refresh component akan ke trigger
+        return view('livewire.pages.dashboard.index');
     }
 }

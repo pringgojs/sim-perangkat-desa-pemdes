@@ -37,7 +37,6 @@
         </div>
     </div>
 
-    {{-- @livewire('pages.dashboard.section.filter') --}}
-    <x-staff.table :$staffs :$staff />
-    {{-- <livewire:pages.village-staff.section.table :staffs="$staffs" /> --}}
+    @livewire('pages.village-staff.section.table', ['status' => key_option('diajukan')])
+
 </div>

@@ -65,6 +65,8 @@ class VillageStaff extends Model
 
     public function scopeType($q, $type)
     {
+        if (!$type) return;
+        
         $q->where('position_type_id', $type);
     }
 
@@ -96,6 +98,17 @@ class VillageStaff extends Model
     public function scopeInActive($q)
     {
         $q->where('is_active', false);
+    }
+
+    public function scopeActiveStatus($q, $active = '', $status = null)
+    {
+        if ($status) {
+            $q->where('data_status_id', $status);
+        }
+
+        if ($active != '' || $active != null) {
+            $q->where('is_active', $active);
+        }
     }
     
     public function scopeSearch($q, $search = null)

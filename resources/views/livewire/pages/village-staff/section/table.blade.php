@@ -44,7 +44,10 @@
                             class="inline-flex rounded-lg p-2 bg-green-50 text-green-700 ring-4 ring-white">
                             <x-heroicon-o-document-text class="h-5 w-5" />
                         </a>
-                        @if ($item->dataStatus->key != 'final')
+                        @php
+                            $arr = ['diajukan', 'final'];
+                        @endphp
+                        @if (!in_array($item->dataStatus->key, $arr))
                             <a onclick="Livewire.dispatch('openModal', { component: 'modals.form-village-staff', arguments: {id: '{{ $item->id }}'} })"
                                 class="inline-flex rounded-lg p-2 bg-purple-50 text-purple-700 ring-4 ring-white">
                                 <x-heroicon-o-pencil class="h-5 w-5" />
