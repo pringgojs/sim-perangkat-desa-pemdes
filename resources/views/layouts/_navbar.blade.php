@@ -4,7 +4,7 @@
             <img src="{{ asset('images/logo.png') }}" class="h-10 mr-3" alt="Flowbite Logo" />
             {{-- <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Simonev</span> --}}
         </a>
-        <div x-data="dropdown()" class="flex items-center md:order-2">
+        <div x-data="dropdown()" @click.outside="close()" class="flex items-center md:order-2">
             {{-- notification --}}
             <button type="button"
                 class="relative rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
@@ -30,7 +30,7 @@
             </button>
             <!-- Dropdown -->
             <div x-show="open" @click.outside="close()"
-                class="z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700"
+                class="z-50 my-4 absolute text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700"
                 :style="open ? styleOpen : ''" id="language-dropdown-menu">
                 <ul class="py-2 font-medium" role="none">
                     <li>
