@@ -10,6 +10,7 @@ use App\Livewire\Pages\Village\Index as VillageIndex;
 use App\Livewire\Pages\Database\Index as DatabaseIndex;
 use App\Livewire\Pages\Dashboard\Index as DashboardIndex;
 use App\Livewire\Pages\VillageType\Index as VillageTypeIndex;
+use App\Livewire\Pages\Notification\Index as NotificationIndex;
 use App\Livewire\Pages\VillageStaff\Index as VillageStaffIndex;
 use App\Livewire\Pages\Tools\RemoveBacklinks\Index as RemoveBacklinksIndex;
 
@@ -27,6 +28,7 @@ Route::middleware([
     // Route::middleware([
     //     'role:administrator'
     // ])->group(function () {
+        Route::get('notification', NotificationIndex::class)->name('notification.index');
         Route::get('profile', ProfileIndex::class)->name('profile.index')->middleware('role:operator');
         Route::get('village-staff', VillageStaffIndex::class)->name('village-staff.index');
         Route::get('village-type', VillageTypeIndex::class)->name('village-type.index');

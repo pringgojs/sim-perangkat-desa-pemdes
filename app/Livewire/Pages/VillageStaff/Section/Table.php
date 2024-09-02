@@ -23,6 +23,7 @@ class Table extends Component
     public $district;
     public $modalConfirm = false;
     public $modalConfirmRevisi = false;
+    public $modalPreview = false;
     protected $listeners = ['refreshComponent' => '$refresh', 'detail', 'processToUpdateStatus'];
     
     public function mount($type = null, $village = null, $district = null, $isActive = true, $status = null)

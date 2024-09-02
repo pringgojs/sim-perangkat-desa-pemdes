@@ -138,6 +138,7 @@
                                         src="{{ $sourceImg }}" alt="Avatar">
                                 </div>
                             </x-modal>
+
                             <img id="preview"
                                 onclick="document.getElementById('exampleModal')._x_dataStack[0].show = true"
                                 class="inline-block size-16 rounded ring-2 ring-white cursor-pointer dark:ring-neutral-900"
@@ -157,7 +158,12 @@
                                                 <polyline points="17 8 12 3 7 8" />
                                                 <line x1="12" x2="12" y1="3" y2="15" />
                                             </svg>
-                                            Upload scan KTP
+                                            {{-- <span wire:loading wire:target="form.ktp">
+                                                Loading...
+                                            </span> --}}
+                                            <span>
+                                                Upload scan KTP
+                                            </span>
                                         </div>
                                     </div>
                                 </template>
