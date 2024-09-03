@@ -20,7 +20,6 @@ class Index extends Component
     public VillageStaffForm $form; 
     public $staff;
     public $modalPreview = false;
-    public $modalConfirm = false;
     public $position_type;
     public $isReadonly = false;
 
@@ -65,14 +64,4 @@ class Index extends Component
         $this->form->validateFilePhoto(); // Memvalidasi hanya field file_photo
     }
 
-    /* proses tombol ajuan data */
-    public function processFinal()
-    {
-        $this->form->sendToVerification();
-        $this->isReadonly = true;
-
-        $this->alert('success', 'Success!');
-        $this->dispatch('$refresh');
-
-    }
 }
