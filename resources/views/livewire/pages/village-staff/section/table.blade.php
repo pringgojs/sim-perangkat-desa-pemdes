@@ -32,8 +32,9 @@
                                     {!! $item->labelDataStatus() !!}
                                 </p>
                                 <p class="flex text-xs leading-5 text-gray-500">
-                                    <a class="truncate">{{ $item->village->name ?? '' }} -
-                                        {{ $item->village->district->name ?? '' }} - {{ $item->address }}</a>
+                                    <a class="truncate">{{ $item->position_name }} -
+                                        {{ $item->village->name ?? '' }}-
+                                        {{ $item->village->district->name ?? '' }}</a>
                                 </p>
                             </div>
                         </div>

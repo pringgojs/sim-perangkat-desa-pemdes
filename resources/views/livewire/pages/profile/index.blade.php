@@ -42,8 +42,15 @@
                         if (element.tagName === 'SELECT' || element.type === 'checkbox' || element.type === 'radio') {
                             element.setAttribute('disabled', true);
                         }
-                    });
             
+                        if (element.classList.contains('bg-gray-50')) {
+                            {{-- element.classList.remove('bg-gray-50');
+                            element.classList.add('bg-white');
+                            element.classList.add('font-bold');
+                            element.classList.add('text-md');
+                            element.classList.add('border-none'); --}}
+                        }
+                    });
                 }
             }" x-init="if (isReadonly) {
                 setReadonly()

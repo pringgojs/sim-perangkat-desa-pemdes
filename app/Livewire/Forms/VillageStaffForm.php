@@ -100,7 +100,9 @@ class VillageStaffForm extends Form
 
     public function store() 
     {
+        // dd($this);
         $this->validate();
+
         
         $user = self::createUser();
 
@@ -206,12 +208,13 @@ class VillageStaffForm extends Form
     {
         if (is_string($this->ktp)) return false; // user tidak upload KTP (isi ktp string path)
 
-        return true;
+        return $this->isMyAccount() ? true : false;
     }
 
     /* validasi untuk beberapa field yang required adalah jika dia mengedit data dia sendiri */
     public function isMyAccount()
     {
+        if (!$this->user) return false;
         return $this->user->id == auth()->user()->id;
     }
 

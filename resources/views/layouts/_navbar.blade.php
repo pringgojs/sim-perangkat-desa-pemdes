@@ -6,7 +6,7 @@
         </a>
         <div x-data="dropdown()" @click.outside="close()" class="flex items-center md:order-2">
             {{-- notification --}}
-            {{-- <button type="button"
+            <button type="button"
                 class="relative rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
                 <span class="absolute -inset-1.5"></span>
                 <span class="sr-only">View notifications</span>
@@ -18,7 +18,7 @@
                 <div
                     class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">
                     20</div>
-            </button> --}}
+            </button>
             {{-- <template> --}}
             {{-- profile --}}
             <button @click="toggle()" type="button" data-dropdown-toggle="language-dropdown-menu"

@@ -40,7 +40,10 @@
                                     <a href="#" class="">{{ ucwords(strtolower($item->name)) }}</a>
                                 </p>
                                 <p class="flex text-xs leading-5 text-gray-500">
-                                    <a class="truncate">{{ $item->district->name ?? '' }} {{ $item->address }}</a>
+                                    <a class="truncate">{{ $item->address }}</a>
+                                </p>
+                                <p class="flex text-xs leading-5 text-gray-500">
+                                    <a class="truncate">{{ $item->district->name ?? '' }}</a>
                                 </p>
                             </div>
                         </div>
