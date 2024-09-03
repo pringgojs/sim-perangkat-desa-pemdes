@@ -38,6 +38,7 @@ class VillageStaffForm extends Form
     public $position_type;
     public $data_status;
     public $user;
+    public $ktp_old;
 
     public function rules()
     {
@@ -49,7 +50,7 @@ class VillageStaffForm extends Form
             'phone' => $this->isMyAccount() ? 'required|max:20' : 'nullable',
             'place_of_birth' => $this->isMyAccount() ? 'required|max:250' : 'nullable',
             'date_of_birth' => $this->isMyAccount() ? 'required' : 'nullable',
-            'ktp' => (!is_string($this->ktp) && $this->ktp) ? 'required|image|mimes:jpeg,png|max:100' : 'nullable', // 100 KB
+            'ktp' => $this->isKtp() ? 'required|image|mimes:jpeg,png|max:100' : 'nullable', // 100 KB
             'position_type' => [
                 'required',
                 'exists:options,id',
@@ -100,22 +101,8 @@ class VillageStaffForm extends Form
     public function store() 
     {
         $this->validate();
-        $payload = [
-            'name' => $this->name,
-            'username' => $this->username,
-            'email' => $this->email,
-        ];
-
-        /* jika password terisi, maka masukkan ke proses simpan */
-        if ($this->password) {
-            $payload['password'] = bcrypt($this->password);
-        }
-
-        $user = User::updateOrCreate([
-            'id' => $this->user->id ?? null
-        ], $payload);
-
-        $user->assignRole('operator');
+        
+        $user = self::createUser();
 
         $payload = [
             'user_id' => $user->id,
@@ -135,11 +122,14 @@ class VillageStaffForm extends Form
         ];
 
         if ($this->ktp) {
-            // TODO: remove file
-            // Storage::delete('path/to/file.jpg');
-
             /* jika ktp is string, maka data ktp di load dari DB, kalau bukan, berarti dari Object Livewire Upload */
             if (!is_string($this->ktp)) {
+                /* remove old file */
+                if ($this->ktp_old) {
+                    // ktp/QnvSbHox97cW0RChaEOI1pmRB6xJJLgAI6k1qAIr.png
+                    Storage::delete('public/'.$this->ktp_old);
+                }
+
                 $path = $this->ktp->store('ktp', 'public');
                 $payload['ktp_scan'] = $path;
             }
@@ -153,6 +143,29 @@ class VillageStaffForm extends Form
         return $model;
     }
 
+    public function createUser()
+    {
+        
+        $payload = [
+            'name' => $this->name,
+            'username' => $this->username,
+            'email' => $this->email,
+        ];
+
+        /* jika password terisi, maka masukkan ke proses simpan */
+        if ($this->password) {
+            $payload['password'] = bcrypt($this->password);
+        }
+
+        $user = User::updateOrCreate([
+            'id' => $this->user->id ?? null
+        ], $payload);
+
+        $user->assignRole('operator');
+        
+        return $user;
+    }
+
     public function setModel(VillageStaff $village_staff)
     {
         $this->village_staff = $village_staff;
@@ -161,6 +174,7 @@ class VillageStaffForm extends Form
         $this->village = $village_staff->village->id;
         $this->position_type = $village_staff->position_type_id;
         $this->district = $village_staff->village->district_id;
+        $this->ktp_old = $village_staff->ktp_scan;
 
         $this->id = $village_staff->id;
         $this->name = $village_staff->user->name;
@@ -185,6 +199,14 @@ class VillageStaffForm extends Form
         $this->tmpUrl = '';
         $this->validateOnly('ktp');
         $this->tmpUrl = $this->ktp->temporaryUrl();
+    }
+
+    /* validasi inputan file */
+    public function isKtp()
+    {
+        if (is_string($this->ktp)) return false; // user tidak upload KTP (isi ktp string path)
+
+        return true;
     }
 
     /* validasi untuk beberapa field yang required adalah jika dia mengedit data dia sendiri */
