@@ -16,7 +16,9 @@ class Index extends Component
     use WithFileUploads;
     protected $listeners = ['refreshComponent' => '$refresh'];
     
+    
     public VillageStaffForm $form; 
+    public $staff;
     public $modalPreview = false;
     public $modalConfirm = false;
     public $position_type;
@@ -26,6 +28,7 @@ class Index extends Component
     {
         /* isi variable user */
         $staff = auth()->user()->staff();
+        $this->staff = $staff;
         $this->position_type = Option::find($staff->position_type_id);
         
         $this->form->setModel($staff);

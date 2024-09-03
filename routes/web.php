@@ -16,7 +16,7 @@ use App\Livewire\Pages\VillageStaff\Index as VillageStaffIndex;
 use App\Livewire\Pages\Tools\RemoveBacklinks\Index as RemoveBacklinksIndex;
 
 Route::get('/', function () {
-    return redirect('dashboard');
+    return redirect('check-role');
     // return view('welcome');
 });
 

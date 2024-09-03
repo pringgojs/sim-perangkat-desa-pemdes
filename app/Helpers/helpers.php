@@ -26,7 +26,7 @@ function option_is_match($key, $id) {
 /* user */
 function is_administrator() {
     $user = auth()->user();
-    return $user->hasRole('adminsitrator');
+    return $user->hasRole('administrator');
 }
 
 function is_sekdes() {

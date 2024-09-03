@@ -43,7 +43,7 @@
                     {{-- </div> --}}
                 </x-modal>
                 <div
-                    class="flex flex-col bg-white border shadow-sm rounded-xl mb-10 border-gradient animate-border-gradient dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+                    class="flex flex-col bg-gray-200 border shadow-sm rounded-xl mb-10 border-gradient animate-border-gradient dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
                     <div class="p-4 md:p-7">
                         <h3 class="text-lg font-bold text-gray-800 dark:text-white">
                             Penting!
@@ -69,7 +69,10 @@
                 </div>
             </div>
         @endif
-        <div class="bg-white rounded-sm shadow p-4 sm:p-7 relative overflow-hidden dark:bg-neutral-800">
+
+        @livewire('pages.profile.header', ['staff' => $staff])
+
+        <div class="bg-white rounded-sm shadow p-4 mt-5 sm:p-7 relative overflow-hidden dark:bg-neutral-800">
             @php
                 $color = $form->village_staff->colorDataStatus();
             @endphp
@@ -227,8 +230,6 @@
                                 {{-- (Optional) --}}
                             </span>
                         </div>
-
-
                     </div>
                     <!-- End Col -->
 
@@ -329,23 +330,20 @@
 
                     @if (!in_array($position_type->id, $positions))
                         {{-- jika posisi sekretaris  --}}
-                        <!-- End Col -->
-                        <div>
-                            <div class="sm:col-span-3">
-                                <label for="af-account-bio"
-                                    class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
-                                    Position Name
-                                </label>
-                            </div>
+                        <div class="sm:col-span-3">
+                            <label for="af-account-bio"
+                                class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
+                                Position Name
+                            </label>
+                        </div>
 
-                            <div class="sm:col-span-9">
-                                <input id="af-account-bio" wire:model="form.position_name"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
-                                    placeholder="Ex. Kaur Pemerintahan"></input>
-                                @error('form.position_name')
-                                    <span class="text-red-500">{{ $message }}</span>
-                                @enderror
-                            </div>
+                        <div class="sm:col-span-9">
+                            <input id="af-account-bio" wire:model="form.position_name"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+                                placeholder="Ex. Kaur Pemerintahan"></input>
+                            @error('form.position_name')
+                                <span class="text-red-500">{{ $message }}</span>
+                            @enderror
                         </div>
                     @endif
                     {{-- sk --}}

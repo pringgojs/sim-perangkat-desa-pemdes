@@ -27,6 +27,7 @@ class VillageStaff extends Model
         'village_id',
         'place_of_birth',
         'date_of_birth',
+        'name',
         'address',
         'ktp_scan',
         'phone_number',

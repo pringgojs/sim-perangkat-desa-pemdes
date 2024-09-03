@@ -11,12 +11,12 @@ class CheckRoleController extends Controller
         $user = auth()->user();
 
         if ($user->hasRole('operator')) {
-            if ($user->staff()->position_type_id == key_option('sekretaris_desa')) {
-                return $this->redirect('/profile', navigate: true);
+            if ($user->staff()->position_type_id != key_option('sekretaris_desa')) {
+                return redirect('/profile');
 
             }
         }
 
-        return $this->redirect('/dashboard', navigate: true);
+        return redirect('/dashboard');
     }
 }
