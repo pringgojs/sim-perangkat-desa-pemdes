@@ -84,7 +84,15 @@
 
     {{-- dialog konfirmasi --}}
     {{-- @livewire('pages.user.section.sub-akun') --}}
-
-    <script></script>
-
 </div>
+
+@script
+    <script>
+        Livewire.hook('morph.updated', ({
+            el,
+            component
+        }) => {
+            initFlowbite()
+        })
+    </script>
+@endscript

@@ -87,3 +87,15 @@
     {{-- @livewire('pages.village-staff.section.detail') --}}
     <x-staff.detail :staff="$staff" />
 </div>
+
+
+@script
+    <script>
+        Livewire.hook('morph.updated', ({
+            el,
+            component
+        }) => {
+            initFlowbite()
+        })
+    </script>
+@endscript
