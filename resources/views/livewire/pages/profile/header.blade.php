@@ -11,7 +11,7 @@
                 </div>
 
                 <div class="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
-                    <p class="text-sm font-medium text-gray-600">Profile,</p>
+                    <p class="text-sm font-medium text-gray-600">Identitas,</p>
                     <p class="text-xl font-bold text-gray-900 sm:text-2xl">{{ $staff->name ?? '**' }}</p>
                     <p class="text-sm font-medium text-gray-600">{{ $staff->position_name ?? '' }} -
                         {{ $staff->village->name ?? '' }} - {{ $staff->village->district->name ?? '' }}</p>
@@ -19,8 +19,8 @@
             </div>
             <div class="mt-5 flex justify-center sm:mt-0">
                 <a href="#"
-                    class="flex items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Download
-                    profile</a>
+                    class="flex items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Unduh
+                    data diri</a>
             </div>
         </div>
     </div>

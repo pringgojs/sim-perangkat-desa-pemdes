@@ -1,5 +1,5 @@
 <div>
-    <h3 class="text-base font-semibold leading-6 text-gray-900">Total Village Staff</h3>
+    <h3 class="text-base font-semibold leading-6 text-gray-900">Total Perangkat Desa</h3>
     <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
         @foreach ($options as $item)
             <a href="{{ route('village-staff.index', ['type' => $item->id]) }}" wire:navigate

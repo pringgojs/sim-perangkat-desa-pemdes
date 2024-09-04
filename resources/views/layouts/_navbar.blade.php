@@ -39,7 +39,7 @@
                             role="menuitem">
                             <div class="inline-flex items-center">
                                 <x-heroicon-o-user class="h-3.5 w-3.5 rounded-full mr-2" />
-                                Account
+                                Akun
                             </div>
                         </a>
                     </li>
@@ -53,7 +53,7 @@
                                 role="menuitem">
                                 <div class="inline-flex items-center">
                                     <x-heroicon-o-arrow-right class="h-3.5 w-3.5 rounded-full mr-2" />
-                                    Logout
+                                    Keluar
                                 </div>
                             </a>
                         </form>
@@ -80,7 +80,7 @@
                     <li>
                         <a href="{{ url('/dashboard') }}" wire:navigate
                             class="block py-2 pl-3 pr-4 @if (request()->segment(1) == 'dashboard') text-blue-700 @else text-gray-900 @endif rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                            aria-current="page">Dashboard</a>
+                            aria-current="page">Beranda</a>
                     </li>
                 @endif
                 @if (auth()->user()->hasRole('administrator'))
@@ -100,12 +100,12 @@
                                 aria-labelledby="dropdownLargeButton">
                                 <li>
                                     <a href="{{ route('village.index') }}" wire:navigate
-                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Village</a>
+                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Desa</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('village-type.index') }}" wire:navigate
-                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Village
-                                        Type</a>
+                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Jenis
+                                        Desa</a>
                                 </li>
                             </ul>
                         </div>
@@ -115,8 +115,8 @@
                 @if (is_administrator() || is_sekdes())
                     <li x-data="dropdown()">
                         <button @click="toggle()"
-                            class="flex items-center justify-between w-full py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">Village
-                            Staff
+                            class="flex items-center justify-between w-full py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">Perangkat
+                            Desa
                             <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                 fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -150,7 +150,7 @@
                     <li>
                         <a href="{{ route('profile.index') }}" wire:navigate
                             class="block py-2 pl-3 pr-4 @if (request()->segment(1) == 'profile') text-blue-700 @else text-gray-900 @endif rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                            Profile</a>
+                            Profil</a>
                     </li>
                 @endif
 

@@ -22,10 +22,10 @@
             <div class="flex">
                 <div class="mb-8 flex-auto">
                     <h2 class="text-xl font-bold text-gray-800 dark:text-neutral-200">
-                        Form Profile
+                        Form Identitas Pribadi
                     </h2>
                     <p class="text-sm text-gray-600 dark:text-neutral-400">
-                        Manage your name, password and account settings.
+                        Lengkapi semua kolom dibawah ini dengan data yang sesungguhnya.
                     </p>
                 </div>
                 <div>
@@ -62,7 +62,7 @@
                     <div class="sm:col-span-3">
                         <label x-ref="labelKtp" @click="setReadonly()"
                             class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
-                            Scan KTP <strong x-text="isReadonly"></strong>
+                            Scan KTP
                         </label>
                     </div>
                     <!-- End Col -->
@@ -111,7 +111,7 @@
                                                 Loading...
                                             </span> --}}
                                             <span>
-                                                Upload scan KTP
+                                                Unggah scan KTP
                                             </span>
                                         </div>
                                     </div>
@@ -127,7 +127,7 @@
                     <div class="sm:col-span-3">
                         <label for="af-account-full-name"
                             class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
-                            Full name
+                            Nama lengkap
                         </label>
                     </div>
                     <!-- End Col -->
@@ -144,7 +144,7 @@
                     <div class="sm:col-span-3">
                         <label for="af-account-full-name"
                             class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
-                            Place, date of birth
+                            Tempat, tanggal lahir
                         </label>
                     </div>
                     <div class="sm:col-span-9">
@@ -170,7 +170,7 @@
                         <div class="inline-block">
                             <label for="af-account-phone"
                                 class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
-                                Phone
+                                No. Handphone
                             </label>
                             <span class="text-sm text-gray-400 dark:text-neutral-600">
                                 {{-- (Optional) --}}
@@ -199,7 +199,7 @@
                     <div class="sm:col-span-3">
                         <label for="af-account-gender-checkbox"
                             class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
-                            Gender
+                            Jenis Kelamin
                         </label>
                     </div>
                     <!-- End Col -->
@@ -212,7 +212,7 @@
                                     name="af-account-gender-checkbox"
                                     class="shrink-0 mt-0.5 border-gray-300 rounded-full text-green-600 focus:ring-green-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-500 dark:checked:bg-green-500 dark:checked:border-green-500 dark:focus:ring-offset-gray-800"
                                     id="af-account-gender-checkbox" checked>
-                                <span class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Male</span>
+                                <span class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Laki-laki</span>
                             </label>
 
                             <label for="af-account-gender-checkbox-female"
@@ -221,7 +221,7 @@
                                     name="af-account-gender-checkbox"
                                     class="shrink-0 mt-0.5 border-gray-300 rounded-full text-green-600 focus:ring-green-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-500 dark:checked:bg-green-500 dark:checked:border-green-500 dark:focus:ring-offset-gray-800"
                                     id="af-account-gender-checkbox-female">
-                                <span class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Female</span>
+                                <span class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Perempuan</span>
                             </label>
                         </div>
                         @error('form.gender')
@@ -233,7 +233,7 @@
                     <div class="sm:col-span-3">
                         <label for="af-account-bio"
                             class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
-                            Address
+                            Alamat lengkap
                         </label>
                     </div>
                     <!-- End Col -->
@@ -251,7 +251,7 @@
                     <div class="sm:col-span-3">
                         <label for="af-account-bio"
                             class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
-                            Position Type
+                            Jenis jabatan
                         </label>
                     </div>
 
@@ -279,7 +279,7 @@
                         <div class="sm:col-span-3">
                             <label for="af-account-bio"
                                 class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
-                                Position Name
+                                Nama jabatan lengkap
                             </label>
                         </div>
 
@@ -296,7 +296,7 @@
                     <div class="sm:col-span-3">
                         <label for="af-account-bio"
                             class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
-                            SK Number
+                            Nomor SK
                         </label>
                     </div>
 
@@ -311,7 +311,7 @@
                     <div class="sm:col-span-3">
                         <label for="af-account-bio"
                             class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
-                            SK TMT
+                            TMT SK
                         </label>
                     </div>
 
@@ -326,7 +326,7 @@
                     <div class="sm:col-span-3">
                         <label for="af-account-bio"
                             class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
-                            SK Date
+                            Tanggal SK
                         </label>
                     </div>
 
@@ -350,11 +350,11 @@
                         </div>
                         <button type="button"
                             class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
-                            Cancel
+                            Batal
                         </button>
                         <button type="submit" wire:loading.attr="disabled" wire:target='store'
                             class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-green-600 text-white hover:bg-green-700 focus:outline-none focus:bg-green-700 disabled:opacity-50 disabled:pointer-events-none">
-                            Save changes
+                            Simpan perubahan
                         </button>
 
                     </div>

@@ -4,7 +4,7 @@
         <!-- Modal header -->
         <div class="flex items-center justify-between p-4 rounded-t md:p-5 dark:border-gray-600">
             <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                {{ $id ? 'Update Village Type' : 'Add New Village Type' }}
+                {{ $id ? 'Perbaruhi  Village Type' : 'TambahNew Village Type' }}
             </h3>
             <button type="button" wire:click="$dispatch('closeModal')"
                 class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto dark:hover:bg-gray-600 dark:hover:text-white"
@@ -22,7 +22,7 @@
             <form wire:submit="store" class="space-y-4 md:space-y-6" autocomplete="off">
                 <div>
                     <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                        Name</label>
+                        Nama</label>
                     <input type="text" wire:model="form.name"
                         class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
                         placeholder="Janti">

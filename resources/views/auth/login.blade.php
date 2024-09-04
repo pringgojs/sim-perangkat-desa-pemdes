@@ -11,7 +11,7 @@
                 {{ $value }}
             </div>
         @endsession
-        <h3 class="text-green-500 font-semibold">Sign in</h3>
+        <h3 class="text-green-500 font-semibold">Form login</h3>
         <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
             {{ env('APP_NAME') }}
         </h1>
@@ -33,7 +33,7 @@
             <div class="block mt-4">
                 <label for="remember_me" class="flex items-center">
                     <x-checkbox id="remember_me" name="remember" />
-                    <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+                    <span class="ms-2 text-sm text-gray-600">{{ __('Ingat saya') }}</span>
                 </label>
             </div>
 
@@ -46,7 +46,7 @@
                 @endif
 
                 <x-button class=" bg-green-600 w-full text-center items-center justify-center normal-case	">
-                    {{ __('Sign In') }}
+                    {{ __('Masuk') }}
                 </x-button>
             </div>
         </form>

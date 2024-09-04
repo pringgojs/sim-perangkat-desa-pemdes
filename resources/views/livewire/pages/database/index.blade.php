@@ -6,8 +6,8 @@
         </div>
         <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
             <a type="button"
-                class="block rounded bg-green-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm cursor-pointer hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Create
-                New</a>
+                class="block rounded bg-green-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm cursor-pointer hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Buat
+                Baru</a>
         </div>
     </div>
     <div class="bg-white shadow px-5 py-5">
@@ -22,7 +22,7 @@
                         </div>
                         <input type="text" wire:model.live="search" id="simple-search"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Search by name ... " required>
+                            placeholder="Cari berdasarkan nama ... " required>
                     </div>
                 </div>
             </div>
@@ -64,12 +64,12 @@
                             <div
                                 class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
 
-                                <p class="mb-3 font-normal text-sm text-gray-500 dark:text-gray-400">Are you sure you
-                                    want to delete <b>{{ ucwords(strtolower($item->database_name)) }}</b>?</p>
+                                <p class="mb-3 font-normal text-sm text-gray-500 dark:text-gray-400">Anda yakin ingin
+                                    menghapus <b>{{ ucwords(strtolower($item->database_name)) }}</b>?</p>
                                 <a wire:key="item-{{ $item->database_name }}"
                                     wire:click="delete('{{ $item->database_name }}')"
                                     class="cursor-pointer item-right rounded-md bg-red-50 px-2.5 py-1.5 text-sm font-semibold text-red-900 shadow-sm ring-1 ring-inset ring-red-300 hover:bg-red-50">
-                                    Yes, delete!
+                                    Ya, hapus!
                                 </a>
                             </div>
                         </div>
