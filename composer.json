@@ -23,6 +23,7 @@
         "mallardduck/blade-lucide-icons": "^1.23",
         "owenvoke/blade-fontawesome": "^2.6",
         "spatie/laravel-permission": "^6.7",
+        "spatie/livewire-filepond": "^1.1",
         "wire-elements/modal": "2.0.10"
     },
     "require-dev": {

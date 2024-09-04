@@ -14,7 +14,7 @@ class Index extends Component
 {
     use LivewireAlert;
     use WithFileUploads;
-    protected $listeners = ['refreshComponent' => '$refresh'];
+    protected $listeners = ['refreshComponent'];
     
     
     public VillageStaffForm $form; 
@@ -32,11 +32,8 @@ class Index extends Component
         
         $this->form->setModel($staff);
         /* mode readonly diaktifkna ketika status bukan draft dan revisi */
-        $filter = [
-            key_option('draft'),
-            key_option('revisi'),
-        ];
-        if (!in_array($staff->data_status_id, $filter)) {
+
+        if ($staff->isReadonly()) {
             $this->isReadonly = true;
         }
     }
@@ -62,6 +59,12 @@ class Index extends Component
     public function updatedFormKtp()
     {
         $this->form->validateFilePhoto(); // Memvalidasi hanya field file_photo
+    }
+
+    public function refreshComponent()
+    {
+        $this->dispatch('$refresh'); 
+        $this->isReadonly = $this->form->village_staff->isReadonly();
     }
 
 }

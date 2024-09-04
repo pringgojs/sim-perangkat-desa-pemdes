@@ -177,4 +177,9 @@ class VillageStaff extends Model
     {
         return $this->data_status_id == key_option('diajukan');
     }
+
+    public function isReadonly()
+    {
+        return $this->data_status_id == key_option('diajukan') || $this->data_status_id == key_option('final');
+    }
 }

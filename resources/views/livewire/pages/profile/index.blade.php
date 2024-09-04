@@ -9,6 +9,17 @@
             @livewire('pages.profile.alert-confirmation', ['staff' => $staff])
         @endif
 
+        @php
+            // $sourceImg = asset('images/ktp.png');
+            $sourceImg = null;
+            if ($form->tmpUrl) {
+                $sourceImg = $form->tmpUrl;
+            } else {
+                if (is_string($form->ktp)) {
+                    $sourceImg = asset('storage/' . $form->ktp);
+                }
+            }
+        @endphp
         @livewire('pages.profile.header', ['staff' => $staff])
 
         <div class="bg-white rounded-sm shadow p-4 mt-5 sm:p-7 relative overflow-hidden dark:bg-neutral-800">
@@ -22,7 +33,7 @@
             <div class="flex">
                 <div class="mb-8 flex-auto">
                     <h2 class="text-xl font-bold text-gray-800 dark:text-neutral-200">
-                        Form Identitas Pribadi
+                        Form Identitas Pribadi {{ $form->village_staff->isReadonly() }}
                     </h2>
                     <p class="text-sm text-gray-600 dark:text-neutral-400">
                         Lengkapi semua kolom dibawah ini dengan data yang sesungguhnya.
@@ -57,26 +68,26 @@
             };
             $watch('isReadonly', value => $refs.labelKtp.click())"
                 x-on:re-init-alpine.window="setReadonly()">
+                @if ($sourceImg)
+                    <div class="overflow-hidden border shadow-sm mb-5 sm:rounded-lg">
+                        <img onclick="document.getElementById('exampleModal')._x_dataStack[0].show = true"
+                            id="preview"
+                            class="inline-block w-full h-auto rounded ring-2 ring-white dark:ring-neutral-900"
+                            src="{{ $sourceImg }}" alt="Avatar">
+                    </div>
+                @endif
+
                 <!-- Grid -->
                 <div class="grid sm:grid-cols-12 gap-2 sm:gap-6">
                     <div class="sm:col-span-3">
-                        <label x-ref="labelKtp" @click="setReadonly()"
-                            class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
-                            Scan KTP
-                        </label>
+                        @if (!$form->village_staff->isReadonly())
+                            <label x-ref="labelKtp" @click="setReadonly()"
+                                class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
+                                Scan KTP
+                            </label>
+                        @endif
                     </div>
                     <!-- End Col -->
-
-                    @php
-                        $sourceImg = asset('images/ktp.png');
-                        if ($form->tmpUrl) {
-                            $sourceImg = $form->tmpUrl;
-                        } else {
-                            if (is_string($form->ktp)) {
-                                $sourceImg = asset('storage/' . $form->ktp);
-                            }
-                        }
-                    @endphp
 
                     <div class="sm:col-span-9">
                         <div class="flex items-center gap-5">
@@ -88,12 +99,12 @@
                                 </div>
                             </x-modal>
 
-                            <img id="preview"
+                            {{-- <img id="preview"
                                 onclick="document.getElementById('exampleModal')._x_dataStack[0].show = true"
                                 class="inline-block size-16 rounded ring-2 ring-white cursor-pointer dark:ring-neutral-900"
-                                src="{{ $sourceImg }}" alt="Avatar">
+                                src="{{ $sourceImg }}" alt="Avatar"> --}}
                             <div class="flex gap-x-2">
-                                <template x-if="!isReadonly">
+                                @if (!$form->village_staff->isReadonly())
                                     <div>
                                         <input x-ref="fileInput" type="file" wire:model="form.ktp" id="imageInput"
                                             style="display: none" accept="image/*">
@@ -115,7 +126,7 @@
                                             </span>
                                         </div>
                                     </div>
-                                </template>
+                                @endif
                             </div>
                         </div>
                         @error('form.ktp')
@@ -127,7 +138,7 @@
                     <div class="sm:col-span-3">
                         <label for="af-account-full-name"
                             class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
-                            Nama lengkap
+                            Nama lengkap <span x-text="isReadonly"></span>
                         </label>
                     </div>
                     <!-- End Col -->
@@ -341,8 +352,7 @@
                 </div>
                 <!-- End Grid -->
 
-
-                <template x-if="!isReadonly">
+                @if (!$form->village_staff->isReadonly())
                     <div class="mt-5 flex justify-end gap-x-2">
                         <div wire:key="{{ str()->random(50) }}" class="justify-end flex-initial ml-5 -mt-5"
                             wire:loading wire:target='store'>
@@ -358,8 +368,9 @@
                         </button>
 
                     </div>
-                </template>
+                @endif
             </form>
         </div>
     </div>
+    @filepondScripts
 </div>

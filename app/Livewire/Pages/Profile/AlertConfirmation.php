@@ -3,6 +3,7 @@
 namespace App\Livewire\Pages\Profile;
 
 use Livewire\Component;
+use App\Livewire\Pages\Profile\Index;
 use App\Livewire\Forms\VillageStaffForm;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
@@ -11,8 +12,8 @@ class AlertConfirmation extends Component
     use LivewireAlert;
     
     protected $listeners = ['refreshComponent' => '$refresh'];
-    public VillageStaffForm $form; 
     
+    public VillageStaffForm $form; 
     public $modalConfirm = false;
     public $staff;
     public function mount($staff)
@@ -34,6 +35,5 @@ class AlertConfirmation extends Component
 
         $this->alert('success', 'Success!');
         $this->dispatch('refreshComponent');
-
     }
 }

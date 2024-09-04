@@ -10,10 +10,13 @@ use Illuminate\Validation\Rule;
 use Livewire\Attributes\Validate;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Storage;
+use Spatie\LivewireFilepond\WithFilePond;
 use App\Rules\UniqueStaffPositionInVillage;
 
 class VillageStaffForm extends Form
 {
+    use WithFilePond;
+
     public $id; // digunakan untuk edit
 
     public $name;
@@ -50,7 +53,7 @@ class VillageStaffForm extends Form
             'phone' => $this->isMyAccount() ? 'required|max:20' : 'nullable',
             'place_of_birth' => $this->isMyAccount() ? 'required|max:250' : 'nullable',
             'date_of_birth' => $this->isMyAccount() ? 'required' : 'nullable',
-            'ktp' => $this->isKtp() ? 'required|image|mimes:jpeg,png|max:100' : 'nullable', // 100 KB
+            'ktp' => $this->isKtp() ? 'required|image|mimes:jpeg,png|max:300' : 'nullable', // 300 KB
             'position_type' => [
                 'required',
                 'exists:options,id',
@@ -94,7 +97,7 @@ class VillageStaffForm extends Form
             'ktp.required' => 'Gambar harus diunggah.',
             'ktp.image' => 'File yang diunggah harus berupa gambar.',
             'ktp.mimes' => 'Gambar harus berformat JPEG atau PNG.',
-            'ktp.max' => 'Ukuran gambar tidak boleh lebih dari 100KB.',
+            'ktp.max' => 'Ukuran gambar tidak boleh lebih dari 300KB.',
         ];
     }
 
