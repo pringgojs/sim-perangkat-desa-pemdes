@@ -16,7 +16,7 @@
             <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
                 <div class="px-4 py-6 sm:px-6">
                     <div class="flex items-start justify-between">
-                        <h2 id="slide-over-heading" class="text-base font-semibold leading-6 text-gray-900">Profile</h2>
+                        <h2 id="slide-over-heading" class="text-base font-semibold leading-6 text-gray-900">Detail </h2>
                         <div class="ml-3 flex h-7 items-center">
                             <button type="button" @click="open = false"
                                 class="relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-indigo-500">
@@ -93,25 +93,25 @@
                     <div class="px-4 pb-5 pt-5 sm:px-0 sm:pt-0">
                         <dl class="space-y-8 px-4 sm:space-y-6 sm:px-6">
                             <div>
-                                <dt class="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Address</dt>
+                                <dt class="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Alamat</dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
                                     <p>{{ $staff->address ?? '-' }}</p>
                                 </dd>
                             </div>
                             <div>
-                                <dt class="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Place, Date of
-                                    birth</dt>
+                                <dt class="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Tempat, tanggal
+                                    lahir</dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">{{ $staff->place_of_birth ?? '' }},
                                     {{ $staff->date_of_birth ?? '-' }}</dd>
                             </div>
                             <div>
-                                <dt class="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Position Type
+                                <dt class="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Jenis jabatan
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
                                     {{ $staff->positionType->name ?? '-' }}</dd>
                             </div>
                             <div>
-                                <dt class="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Phone Number
+                                <dt class="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">No. HP
                                 </dt>
                                 <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
                                     {{ $staff->phone_number ?? '-' }}</dd>
@@ -120,19 +120,19 @@
                     </div>
 
                     <div class="p-6">
-                        <h3 class="font-medium text-gray-900">SK Information</h3>
+                        <h3 class="font-medium text-gray-900">Informasi SK</h3>
                         <dl class="mt-2 divide-y divide-gray-200 border-b border-t border-gray-200">
 
                             <div class="flex justify-between py-3 text-sm font-medium">
-                                <dt class="text-gray-500">SK number</dt>
+                                <dt class="text-gray-500">No. SK</dt>
                                 <dd class="text-gray-900">{{ $staff->sk_number ?? '-' }}</dd>
                             </div>
                             <div class="flex justify-between py-3 text-sm font-medium">
-                                <dt class="text-gray-500">SK TMT</dt>
+                                <dt class="text-gray-500">TMT SK</dt>
                                 <dd class="text-gray-900">{{ $staff->sk_tmt ?? '-' }}</dd>
                             </div>
                             <div class="flex justify-between py-3 text-sm font-medium">
-                                <dt class="text-gray-500">SK Date</dt>
+                                <dt class="text-gray-500">Tanggal SK</dt>
                                 <dd class="text-gray-900">{{ $staff->sk_date ?? '-' }}</dd>
                             </div>
 
