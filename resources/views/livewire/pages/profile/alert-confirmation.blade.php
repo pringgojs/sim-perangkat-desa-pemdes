@@ -25,8 +25,8 @@
             </div>
         </div>
         <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-            <button wire:click="processFinal" type="button"
-                class="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 sm:ml-3 sm:w-auto">Ya,
+            <button type="button" <button wire:click="processFinal" type="button"
+                class="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-800 sm:ml-3 sm:w-auto">Ya,
                 Ajukan sekarang</button>
             <div wire:key="{{ str()->random(50) }}" class="justify-end flex-initial ml-5 -mt-5" wire:loading
                 wire:target='processFinal'>
@@ -49,15 +49,9 @@
                 <p>Catatan revisi: <span class="text-red-600">{{ $staff->reason_note }}</span>
                 </p>
             @endif
-            <a class="mt-3 inline-flex cursor-pointer items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-600 dark:focus:text-blue-600"
-                onclick="document.getElementById('modalConfirm')._x_dataStack[0].show = true">
-                Ajukan Finalisasi
-                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path d="m9 18 6-6-6-6"></path>
-                </svg>
-            </a>
+            <button onclick="document.getElementById('modalConfirm')._x_dataStack[0].show = true" type="button"
+                class="inline-flex mt-2 w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-800 sm:w-auto">Ajukan
+                Finalisasi</button>
         </div>
     </div>
 </div>
