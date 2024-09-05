@@ -80,7 +80,33 @@
                                                     Perbaikan</button>
                                                 <div class="ml-3 inline-flex sm:ml-0">
                                                     <div class="relative inline-block text-left">
+                                                        <div class="relative inline-block text-left">
+                                                            <button type="button"
+                                                                class="relative inline-flex items-center rounded-md bg-white p-2 text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                                id="dropdownDefaultButton"
+                                                                data-dropdown-toggle="dropdown">
+                                                                <span class="absolute -inset-1"></span>
+                                                                <span class="sr-only">Open options menu</span>
+                                                                <svg class="h-5 w-5" viewBox="0 0 20 20"
+                                                                    fill="currentColor" aria-hidden="true">
+                                                                    <path
+                                                                        d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 8.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM11.5 15.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z" />
+                                                                </svg>
+                                                            </button>
 
+                                                            <!-- Dropdown menu -->
+                                                            <div id="dropdown"
+                                                                class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                                                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                                                                    aria-labelledby="dropdownDefaultButton">
+                                                                    <li>
+                                                                        <a href="#"
+                                                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit
+                                                                            dan Setujui</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -101,7 +127,8 @@
                             <div>
                                 <dt class="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Tempat, tanggal
                                     lahir</dt>
-                                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">{{ $staff->place_of_birth ?? '' }},
+                                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
+                                    {{ $staff->place_of_birth ?? '' }},
                                     {{ $staff->date_of_birth ?? '-' }}</dd>
                             </div>
                             <div>

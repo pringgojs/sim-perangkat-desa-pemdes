@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Livewire\Pages\Profile;
+namespace App\Livewire\Pages\Profile\Section;
 
 use Livewire\Component;
-use App\Livewire\Pages\Profile\Index;
 use App\Livewire\Forms\VillageStaffForm;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
@@ -22,11 +21,6 @@ class AlertConfirmation extends Component
         $this->form->setModel($staff);
     }
 
-    public function render()
-    {
-        return view('livewire.pages.profile.alert-confirmation');
-    }
-
     /* proses tombol ajuan data */
     public function processFinal()
     {
@@ -35,5 +29,10 @@ class AlertConfirmation extends Component
 
         $this->alert('success', 'Success!');
         $this->dispatch('refreshComponent');
+    }
+    
+    public function render()
+    {
+        return view('livewire.pages.profile.section.alert-confirmation');
     }
 }
