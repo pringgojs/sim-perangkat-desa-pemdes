@@ -21,15 +21,20 @@ class Form extends Component
     public $modalPreview = false;
     public $position_type;
     public $isReadonly = false;
+    public $from;
 
-    public function mount($form, $staff)
+    public function mount($form, $staff, $isReadonly = false, $from = null)
     {
         $this->staff = $staff;
         $this->form = $form;
         $this->position_type = Option::find($staff->position_type_id);
-        
-        if ($staff->isReadonly()) {
-            $this->isReadonly = true;
+        $this->from = $from; // isinya 'admin
+
+        /* jika mode edit dari admin pemdes, maka readonly dibuat false */
+        if ($from != 'admin') {
+            if ($staff->isReadonly()) {
+                $this->isReadonly = true;
+            }
         }
     }
 
@@ -37,7 +42,7 @@ class Form extends Component
     {
         DB::beginTransaction();
 
-        $model = $this->form->store();
+        $model = $this->form->store($this->from);
         
         DB::commit();
         

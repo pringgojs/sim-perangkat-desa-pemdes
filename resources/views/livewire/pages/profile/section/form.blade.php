@@ -68,7 +68,7 @@
             <!-- Grid -->
             <div class="grid sm:grid-cols-12 gap-2 sm:gap-6">
                 <div class="sm:col-span-3">
-                    @if (!$form->village_staff->isReadonly())
+                    @if (!$isReadonly)
                         <label x-ref="labelKtp" @click="setReadonly()"
                             class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
                             Scan KTP
@@ -92,7 +92,7 @@
                             class="inline-block size-16 rounded ring-2 ring-white cursor-pointer dark:ring-neutral-900"
                             src="{{ $sourceImg }}" alt="Avatar"> --}}
                         <div class="flex gap-x-2">
-                            @if (!$form->village_staff->isReadonly())
+                            @if (!$isReadonly)
                                 <div>
                                     <input x-ref="fileInput" type="file" wire:model="form.ktp" id="imageInput"
                                         style="display: none" accept="image/*">
@@ -339,7 +339,7 @@
             </div>
             <!-- End Grid -->
 
-            @if (!$form->village_staff->isReadonly())
+            @if (!$isReadonly)
                 <div class="mt-5 flex justify-end gap-x-2">
                     <div wire:key="{{ str()->random(50) }}" class="justify-end flex-initial ml-5 -mt-5" wire:loading
                         wire:target='store'>
@@ -353,7 +353,6 @@
                         class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-green-600 text-white hover:bg-green-700 focus:outline-none focus:bg-green-700 disabled:opacity-50 disabled:pointer-events-none">
                         Simpan perubahan
                     </button>
-
                 </div>
             @endif
         </form>

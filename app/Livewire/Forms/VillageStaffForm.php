@@ -101,9 +101,9 @@ class VillageStaffForm extends Form
         ];
     }
 
-    public function store() 
+    /* $from = admin, maka jangan rubah statusnya */
+    public function store($from = null) 
     {
-        // dd($this);
         $this->validate();
 
         
@@ -123,8 +123,12 @@ class VillageStaffForm extends Form
             'sk_number' => $this->sk_number ?? null,
             'sk_tmt' => $this->sk_tmt ?? null,
             'sk_date' => $this->sk_date ?? null,
-            'data_status_id' => key_option('draft')
         ];
+
+        /* jika dari mode tinjau admin, status tidak perlu di rubah ke draft */
+        if ($from != 'admin') {
+            $payload['data_status_id'] = key_option('draft');
+        }
 
         if ($this->ktp) {
             /* jika ktp is string, maka data ktp di load dari DB, kalau bukan, berarti dari Object Livewire Upload */
