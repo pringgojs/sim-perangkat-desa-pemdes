@@ -3,6 +3,7 @@
 use App\Livewire\Pages\User\Form;
 use App\Livewire\Pages\User\Index;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Pages\VillageStaff\Edit as VillageStaffEdit;
 use App\Http\Controllers\SSOTokenController;
 use App\Livewire\Pages\Database\UserAccount;
 use App\Http\Controllers\CheckRoleController;
@@ -32,6 +33,7 @@ Route::middleware([
         Route::get('check-role', [CheckRoleController::class, 'index'])->name('check-role');
         Route::get('notification', NotificationIndex::class)->name('notification.index');
         Route::get('profile', ProfileIndex::class)->name('profile.index')->middleware('role:operator');
+        Route::get('village-staff/{id}/edit', VillageStaffEdit::class)->name('village-staff.edit');
         Route::get('village-staff', VillageStaffIndex::class)->name('village-staff.index');
         Route::get('village-type', VillageTypeIndex::class)->name('village-type.index');
         Route::get('village', VillageIndex::class)->name('village.index');

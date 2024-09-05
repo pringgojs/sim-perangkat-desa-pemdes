@@ -20,7 +20,8 @@
             <div class="mt-5 flex justify-center sm:mt-0">
                 <a href="#"
                     class="flex items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Unduh
-                    data diri</a>
+                    Data
+                </a>
             </div>
         </div>
     </div>

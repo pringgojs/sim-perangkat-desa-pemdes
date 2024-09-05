@@ -22,7 +22,7 @@
         <div class="flex">
             <div class="mb-8 flex-auto">
                 <h2 class="text-xl font-bold text-gray-800 dark:text-neutral-200">
-                    Form Identitas Pribadi {{ $form->village_staff->isReadonly() }}
+                    Form Identitas Pribadi
                 </h2>
                 <p class="text-sm text-gray-600 dark:text-neutral-400">
                     Lengkapi semua kolom dibawah ini dengan data yang sesungguhnya.
