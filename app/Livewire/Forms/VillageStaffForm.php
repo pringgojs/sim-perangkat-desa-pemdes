@@ -6,6 +6,7 @@ use Livewire\Form;
 use App\Models\User;
 use App\Models\Village;
 use App\Models\VillageStaff;
+use App\Rules\UniqueUsername;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Validate;
 use Spatie\Permission\Models\Role;
@@ -46,7 +47,11 @@ class VillageStaffForm extends Form
     public function rules()
     {
         return [
-            'username' => 'required|max:250',
+            'username' => [
+                'required',
+                'max:10',
+                new UniqueUsername($this->username, $this->user)
+            ],
             'name' => 'required|max:250',
             'gender' => $this->isMyAccount() ? 'required' : 'nullable',
             'address' => $this->isMyAccount() ? 'required|max:250' : 'nullable',
@@ -66,12 +71,12 @@ class VillageStaffForm extends Form
             'sk_tmt' => $this->isMyAccount() && $this->isBPD() ? 'required|max:250' : 'nullable',
             'sk_date' => $this->isMyAccount() && $this->isBPD() ? 'required|max:250' : 'nullable',
             'password' => $this->user ? 'nullable' : 'required|string|regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/',
-            'email' => [
-                'required',
-                'string',
-                'email',
-                Rule::unique('users')->ignore($this->user), 
-            ],
+            // 'email' => [
+            //     'required',
+            //     'string',
+            //     'email',
+            //     Rule::unique('users')->ignore($this->user), 
+            // ],
         ];
 
     }
@@ -79,7 +84,7 @@ class VillageStaffForm extends Form
     public function messages() 
     {
         return [
-            'position_type.required' => 'Username wajib diisi.',
+            'position_type.required' => 'Jenis jabatan wajib diisi.',
             'district.required' => 'Kecamatan wajib diisi.',
             'village.required' => 'Desa wajib diisi.',
             'username.required' => 'Username wajib diisi.',
@@ -105,7 +110,6 @@ class VillageStaffForm extends Form
     public function store($from = null) 
     {
         $this->validate();
-
         
         $user = self::createUser();
 

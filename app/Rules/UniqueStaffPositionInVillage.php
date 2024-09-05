@@ -26,7 +26,6 @@ class UniqueStaffPositionInVillage implements ValidationRule
     {
         $is_kasi = option_is_match('kasi', $this->staff_position_id);
         $is_kaur = option_is_match('kaur', $this->staff_position_id);
-        info('mulai');
         /* cek jumlah kasi dan kaur didesa tersebut. */
         $positions = [
             key_option('kasi'),
@@ -34,8 +33,6 @@ class UniqueStaffPositionInVillage implements ValidationRule
         ];
 
         if (in_array($this->staff_position_id, $positions)) {
-            info('iya kasi');
-
             $village = Village::find($this->village_id);
             $village_type_detail = $village->type->villageTypeDetail;
 
@@ -43,16 +40,11 @@ class UniqueStaffPositionInVillage implements ValidationRule
             $total_kasi = self::countVillageStaff('kasi');
             $total_kaur = self::countVillageStaff('kaur');
 
-            info('total kasi' . $total_kasi);
             /* cek apakah desa swakarya, jika iya kasi/kaur bisa 2/3. Tetapi tidak boleh keduanya sama-sama 3 atau sama-sama 2*/
             /* berarti cek jumlah maksimal kasi dan kaur adalah 5. */
             if ($village_type_detail->is_swakarya) {
-                info('desa swakarya');
-
                 /* validasi maksimal jumlah kasi/kaur adalah 3 */
                 if ($is_kasi) {
-                    info('is kasi');
-
                     if ($total_kasi == 3) {
                         info("1");
                         $fail('Untuk jabatan ini di desa ini sudah melebihi maksimal.');
@@ -62,11 +54,7 @@ class UniqueStaffPositionInVillage implements ValidationRule
                 }
 
                 if ($is_kaur) {
-                    info('is kaur');
-
                     if ($total_kaur == 3) {
-                        info("2");
-
                         $fail('Untuk jabatan ini di desa ini sudah melebihi maksimal.');
                         return;
                     }
@@ -74,8 +62,6 @@ class UniqueStaffPositionInVillage implements ValidationRule
 
                 /* maksimal jumlah kasi dan kaur adalah 5 */
                 if (($total_kasi + $total_kaur) >= 5 ) {
-                    info("3");
-
                     $fail('Untuk jabatan ini di desa ini sudah melebihi maksimal.');
                     return;
                 }
@@ -83,18 +69,14 @@ class UniqueStaffPositionInVillage implements ValidationRule
             } else {
                 /* desa biasa sesuai jumlah maksimal */
                 if ($is_kasi && $total_kasi == $village_type_detail->max_kasi) {
-                    info('4');
                     $fail('Untuk jabatan ini di desa ini sudah melebihi maksimal.');
                     return;
                 }
 
                 if ($is_kaur && $total_kaur == $village_type_detail->max_kaur) {
-                    info(5);
                     $fail('Untuk jabatan ini di desa ini sudah melebihi maksimal.');
                     return;
                 }
-
-                info('done bukan swakarya');
 
                 return;
             }
@@ -102,7 +84,6 @@ class UniqueStaffPositionInVillage implements ValidationRule
             return;
         }
 
-        info('jabatan sekdes');
         /* jika jabatan selain sekretaris dan kepala, maka bebaskan */
         $positions = [
             key_option('sekretaris_desa'),
@@ -110,7 +91,6 @@ class UniqueStaffPositionInVillage implements ValidationRule
         ];
 
         if (!in_array($this->staff_position_id, $positions)) {
-            info('bukan jabatan sekdes');
             return;
         }
     
@@ -126,9 +106,6 @@ class UniqueStaffPositionInVillage implements ValidationRule
         if ($query->exists()) {
             $fail('Untuk jabatan ini di desa ini sudah terisi.');
         }
-
-        info('done');
-
     }
 
     public function countVillageStaff($key = null)
