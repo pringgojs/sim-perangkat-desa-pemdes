@@ -1,6 +1,6 @@
 <div>
-    <div x-data="{ open: false }" @set-open-detail.window="open = $event.detail" x-show="open" @click.away="open = false"
-        class="fixed inset-0 flex z-50 justify-end">
+    <div x-cloak x-data="{ open: false }" @set-open-detail.window="open = $event.detail" x-show="open"
+        @click.away="open = false" class="fixed inset-0 flex z-50 justify-end">
         <!-- Background overlay -->
         <div x-show="open" @click="open = false" x-transition:enter="transition ease-out duration-300"
             x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
