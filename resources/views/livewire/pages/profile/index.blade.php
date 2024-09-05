@@ -9,7 +9,7 @@
             @livewire('pages.profile.section.alert-confirmation', ['staff' => $staff])
         @endif
 
-        @livewire('pages.profile.section.header', ['staff' => $staff])
+        @livewire('pages.profile.section.header', ['staff' => $staff, 'form' => $form])
         @livewire('pages.profile.section.form', ['form' => $form, 'staff' => $staff])
     </div>
     {{-- @filepondScripts --}}
