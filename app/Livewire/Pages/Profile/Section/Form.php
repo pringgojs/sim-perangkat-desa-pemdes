@@ -36,6 +36,11 @@ class Form extends Component
                 $this->isReadonly = true;
             }
         }
+
+        if ($from == 'admin' && $staff->dataStatus->key == 'final') {
+            $this->isReadonly = true;
+        }
+
     }
 
     public function store()

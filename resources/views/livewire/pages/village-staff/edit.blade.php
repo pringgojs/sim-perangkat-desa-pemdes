@@ -7,7 +7,7 @@
             @livewire('pages.profile.section.alert-confirmation', ['staff' => $staff])
         @endif --}}
 
-        @livewire('pages.profile.section.header', ['staff' => $staff])
+        @livewire('pages.profile.section.header', ['form' => $form, 'staff' => $staff, 'from' => 'admin'])
         @livewire('pages.profile.section.form', ['form' => $form, 'staff' => $staff, 'isReadonly' => false, 'from' => 'admin'])
     </div>
 </div>

@@ -154,7 +154,6 @@ class VillageStaffForm extends Form
 
     public function createUser()
     {
-        
         $payload = [
             'name' => $this->name,
             'username' => $this->username,
