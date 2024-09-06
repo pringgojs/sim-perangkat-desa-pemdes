@@ -5,6 +5,7 @@ namespace App\Livewire\Pages\VillageStaff\Section;
 use App\Models\Option;
 use App\Models\Village;
 use Livewire\Component;
+use App\Livewire\Pages\VillageStaff\Section\Table;
 
 class Filter extends Component
 {
@@ -36,21 +37,41 @@ class Filter extends Component
     {
         $this->villages = Village::where('district_id', $id)->get();
         $this->district_id = $id;
+
+        self::filter();
     }
 
     public function setVillageId($id)
     {
         $this->village_id = $id;
+        self::filter();
+
     }
 
     public function setStatusDataId($id)
     {
         $this->status_data_id = $id;
+        self::filter();
+
     }
 
     public function setPositionTypeId($id)
     {
         $this->position_type_id = $id;
+        self::filter();
+
+    }
+
+    public function filter()
+    {
+        $params = [
+            'district' => $this->district_id,
+            'type' => $this->position_type_id,
+            'status' => $this->status_data_id,
+            'village' => $this->village_id,
+        ];
+
+        $this->dispatch('filter', $params )->to(Table::class);
     }
 
     public function ifOperator()

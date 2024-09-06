@@ -24,7 +24,7 @@ class Table extends Component
     public $modalConfirm = false;
     public $modalConfirmRevisi = false;
     public $modalPreview = false;
-    protected $listeners = ['refreshComponent' => '$refresh', 'detail', 'processToUpdateStatus'];
+    protected $listeners = ['refreshComponent' => '$refresh', 'detail', 'processToUpdateStatus', 'filter'];
     
     public function mount($type = null, $village = null, $district = null, $isActive = true, $status = null)
     {
@@ -69,6 +69,25 @@ class Table extends Component
         $this->form->setModel($this->staff);
     }
 
+    public function filter($params = [])
+    {
+        if(isset($params['district'])) {
+            $this->district = $params['district'];
+        }
+
+        if(isset($params['type'])) {
+            $this->type = $params['type'];
+        }
+
+        if(isset($params['village'])) {
+            $this->village = $params['village'];
+        }
+
+        if(isset($params['status'])) {
+            $this->status = $params['status'];
+        }
+    }
+    
     /* proses tombol finalisasi data */
     public function processToUpdateStatus($key, $reason = null)
     {

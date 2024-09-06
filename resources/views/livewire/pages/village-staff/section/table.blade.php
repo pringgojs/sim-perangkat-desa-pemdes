@@ -1,8 +1,7 @@
 <div>
 
-    <!-- Act only according to that maxim whereby you can, at the same time, will that it should become a universal law. - Immanuel Kant -->
     <div x-data="{ openDetail: false }" class="bg-white shadow px-5 py-5">
-        {{-- Care about people's approval and you will be their prisoner. --}}
+        {{-- filter --}}
         @livewire('pages.village-staff.section.filter')
 
         <div class="grid xl:grid-span-2 lg:grid-span-2 md:grid-span-5 sm:grid-span-6 gap-4">
