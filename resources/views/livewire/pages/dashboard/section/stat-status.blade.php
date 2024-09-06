@@ -12,7 +12,7 @@
         @endforeach
     </dl>
 
-    <h3 class="text-base mt-5 font-semibold leading-6 text-gray-900">Total Perangkat 6 Bulan Menjelang Pensiun</h3>
+    <h3 class="text-base mt-5 font-semibold leading-6 text-gray-900">Total Perangkat Berdasarkan Status Data</h3>
     <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4">
         @foreach ($status_data as $i => $item)
             <a wire:key="status-data-{{ $i }}"
