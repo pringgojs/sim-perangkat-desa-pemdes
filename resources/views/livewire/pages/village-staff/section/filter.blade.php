@@ -1,9 +1,10 @@
 <div>
-    <div x-data="{ kecamatan: '', desa: '', jenisPerangkat: '', statusData: '', search: '', isDropdownOpen: '' }" class="flex flex-wrap items-center space-x-2 mb-5">
+    <div x-data="{ kecamatan: '', desa: '', jenisPerangkat: '', statusData: '', search: '', isDropdownOpen: '' }" class="flex flex-wrap items-center space-x-1 mb-5">
         <!-- Filter Kecamatan -->
         <div class="relative flex items-center space-x-1">
             <button @click="isDropdownOpen = isDropdownOpen === 'kecamatan' ? '' : 'kecamatan'"
-                class="flex items-center bg-white text-gray-700 text-sm px-2 py-1 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200">
+                class="flex items-center  text-gray-700 text-sm px-2 py-1 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200"
+                :class="kecamatan ? 'bg-gray-200 text-sm font-semibold leading-6 text-gray-900' : 'bg-white'">
 
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
@@ -36,7 +37,8 @@
         <!-- Filter Desa -->
         <div class="relative flex items-center space-x-1">
             <button @click="isDropdownOpen = isDropdownOpen === 'desa' ? '' : 'desa'"
-                class="flex items-center bg-white text-gray-700 text-sm px-2 py-1 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200">
+                class="flex items-center text-gray-700 text-sm px-2 py-1 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200"
+                :class="desa ? 'bg-gray-200 text-sm font-semibold leading-6 text-gray-900' : 'bg-white'">
                 {{-- <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
                         d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -68,7 +70,8 @@
         <!-- Filter Jenis Perangkat -->
         <div class="relative flex items-center space-x-1">
             <button @click="isDropdownOpen = isDropdownOpen === 'jenisPerangkat' ? '' : 'jenisPerangkat'"
-                class="flex items-center bg-white text-gray-700 text-sm px-2 py-1 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200">
+                class="flex items-center text-gray-700 text-sm px-2 py-1 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200"
+                :class="jenisPerangkat ? 'bg-gray-200 text-sm font-semibold leading-6 text-gray-900' : 'bg-white'">
                 {{-- <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
                         d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -100,7 +103,8 @@
         <!-- Filter Status Data -->
         <div class="relative flex items-center space-x-1">
             <button @click="isDropdownOpen = isDropdownOpen === 'statusData' ? '' : 'statusData'"
-                class="flex items-center bg-white text-gray-700 text-sm px-2 py-1 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200">
+                class="flex items-center text-gray-700 text-sm px-2 py-1 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200"
+                :class="statusData ? 'bg-gray-200 text-sm font-semibold leading-6 text-gray-900' : 'bg-white'">
                 {{-- <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
                         d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
