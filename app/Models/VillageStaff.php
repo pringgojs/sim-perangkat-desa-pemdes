@@ -38,6 +38,7 @@ class VillageStaff extends Model
         'data_status_id',
         'sk_number',
         'sk_tmt',
+        'gender',
         'sk_date',
         'date_of_pensiun'
     ];

@@ -150,7 +150,7 @@
                         <input type="text" wire:model="form.place_of_birth"
                             class="inline-flex w-2/3 min-w-0 bg-gray-50 rounded-l-md border-r-0 border-gray-300 p-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-green-500 focus:border-green-500 sm:text-sm "
                             placeholder="Ex. Ponorogo">
-                        <input type="date" wire:model="form.date_of_birth"
+                        <input type="date" wire:model="form.date_of_birth" wire:change="calculatePensiunDate"
                             class="block w-1/3 min-w-0 flex-1 bg-gray-50 rounded-none rounded-r-md border-0 p-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-green-500 focus:border-green-500 sm:text-sm "
                             placeholder="03-08-1986">
 
@@ -315,6 +315,7 @@
 
                 <div class="sm:col-span-9">
                     <input id="af-account-bio" wire:model="form.sk_tmt" type="date"
+                        wire:change="calculatePensiunDate"
                         class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
                         placeholder=""></input>
                     @error('form.sk_tmt')
@@ -335,6 +336,21 @@
                     @error('form.sk_date')
                         <span class="text-red-500">{{ $message }}</span>
                     @enderror
+                </div>
+
+                <div class="sm:col-span-3">
+                    <label for="af-account-bio"
+                        class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
+                        Tanggal Pensiun
+                    </label>
+                </div>
+
+                <div class="sm:col-span-9">
+                    <input readonly id="af-account-bio" wire:model="form.pensiun" type="date"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+                        placeholder=""></input>
+                    <span class="text-green-500">*Untuk BPD dan Kades tanggal pensiun diambil dari perhitungan SK TMT,
+                        sedangkan jenis perangkat yang lain dari tanggal lahir</span>
                 </div>
             </div>
             <!-- End Grid -->

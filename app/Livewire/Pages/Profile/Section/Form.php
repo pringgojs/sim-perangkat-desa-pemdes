@@ -41,6 +41,7 @@ class Form extends Component
             $this->isReadonly = true;
         }
 
+        self::calculatePensiunDate();
     }
 
     public function store()
@@ -59,6 +60,11 @@ class Form extends Component
     public function updatedFormKtp()
     {
         $this->form->validateFilePhoto(); // Memvalidasi hanya field file_photo
+    }
+
+    public function calculatePensiunDate()
+    {
+        $this->form->calculatePensiunDate(); // Memvalidasi hanya field file_photo
     }
 
     public function refreshComponent()

@@ -5,6 +5,7 @@ namespace App\Livewire\Forms;
 use Carbon\Carbon;
 use Livewire\Form;
 use App\Models\User;
+use App\Models\Option;
 use App\Models\Village;
 use App\Constants\Constants;
 use App\Models\VillageStaff;
@@ -32,6 +33,7 @@ class VillageStaffForm extends Form
     public $sk_number;
     public $sk_tmt;
     public $sk_date;
+    public $pensiun;
     public $username;
     public $password;
     public $email;
@@ -111,7 +113,9 @@ class VillageStaffForm extends Form
     /* $from = admin, maka jangan rubah statusnya */
     public function store($from = null) 
     {
-        // dd($this);
+        /* untuk jabatan tertentu tidak perlu ngisi nama jabatan */
+        self::setPositionName();
+
         $this->validate();
         
         $user = self::createUser();
@@ -129,22 +133,15 @@ class VillageStaffForm extends Form
             'position_name' => $this->position_name ?? null,
             'sk_number' => $this->sk_number ?? null,
             'sk_tmt' => $this->sk_tmt ?? null,
+            'gender' => $this->gender ?? 1,
             'sk_date' => $this->sk_date ?? null,
+            'date_of_pensiun' => $this->pensiun ?? null,
         ];
 
         /* jika dari mode tinjau admin, status tidak perlu di rubah ke draft */
         if ($from != 'admin') {
             $payload['data_status_id'] = key_option('draft');
         }
-
-        /* menambah tanggal pensiun */
-        $positions = [
-            key_option('bpd'),
-            key_option('kepala_desa'),
-        ];
-        $pensiun = in_array($this->position_type, $positions) ? Constants::STAFF_KADES_BPD_PENSIUN : Constants::STAFF_PENSIUN; //  8 tahun untuk BPD dan kades, 60 tahun selain BPD;
-        $date_of_pensiun = in_array($this->position_type, $positions) ? $this->sk_tmt : $this->date_of_birth; //  8 tahun untuk BPD dan kades, 60 tahun selain BPD;
-        $payload['date_of_pensiun'] = self::calculateRetirementDate($date_of_pensiun, $pensiun);
 
         if ($this->ktp) {
             /* jika ktp is string, maka data ktp di load dari DB, kalau bukan, berarti dari Object Livewire Upload */
@@ -166,6 +163,21 @@ class VillageStaffForm extends Form
         ], $payload);
 
         return $model;
+    }
+
+    /* untuk jabatan tertentu tidak perlu ngisi nama jabatan */
+    public function setPositionName()
+    {
+        $positions = [
+            key_option('sekretaris_desa'),
+            key_option('kepala_desa'),
+            key_option('kepala_wilayah'),
+            key_option('bpd'),
+        ];
+
+        if (in_array($this->position_type, $positions)) {
+            $this->position_name = Option::find($this->position_type)->name;
+        }
     }
 
     public function createUser()
@@ -223,6 +235,19 @@ class VillageStaffForm extends Form
         $this->tmpUrl = '';
         $this->validateOnly('ktp');
         $this->tmpUrl = $this->ktp->temporaryUrl();
+    }
+
+    /* tetapkan tanggal pensiun */
+    public function calculatePensiunDate()
+    {
+        /* menambah tanggal pensiun */
+        $positions = [
+            key_option('bpd'),
+            key_option('kepala_desa'),
+        ];
+        $pensiun = in_array($this->position_type, $positions) ? Constants::STAFF_KADES_BPD_PENSIUN : Constants::STAFF_PENSIUN; //  8 tahun untuk BPD dan kades, 60 tahun selain BPD;
+        $date_of_pensiun = in_array($this->position_type, $positions) ? $this->sk_tmt : $this->date_of_birth; //  8 tahun untuk BPD dan kades, 60 tahun selain BPD;
+        $this->pensiun = self::calculateRetirementDate($date_of_pensiun, $pensiun);
     }
 
     /* validasi inputan file */
