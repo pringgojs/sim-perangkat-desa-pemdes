@@ -1,9 +1,12 @@
 <div>
+
     <!-- Act only according to that maxim whereby you can, at the same time, will that it should become a universal law. - Immanuel Kant -->
     <div x-data="{ openDetail: false }" class="bg-white shadow px-5 py-5">
         {{-- Care about people's approval and you will be their prisoner. --}}
+        @livewire('pages.report.section.filter')
+
         <div class="grid xl:grid-span-2 lg:grid-span-2 md:grid-span-5 sm:grid-span-6 gap-4">
-            <div class="col-end-7 col-span-2">
+            {{-- <div class="col-end-7 col-span-2">
                 <div class="flex items-center">
                     <label for="simple-search" class="sr-only">Search</label>
                     <div class="relative w-full">
@@ -15,7 +18,7 @@
                             placeholder="Cari berdasarkan nama atau alamat ... " required>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
         <ul role="list" class="divide-y divide-gray-100">
             @foreach ($staffs as $item)
