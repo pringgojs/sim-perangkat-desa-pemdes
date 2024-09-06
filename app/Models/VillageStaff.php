@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Models\AutoUuid;
 use App\Traits\GenerateUuid;
 use App\Scopes\VillageStaffScope;
@@ -38,6 +39,7 @@ class VillageStaff extends Model
         'sk_number',
         'sk_tmt',
         'sk_date',
+        'date_of_pensiun'
     ];
 
     // Relasi ke tabel users
@@ -91,6 +93,11 @@ class VillageStaff extends Model
         $q->where('data_status_id', key_option('diajukan') );
     }
 
+    public function scopeFinal($q)
+    {
+        $q->where('data_status_id', key_option('final') );
+    }
+
     public function scopeActive($q)
     {
         $q->where('is_active', true);
@@ -111,6 +118,43 @@ class VillageStaff extends Model
             $q->where('is_active', $active);
         }
     }
+
+    /* menghitung yang 6 bulan lagi pensiun */
+    public static function totalStaffRetiringSoon()
+    {
+        $retirementAge = 60;
+        
+        // Tanggal 6 bulan dari sekarang
+        $sixMonthsFromNow = Carbon::now()->addMonths(6);
+
+        // Rentang waktu 1 hari sebelum dan sesudah tanggal 6 bulan lagi
+        $startDate = $sixMonthsFromNow->copy()->subYears($retirementAge)->startOfDay();
+        $endDate = $sixMonthsFromNow->copy()->subYears($retirementAge)->endOfDay();
+
+        // dd($endDate);
+        // Query untuk mencari jumlah perangkat desa yang akan pensiun dalam 6 bulan
+        return $staffRetiringSoon = VillageStaff::active()->whereBetween(
+            'date_of_birth', 
+            [$startDate, $endDate]
+        )->count();
+
+    }
+
+    /* menghitung yang 6 bulan lagi pensiun */
+    public static function totalBpdRetiringSoon()
+    {
+        $bpd = key_option('bpd');
+        $retirementAge = 60;
+        // Hitung tanggal 6 bulan lagi dari sekarang
+        $sixMonthsFromNow = Carbon::now()->addMonths(6);
+
+        // Query untuk mencari jumlah perangkat desa yang akan pensiun
+        return VillageStaff::active()->whereDate('date_of_birth', '=', $sixMonthsFromNow->subYears($retirementAge)->toDateString())
+                    ->type($bpd)->count();
+
+    }
+
+
     
     public function scopeSearch($q, $search = null)
     {

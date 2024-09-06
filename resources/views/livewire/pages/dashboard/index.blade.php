@@ -3,6 +3,7 @@
     @livewire('pages.dashboard.stats')
     {{-- daftar menunggu persetujuan --}}
     @if (auth()->user()->hasRole('administrator'))
+        @livewire('pages.dashboard.section.statStatus')
         <div class="sm:flex sm:items-center mb-5 mt-5">
             <div class="sm:flex-auto">
                 <h1 class="text-base font-semibold leading-6 text-gray-900">Data Perangkat Menunggu untuk Disetujui</h1>

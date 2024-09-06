@@ -2,9 +2,11 @@
 
 namespace App\Livewire\Forms;
 
+use Carbon\Carbon;
 use Livewire\Form;
 use App\Models\User;
 use App\Models\Village;
+use App\Constants\Constants;
 use App\Models\VillageStaff;
 use App\Rules\UniqueUsername;
 use Illuminate\Validation\Rule;
@@ -49,7 +51,7 @@ class VillageStaffForm extends Form
         return [
             'username' => [
                 'required',
-                'max:10',
+                'max:250',
                 new UniqueUsername($this->username, $this->user)
             ],
             'name' => 'required|max:250',
@@ -109,6 +111,7 @@ class VillageStaffForm extends Form
     /* $from = admin, maka jangan rubah statusnya */
     public function store($from = null) 
     {
+        // dd($this);
         $this->validate();
         
         $user = self::createUser();
@@ -133,6 +136,15 @@ class VillageStaffForm extends Form
         if ($from != 'admin') {
             $payload['data_status_id'] = key_option('draft');
         }
+
+        /* menambah tanggal pensiun */
+        $positions = [
+            key_option('bpd'),
+            key_option('kepala_desa'),
+        ];
+        $pensiun = in_array($this->position_type, $positions) ? Constants::STAFF_KADES_BPD_PENSIUN : Constants::STAFF_PENSIUN; //  8 tahun untuk BPD dan kades, 60 tahun selain BPD;
+        $date_of_pensiun = in_array($this->position_type, $positions) ? $this->sk_tmt : $this->date_of_birth; //  8 tahun untuk BPD dan kades, 60 tahun selain BPD;
+        $payload['date_of_pensiun'] = self::calculateRetirementDate($date_of_pensiun, $pensiun);
 
         if ($this->ktp) {
             /* jika ktp is string, maka data ktp di load dari DB, kalau bukan, berarti dari Object Livewire Upload */
@@ -249,5 +261,37 @@ class VillageStaffForm extends Form
             $this->village_staff->reason_note = $reason;
         }
         $this->village_staff->save();
+    }
+
+    /**
+     * Fungsi untuk menghitung tanggal pensiun berdasarkan tanggal lahir.
+     * Pensiun akan jatuh pada tanggal 1 bulan setelah ulang tahun ke-60.
+     *
+     * 
+     * Jika ternyata staff adalah BPD atau kades, maka 8 tahun
+     * @param string $dateOfBirth Tanggal lahir (format: Y-m-d)
+     * @param int $retirementAge Usia pensiun (default 60 tahun)
+     * @return string Tanggal pensiun (format: Y-m-d)
+     */
+    function calculateRetirementDate($dateOfBirth = null, $retirementAge = 60)
+    {
+        if (!$dateOfBirth) return null;
+
+        // Mengubah tanggal lahir menjadi objek Carbon
+        $dob = Carbon::createFromFormat('Y-m-d', $dateOfBirth);
+        
+        // Menghitung tanggal ulang tahun ke-60
+        $sixtiethBirthday = $dob->addYears($retirementAge);
+
+        /* jika BPD maka kembalikan tanggal dari TMT */
+        if ($retirementAge == Constants::STAFF_KADES_BPD_PENSIUN) {
+            return $sixtiethBirthday->toDateString();
+        }
+        
+        // Mengambil tanggal 1 bulan setelah ulang tahun ke-60
+        $retirementDate = $sixtiethBirthday->addMonth()->startOfMonth();
+        
+        // Mengembalikan tanggal pensiun dalam format Y-m-d
+        return $retirementDate->toDateString();
     }
 }
