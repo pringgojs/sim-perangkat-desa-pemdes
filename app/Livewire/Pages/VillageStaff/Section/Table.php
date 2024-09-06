@@ -86,8 +86,12 @@ class Table extends Component
         if(isset($params['status'])) {
             $this->status = $params['status'];
         }
+
+        if(isset($params['search'])) {
+            $this->search = $params['search'];
+        }
     }
-    
+
     /* proses tombol finalisasi data */
     public function processToUpdateStatus($key, $reason = null)
     {

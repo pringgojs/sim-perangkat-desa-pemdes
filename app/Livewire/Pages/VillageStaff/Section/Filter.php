@@ -14,6 +14,7 @@ class Filter extends Component
     public $status_data = [];
     public $villages = [];
     
+    public $search;
     public $district_id;
     public $status_data_id;
     public $position_type_id;
@@ -69,6 +70,7 @@ class Filter extends Component
             'type' => $this->position_type_id,
             'status' => $this->status_data_id,
             'village' => $this->village_id,
+            'search' => $this->search,
         ];
 
         $this->dispatch('filter', $params )->to(Table::class);
