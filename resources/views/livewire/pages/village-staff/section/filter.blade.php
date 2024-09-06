@@ -1,5 +1,5 @@
 <div>
-    <div x-data="{ kecamatan: '', desa: '', jenisPerangkat: '', statusData: '', search: '', isDropdownOpen: '' }" class="flex flex-wrap items-center space-x-1 mb-5">
+    <div x-cloak x-data="{ kecamatan: '', desa: '', jenisPerangkat: '', statusData: '', search: '', isDropdownOpen: '' }" class="flex flex-wrap items-center space-x-1 mb-5">
         <!-- Filter Kecamatan -->
         <div class="relative flex items-center space-x-1">
             <button @click="isDropdownOpen = isDropdownOpen === 'kecamatan' ? '' : 'kecamatan'"
@@ -20,14 +20,16 @@
                 <span x-text="kecamatan || ''"></span>
             </button>
             <div x-show="isDropdownOpen === 'kecamatan'" @click.outside="isDropdownOpen = ''"
-                class="absolute z-10 mt-2 w-40 bg-white shadow-lg rounded-md">
+                class="absolute z-10 mt-2 w-40 max-h-56 overflow-y-scroll overflow-x-hidden bg-white shadow-lg rounded-md ">
                 <ul class="text-sm">
-                    <li @click="kecamatan = 'Kecamatan A'; isDropdownOpen = ''"
-                        class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Kecamatan A</li>
-                    <li @click="kecamatan = 'Kecamatan B'; isDropdownOpen = ''"
+                    @foreach ($districts as $item)
+                        <li @click="kecamatan = '{{ $item->name }}'; isDropdownOpen = ''; $wire.getVillages('{{ $item->id }}')"
+                            class="px-4 py-2 hover:bg-gray-200 cursor-pointer">{{ $item->name }}</li>
+                    @endforeach
+                    {{-- <li @click="kecamatan = 'Kecamatan B'; isDropdownOpen = ''"
                         class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Kecamatan B</li>
                     <li @click="kecamatan = 'Kecamatan C'; isDropdownOpen = ''"
-                        class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Kecamatan C</li>
+                        class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Kecamatan C</li> --}}
                 </ul>
             </div>
         </div>
@@ -53,14 +55,16 @@
                 <span x-text="desa || ''"></span>
             </button>
             <div x-show="isDropdownOpen === 'desa'" @click.outside="isDropdownOpen = ''"
-                class="absolute z-10 mt-2 w-40 bg-white shadow-lg rounded-md">
+                class="absolute z-10 mt-2 w-40 max-h-56 overflow-y-scroll overflow-x-hidden bg-white shadow-lg rounded-md">
                 <ul class="text-sm">
-                    <li @click="desa = 'Desa A'; isDropdownOpen = ''"
-                        class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Desa A</li>
-                    <li @click="desa = 'Desa B'; isDropdownOpen = ''"
+                    @foreach ($villages as $item)
+                        <li @click="desa = '{{ $item->name }}'; isDropdownOpen = ''; $wire.setVillageId('{{ $item->id }}')"
+                            class="px-4 py-2 hover:bg-gray-200 cursor-pointer">{{ $item->name }}</li>
+                    @endforeach
+                    {{-- <li @click="desa = 'Desa B'; isDropdownOpen = ''"
                         class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Desa B</li>
                     <li @click="desa = 'Desa C'; isDropdownOpen = ''"
-                        class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Desa C</li>
+                        class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Desa C</li> --}}
                 </ul>
             </div>
         </div>
@@ -88,12 +92,14 @@
             <div x-show="isDropdownOpen === 'jenisPerangkat'" @click.outside="isDropdownOpen = ''"
                 class="absolute z-10 mt-2 w-40 bg-white shadow-lg rounded-md">
                 <ul class="text-sm">
-                    <li @click="jenisPerangkat = 'Perangkat A'; isDropdownOpen = ''"
-                        class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Perangkat A</li>
-                    <li @click="jenisPerangkat = 'Perangkat B'; isDropdownOpen = ''"
+                    @foreach ($position_types as $item)
+                        <li @click="jenisPerangkat = '{{ $item->name }}'; isDropdownOpen = ''; $wire.setPositionTypeId('{{ $item->id }}')"
+                            class="px-4 py-2 hover:bg-gray-200 cursor-pointer">{{ $item->name }}</li>
+                    @endforeach
+                    {{-- <li @click="jenisPerangkat = 'Perangkat B'; isDropdownOpen = ''"
                         class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Perangkat B</li>
                     <li @click="jenisPerangkat = 'Perangkat C'; isDropdownOpen = ''"
-                        class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Perangkat C</li>
+                        class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Perangkat C</li> --}}
                 </ul>
             </div>
         </div>
@@ -122,10 +128,10 @@
             <div x-show="isDropdownOpen === 'statusData'" @click.outside="isDropdownOpen = ''"
                 class="absolute z-10 mt-2 w-40 bg-white shadow-lg rounded-md">
                 <ul class="text-sm">
-                    <li @click="statusData = 'Aktif'; isDropdownOpen = ''"
-                        class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Aktif</li>
-                    <li @click="statusData = 'Tidak Aktif'; isDropdownOpen = ''"
-                        class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Tidak Aktif</li>
+                    @foreach ($status_data as $item)
+                        <li @click="statusData = '{{ $item->name }}'; isDropdownOpen = ''; $wire.setStatusDataId('{{ $item->id }}')"
+                            class="px-4 py-2 hover:bg-gray-200 cursor-pointer">{{ $item->name }}</li>
+                    @endforeach
                 </ul>
             </div>
         </div>
