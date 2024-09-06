@@ -19,6 +19,8 @@ class Filter extends Component
     public $status_data_id;
     public $position_type_id;
     public $village_id;
+    public $isOperator = false;
+
     public function mount()
     {
         $this->position_types = Option::positionTypes()->get();
@@ -80,14 +82,9 @@ class Filter extends Component
     {
         $user = auth()->user(); 
         if ($user->hasRole('operator')) {
-            $village = $user->staff()->village;
-            $this->form->village = $village->id;
-            $this->form->district = $village->district_id;
-
-            self::getVillages();
+            $this->isOperator = true;
         }
     }
-
 
     public function render()
     {
