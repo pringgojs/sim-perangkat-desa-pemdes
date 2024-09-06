@@ -2,25 +2,26 @@
 
 namespace App\Livewire\Pages\Dashboard\Section;
 
+use App\Models\Option;
 use Livewire\Component;
 use App\Models\VillageStaff;
 
 class StatStatus extends Component
 {
     public $stats;
+    public $status_data;
     public function mount()
     {
-        $total = VillageStaff::active()->count();
-        $total_final = VillageStaff::active()->final()->count();
         $total_staff_retiring_soon = VillageStaff::totalStaffRetiringSoon();
         $total_bpd_retiring_soon = VillageStaff::totalBpdRetiringSoon();
-
         $this->stats = [
-            'Jumlah Total Perangkat (Semua Status)' => $total,
-            'Jumlah Perangkat dengan Status Final' => $total_final,
-            'Jumlah Perangkat 6 Bulan lagi pensiun' => $total_staff_retiring_soon,
-            'Jumlah BPD 6 Bulan lagi pensiun' => $total_bpd_retiring_soon,
+            // 'Jumlah Total Perangkat (Semua Status)' => $total,
+            // 'Jumlah Perangkat dengan Status Final' => $total_final,
+            'Jumlah Semua Perangkat Kecuali BPD' => $total_staff_retiring_soon,
+            'Jumlah Khusus BPD' => $total_bpd_retiring_soon,
         ];
+
+        $this->status_data = Option::statusData()->get();
     }
 
     public function render()

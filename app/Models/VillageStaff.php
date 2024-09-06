@@ -123,20 +123,15 @@ class VillageStaff extends Model
     /* menghitung yang 6 bulan lagi pensiun */
     public static function totalStaffRetiringSoon()
     {
-        $retirementAge = 60;
-        
         // Tanggal 6 bulan dari sekarang
-        $sixMonthsFromNow = Carbon::now()->addMonths(6);
+        $now = Carbon::now()->format('Y-m-d');
+        $sixMonthsFromNow = Carbon::now()->addMonths(6)->format('Y-m-d');
 
-        // Rentang waktu 1 hari sebelum dan sesudah tanggal 6 bulan lagi
-        $startDate = $sixMonthsFromNow->copy()->subYears($retirementAge)->startOfDay();
-        $endDate = $sixMonthsFromNow->copy()->subYears($retirementAge)->endOfDay();
-
-        // dd($endDate);
+        // dd($sixMonthsFromNow);
         // Query untuk mencari jumlah perangkat desa yang akan pensiun dalam 6 bulan
         return $staffRetiringSoon = VillageStaff::active()->whereBetween(
-            'date_of_birth', 
-            [$startDate, $endDate]
+            'date_of_pensiun', 
+            [$now, $sixMonthsFromNow]
         )->count();
 
     }
@@ -144,15 +139,15 @@ class VillageStaff extends Model
     /* menghitung yang 6 bulan lagi pensiun */
     public static function totalBpdRetiringSoon()
     {
+        $now = Carbon::now()->format('Y-m-d');
+        $sixMonthsFromNow = Carbon::now()->addMonths(6)->format('Y-m-d');
+
         $bpd = key_option('bpd');
-        $retirementAge = 60;
-        // Hitung tanggal 6 bulan lagi dari sekarang
-        $sixMonthsFromNow = Carbon::now()->addMonths(6);
-
-        // Query untuk mencari jumlah perangkat desa yang akan pensiun
-        return VillageStaff::active()->whereDate('date_of_birth', '=', $sixMonthsFromNow->subYears($retirementAge)->toDateString())
-                    ->type($bpd)->count();
-
+        // Query untuk mencari jumlah perangkat desa yang akan pensiun dalam 6 bulan
+        return $staffRetiringSoon = VillageStaff::active()->whereBetween(
+            'date_of_pensiun', 
+            [$now, $sixMonthsFromNow]
+        )->type($bpd)->count();
     }
 
 

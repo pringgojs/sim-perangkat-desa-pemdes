@@ -38,6 +38,12 @@ class Option extends Model
         return $this->hasMany(VillageStaff::class, 'position_type_id');
     }
 
+     // Relasi ke tabel village_staff (jika diperlukan)
+    public function villageStaffStatusData()
+    {
+        return $this->hasMany(VillageStaff::class, 'data_status_id');
+    }
+
     public function scopeDistricts($q)
     {
         $q->where('type', 'district')->orderBy('name');
