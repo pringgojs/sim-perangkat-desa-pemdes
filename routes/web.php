@@ -31,7 +31,7 @@ Route::middleware([
     // Route::middleware([
     //     'role:administrator'
     // ])->group(function () {
-        Route::get('report/pending-approval', PendingApproval::class)->name('pending-approval');
+        Route::get('report/pending-approval', PendingApproval::class)->name('pending-approval')->middleware('role:administrator');
         Route::get('check-role', [CheckRoleController::class, 'index'])->name('check-role');
         Route::get('notification', NotificationIndex::class)->name('notification.index');
         Route::get('profile', ProfileIndex::class)->name('profile.index')->middleware('role:operator');
