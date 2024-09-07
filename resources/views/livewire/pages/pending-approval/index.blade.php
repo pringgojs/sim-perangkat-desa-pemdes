@@ -1,6 +1,6 @@
 <div>
     {{-- The whole world belongs to you. --}}
-    <div class="sm:flex sm:items-center mb-5 mt-5">
+    <div class="sm:flex sm:items-center mb-5">
         <div class="sm:flex-auto">
             <h1 class="text-base font-semibold leading-6 text-gray-900">Data Perangkat Menunggu untuk Disetujui</h1>
         </div>
