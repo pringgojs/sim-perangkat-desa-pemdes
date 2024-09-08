@@ -184,7 +184,7 @@
     </div>
 </nav>
 
-<script>
+{{-- <script>
     document.addEventListener('alpine:init', () => {
         Alpine.data('dropdown', (initialOpen = false) => ({
             open: initialOpen,
@@ -197,7 +197,7 @@
             },
         }));
     });
-</script>
+</script> --}}
 
 <script>
     initFlowbite()

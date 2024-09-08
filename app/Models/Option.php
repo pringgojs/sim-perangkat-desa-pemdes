@@ -64,6 +64,10 @@ class Option extends Model
         $q->where('type', 'status_data')->orderBy('name');
     }
 
+    public function scopeOrderByDefault($q)
+    {
+        $q->orderBy('name');
+    }
     
     public function scopeSearch($q, $search = null)
     {

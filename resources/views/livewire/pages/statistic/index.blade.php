@@ -17,8 +17,22 @@
                 @livewire('pages.statistic.section.table')
 
                 <!-- Chart di sebelah kanan -->
-                @livewire('pages.statistic.section.chart')
+                @php
+                    // $legend = ['Category A', 'Category B', 'Category C', 'Category D'];
+                    // $series = [
+                    //     [
+                    //         'name' => 'Series 1',
+                    //         'data' => [10, 20, 15, 25],
+                    //     ],
+                    //     [
+                    //         'name' => 'Series 2',
+                    //         'data' => [12, 18, 22, 30],
+                    //     ],
+                    // ];
+                @endphp
 
+                {{ print_r($series) }}
+                <livewire:utils.bar-chart :$legend :$series id="jumlah-berdasarkan-jenis" />
             </div>
         </div>
     </div>

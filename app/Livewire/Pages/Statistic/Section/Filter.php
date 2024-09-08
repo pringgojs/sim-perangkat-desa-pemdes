@@ -5,6 +5,7 @@ namespace App\Livewire\Pages\Statistic\Section;
 use App\Models\Option;
 use App\Models\Village;
 use Livewire\Component;
+use App\Livewire\Pages\Statistic\Index;
 use App\Livewire\Pages\Statistic\Section\Table;
 
 class Filter extends Component
@@ -47,6 +48,8 @@ class Filter extends Component
         ];
 
         $this->dispatch('filter', $params )->to(Table::class);
+        $this->dispatch('initChart', ['district' => $this->district_id] )->to(Index::class);
+
     }
 
     public function ifOperator()
