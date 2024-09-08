@@ -1,5 +1,4 @@
 <div>
-    {{ print_r($series) }}
     <div wire:ignore>
         <div id="bar-chart-{{ $id }}"></div>
     </div>
@@ -71,14 +70,12 @@
         });
 
 
+        /* disini, legend dan series harus dikirim dari BAKEND. meskipun properti sudah diset reaktif, nyatanya ketika dipanggil di livewire on update data masih data old */
         Livewire.on('update-chart', ({
             legend,
             series
         }) => {
-            console.log('update-chart');
-            console.log(series);
             if (chart) {
-
                 console.log(series);
                 chart.updateSeries(series);
 

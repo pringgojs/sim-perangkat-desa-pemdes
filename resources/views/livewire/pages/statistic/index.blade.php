@@ -31,7 +31,6 @@
                     // ];
                 @endphp
 
-                {{ print_r($series) }}
                 <livewire:utils.bar-chart :$legend :$series id="jumlah-berdasarkan-jenis" />
             </div>
         </div>
