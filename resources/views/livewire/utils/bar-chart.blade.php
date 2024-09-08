@@ -71,12 +71,15 @@
         });
 
 
-        Livewire.on('updateChart', ({
-            series,
-            legend
+        Livewire.on('update-chart', ({
+            legend,
+            series
         }) => {
-            console.log('updateChart');
+            console.log('update-chart');
+            console.log(series);
             if (chart) {
+
+                console.log(series);
                 chart.updateSeries(series);
 
                 chart.updateOptions({

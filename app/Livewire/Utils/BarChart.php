@@ -17,28 +17,10 @@ class BarChart extends Component
     public $id;
     
     protected $listeners = ['refreshComponent' => '$refresh', 'updateChart'];
-    // public function mount($legend, $series, $id)
-    // {
-    //     info('series');
-    //     info($series);
-    //     $this->legend = $legend;
-    //     $this->series = $series;
-    //     $this->id = $id;
-    // }
 
-    public function updateChart($params = [])
+    public function updateChart($series = [], $legend = [])
     {
-        info('dari INDEX: $params');
-
-        if(isset($params['legend'])) {
-            $this->legend = $params['legend'];
-        }
-
-        if(isset($params['series'])) {
-            $this->series = $params['series'];
-            info('$this->series');
-            info($this->series);
-        }
+        $this->dispatch('update-chart', legend: $legend, series: $series);
     }
 
     public function render()
