@@ -56,7 +56,6 @@ class VillageStaffExport implements FromCollection, WithHeadings, WithMapping
 
     public function headings(): array
     {
-        ++$this->i;
         return [
             '#',
             'Nama',
@@ -78,9 +77,8 @@ class VillageStaffExport implements FromCollection, WithHeadings, WithMapping
 
     public function map($staff): array
     {
-        // dd($staff);
         return [
-            $this->i,
+            ++$this->i,
             $staff->name,
             $staff->gender ? 'L': 'P',
             $staff->positionType->name,

@@ -29,6 +29,8 @@ class Filter extends Component
         $this->districts = Option::districts()->get();
         $this->status_data = Option::statusData()->get();
 
+        $this->position_type_id = request()->type ?? null;
+
         /* jika yang login adalah operator desa, seting village dan district otomatis terisi */
         self::ifOperator();
     }
