@@ -49,7 +49,11 @@ class Filter extends Component
 
         $this->dispatch('filter', $params )->to(Table::class);
         $this->dispatch('initChart', ['district' => $this->district_id] )->to(Index::class);
+    }
 
+    public function export()
+    {
+        $this->dispatch('export')->to(Table::class);
     }
 
     public function ifOperator()

@@ -5,6 +5,8 @@ namespace App\Livewire\Pages\Statistic\Section;
 use App\Models\Village;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\StatisticVillageStaffPensiunExport;
 
 class Table extends Component
 {
@@ -12,7 +14,7 @@ class Table extends Component
     public $district;
     public $search;
 
-    protected $listeners = ['refreshComponent' => '$refresh', 'filter'];
+    protected $listeners = ['refreshComponent' => '$refresh', 'filter', 'export'];
 
     public function filter($params = [])
     {
@@ -23,6 +25,15 @@ class Table extends Component
         if(isset($params['search'])) {
             $this->search = $params['search'];
         }
+    }
+
+    public function export()
+    {
+        $params = [
+            'district' => $this->district,
+            'search' => $this->search,
+        ];
+        return Excel::download(new StatisticVillageStaffPensiunExport($params), 'perangakat-daerah-yang-mau-pensiun-'.date('Ymd').'.xlsx');
     }
 
     public function updatingSearch()

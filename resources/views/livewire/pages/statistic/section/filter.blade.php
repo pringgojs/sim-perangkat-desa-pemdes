@@ -58,14 +58,21 @@
         </div>
 
         <!-- Tombol Export -->
-        <div>
+        <div class="flex flex-wrap items-center content-center space-x-1 mb-5 mt-2">
             {{-- <button type="button" class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Button text</button> --}}
 
-            <button @click="alert('abc')"
-                class="flex items-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                <x-bytesize-download class="h-5 w-5 mr-2" />
-                Unduh
-            </button>
+            <div class="relative flex items-center">
+                <button wire:click="export"
+                    class="flex items-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                    <x-bytesize-download class="h-5 w-5 mr-2" />
+                    Unduh
+                </button>
+            </div>
+
+            <div wire:loading class="relative flex items-center -mt-6">
+                @livewire('utils.loading', key(\Illuminate\Support\Str::random(10)))
+
+            </div>
         </div>
     </div>
 
