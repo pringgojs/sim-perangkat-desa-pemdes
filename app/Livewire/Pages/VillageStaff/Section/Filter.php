@@ -29,8 +29,6 @@ class Filter extends Component
         $this->districts = Option::districts()->get();
         $this->status_data = Option::statusData()->get();
 
-        $this->position_type_id = request()->type ?? null;
-
         /* jika yang login adalah operator desa, seting village dan district otomatis terisi */
         self::ifOperator();
     }
@@ -76,15 +74,7 @@ class Filter extends Component
 
     public function export()
     {
-        $params = [
-            'district' => $this->district_id,
-            'type' => $this->position_type_id,
-            'status' => $this->status_data_id,
-            'village' => $this->village_id,
-            'search' => $this->search,
-        ];
-
-        return Excel::download(new VillageStaffExport($params), 'perangakat-daerah-'.date('Ymd').'.xlsx');
+        $this->dispatch('export')->to(Table::class);
     }
 
     public function ifOperator()

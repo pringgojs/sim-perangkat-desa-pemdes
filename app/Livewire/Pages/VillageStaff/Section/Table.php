@@ -5,6 +5,8 @@ namespace App\Livewire\Pages\VillageStaff\Section;
 use App\Models\User;
 use Livewire\Component;
 use App\Models\VillageStaff;
+use App\Exports\VillageStaffExport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Livewire\Forms\VillageStaffForm;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Livewire\Pages\VillageStaff\Section\Detail;
@@ -24,7 +26,7 @@ class Table extends Component
     public $modalConfirm = false;
     public $modalConfirmRevisi = false;
     public $modalPreview = false;
-    protected $listeners = ['refreshComponent' => '$refresh', 'detail', 'processToUpdateStatus', 'filter'];
+    protected $listeners = ['refreshComponent' => '$refresh', 'detail', 'processToUpdateStatus', 'filter', 'export'];
     
     public function mount($type = null, $village = null, $district = null, $isActive = true, $status = null)
     {
@@ -90,6 +92,18 @@ class Table extends Component
         if(isset($params['search'])) {
             $this->search = $params['search'];
         }
+    }
+
+    public function export()
+    {
+        $params = [
+            'district' => $this->district,
+            'type' => $this->type,
+            'status' => $this->status,
+            'village' => $this->village,
+            'search' => $this->search,
+        ];
+        return Excel::download(new VillageStaffExport($params), 'perangakat-daerah-'.date('Ymd').'.xlsx');
     }
 
     /* proses tombol finalisasi data */
