@@ -5,7 +5,8 @@
             {{-- <p class="mt-2 text-sm text-gray-700">Daftar program dan kegiatan yang telah diimport ke sistem.</p> --}}
         </div>
         <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-            <a onclick="Livewire.dispatch('openModal', { component: 'modals.form-village-staff' })" type="button"
+            <a onclick="Livewire.dispatch('openModal', { component: 'modals.form-village-staff', arguments: {position_type_id: '{{ $option->id }}'} })"
+                type="button"
                 class="block rounded bg-green-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm cursor-pointer hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Buat
                 Baru</a>
         </div>
