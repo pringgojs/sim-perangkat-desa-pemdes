@@ -1,12 +1,11 @@
 <div>
+    <div class="font-bold">{{ $title }}</div>
     <div wire:ignore>
         <div id="bar-chart-{{ $id }}"></div>
     </div>
 </div>
 @script
     <script>
-        // document.addEventListener('livewire:mount', function() {
-        console.log('bar kepanggil 1');
         let chart;
         let currentSeries = @json($series); // Menyimpan data awal
         let currentCategories = @json($legend); // Menyimpan kategori awal
@@ -39,34 +38,6 @@
                     chart.destroy(); // Hapus chart saat komponen dihapus
                 }
             });
-        });
-
-        Livewire.hook('morph.updated', (component) => {
-            // Cek apakah data series atau kategori berubah
-            // console.log('json($series)');
-            // console.log(@json($series));
-
-            const newSeries = @json($series);
-            const newCategories = @json($legend);
-
-            // console.log('newSeries');
-            // console.log(newSeries);
-            if (JSON.stringify(newSeries) !== JSON.stringify(currentSeries) || JSON.stringify(newCategories) !==
-                JSON.stringify(currentCategories)) {
-                // console.log('ini kepanggil gak yaaaa');
-                currentSeries = newSeries;
-                currentCategories = newCategories;
-
-                if (chart) {
-                    chart.updateSeries(newSeries); // Update data series
-
-                    chart.updateOptions({
-                        xaxis: {
-                            categories: newCategories, // Update kategori
-                        }
-                    });
-                }
-            }
         });
 
 

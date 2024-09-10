@@ -31,10 +31,9 @@
                     // ];
                 @endphp
 
-                <livewire:utils.bar-chart :$legend :$series id="jumlah-berdasarkan-jenis" />
+                <livewire:utils.bar-chart :$legend :$series title="Grafik Jumlah Perangkat Berdasarkan Jenis Jabatan"
+                    id="jumlah-berdasarkan-jenis" />
             </div>
         </div>
     </div>
-    {{-- @livewire('pages.report.section.filter') --}}
-    {{-- @livewire('pages.village-staff.section.table', ['status' => key_option('diajukan')]) --}}
 </div>
