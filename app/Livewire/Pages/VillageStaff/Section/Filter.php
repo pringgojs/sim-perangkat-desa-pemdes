@@ -5,6 +5,8 @@ namespace App\Livewire\Pages\VillageStaff\Section;
 use App\Models\Option;
 use App\Models\Village;
 use Livewire\Component;
+use App\Exports\VillageStaffExport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Livewire\Pages\VillageStaff\Section\Table;
 
 class Filter extends Component
@@ -68,6 +70,19 @@ class Filter extends Component
         ];
 
         $this->dispatch('filter', $params )->to(Table::class);
+    }
+
+    public function export()
+    {
+        $params = [
+            'district' => $this->district_id,
+            'type' => $this->position_type_id,
+            'status' => $this->status_data_id,
+            'village' => $this->village_id,
+            'search' => $this->search,
+        ];
+
+        return Excel::download(new VillageStaffExport($params), 'perangakat-daerah-'.date('Ymd').'.xlsx');
     }
 
     public function ifOperator()
