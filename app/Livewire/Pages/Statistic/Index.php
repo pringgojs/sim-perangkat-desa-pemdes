@@ -60,10 +60,10 @@ class Index extends Component
 
         ];
 
-        // $this->dispatch('test-gan');
+        // $this->dispatch('update-chart');
 
         // $this->dispatch('updateChart')->to(BarChart::class);
-        $this->dispatch('updateChart')->to(BarChartComponent::class);
+        $this->dispatch('updateChart', $this->legend, $this->series)->to(BarChartComponent::class);
     } 
 
     public function render()
