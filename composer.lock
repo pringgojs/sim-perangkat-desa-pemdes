@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f9706ef7967100434beb7bdd67407235",
+    "content-hash": "d10a72c7ef2001ef428a373c98a31bd7",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -3933,6 +3933,46 @@
                 "source": "https://github.com/antonioribeiro/google2fa/tree/v8.0.1"
             },
             "time": "2022-06-13T21:57:56+00:00"
+        },
+        {
+            "name": "pringgojs/livewire-charts",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "../livewire-chart-package",
+                "reference": "d0f36d8ff389fcefbe2284f17c999a91c05d8f29"
+            },
+            "require": {
+                "illuminate/contracts": "^10.0||^11.0",
+                "livewire/livewire": "^3.5",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "spatie/laravel-package-tools": "^1.16"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Pringgojs\\LivewireCharts\\LivewireChartServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Pringgojs\\LivewireCharts\\": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Pringgo Juni S",
+                    "email": "odyinggo@gmail.com"
+                }
+            ],
+            "description": "Livewire chart component",
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "psr/clock",
@@ -9779,8 +9819,10 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "pringgojs/livewire-charts": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

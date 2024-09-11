@@ -1,4 +1,6 @@
 <div>
+    <p class="font-bold">{{ print_r($series) }}</p>
+
     <div class="font-bold">{{ $title }}</div>
     <div wire:ignore>
         <div id="bar-chart-{{ $id }}"></div>

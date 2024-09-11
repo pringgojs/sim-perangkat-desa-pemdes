@@ -22,6 +22,7 @@
         "maatwebsite/excel": "^3.1",
         "mallardduck/blade-lucide-icons": "^1.23",
         "owenvoke/blade-fontawesome": "^2.6",
+        "pringgojs/livewire-charts": "dev-main",
         "spatie/laravel-permission": "^6.7",
         "spatie/livewire-filepond": "^1.1",
         "wire-elements/modal": "2.0.10"
@@ -80,6 +81,12 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
-    "prefer-stable": true
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../livewire-chart-package"
+        }
+    ]
 }

@@ -31,7 +31,8 @@
                     // ];
                 @endphp
 
-                <livewire:utils.bar-chart :$legend :$series :$title id="jumlah-berdasarkan-jenis" />
+                {{-- <livewire:utils.bar-chart :$legend :$series :$title id="jumlah-berdasarkan-jenis" /> --}}
+                <livewire:bar-chart-component :series="$series" :categories="$legend" :$title />
             </div>
         </div>
     </div>

@@ -7,6 +7,7 @@ use App\Models\Village;
 use Livewire\Component;
 use App\Models\VillageStaff;
 use App\Livewire\Utils\BarChart;
+use Pringgojs\LivewireCharts\BarChartComponent;
 
 class Index extends Component
 {
@@ -59,7 +60,10 @@ class Index extends Component
 
         ];
 
-        $this->dispatch('updateChart')->to(BarChart::class);
+        // $this->dispatch('test-gan');
+
+        // $this->dispatch('updateChart')->to(BarChart::class);
+        $this->dispatch('updateChart')->to(BarChartComponent::class);
     } 
 
     public function render()
