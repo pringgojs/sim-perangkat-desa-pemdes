@@ -12,6 +12,7 @@ class Index extends Component
 {
     public $legend = [];
     public $series = [];
+    public $title;
     protected $listeners = ['refreshComponent' => '$refresh', 'initChart'];
     
     public function mount()
@@ -19,28 +20,45 @@ class Index extends Component
         self::initChart();
     }
 
-    public function initChart($district = null)
+    public function initChart($districtId = null)
     {
-        $this->legend = Option::positionTypes()->orderByDefault()->pluck('name')->toArray();
+        $this->title = 'Grafik Jumlah Perangkat Berdasarkan Jenis Jabatan ';
         
-        $data = [];
+        $district = Option::find($districtId);
+        if ($district) {
+            $this->title .= '(Kec.'.$district->name.')';
+        }
+        
+        $this->legend = Option::positionTypes()->orderByDefault()->pluck('name')->toArray();
+
+        $data_male = [];
+        $data_famale = [];
         foreach (Option::positionTypes()->orderByDefault()->get() as $item) {
-            $data[] = VillageStaff::district($district)
+            $data_male[] = VillageStaff::district($districtId)
                 ->type($item->id)
                 ->activeStatus(true)
+                ->gender(true)
+                ->count();
+
+            $data_famale[] = VillageStaff::district($districtId)
+                ->type($item->id)
+                ->activeStatus(true)
+                ->gender(false)
                 ->count();
         }
 
         $this->series = [
             [
-                'name' => 'Jumlah',
-                'data' => $data
+                'name' => 'Laki-laki',
+                'data' => $data_male
+            ],
+            [
+                'name' => 'Perempuan',
+                'data' => $data_famale
             ]
+
         ];
 
-        // $this->emit('updateChart', $this->series, $this->categories);
-
-        // $this->dispatch('updateChart', $this->series, $this->legend )->to(BarChart::class);
         $this->dispatch('updateChart')->to(BarChart::class);
     } 
 

@@ -31,8 +31,7 @@
                     // ];
                 @endphp
 
-                <livewire:utils.bar-chart :$legend :$series title="Grafik Jumlah Perangkat Berdasarkan Jenis Jabatan"
-                    id="jumlah-berdasarkan-jenis" />
+                <livewire:utils.bar-chart :$legend :$series :$title id="jumlah-berdasarkan-jenis" />
             </div>
         </div>
     </div>

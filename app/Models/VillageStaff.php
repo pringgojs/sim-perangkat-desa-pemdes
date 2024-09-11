@@ -109,6 +109,11 @@ class VillageStaff extends Model
         $q->where('is_active', false);
     }
 
+    public function scopeGender($q, $gen)
+    {
+        $q->where('gender', $gen);
+    }
+
     public function scopeActiveStatus($q, $active = '', $status = null)
     {
         if ($status) {

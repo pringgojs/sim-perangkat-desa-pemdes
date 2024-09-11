@@ -7,6 +7,7 @@ use Livewire\Component;
 
 class BarChart extends Component
 {
+    #[Reactive] 
     public $title;
     
     #[Reactive] 

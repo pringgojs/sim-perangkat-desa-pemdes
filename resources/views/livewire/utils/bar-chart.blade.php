@@ -17,6 +17,22 @@
             var chartElement = document.querySelector("#bar-chart-{{ $id }}");
 
             if (chartElement && chartElement.innerHTML === "") {
+                var tailwindColors = [
+                    '#10B981', // green-500
+                    '#F59E0B', // yellow-500
+                    '#3B82F6', // blue-500
+                    '#EF4444', // red-500
+                    '#8B5CF6', // purple-500
+                ];
+
+                // Fungsi untuk memotong array warna sesuai dengan jumlah legend
+                function getDynamicColors(count) {
+                    return tailwindColors.slice(0, count);
+                }
+
+                // Ambil warna dinamis berdasarkan jumlah legend atau kategori
+                var dynamicColors = getDynamicColors(currentCategories.length);
+
                 var options = {
                     chart: {
                         type: 'bar',
@@ -26,7 +42,7 @@
                     xaxis: {
                         categories: currentCategories,
                     },
-                    colors: ['rgb(5, 122, 85)'], // Set warna bar chart
+                    colors: dynamicColors, // Set warna bar chart
                 };
 
                 chart = new ApexCharts(chartElement, options);
@@ -47,7 +63,6 @@
             series
         }) => {
             if (chart) {
-                console.log(series);
                 chart.updateSeries(series);
 
                 chart.updateOptions({
