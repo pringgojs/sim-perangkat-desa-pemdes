@@ -22,19 +22,21 @@ class Table extends Component
     public $status;
     public $isActive;
     public $village;
+    public $isWillRetire; // akan pensiun
     public $district;
     public $modalConfirm = false;
     public $modalConfirmRevisi = false;
     public $modalPreview = false;
     protected $listeners = ['refreshComponent' => '$refresh', 'detail', 'processToUpdateStatus', 'filter', 'export'];
     
-    public function mount($type = null, $village = null, $district = null, $isActive = true, $status = null)
+    public function mount($type = null, $village = null, $district = null, $isActive = true, $status = null, $isWillRetire = false)
     {
         $this->type = $type;
         $this->village = $village;
         $this->district = $district;
         $this->isActive = $isActive;
         $this->status = $status;
+        $this->isWillRetire = $isWillRetire;
     }
 
     public function render()
@@ -44,6 +46,7 @@ class Table extends Component
                 ->district($this->district)
                 ->village($this->village)
                 ->type($this->type)
+                ->pensiun($this->isWillRetire)
                 ->activeStatus($this->isActive, $this->status)
                 ->with(['village', 'positionType'])
                 ->paginate()
@@ -102,6 +105,7 @@ class Table extends Component
             'status' => $this->status,
             'village' => $this->village,
             'search' => $this->search,
+            'isWillRetire' => $this->isWillRetire,
         ];
         return Excel::download(new VillageStaffExport($params), 'perangakat-daerah-'.date('Ymd').'.xlsx');
     }

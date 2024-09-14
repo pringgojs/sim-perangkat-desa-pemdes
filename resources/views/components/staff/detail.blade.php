@@ -132,6 +132,13 @@
                                     {{ $staff->place_of_birth ?? '' }},
                                     {{ $staff->date_of_birth ?? '-' }}</dd>
                             </div>
+
+                            <div>
+                                <dt class="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Tanggal Pensiun
+                                </dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
+                                    {{ $staff->date_of_pensiun ?? '-' }}</dd>
+                            </div>
                             <div>
                                 <dt class="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Jenis jabatan
                                 </dt>

@@ -156,6 +156,18 @@ class VillageStaff extends Model
     }
 
 
+    /* scope pensiun */
+    public function scopePensiun($q, $isWillRetire = false)
+    {
+        if (!$isWillRetire) return;
+        
+        // Tanggal 6 bulan dari sekarang
+        $now = Carbon::now()->format('Y-m-d');
+        $sixMonthsFromNow = Carbon::now()->addMonths(6)->format('Y-m-d');
+
+        // Query untuk mencari jumlah perangkat desa yang akan pensiun dalam 6 bulan
+        $q->whereBetween( 'date_of_pensiun', [$now, $sixMonthsFromNow]);
+    }
     
     public function scopeSearch($q, $search = null)
     {

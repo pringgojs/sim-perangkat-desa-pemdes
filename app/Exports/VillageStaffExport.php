@@ -16,6 +16,7 @@ class VillageStaffExport implements FromCollection, WithHeadings, WithMapping
     public $isActive;
     public $village;
     public $district;
+    public $isWillRetire;
 
     public function __construct($params = [])
     {
@@ -38,6 +39,10 @@ class VillageStaffExport implements FromCollection, WithHeadings, WithMapping
         if(isset($params['search'])) {
             $this->search = $params['search'];
         }
+        
+        if(isset($params['isWillRetire'])) {
+            $this->isWillRetire = $params['isWillRetire'];
+        }
 
     }
     /**
@@ -49,6 +54,7 @@ class VillageStaffExport implements FromCollection, WithHeadings, WithMapping
                 ->district($this->district)
                 ->village($this->village)
                 ->type($this->type)
+                ->pensiun($this->isWillRetire)
                 ->activeStatus($this->isActive, $this->status)
                 ->with(['village', 'positionType'])
                 ->get();
