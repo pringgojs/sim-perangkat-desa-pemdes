@@ -37,7 +37,8 @@
                             </span>
                             <div class="min-w-0 flex-auto">
                                 <p class="text-sm font-semibold leading-6 text-gray-900">
-                                    <a href="#" class="">{{ ucwords(strtolower($item->name)) }}</a>
+                                    <a href="#" class="">{{ ucwords(strtolower($item->name)) }}
+                                        {!! $item->labelType() !!}</a>
                                 </p>
                                 <p class="flex text-xs leading-5 text-gray-500">
                                     <a class="truncate">{{ $item->address }}</a>
