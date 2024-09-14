@@ -57,6 +57,13 @@ class Village extends Model
         $q->where('district_id', $district);
     }
 
+    public function scopeType($q, $type = null)
+    {
+        if (!$type) return;
+
+        $q->where('type_id', $type);
+    }
+
     public function scopeOrderByDefault($q)
     {
         $q->orderBy('name');
