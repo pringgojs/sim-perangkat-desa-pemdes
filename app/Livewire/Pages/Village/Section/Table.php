@@ -5,6 +5,8 @@ namespace App\Livewire\Pages\Village\Section;
 use App\Models\Village;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Exports\VillageExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Table extends Component
@@ -15,7 +17,7 @@ class Table extends Component
     public $district;
     public $type;
     public $search;
-    protected $listeners = ['refreshComponent' => '$refresh', 'filter'];
+    protected $listeners = ['refreshComponent' => '$refresh', 'filter', 'export'];
     
     public function render()
     {
@@ -37,6 +39,16 @@ class Table extends Component
         if(isset($params['search'])) {
             $this->search = $params['search'];
         }
+    }
+
+    public function export()
+    {
+        $params = [
+            'district' => $this->district,
+            'type' => $this->type,
+            'search' => $this->search,
+        ];
+        return Excel::download(new VillageExport($params), 'desa-'.date('Ymd').'.xlsx');
     }
 
     public function delete($id)
