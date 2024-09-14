@@ -18,6 +18,7 @@ use App\Livewire\Pages\Notification\Index as NotificationIndex;
 use App\Livewire\Pages\VillageStaff\Index as VillageStaffIndex;
 use App\Livewire\Pages\PendingApproval\Index as PendingApprovalIndex;
 use App\Livewire\Pages\Tools\RemoveBacklinks\Index as RemoveBacklinksIndex;
+use App\Livewire\Pages\StatisticStatusData\Index as StatisticStatusDataIndex;
 
 Route::get('/', function () {
     return redirect('check-role');
@@ -33,6 +34,7 @@ Route::middleware([
     // Route::middleware([
     //     'role:administrator'
     // ])->group(function () {
+        Route::get('statistic-status-data', StatisticStatusDataIndex::class)->name('statistic-status-data')->middleware('role:administrator');
         Route::get('statistic', StatisticIndex::class)->name('statistic')->middleware('role:administrator');
         Route::get('pending-approval', PendingApprovalIndex::class)->name('pending-approval')->middleware('role:administrator');
         Route::get('check-role', [CheckRoleController::class, 'index'])->name('check-role');

@@ -1,6 +1,6 @@
 <div>
     {{-- If your happiness depends on money, you will never be happy with yourself. --}}
-    @livewire('pages.statistic.section.filter')
+    @livewire('pages.statistic-status-data.section.filter')
 
     <div class="overflow-x-auto">
         <table class="table-auto w-full border-collapse border border-gray-300 mb-5">

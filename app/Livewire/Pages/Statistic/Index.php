@@ -64,7 +64,7 @@ class Index extends Component
 
         // $this->dispatch('updateChart')->to(BarChart::class);
         $this->dispatch('updateChart', $this->legend, $this->series)->to(BarChartComponent::class);
-    } 
+    }
 
     public function render()
     {

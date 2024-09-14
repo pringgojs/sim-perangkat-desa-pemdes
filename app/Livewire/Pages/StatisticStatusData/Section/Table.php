@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Livewire\Pages\Statistic\Section;
+namespace App\Livewire\Pages\StatisticStatusData\Section;
 
 use App\Models\Option;
 use App\Models\Village;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\StatisticVillageStaffStatusDataExport;
 
-class TableStatusData extends Component
+class Table extends Component
 {
     use WithPagination;
     public $statusData;
@@ -38,7 +40,7 @@ class TableStatusData extends Component
             'district' => $this->district,
             'search' => $this->search,
         ];
-        // return Excel::download(new StatisticVillageStaffPensiunExport($params), 'perangakat-daerah-yang-mau-pensiun-'.date('Ymd').'.xlsx');
+        return Excel::download(new StatisticVillageStaffStatusDataExport($params), 'perangakat-daerah-berdasarkan-status-data-'.date('Ymd').'.xlsx');
     }
 
     public function updatingSearch()
@@ -53,8 +55,9 @@ class TableStatusData extends Component
     
     public function render()
     {
-        return view('livewire.pages.statistic.section.table-status-data', [
-            'villages' => Village::with(['district:id,name', 'type'])->search($this->search)->district($this->district)->orderByDefault()->paginate(5), 
+        $query = Village::with(['district:id,name', 'type'])->search($this->search)->district($this->district)->orderByDefault()->paginate(5);
+        return view('livewire.pages.statistic-status-data.section.table', [
+            'villages' => $query, 
         ]);
     }
 }
