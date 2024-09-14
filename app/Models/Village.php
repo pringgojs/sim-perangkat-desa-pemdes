@@ -133,4 +133,16 @@ class Village extends Model
             [$now, $sixMonthsFromNow]
         )->type($bpd)->count();
     }
+
+    /* menghitung total staff berdasarkan jenis staff */
+    public function totalStaffByType($type)
+    {
+        return $this->staff->where('position_type_id', $type)->count();
+    }
+
+    /* menghitung total staff berdasarkan status */
+    public function totalStaffByStatus($status)
+    {
+        return $this->staff->where('data_status_id', $status)->count();
+    }
 }
