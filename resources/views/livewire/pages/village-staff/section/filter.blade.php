@@ -3,7 +3,7 @@
         @if (!$isOperator)
             <!-- Filter Kecamatan -->
             <div class="relative flex items-center space-x-1">
-                <button @click="isDropdownOpen = isDropdownOpen === 'kecamatan' ? '' : 'kecamatan'"
+                <button title="Kecamatan" @click="isDropdownOpen = isDropdownOpen === 'kecamatan' ? '' : 'kecamatan'"
                     class="flex items-center  text-gray-700 text-sm px-2 py-1 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200"
                     :class="kecamatan ? 'bg-gray-200 text-sm font-semibold leading-6 text-gray-900' : 'bg-white'">
 
@@ -39,7 +39,7 @@
 
             <!-- Filter Desa -->
             <div class="relative flex items-center space-x-1">
-                <button @click="isDropdownOpen = isDropdownOpen === 'desa' ? '' : 'desa'"
+                <button title="Desa" @click="isDropdownOpen = isDropdownOpen === 'desa' ? '' : 'desa'"
                     class="flex items-center text-gray-700 text-sm px-2 py-1 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200"
                     :class="desa ? 'bg-gray-200 text-sm font-semibold leading-6 text-gray-900' : 'bg-white'">
                     {{-- <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
@@ -74,7 +74,8 @@
         @endif
         <!-- Filter Jenis Perangkat -->
         <div class="relative flex items-center space-x-1">
-            <button @click="isDropdownOpen = isDropdownOpen === 'jenisPerangkat' ? '' : 'jenisPerangkat'"
+            <button title="Jenis Perangkat"
+                @click="isDropdownOpen = isDropdownOpen === 'jenisPerangkat' ? '' : 'jenisPerangkat'"
                 class="flex items-center text-gray-700 text-sm px-2 py-1 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200"
                 :class="jenisPerangkat ? 'bg-gray-200 text-sm font-semibold leading-6 text-gray-900' : 'bg-white'">
                 {{-- <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">
@@ -109,7 +110,7 @@
 
         <!-- Filter Status Data -->
         <div class="relative flex items-center space-x-1">
-            <button @click="isDropdownOpen = isDropdownOpen === 'statusData' ? '' : 'statusData'"
+            <button title="Status Data" @click="isDropdownOpen = isDropdownOpen === 'statusData' ? '' : 'statusData'"
                 class="flex items-center text-gray-700 text-sm px-2 py-1 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200"
                 :class="statusData ? 'bg-gray-200 text-sm font-semibold leading-6 text-gray-900' : 'bg-white'">
                 {{-- <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">

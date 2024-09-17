@@ -2,12 +2,12 @@
     <div x-cloak x-data="{ kecamatan: '', desa: '', jenisPerangkat: '', villageType: '', search: '', isDropdownOpen: '' }" class="flex flex-wrap items-center space-x-1 mb-5">
         <!-- Filter Kecamatan -->
         <div class="relative flex items-center space-x-1">
-            <button @click="isDropdownOpen = isDropdownOpen === 'kecamatan' ? '' : 'kecamatan'"
+            <button title="Kecamatan" @click="isDropdownOpen = isDropdownOpen === 'kecamatan' ? '' : 'kecamatan'"
                 class="flex items-center  text-gray-700 text-sm px-2 py-1 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200"
                 :class="kecamatan ? 'bg-gray-200 text-sm font-semibold leading-6 text-gray-900' : 'bg-white'">
 
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="size-6">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
                 </svg>
@@ -37,7 +37,7 @@
 
         <!-- Filter Status Data -->
         <div class="relative flex items-center space-x-1">
-            <button @click="isDropdownOpen = isDropdownOpen === 'villageType' ? '' : 'villageType'"
+            <button title="Jenis Desa" @click="isDropdownOpen = isDropdownOpen === 'villageType' ? '' : 'villageType'"
                 class="flex items-center text-gray-700 text-sm px-2 py-1 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200"
                 :class="villageType ? 'bg-gray-200 text-sm font-semibold leading-6 text-gray-900' : 'bg-white'">
                 {{-- <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" viewBox="0 0 20 20" fill="currentColor">

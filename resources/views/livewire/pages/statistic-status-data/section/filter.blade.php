@@ -3,7 +3,7 @@
         @if (!$isOperator)
             <!-- Filter Kecamatan -->
             <div class="relative flex items-center space-x-1">
-                <button @click="isDropdownOpen = isDropdownOpen === 'kecamatan' ? '' : 'kecamatan'"
+                <button title="Kecamatan" @click="isDropdownOpen = isDropdownOpen === 'kecamatan' ? '' : 'kecamatan'"
                     class="flex items-center  text-gray-700 text-sm px-2 py-1 rounded-md hover:bg-gray-200 focus:outline-none focus:bg-gray-200"
                     :class="kecamatan ? 'bg-gray-200 text-sm font-semibold leading-6 text-gray-900' : 'bg-white'">
 
