@@ -13,6 +13,7 @@ use App\Livewire\Pages\Village\Index as VillageIndex;
 use App\Livewire\Pages\Database\Index as DatabaseIndex;
 use App\Livewire\Pages\Dashboard\Index as DashboardIndex;
 use App\Livewire\Pages\Statistic\Index as StatisticIndex;
+use App\Livewire\Pages\Permission\Index as PermissionIndex;
 use App\Livewire\Pages\VillageStaff\Edit as VillageStaffEdit;
 use App\Livewire\Pages\VillageType\Index as VillageTypeIndex;
 use App\Livewire\Pages\Notification\Index as NotificationIndex;
@@ -46,6 +47,7 @@ Route::middleware([
         Route::get('village-staff', VillageStaffIndex::class)->name('village-staff.index');
         Route::get('village-type', VillageTypeIndex::class)->name('village-type.index');
         Route::get('village', VillageIndex::class)->name('village.index');
+        Route::get('permission', PermissionIndex::class)->name('permission.index');
         Route::get('role', RoleIndex::class)->name('role.index');
         Route::get('user', Index::class)->name('user.index')->middleware('role:administrator');
         Route::get('dashboard', DashboardIndex::class)->name('dashboard.index');

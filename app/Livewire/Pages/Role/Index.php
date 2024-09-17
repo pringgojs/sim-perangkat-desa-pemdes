@@ -3,10 +3,15 @@
 namespace App\Livewire\Pages\Role;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use Spatie\Permission\Models\Role;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Index extends Component
 {
+    use LivewireAlert;
+    use WithPagination;
+
     protected $listeners = ['refreshComponent' => '$refresh'];
 
     public $search;
@@ -15,5 +20,14 @@ class Index extends Component
         return view('livewire.pages.role.index', [
             'roles' => Role::paginate(5)
         ]);
+    }
+    
+    public function delete($id)
+    {
+        $role = Role::findOrFail($id);
+        $role->delete();
+        
+        $this->alert('success', 'Success!');
+        $this->dispatch('refreshComponent')->self();
     }
 }

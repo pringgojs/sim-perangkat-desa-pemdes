@@ -206,7 +206,7 @@
                                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Role</a>
                                 </li>
                                 <li>
-                                    <a
+                                    <a href="{{ route('permission.index') }}" wire:navigate
                                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Permission</a>
                                 </li>
                             </ul>
