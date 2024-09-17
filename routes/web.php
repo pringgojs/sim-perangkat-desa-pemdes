@@ -7,6 +7,7 @@ use App\Http\Controllers\SSOTokenController;
 use App\Livewire\Pages\Database\UserAccount;
 use App\Livewire\Pages\VillageStaff\Pensiun;
 use App\Http\Controllers\CheckRoleController;
+use App\Livewire\Pages\Role\Index as RoleIndex;
 use App\Livewire\Pages\Profile\Index as ProfileIndex;
 use App\Livewire\Pages\Village\Index as VillageIndex;
 use App\Livewire\Pages\Database\Index as DatabaseIndex;
@@ -45,6 +46,7 @@ Route::middleware([
         Route::get('village-staff', VillageStaffIndex::class)->name('village-staff.index');
         Route::get('village-type', VillageTypeIndex::class)->name('village-type.index');
         Route::get('village', VillageIndex::class)->name('village.index');
+        Route::get('role', RoleIndex::class)->name('role.index');
         Route::get('user', Index::class)->name('user.index')->middleware('role:administrator');
         Route::get('dashboard', DashboardIndex::class)->name('dashboard.index');
         Route::get('/phpmyadmin', [SSOTokenController::class, 'phpMyAdmin'])->name('phpmyadmin');
