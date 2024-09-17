@@ -3,6 +3,7 @@
 use App\Livewire\Pages\User\Form;
 use App\Livewire\Pages\User\Index;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Pages\Role\RolePermission;
 use App\Http\Controllers\SSOTokenController;
 use App\Livewire\Pages\Database\UserAccount;
 use App\Livewire\Pages\VillageStaff\Pensiun;
@@ -48,6 +49,7 @@ Route::middleware([
         Route::get('village-type', VillageTypeIndex::class)->name('village-type.index');
         Route::get('village', VillageIndex::class)->name('village.index');
         Route::get('permission', PermissionIndex::class)->name('permission.index');
+        Route::get('role/{id}/permission', RolePermission::class)->name('role.permission');
         Route::get('role', RoleIndex::class)->name('role.index');
         Route::get('user', Index::class)->name('user.index')->middleware('role:administrator');
         Route::get('dashboard', DashboardIndex::class)->name('dashboard.index');

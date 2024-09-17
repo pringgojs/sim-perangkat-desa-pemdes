@@ -44,6 +44,10 @@
                     </div>
 
                     <div class="flex flex-none items-center gap-x-2">
+                        <a href="{{ route('role.permission', ['id' => $item->id]) }}" wire:navigate
+                            class="inline-flex rounded-lg p-2 bg-green-50 text-green-700 ring-4 ring-white cursor-pointer">
+                            <x-heroicon-o-document-text class="h-5 w-5" />
+                        </a>
                         <a
                             onclick="Livewire.dispatch('openModal', { component: 'modals.form-role', arguments: {id: {{ $item->id }}} })"class="inline-flex rounded-lg p-2 bg-purple-50 text-purple-700 ring-4 ring-white">
                             <x-heroicon-o-pencil class="h-5 w-5" />
