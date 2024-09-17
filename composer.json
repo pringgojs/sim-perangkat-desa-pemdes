@@ -82,11 +82,5 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../livewire-chart-package"
-        }
-    ]
+    "prefer-stable": true
 }
