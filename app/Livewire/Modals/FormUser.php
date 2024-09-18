@@ -46,26 +46,6 @@ class FormUser extends ModalComponent
         DB::beginTransaction();
 
         $user = $this->form->store();
-
-        if ($this->form->is_create_cpanel_account) {
-            /* create cpanel account */
-            $cpanel_service = new CpanelService;
-            $user_cpanel = $cpanel_service->createAccount(
-                $user,
-                $this->form->username,
-                $this->form->domain,
-                $this->form->email,
-                $this->form->password,
-                'all website'
-            );
-        }
-
-        if ($this->form->is_create_db_account) {
-            /* create database account */
-            $database_service = new DatabaseService;
-            $user_database = $database_service->createAccount($user, $this->form->database_username, $this->form->database_password, $this->form->database);
-        }
-
         
         DB::commit();
         

@@ -50,7 +50,7 @@ class UserForm extends Form
         return [
             'name' => 'required|max:250',
             'username' => 'required|max:16',
-            'domain' => $this->user || !$this->is_create_cpanel_account ? 'nullable' : 'required|max:40',
+            // 'domain' => $this->user || !$this->is_create_cpanel_account ? 'nullable' : 'required|max:40',
             'role' => 'required',
             'password' => $this->user ? 'nullable' : 'required|string|regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/',
             // 'repassword' => !$this->password ? 'nullable' : 'required_with:password|same:password|min:6',
@@ -60,9 +60,9 @@ class UserForm extends Form
                 'email',
                 Rule::unique('users')->ignore($this->user), 
             ],
-            'database' => $this->database ? 'string|max:40' : 'nullable',
-            'database_username' => !$this->is_create_db_account ? 'nullable' : 'required|max:50',
-            'database_password' => !$this->database_username || !$this->is_create_db_account? 'nullable' : 'required|string|regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/',
+            // 'database' => $this->database ? 'string|max:40' : 'nullable',
+            // 'database_username' => !$this->is_create_db_account ? 'nullable' : 'required|max:50',
+            // 'database_password' => !$this->database_username || !$this->is_create_db_account? 'nullable' : 'required|string|regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/',
             // 'database_repassword' => !$this->database_password || !$this->is_create_db_account ? 'nullable' : 'required_with:database_password|same:database_password',
         ];
 
