@@ -31,6 +31,22 @@
                         @enderror
                     </div>
                 </div>
+                <div>
+                    <label for="groups"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Group</label>
+                    <select id="groups" wire:model="form.role"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
+                        <option selected>Choose a role</option>
+                        @foreach ($groups as $item)
+                            <option value="{{ $item->id }}">{{ ucfirst($item->group) }}</option>
+                        @endforeach
+                    </select>
+                    <div>
+                        @error('form.role')
+                            <span class="text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
 
                 <div class="flex">
                     <button type="submit" wire:loading.attr="disabled" wire:target='store'

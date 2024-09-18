@@ -16,9 +16,11 @@ class FormPermission extends ModalComponent
     public PermissionForm $form; 
 
     public $id;
+    public $groups;
 
     public function mount()
     {
+        $this->groups = Permission::whereNotNull('group')->select('group')->groupBy('group')->get(); 
         if ($this->id) {
             $model = Permission::find($this->id);
             $this->form->setModel($model);
