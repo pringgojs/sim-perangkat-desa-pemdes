@@ -14,19 +14,17 @@
                     <div class="mt-6 space-y-6 sm:flex sm:items-center sm:space-x-10 sm:space-y-0 mb-5">
                         @foreach (\Spatie\Permission\Models\Permission::whereGroup($item->group)->orderBy('name')->get() as $permission)
                             <div class="flex items-center">
-                                <input id="permission-{{ $permission->id }}"
+                                <input id="role-{{ $item->id }}-permission-{{ $permission->id }}"
                                     @if ($role->hasPermissionTo($permission->id)) checked @endif )
                                     wire:change="update({{ $permission->id }})" name="group" type="checkbox"
                                     class="h-4 w-4 border-gray-300 text-green-600 focus:ring-green-600">
-                                <label for="permission-{{ $permission->id }}"
+                                <label for="role-{{ $item->id }}-permission-{{ $permission->id }}"
                                     class="ml-3 block text-sm font-medium leading-6 text-gray-900">{{ \App\Services\PermissionService::getName($permission->name) }}</label>
                             </div>
                         @endforeach
                     </div>
                 @endforeach
-
             </fieldset>
-
         </div>
     </div>
 </div>

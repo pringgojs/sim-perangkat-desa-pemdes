@@ -1,7 +1,7 @@
 <div>
     <div class="sm:flex sm:items-center mb-5">
         <div class="sm:flex-auto">
-            <h1 class="text-base font-semibold leading-6 text-gray-900">Permission</h1>
+            <h1 class="text-base font-semibold leading-6 text-gray-900">Role</h1>
             {{-- <p class="mt-2 text-sm text-gray-700">Daftar program dan kegiatan yang telah diimport ke sistem.</p> --}}
         </div>
         <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
@@ -39,6 +39,10 @@
                                 <p class="text-sm font-semibold leading-6 text-gray-900">
                                     <a href="#" class="">{{ ucwords(strtolower($item->name)) }}</a>
                                 </p>
+                                <p class="flex text-xs leading-5 text-gray-500">
+                                    <a class="truncate">{{ count($item->permissions) }} permission</a>
+                                </p>
+
                             </div>
                         </div>
                     </div>

@@ -1,7 +1,7 @@
 <div>
     <div class="sm:flex sm:items-center mb-5">
         <div class="sm:flex-auto">
-            <h1 class="text-base font-semibold leading-6 text-gray-900">Role</h1>
+            <h1 class="text-base font-semibold leading-6 text-gray-900">Permission</h1>
             {{-- <p class="mt-2 text-sm text-gray-700">Daftar program dan kegiatan yang telah diimport ke sistem.</p> --}}
         </div>
         <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
