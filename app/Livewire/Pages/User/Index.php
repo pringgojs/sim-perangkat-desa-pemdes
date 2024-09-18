@@ -6,8 +6,10 @@ use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class Index extends Component
+class Index extends Component implements HasMiddleware 
 {
     use LivewireAlert;
 
@@ -16,12 +18,13 @@ class Index extends Component
     public $search;
     protected $listeners = ['refreshComponent' => '$refresh'];
 
-    public function mount()
+    public static function middleware(): array
     {
-        auth()->user()->hasPermissionTo('user.index');
-
+        return [
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('user.view,web')),
+        ];
     }
-
+    
     public function render()
     {
         return view('livewire.pages.user.index', [
