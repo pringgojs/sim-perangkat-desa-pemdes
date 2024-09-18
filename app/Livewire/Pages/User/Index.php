@@ -16,6 +16,12 @@ class Index extends Component
     public $search;
     protected $listeners = ['refreshComponent' => '$refresh'];
 
+    public function mount()
+    {
+        auth()->user()->hasPermissionTo('user.index');
+
+    }
+
     public function render()
     {
         return view('livewire.pages.user.index', [

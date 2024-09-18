@@ -29,10 +29,13 @@ class PermissionSeeder extends Seeder
 
     public function permission()
     {
+        $group = 'User';
+        $permissions = PermissionService::create($group, ['view', 'create', 'edit', 'delete', 'export']);
+
         $group = 'Desa';
-        $permissions = PermissionService::create($group, ['create', 'edit', 'delete', 'export']);
+        $permissions = PermissionService::create($group, ['view', 'create', 'edit', 'delete', 'export']);
 
         $group = 'Jenis Desa';
-        $permissions = PermissionService::create($group, ['create', 'edit', 'delete', 'export']);
+        $permissions = PermissionService::create($group, ['view', 'create', 'edit', 'delete', 'export']);
     }
 }

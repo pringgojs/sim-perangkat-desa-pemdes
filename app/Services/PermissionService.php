@@ -10,13 +10,15 @@ class PermissionService
     {
         foreach ($permissions as $item) {
             $groupMask = str_replace(' ', '.', $group);
+            $name = strtolower($groupMask.'.'.$item);
             $payload = [
-                'name' => strtolower($groupMask.'.'.$item),
+                'name' => $name,
                 'group' => strtolower($group)
             ];
 
+
             $permission = Permission::updateOrCreate([
-                'name' => $item
+                'name' => $name
             ], $payload);
         }
     }
