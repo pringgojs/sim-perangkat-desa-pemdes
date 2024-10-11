@@ -5,3 +5,14 @@ tolong buatkan saya migration dan model laravel untuk tabel village_siltap, deng
 -   position_type_id (uuid) relasi ke table options
 -   siltap (number, default 0)
 -   tunjangan (number, default 0)
+
+tolong buatkan saya migration dan model laravel untuk tabel village_position_type di laravel 11, dengan attribute:
+
+-   id (uuid primary key)
+-   village_id (uuid) relasi ke table villages
+-   position_type_id (uuid) relasi ke table options
+-   position_type_status_id (uuid) relasi ke table options
+-   siltap (number, default 0)
+-   tunjangan (number, default 0)
+-   thp (number, default 0)
+-   code (string, nullable)

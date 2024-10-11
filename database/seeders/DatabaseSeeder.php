@@ -10,6 +10,7 @@ use Database\Seeders\UserSeeder;
 use Database\Seeders\OptionSeeder;
 use Database\Seeders\VillageSeeder;
 use Database\Seeders\PermissionSeeder;
+use Database\Seeders\VillagePositionTypeSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -31,5 +32,6 @@ class DatabaseSeeder extends Seeder
         $this->call(OptionSeeder::class);
         $this->call(VillageSeeder::class);
         $this->call(VillageSiltapSeeder::class);
+        $this->call(VillagePositionTypeSeeder::class);
     }
 }

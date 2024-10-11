@@ -20,6 +20,7 @@ class OptionSeeder extends Seeder
         self::statusData();
         self::positionType();
         self::villageType();
+        self::statusJabatan();
 
     }
 
@@ -71,6 +72,23 @@ class OptionSeeder extends Seeder
             'name' => $value,
             'key' => strtolower($value),
             'type' => 'status_data',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ])->toArray();
+    
+        Option::insert($data);
+    }
+    
+    public function statusJabatan()
+    {
+        $options = [
+            'Definitif', 'Plt', 'Pj', 'Plh'];
+    
+        $data = collect($options)->map(fn($value) => [
+            'id' => Str::uuid(),
+            'name' => $value,
+            'key' => strtolower($value),
+            'type' => 'status_jabatan',
             'created_at' => now(),
             'updated_at' => now(),
         ])->toArray();
