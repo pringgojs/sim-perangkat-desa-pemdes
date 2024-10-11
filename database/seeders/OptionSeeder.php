@@ -81,7 +81,7 @@ class OptionSeeder extends Seeder
     public function positionType()
     {
         $options = [
-            'Kasi', 'Kaur', 'Sekretaris Desa', 'Kepala Desa', 'Kepala Wilayah', 'BPD'];
+            'Kasi', 'Kaur', 'Sekretaris Desa', 'Kepala Desa', 'Kepala Wilayah', 'BPD', "Staf"];
     
         $data = collect($options)->map(fn($value) => [
             'id' => Str::uuid(),

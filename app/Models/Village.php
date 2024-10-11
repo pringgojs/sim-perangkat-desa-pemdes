@@ -60,6 +60,13 @@ class Village extends Model
         $q->where('district_id', $district);
     }
 
+    public function scopeCode($q, $code = null)
+    {
+        if (!$code) return;
+
+        $q->where('code', $code);
+    }
+
     public function scopeType($q, $type = null)
     {
         if (!$type) return;

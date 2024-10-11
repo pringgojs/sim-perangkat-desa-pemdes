@@ -1,0 +1,7 @@
+tolong buatkan saya migration dan model laravel untuk tabel village_siltap, dengan attribute:
+
+-   id (uuid primary key)
+-   village_id (uuid) relasi ke table villages
+-   position_type_id (uuid) relasi ke table options
+-   siltap (number, default 0)
+-   tunjangan (number, default 0)

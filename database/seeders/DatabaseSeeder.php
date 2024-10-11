@@ -30,5 +30,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(OptionSeeder::class);
         $this->call(VillageSeeder::class);
+        $this->call(VillageSiltapSeeder::class);
     }
 }
