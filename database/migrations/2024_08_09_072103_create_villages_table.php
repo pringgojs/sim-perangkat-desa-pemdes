@@ -17,8 +17,11 @@ return new class extends Migration
             $table->uuid('district_id');
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
+            $table->string('code')->nullable();
             $table->uuid('type_id');
             $table->string('no_sotk')->nullable();
+            $table->integer('total_kasi')->default(0);
+            $table->integer('total_kaur')->default(0);
             $table->timestamps();
 
             // Foreign keys

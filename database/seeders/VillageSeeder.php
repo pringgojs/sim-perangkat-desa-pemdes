@@ -7,7 +7,9 @@ use App\Models\Option;
 use App\Models\Village;
 use Illuminate\Support\Str;
 use App\Models\VillageStaff;
+use App\Imports\VillageImport;
 use Illuminate\Database\Seeder;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class VillageSeeder extends Seeder
@@ -17,8 +19,15 @@ class VillageSeeder extends Seeder
      */
     public function run(): void
     {
-        self::village();
-        self::villageStaff();
+        // self::village();
+        self::villageImport();
+        // self::villageStaff();
+    }
+
+    public function villageImport()
+    {
+        Excel::import(new VillageImport, storage_path('app/resources/data-desa.xlsx'));
+
     }
 
     public function village()

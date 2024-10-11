@@ -26,14 +26,33 @@ class OptionSeeder extends Seeder
     public function district()
     {
         $districts = [
-            'Ponorogo', 'Jenangan', 'Babadan', 'Siman', 'Kauman', 'Sukorejo', 'Sampung', 'Badegan', 'Jambon', 'Balong', 
-            'Slahung', 'Bungkal', 'Ngrayun', 'Sambit', 'Sawoo', 'Mlarak', 'Jetis', 'Pulung', 'Ngebel', 'Sooko', 'Pudak',
+            'SLAHUNG' => '35.02.01',
+            'NGRAYUN' => '35.02.02',
+            'BUNGKAL' => '35.02.03',
+            'SAMBIT' => '35.02.04',
+            'SAWOO' => '35.02.05',
+            'SOOKO' => '35.02.06',
+            'PULUNG' => '35.02.07',
+            'MLARAK' => '35.02.08',
+            'JETIS' => '35.02.09',
+            'SIMAN' => '35.02.10',
+            'BALONG' => '35.02.11',
+            'KAUMAN' => '35.02.12',
+            'BADEGAN' => '35.02.13',
+            'SAMPUNG' => '35.02.14',
+            'SUKOREJO' => '35.02.15',
+            'BABADAN' => '35.02.16',
+            'JENANGAN' => '35.02.18',
+            'NGEBEL' => '35.02.19',
+            'JAMBON' => '35.02.20',
+            'PUDAK' => '35.02.21',
         ];
     
-        $data = collect($districts)->map(fn($district) => [
+        $data = collect($districts)->map(fn($index, $value) => [
             'id' => Str::uuid(),
-            'name' => $district,
+            'name' => ucwords($value),
             'key' => null,
+            'extra' => serialize(['code' => $index]),
             'type' => 'district',
             'created_at' => now(),
             'updated_at' => now(),
@@ -79,7 +98,7 @@ class OptionSeeder extends Seeder
     public function villageType()
     {
         $options = [
-            'Desa Swadaya', 'Desa Swakarya', 'Desa Swasembada'];
+            'Swadaya', 'Swakarya', 'Swasembada'];
     
         $max_kasi = [2,3,3];
 

@@ -14,18 +14,10 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        // self::role();
         self::permission();
-        
     }
 
-    public function role()
-    {
-        $roles = ['administrator', 'operator'];
-        foreach ($roles as $role) {
-            Role::create(['name' => $role]);
-        }
-    }
+    
 
     public function permission()
     {

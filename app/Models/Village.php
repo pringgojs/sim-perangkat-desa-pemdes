@@ -21,6 +21,9 @@ class Village extends Model
         'district_id',
         'address',
         'phone',
+        'code',
+        'total_kasi',
+        'total_kaur',
         'type_id',
         'no_sotk',
     ];
