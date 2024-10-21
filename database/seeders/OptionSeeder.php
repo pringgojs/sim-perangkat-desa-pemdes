@@ -21,7 +21,7 @@ class OptionSeeder extends Seeder
         self::positionType();
         self::villageType();
         self::statusJabatan();
-
+        self::educationLevel();
     }
 
     public function district()
@@ -78,6 +78,23 @@ class OptionSeeder extends Seeder
     
         Option::insert($data);
     }
+
+    public function educationLevel()
+    {
+        $options = [
+            'SD', 'SMP/SLTP', 'SMA/SLTA', 'Diploma', 'D1', 'D2', 'D3', 'D4', 'S1'];
+    
+        $data = collect($options)->map(fn($value) => [
+            'id' => Str::uuid(),
+            'name' => $value,
+            'key' => strtolower($value),
+            'type' => 'education_level',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ])->toArray();
+    
+        Option::insert($data);
+    }
     
     public function statusJabatan()
     {
@@ -88,7 +105,7 @@ class OptionSeeder extends Seeder
             'id' => Str::uuid(),
             'name' => $value,
             'key' => strtolower($value),
-            'type' => 'status_jabatan',
+            'type' => 'position_type_status',
             'created_at' => now(),
             'updated_at' => now(),
         ])->toArray();

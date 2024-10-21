@@ -54,6 +54,16 @@ class Option extends Model
         $q->where('type', 'village_type')->orderBy('name');
     }
 
+    public function scopeEducationLevels($q)
+    {
+        $q->where('type', 'education_level')->orderBy('name');
+    }
+
+    public function scopePositionTypeStatus($q)
+    {
+        $q->where('type', 'position_type_status')->orderBy('name');
+    }
+
     public function scopePositionTypes($q)
     {
         $q->where('type', 'position_type')->orderBy('name');

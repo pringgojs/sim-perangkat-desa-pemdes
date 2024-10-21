@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Imports\VillageStaffImport;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class VillageStaffSeeder extends Seeder
 {
@@ -12,6 +14,6 @@ class VillageStaffSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Excel::import(new VillageStaffImport, storage_path('app/resources/data-perangkat.xlsx'));
     }
 }

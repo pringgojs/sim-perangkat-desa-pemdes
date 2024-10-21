@@ -41,6 +41,7 @@ class VillagePositionTypeImport implements ToCollection
             $tunjangan = $item[7];
             $total = $item[8];
             $status = $item[9];
+            $is_parkir = $item[10];
 
             if ($position_type == 'Staf Seksi') $key = 'staf';
             if ($position_type == 'Staf Urusan') $key = 'staf';
@@ -62,6 +63,7 @@ class VillagePositionTypeImport implements ToCollection
             $model->siltap = $siltap ?? 0;
             $model->tunjangan = $tunjangan ?? 0;
             $model->thp = $total ?? 0;
+            $model->is_parkir = $is_parkir == 'parkir' ? true : false;
             $model->save();
         }
     }

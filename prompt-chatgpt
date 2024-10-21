@@ -16,3 +16,21 @@ tolong buatkan saya migration dan model laravel untuk tabel village_position_typ
 -   tunjangan (number, default 0)
 -   thp (number, default 0)
 -   code (string, nullable)
+
+tolong buatkan saya model beserta migrationnya untk tabel village_staff_history di laravel 11, dengan attribute:
+
+-   id (uuid primary key)
+-   village_staff_id (uuid) relasi ke table village_staff
+-   village_position_type_id (uuid) relasi ke table village_position_type
+-   village_id (uuid) relasi ke table villages
+-   position_code (string, nullable)
+-   position_type_id (uuid) relasi ke table options
+-   position_name (string, nullable)
+-   position_type_status_id (uuid) relasi ke table options
+-   siltap (number, default 0)
+-   tunjangan (number, default 0)
+-   thp (number, default 0)
+-   no_sk (string, nullable)
+-   date_of_sk (datetime, nullable)
+-   date_of_appointment (datetime, nullable)
+-   enddate_of_office (datetime, nullable)

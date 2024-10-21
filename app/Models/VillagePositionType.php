@@ -40,4 +40,12 @@ class VillagePositionType extends Model
     {
         return $this->belongsTo(Option::class, 'position_type_status_id');
     }
+
+    public function scopeCode($q, $code = null)
+    {
+        if (!$code) return;
+
+        $q->where('code', $code);
+    }
+    
 }
