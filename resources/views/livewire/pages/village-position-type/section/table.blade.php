@@ -53,7 +53,9 @@
 
                                         <td
                                             class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                                            {{ $item->position_name }}
+                                            {{ $item->position_name }} <br>
+                                            {{ $item->code }}
+
                                         </td>
                                         <td
                                             class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
