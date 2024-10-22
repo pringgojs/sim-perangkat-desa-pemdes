@@ -30,8 +30,6 @@ class Filter extends Component
             'isParkir' => $isParkir,
         ];
 
-        info($params);
-
         $this->dispatch('filter', $params )->to(Table::class);
     }
 
