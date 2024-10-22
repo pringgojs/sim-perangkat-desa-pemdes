@@ -57,7 +57,7 @@
                                     </div>
                                     <div class="overflow-y-scroll max-h-48 space-y-0.5 ">
                                         <template x-for="item in filteredDistricts">
-                                            <a @click="addSelectedDistrict(item)"
+                                            <a @click="addSelectedDistrict(item);doFilter()"
                                                 class="p-2 md:px-3 capitalize flex items-center text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300"
                                                 :class="checkInSelectedDistrict(item.id) ? 'bg-green-100' : ''"
                                                 href="#" x-text="item.name">
@@ -104,11 +104,13 @@
                                     </div>
                                     <div class="overflow-y-scroll max-h-48 space-y-0.5 ">
                                         <template x-for="item in filteredVillages">
-                                            <a @click="addSelectedVillage(item)"
-                                                class="p-2 md:px-3 capitalize flex items-center text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300"
-                                                :class="checkInSelectedVillage(item.id) ? 'bg-green-100' : ''"
-                                                href="#" x-text="item.name">
-                                            </a>
+                                            <div>
+                                                <a @click="addSelectedVillage(item);doFilter()"
+                                                    class="p-2 md:px-3 capitalize flex items-center text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300"
+                                                    :class="checkInSelectedVillage(item.id) ? 'bg-green-100' : ''"
+                                                    href="#" x-html="item.name +'<br>'+ item.code">
+                                                </a>
+                                            </div>
                                         </template>
                                     </div>
                                 </div>
@@ -120,229 +122,193 @@
                             class="block pt-2 pb-1 px-3 text-xs font-medium uppercase text-gray-400 dark:text-neutral-500">
                             Jabatan
                         </span>
-                        <a @click="dateType == 'today' ? dateType = '' : dateType='today';doFilter()"
-                            class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
-                            :class="dateType == 'today' ? 'bg-green-100' : ''" href="#">
-                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
-                            </svg>
-
-                            Hari ini
-                        </a>
-                        <a @click="dateType == 'this-month' ? dateType = '' : dateType='this-month';doFilter()"
-                            class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
-                            :class="dateType == 'this-month' ? 'bg-green-100' : ''" href="#">
-                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
-                            </svg>
-
-                            Bulan ini
-                        </a>
-
-                        <a @click="dateType == 'other-month' ? dateType = '' : dateType='other-month';showSelectMonth=true;"
-                            class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
-                            :class="dateType == 'other-month' ? 'bg-green-100' : ''" href="#">
-                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
-                            </svg>
-                            Bulan Tertentu
-                        </a>
-                        {{-- <a @click="dateType='date-range'"
-                            class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
-                            :class="dateType == 'date-range' ? 'bg-green-100' : ''" href="#">
-                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M6.75 2.994v2.25m10.5-2.25v2.25m-14.252 13.5V7.491a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v11.251m-18 0a2.25 2.25 0 0 0 2.25 2.25h13.5a2.25 2.25 0 0 0 2.25-2.25m-18 0v-7.5a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v7.5m-6.75-6h2.25m-9 2.25h4.5m.002-2.25h.005v.006H12v-.006Zm-.001 4.5h.006v.006h-.006v-.005Zm-2.25.001h.005v.006H9.75v-.006Zm-2.25 0h.005v.005h-.006v-.005Zm6.75-2.247h.005v.005h-.005v-.005Zm0 2.247h.006v.006h-.006v-.006Zm2.25-2.248h.006V15H16.5v-.005Z" />
-                            </svg>
-
-                            Range Tanggal
-                        </a> --}}
-                    </div>
-                </div>
-
-                {{-- select bulan --}}
-                <div x-show='showSelectMonth' x-cloak x-transition @click.away="showSelectMonth=false"
-                    class="absolute inline-flex z-10 w-48 mt-48 ml-40 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                    role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-                    <div class="py-1 capitalize" role="none">
-                        <div class="block p-4 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                            id="menu-item-1">
-                            <x-label for="" class="text-xs font-medium text-gray-700 dark:text-gray-200">
-                                bulan
-                            </x-label>
-                            <select name='month' x-model="month"
-                                class="bg-gray-50 border px-4 capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                required>
-                                <option value="" selected disabled>pilih bulan</option>
-                                {{-- @foreach ($months as $month)
-                                    <option value="{{ $month['value'] }}">{{ $month['name'] }}
-                                    </option>
-                                @endforeach --}}
-                            </select>
-                            <x-label for="" class="mt-4 text-xs text-gray-700 dark:text-gray-200">
-                                tahun
-                            </x-label>
-                            <x-input x-mask="9999" x-model="year" type="text" class="w-full py-2.5"
-                                name='year' placeholder="Tahun" required />
-                            <x-button class="w-full mt-3 text-sm" @click="doFilter()"><span
-                                    class="mx-auto">Simpan</span></x-button>
+                        <div class="overflow-y-scroll max-h-48 space-y-0.5 ">
+                            <template x-for="item in positionTypes">
+                                <a @click="positionType == item.id ? positionType = '' : positionType=item.id;doFilter()"
+                                    class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
+                                    :class="positionType == item.id ? 'bg-green-100' : ''" href="#">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 size-4" fill="none"
+                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M14.25 6.087c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.036-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959v0a.64.64 0 0 1-.657.643 48.39 48.39 0 0 1-4.163-.3c.186 1.613.293 3.25.315 4.907a.656.656 0 0 1-.658.663v0c-.355 0-.676-.186-.959-.401a1.647 1.647 0 0 0-1.003-.349c-1.036 0-1.875 1.007-1.875 2.25s.84 2.25 1.875 2.25c.369 0 .713-.128 1.003-.349.283-.215.604-.401.959-.401v0c.31 0 .555.26.532.57a48.039 48.039 0 0 1-.642 5.056c1.518.19 3.058.309 4.616.354a.64.64 0 0 0 .657-.643v0c0-.355-.186-.676-.401-.959a1.647 1.647 0 0 1-.349-1.003c0-1.035 1.008-1.875 2.25-1.875 1.243 0 2.25.84 2.25 1.875 0 .369-.128.713-.349 1.003-.215.283-.4.604-.4.959v0c0 .333.277.599.61.58a48.1 48.1 0 0 0 5.427-.63 48.05 48.05 0 0 0 .582-4.717.532.532 0 0 0-.533-.57v0c-.355 0-.676.186-.959.401-.29.221-.634.349-1.003.349-1.035 0-1.875-1.007-1.875-2.25s.84-2.25 1.875-2.25c.37 0 .713.128 1.003.349.283.215.604.401.96.401v0a.656.656 0 0 0 .658-.663 48.422 48.422 0 0 0-.37-5.36c-1.886.342-3.81.574-5.766.689a.578.578 0 0 1-.61-.58v0Z">
+                                        </path>
+                                    </svg>
+                                    <span x-text="item.name"></span>
+                                </a>
+                            </template>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="relative flex items-center space-x-1">
-            <div class="flex items-center">
-                <label for="simple-search" class="sr-only">Search</label>
-                <div class="relative w-full">
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <x-bi-search class="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                    <div class="p-1 space-y-0.5">
+                        <span
+                            class="block pt-2 pb-1 px-3 text-xs font-medium uppercase text-gray-400 dark:text-neutral-500">
+                            Parkir
+                        </span>
+                        <a @click="isParkir = !isParkir;doFilter()"
+                            class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
+                            :class="isParkir ? 'bg-green-100' : ''" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 size-4" fill="none"
+                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 0 1-1.125-1.125v-3.75ZM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-8.25ZM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-2.25Z" />
+                            </svg>
+                            Jabatan parkir
+                        </a>
                     </div>
-                    <input type="text" x-model="search" id="simple-search" @change="doFilter()"
-                        class="bg-white border border-gray-300 text-gray-900 text-sm rounded focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Cari berdasarkan kode transaksi ... " required>
                 </div>
             </div>
+            <div class="relative flex items-center space-x-1">
+                <div class="flex items-center">
+                    <label for="simple-search" class="sr-only">Search</label>
+                    <div class="relative w-full">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <x-bi-search class="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                        </div>
+                        <input type="text" x-model="search" id="simple-search" @change="doFilter()"
+                            class="bg-white border border-gray-300 text-gray-900 text-sm rounded focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Cari ... " required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative flex items-center space-x-1">
+                <div wire:loading class="-mt-6">
+                    @livewire('utils.loading', key(\Illuminate\Support\Str::random(10)))
+                </div>
+            </div>
+            <div class="flex-grow">
+            </div>
+            <div class="flex flex-wrap items-center content-center space-x-1">
+                {{-- <button type="button" class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Button text</button> --}}
+                <div class="relative flex items-center">
+                    @can('transaksi.pengeluaran.barang.export transaction')
+                        <button wire:click="export"
+                            class="flex items-center rounded-md bg-white  py-2.5 px-4 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                            <x-bytesize-download class="h-5 w-5 mr-2" />
+                            Transaksi
+                        </button>
+                    @endcan
+                    @can('transaksi.pengeluaran.barang.export transaction detail')
+                        <button wire:click="exportDetail"
+                            class="flex items-center rounded-md ml-1 bg-white  py-2.5 px-4 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                            <x-bytesize-download class="h-5 w-5 mr-2" />
+                            Detail Transaksi
+                        </button>
+                    @endcan
+                </div>
+            </div>
+            <div class="relative flex items-center space-x-1">
+                <button class="hidden" x-ref="btnFilter"
+                    @click="$wire.filter(area, search,positionType,selectedDistrict, selectedVillage, isParkir)"></button>
+            </div>
         </div>
 
-        <div class="relative flex items-center space-x-1">
-            <div wire:loading class="-mt-6">
-                @livewire('utils.loading', key(\Illuminate\Support\Str::random(10)))
-            </div>
-        </div>
-        <div class="flex-grow">
-        </div>
-        <div class="flex flex-wrap items-center content-center space-x-1">
-            {{-- <button type="button" class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Button text</button> --}}
-            <div class="relative flex items-center">
-                @can('transaksi.pengeluaran.barang.export transaction')
-                    <button wire:click="export"
-                        class="flex items-center rounded-md bg-white  py-2.5 px-4 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                        <x-bytesize-download class="h-5 w-5 mr-2" />
-                        Transaksi
-                    </button>
-                @endcan
-                @can('transaksi.pengeluaran.barang.export transaction detail')
-                    <button wire:click="exportDetail"
-                        class="flex items-center rounded-md ml-1 bg-white  py-2.5 px-4 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                        <x-bytesize-download class="h-5 w-5 mr-2" />
-                        Detail Transaksi
-                    </button>
-                @endcan
-            </div>
-        </div>
-        <div class="relative flex items-center space-x-1">
-            <button class="hidden" x-ref="btnFilter"
-                @click="$wire.filter(status, dateType, search, month, year)"></button>
-        </div>
+        <script>
+            function filter() {
+                return {
+                    area: '',
+                    positionType: '',
+                    isParkir: false,
+                    search: '',
+                    showSelectMonth: false,
+                    month: '',
+                    year: '',
+                    villages: @js($villages),
+                    districts: @js($districts),
+                    positionTypes: @js($positionTypes),
+                    searchDistrict: '',
+                    searchVillage: '',
+                    selectedDistrict: [],
+                    selectedVillage: [],
+                    init() {},
+                    get filteredDistricts() {
+                        if (this.searchDistrict === "") {
+                            return this.districts; // Jika input kosong, tampilkan semua data
+                        }
+
+                        let filtered = this.districts.filter((item) =>
+                            item.name
+                            .toLowerCase()
+                            .includes(this.searchDistrict.toLowerCase())
+                        );
+
+                        return filtered;
+                    },
+                    addSelectedDistrict(district) {
+                        /* hapus data village */
+                        this.selectedVillage = [];
+
+                        let index = this.selectedDistrict.findIndex(item =>
+                            item == district.id
+                        );
+
+                        if (index !== -1) {
+                            this.selectedDistrict.splice(index, 1);
+                        } else {
+                            this.selectedDistrict.push(district.id)
+                        }
+                        console.log(this.selectedDistrict);
+                    },
+                    checkInSelectedDistrict(value) {
+                        let index = this.selectedDistrict.findIndex(item =>
+                            item == value
+                        );
+
+                        if (index !== -1) {
+                            return true;
+                        }
+
+                        return false;
+                    },
+
+
+                    get filteredVillages() {
+                        if (this.searchVillage === "") {
+                            return this.villages; // Jika input kosong, tampilkan semua data
+                        }
+
+                        let filtered = this.villages.filter((item) =>
+                            item.name
+                            .toLowerCase()
+                            .includes(this.searchVillage.toLowerCase())
+                        );
+
+                        return filtered;
+                    },
+
+                    addSelectedVillage(village) {
+                        /* hapus data district */
+                        this.selectedDistrict = [];
+
+                        let index = this.selectedVillage.findIndex(item =>
+                            item == village.id
+                        );
+
+                        if (index !== -1) {
+                            this.selectedVillage.splice(index, 1);
+                        } else {
+                            this.selectedVillage.push(village.id)
+                        }
+                        console.log('index', this.selectedVillage)
+                    },
+                    checkInSelectedVillage(value) {
+                        let index = this.selectedVillage.findIndex(item =>
+                            item == value
+                        );
+
+                        if (index !== -1) {
+                            return true;
+                        }
+
+                        return false;
+                    },
+                    doFilter() {
+                        this.$refs.btnFilter.click();
+                    }
+                };
+            }
+        </script>
+
+        <script>
+            window.HSStaticMethods.autoInit();
+        </script>
     </div>
-
-    <script>
-        function filter() {
-            return {
-                area: '',
-                dateType: '',
-                search: '',
-                showSelectMonth: false,
-                month: '',
-                year: '',
-                villages: @js($villages),
-                districts: @js($districts),
-                searchDistrict: '',
-                searchVillage: '',
-                selectedDistrict: [],
-                selectedVillage: [],
-                init() {},
-                get filteredDistricts() {
-                    if (this.searchDistrict === "") {
-                        return this.districts; // Jika input kosong, tampilkan semua data
-                    }
-
-                    let filtered = this.districts.filter((item) =>
-                        item.name
-                        .toLowerCase()
-                        .includes(this.searchDistrict.toLowerCase())
-                    );
-
-                    return filtered;
-                },
-                addSelectedDistrict(district) {
-                    let index = this.selectedDistrict.findIndex(item =>
-                        item == district.id
-                    );
-
-                    if (index !== -1) {
-                        this.selectedDistrict.splice(index, 1);
-                    } else {
-                        this.selectedDistrict.push(district.id)
-                    }
-                    console.log(this.selectedDistrict);
-                },
-                checkInSelectedDistrict(value) {
-                    let index = this.selectedDistrict.findIndex(item =>
-                        item == value
-                    );
-
-                    if (index !== -1) {
-                        return true;
-                    }
-
-                    return false;
-                },
-
-
-                get filteredVillages() {
-                    if (this.searchVillage === "") {
-                        return this.villages; // Jika input kosong, tampilkan semua data
-                    }
-
-                    let filtered = this.villages.filter((item) =>
-                        item.name
-                        .toLowerCase()
-                        .includes(this.searchVillage.toLowerCase())
-                    );
-
-                    return filtered;
-                },
-
-                addSelectedVillage(village) {
-                    let index = this.selectedVillage.findIndex(item =>
-                        item == village.id
-                    );
-
-                    if (index !== -1) {
-                        this.selectedVillage.splice(index, 1);
-                    } else {
-                        this.selectedVillage.push(village.id)
-                    }
-                    console.log('index', this.selectedVillage)
-                },
-                checkInSelectedVillage(value) {
-                    let index = this.selectedVillage.findIndex(item =>
-                        item == value
-                    );
-
-                    if (index !== -1) {
-                        return true;
-                    }
-
-                    return false;
-                },
-                doFilter() {
-                    this.$refs.btnFilter.click();
-                }
-            };
-        }
-    </script>
-
-    <script>
-        window.HSStaticMethods.autoInit();
-    </script>
-</div>
