@@ -22,10 +22,10 @@
                             Wilayah
                         </span>
                         <div
-                            class="hs-dropdown [--strategy:static] md:[--strategy:absolute] [--adaptive:none]   [--auto-close:outside] [--is-collapse:true] md:[--is-collapse:false] relative">
-                            <div @click="filterStatus('kecamatan');" id="hs-header-base-dropdown-sub"
+                            class="hs-dropdown [--strategy:static] md:[--strategy:absolute] [--adaptive:none] [--auto-close:inside] [--is-collapse:true] md:[--is-collapse:false] relative">
+                            <div @click="area='district';" id="hs-header-base-dropdown-sub"
                                 class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
-                                :class="checkInStatus('kecamatan') ? 'bg-green-100' : ''" href="#">
+                                :class="area == 'district' ? 'bg-green-100' : ''" href="#">
                                 <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -59,7 +59,7 @@
                                         <template x-for="item in filteredDistricts">
                                             <a @click="addSelectedDistrict(item)"
                                                 class="p-2 md:px-3 capitalize flex items-center text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300"
-                                                :class="checkInSelectedDistrict(item) ? 'bg-green-100' : ''"
+                                                :class="checkInSelectedDistrict(item.id) ? 'bg-green-100' : ''"
                                                 href="#" x-text="item.name">
                                             </a>
                                         </template>
@@ -67,23 +67,58 @@
                                 </div>
                             </div>
                         </div>
+                        <div
+                            class="hs-dropdown [--strategy:static] md:[--strategy:absolute] [--adaptive:none] [--auto-close:inside] [--is-collapse:true] md:[--is-collapse:false] relative">
 
-                        <a @click="filterStatus('desa');doFilter()"
-                            class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
-                            :class="checkInStatus('desa') ? 'bg-green-100' : ''" href="#">
-                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d=" M5.25 7.5A2.25 2.25 0 0 1 7.5 5.25h9a2.25 2.25 0 0 1 2.25 2.25v9a2.25 2.25 0 0
+                            <div @click="area='village';" id="hs-header-base-dropdown-sub-village"
+                                class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
+                                :class="area == 'village' ? 'bg-green-100' : ''" href="#">
+                                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d=" M5.25 7.5A2.25 2.25 0 0 1 7.5 5.25h9a2.25 2.25 0 0 1 2.25 2.25v9a2.25 2.25 0 0
                                                 1-2.25 2.25h-9a2.25 2.25 0 0 1-2.25-2.25v-9Z" />
-                            </svg>
+                                </svg>
 
-                            Desa
-                        </a>
+                                Desa
+                            </div>
+                            <div class="hs-dropdown-menu transition-[opacity,margin] duration-[0.1ms] md:duration-[150ms] hs-dropdown-open:opacity-100 opacity-0 relative md:w-48 hidden z-10 md:mt-2 md:!mx-[10px] md:top-0 md:start-full ps-7 md:ps-0 md:bg-white md:rounded-lg md:shadow-md dark:bg-neutral-800 dark:divide-neutral-700 before:hidden md:before:block before:absolute before:-end-5 before:top-0 before:h-full before:w-5 md:after:hidden after:absolute after:top-1 after:start-[18px] after:w-0.5 after:h-[calc(100%-0.25rem)] after:bg-gray-100 dark:md:bg-neutral-800 dark:after:bg-neutral-700"
+                                role="menu" aria-orientation="vertical"
+                                aria-labelledby="hs-header-base-dropdown-sub-village">
+                                <div class="p-1 space-y-1">
+                                    <div class="max-w-sm">
+                                        <div class="relative">
+                                            <input type="text" x-model="searchVillage"
+                                                class="peer py-2 px-3 ps-11 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-green-500 focus:ring-green-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                                                placeholder="Cari...">
+                                            <div
+                                                class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4 peer-disabled:opacity-50 peer-disabled:pointer-events-none">
+                                                <svg class="shrink-0 size-4 text-gray-500 dark:text-neutral-500"
+                                                    xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                    class="size-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="overflow-y-scroll max-h-48 space-y-0.5 ">
+                                        <template x-for="item in filteredVillages">
+                                            <a @click="addSelectedVillage(item)"
+                                                class="p-2 md:px-3 capitalize flex items-center text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300"
+                                                :class="checkInSelectedVillage(item.id) ? 'bg-green-100' : ''"
+                                                href="#" x-text="item.name">
+                                            </a>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="p-1 space-y-0.5">
                         <span
                             class="block pt-2 pb-1 px-3 text-xs font-medium uppercase text-gray-400 dark:text-neutral-500">
-                            Tanggal
+                            Jabatan
                         </span>
                         <a @click="dateType == 'today' ? dateType = '' : dateType='today';doFilter()"
                             class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
@@ -212,15 +247,18 @@
     <script>
         function filter() {
             return {
-                status: [],
+                area: '',
                 dateType: '',
                 search: '',
                 showSelectMonth: false,
                 month: '',
                 year: '',
+                villages: @js($villages),
                 districts: @js($districts),
                 searchDistrict: '',
+                searchVillage: '',
                 selectedDistrict: [],
+                selectedVillage: [],
                 init() {},
                 get filteredDistricts() {
                     if (this.searchDistrict === "") {
@@ -237,13 +275,13 @@
                 },
                 addSelectedDistrict(district) {
                     let index = this.selectedDistrict.findIndex(item =>
-                        item.id === district.id
+                        item == district.id
                     );
 
                     if (index !== -1) {
                         this.selectedDistrict.splice(index, 1);
                     } else {
-                        this.selectedDistrict.push(district)
+                        this.selectedDistrict.push(district.id)
                     }
                     console.log(this.selectedDistrict);
                 },
@@ -259,24 +297,35 @@
                     return false;
                 },
 
-                filterStatus(value) {
-                    let index = this.status.findIndex(item =>
-                        item == value
-                    );
 
-                    console.log(index);
-
-                    if (index !== -1) {
-                        this.status.splice(index, 1);
-                    } else {
-                        this.status.push(value)
+                get filteredVillages() {
+                    if (this.searchVillage === "") {
+                        return this.villages; // Jika input kosong, tampilkan semua data
                     }
 
-                    console.log(this.status);
+                    let filtered = this.villages.filter((item) =>
+                        item.name
+                        .toLowerCase()
+                        .includes(this.searchVillage.toLowerCase())
+                    );
+
+                    return filtered;
                 },
 
-                checkInStatus(value) {
-                    let index = this.status.findIndex(item =>
+                addSelectedVillage(village) {
+                    let index = this.selectedVillage.findIndex(item =>
+                        item == village.id
+                    );
+
+                    if (index !== -1) {
+                        this.selectedVillage.splice(index, 1);
+                    } else {
+                        this.selectedVillage.push(village.id)
+                    }
+                    console.log('index', this.selectedVillage)
+                },
+                checkInSelectedVillage(value) {
+                    let index = this.selectedVillage.findIndex(item =>
                         item == value
                     );
 
@@ -286,7 +335,6 @@
 
                     return false;
                 },
-
                 doFilter() {
                     this.$refs.btnFilter.click();
                 }
