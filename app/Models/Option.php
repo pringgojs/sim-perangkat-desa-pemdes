@@ -85,4 +85,11 @@ class Option extends Model
 
         $q->where('name', 'like', '%'.$search.'%');
     }
+
+    // khusus district mengambil data code
+    public function getCode()
+    {
+        $unserialize = unserialize($this->extra);
+        return $unserialize['code'];
+    }
 }

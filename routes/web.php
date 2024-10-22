@@ -9,6 +9,8 @@ use App\Livewire\Pages\Database\UserAccount;
 use App\Livewire\Pages\VillageStaff\Pensiun;
 use App\Http\Controllers\CheckRoleController;
 use App\Livewire\Pages\Role\Index as RoleIndex;
+use App\Livewire\Pages\VillagePositionType\Edit;
+use App\Livewire\Pages\VillagePositionType\Create;
 use App\Livewire\Pages\Profile\Index as ProfileIndex;
 use App\Livewire\Pages\Village\Index as VillageIndex;
 use App\Livewire\Pages\Database\Index as DatabaseIndex;
@@ -22,6 +24,7 @@ use App\Livewire\Pages\VillageStaff\Index as VillageStaffIndex;
 use App\Livewire\Pages\PendingApproval\Index as PendingApprovalIndex;
 use App\Livewire\Pages\Tools\RemoveBacklinks\Index as RemoveBacklinksIndex;
 use App\Livewire\Pages\StatisticStatusData\Index as StatisticStatusDataIndex;
+use App\Livewire\Pages\VillagePositionType\Index as VillagePositionTypeIndex;
 
 Route::get('/', function () {
     return redirect('check-role');
@@ -37,6 +40,9 @@ Route::middleware([
     // Route::middleware([
     //     'role:administrator'
     // ])->group(function () {
+        Route::get('village-position-type/{id}/edit', Edit::class)->name('village-position-type.edit');
+        Route::get('village-position-type/create', Create::class)->name('village-position-type.create');
+        Route::get('village-position-type', VillagePositionTypeIndex::class)->name('village-position-type.index');
         Route::get('statistic-status-data', StatisticStatusDataIndex::class)->name('statistic-status-data')->middleware('role:administrator');
         Route::get('statistic', StatisticIndex::class)->name('statistic')->middleware('role:administrator');
         Route::get('pending-approval', PendingApprovalIndex::class)->name('pending-approval')->middleware('role:administrator');

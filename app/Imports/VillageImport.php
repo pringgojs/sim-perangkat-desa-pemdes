@@ -33,7 +33,7 @@ class VillageImport implements ToCollection
             $type = ucwords($item[6]);
 
             $district = Option::districts()->search(ucwords($district_name))->first();
-            $type = Option::search(ucwords($district_name))->first();
+            $type = Option::search(ucwords($type))->first();
 
             $data = [
                 'id' => Str::uuid(),
