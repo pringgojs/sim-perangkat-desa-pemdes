@@ -31,6 +31,10 @@ export default {
             animation: {
                 "border-gradient": "border-gradient 3s infinite",
             },
+            colors: {
+                // Tambahkan warna custom untuk scrollbar
+                "light-green-gray": "#A5B8A7", // Hijau muda mendekati abu-abu
+            },
         },
     },
 
@@ -41,5 +45,9 @@ export default {
             charts: true,
         }),
         require("preline/plugin"),
+        require("tailwind-scrollbar"),
     ],
+    variants: {
+        scrollbar: ["rounded"], // Tambahkan varian rounded
+    },
 };

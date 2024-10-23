@@ -28,17 +28,8 @@
                         <div class="sm:flex">
                             <div class="p-1 space-y-1">
                                 <div class="max-w-sm">
-                                    <livewire:utils.select-search wire:model="form.district" />
+                                    <livewire:utils.select-search value="{{ $form->district }}" :options="$districts" />
                                 </div>
-                                {{-- <div class="overflow-y-scroll max-h-48 space-y-0.5 relative ">
-                                    <template x-for="item in filteredDistricts">
-                                        <a @click="addSelectedDistrict(item);doFilter()"
-                                            class="p-2 md:px-3 capitalize flex items-center text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300"
-                                            :class="checkInSelectedDistrict(item.id) ? 'bg-green-100' : ''"
-                                            href="#" x-text="item.name">
-                                        </a>
-                                    </template>
-                                </div> --}}
                             </div>
                         </div>
                     </div>

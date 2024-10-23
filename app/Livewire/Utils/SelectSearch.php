@@ -10,23 +10,21 @@ class SelectSearch extends Component
     public $search = '';
     public $value = ''; // Properti baru untuk binding dari parent
 
-    public function mount()
+    public function mount($options = [])
     {
         // Inisialisasi data options
-        $this->options = [
-            'Option 1',
-            'Option 2',
-            'Option 3',
-            'Option 4',
-            'Option 5'
-        ];
-        
-        // Jika value sudah diisi, set search berdasarkan value
+        $this->options = $options;
+        self::setValue();
+    }
+
+    public function setValue()
+    {
         if ($this->value) {
-            $this->search = $this->value;
+            $find = $this->options->find($this->value);
+            if ($find) $this->value = $find->name;
         }
     }
-    
+
     public function render()
     {
         return view('livewire.utils.select-search', [

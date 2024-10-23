@@ -2,7 +2,7 @@
     <div x-data="{
         search: @entangle('search'),
         value: @entangle('value'),
-        options: @entangle('options'),
+        options: @js($options),
         filteredOptions: [],
         isDropdownVisible: false,
     
@@ -14,7 +14,7 @@
         // Fungsi untuk memfilter options berdasarkan pencarian
         filterOptions() {
             this.filteredOptions = this.options.filter(option =>
-                option.toLowerCase().includes(this.search.toLowerCase())
+                option.name.toLowerCase().includes(this.search.toLowerCase())
             );
         }
     }" x-init="search = value;
@@ -28,10 +28,10 @@
         <!-- Dropdown List -->
         <div class="absolute top-full left-0 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg text-sm"
             x-show="isDropdownVisible" x-cloak style="display: none;">
-            <ul>
-                <template x-for="option in filteredOptions" :key="option">
-                    <li @click="search = option; value = option; isDropdownVisible = false"
-                        class="p-2 md:px-3 cursor-pointer hover:bg-gray-100" x-text="option"></li>
+            <ul class="overflow-y-scroll max-h-48 space-y-0.5">
+                <template x-for="option in filteredOptions" :key="option.id">
+                    <li @click="search = option.name; value = option.id; isDropdownVisible = false"
+                        class="p-2 md:px-3 cursor-pointer hover:bg-gray-100" x-text="option.name"></li>
                 </template>
 
                 <template x-if="filteredOptions.length === 0">
