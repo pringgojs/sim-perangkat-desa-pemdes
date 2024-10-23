@@ -85,6 +85,9 @@ class VillagePositionType extends Model
             $q->where('position_type_id', $params['positionType']);
         }
 
+        if ($params['positionStatus']) {
+            $q->where('position_type_status_id', $params['positionStatus']);
+        }
         
         if ($params['isParkir']) {
             $q->where('is_parkir', $params['isParkir']);

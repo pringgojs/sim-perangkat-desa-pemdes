@@ -12,14 +12,16 @@ class Filter extends Component
     public $districts;
     public $villages;
     public $positionTypes;
+    public $positionTypeStatus;
     public function mount()
     {
         $this->districts = Option::districts()->get();
         $this->positionTypes = Option::positionTypes()->get();
         $this->villages = Village::with(['district'])->orderByDefault()->get();
+        $this->positionTypeStatus = Option::positionTypeStatus()->get();
     }
 
-    public function filter($area = null, $search = null, $positionType = null, $selectedDistrict = [], $selectedVillage = [], $isParkir = false)
+    public function filter($area = null, $search = null, $positionType = null, $selectedDistrict = [], $selectedVillage = [], $positionStatus = null, $isParkir = false)
     {
         $params = [
             'area' => $area,
@@ -28,6 +30,7 @@ class Filter extends Component
             'selectedDistrict' => $selectedDistrict,
             'selectedVillage' => $selectedVillage,
             'isParkir' => $isParkir,
+            'positionStatus' => $positionStatus,
         ];
 
         $this->dispatch('filter', $params )->to(Table::class);

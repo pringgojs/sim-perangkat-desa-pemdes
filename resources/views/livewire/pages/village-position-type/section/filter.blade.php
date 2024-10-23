@@ -141,6 +141,27 @@
                     <div class="p-1 space-y-0.5">
                         <span
                             class="block pt-2 pb-1 px-3 text-xs font-medium uppercase text-gray-400 dark:text-neutral-500">
+                            Status Jabatan
+                        </span>
+                        <div class="space-y-0.5 ">
+                            <template x-for="item in positionTypeStatus">
+                                <a @click="positionStatus == item.id ? positionStatus = '' : positionStatus=item.id;doFilter()"
+                                    class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
+                                    :class="positionStatus == item.id ? 'bg-green-100' : ''" href="#">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 size-4" fill="none"
+                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M14.25 6.087c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.036-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959v0a.64.64 0 0 1-.657.643 48.39 48.39 0 0 1-4.163-.3c.186 1.613.293 3.25.315 4.907a.656.656 0 0 1-.658.663v0c-.355 0-.676-.186-.959-.401a1.647 1.647 0 0 0-1.003-.349c-1.036 0-1.875 1.007-1.875 2.25s.84 2.25 1.875 2.25c.369 0 .713-.128 1.003-.349.283-.215.604-.401.959-.401v0c.31 0 .555.26.532.57a48.039 48.039 0 0 1-.642 5.056c1.518.19 3.058.309 4.616.354a.64.64 0 0 0 .657-.643v0c0-.355-.186-.676-.401-.959a1.647 1.647 0 0 1-.349-1.003c0-1.035 1.008-1.875 2.25-1.875 1.243 0 2.25.84 2.25 1.875 0 .369-.128.713-.349 1.003-.215.283-.4.604-.4.959v0c0 .333.277.599.61.58a48.1 48.1 0 0 0 5.427-.63 48.05 48.05 0 0 0 .582-4.717.532.532 0 0 0-.533-.57v0c-.355 0-.676.186-.959.401-.29.221-.634.349-1.003.349-1.035 0-1.875-1.007-1.875-2.25s.84-2.25 1.875-2.25c.37 0 .713.128 1.003.349.283.215.604.401.96.401v0a.656.656 0 0 0 .658-.663 48.422 48.422 0 0 0-.37-5.36c-1.886.342-3.81.574-5.766.689a.578.578 0 0 1-.61-.58v0Z">
+                                        </path>
+                                    </svg>
+                                    <span x-text="item.name"></span>
+                                </a>
+                            </template>
+                        </div>
+                    </div>
+                    <div class="p-1 space-y-0.5">
+                        <span
+                            class="block pt-2 pb-1 px-3 text-xs font-medium uppercase text-gray-400 dark:text-neutral-500">
                             Parkir
                         </span>
                         <a @click="isParkir = !isParkir;doFilter()"
@@ -198,7 +219,7 @@
             </div>
             <div class="relative flex items-center space-x-1">
                 <button class="hidden" x-ref="btnFilter"
-                    @click="$wire.filter(area, search,positionType,selectedDistrict, selectedVillage, isParkir)"></button>
+                    @click="$wire.filter(area, search,positionType,selectedDistrict, selectedVillage, positionStatus, isParkir)"></button>
             </div>
         </div>
 
@@ -207,14 +228,13 @@
                 return {
                     area: '',
                     positionType: '',
+                    positionStatus: '',
                     isParkir: false,
                     search: '',
-                    showSelectMonth: false,
-                    month: '',
-                    year: '',
                     villages: @js($villages),
                     districts: @js($districts),
                     positionTypes: @js($positionTypes),
+                    positionTypeStatus: @js($positionTypeStatus),
                     searchDistrict: '',
                     searchVillage: '',
                     selectedDistrict: [],
