@@ -4,7 +4,7 @@
 
     <div class="border rounded shadow-sm p-6 bg-white dark:bg-neutral-800 dark:border-neutral-700">
         <div class="flex flex-col">
-            <div class="-m-1.5 overflow-x-auto">
+            <div class="-m-1.5 overflow-x-auto mb-5">
                 <div class="p-1.5 min-w-full inline-block align-middle ">
                     <div class="overflow-hidden">
                         <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
@@ -81,8 +81,8 @@
                         </table>
                     </div>
                 </div>
-                {{ $village_position_types->links() }}
             </div>
+            {{ $village_position_types->links() }}
         </div>
     </div>
 </div>

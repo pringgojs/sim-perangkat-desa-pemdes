@@ -196,25 +196,24 @@
                     @livewire('utils.loading', key(\Illuminate\Support\Str::random(10)))
                 </div>
             </div>
-            <div class="flex-grow">
-            </div>
+            <div class="flex-grow"></div>
             <div class="flex flex-wrap items-center content-center space-x-1">
                 {{-- <button type="button" class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Button text</button> --}}
                 <div class="relative flex items-center">
-                    @can('transaksi.pengeluaran.barang.export transaction')
-                        <button wire:click="export"
-                            class="flex items-center rounded-md bg-white  py-2.5 px-4 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                            <x-bytesize-download class="h-5 w-5 mr-2" />
-                            Transaksi
-                        </button>
-                    @endcan
-                    @can('transaksi.pengeluaran.barang.export transaction detail')
-                        <button wire:click="exportDetail"
+                    {{-- @can('transaksi.pengeluaran.barang.export transaction') --}}
+                    {{-- <button wire:click="export"
+                        class="flex items-center rounded-md bg-white  py-2.5 px-4 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                        <x-bytesize-download class="h-5 w-5 mr-2" />
+                        Unduh Excel
+                    </button> --}}
+                    {{-- @endcan --}}
+                    {{-- @can('transaksi.pengeluaran.barang.export transaction detail') --}}
+                    {{-- <button wire:click="exportDetail"
                             class="flex items-center rounded-md ml-1 bg-white  py-2.5 px-4 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                             <x-bytesize-download class="h-5 w-5 mr-2" />
                             Detail Transaksi
-                        </button>
-                    @endcan
+                        </button> --}}
+                    {{-- @endcan --}}
                 </div>
             </div>
             <div class="relative flex items-center space-x-1">
