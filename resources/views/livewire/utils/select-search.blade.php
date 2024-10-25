@@ -16,6 +16,10 @@
             this.filteredOptions = this.options.filter(option =>
                 option.name.toLowerCase().includes(this.search.toLowerCase())
             );
+        },
+        onSelected(v) {
+            console.log(v);
+            this.$dispatch('{{ $callback }}', v);
         }
     }" x-init="search = value;
     filterOptions()" class="relative" @click.away="isDropdownVisible = false">
@@ -26,11 +30,11 @@
             placeholder="Cari..." />
 
         <!-- Dropdown List -->
-        <div class="absolute top-full left-0 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg text-sm"
+        <div class="absolute top-full left-0 w-full mt-1 pb-1 bg-white border border-gray-300 rounded-md shadow-lg text-sm"
             x-show="isDropdownVisible" x-cloak style="display: none;">
             <ul class="overflow-y-scroll max-h-48 space-y-0.5">
                 <template x-for="option in filteredOptions" :key="option.id">
-                    <li @click="search = option.name; value = option.id; isDropdownVisible = false"
+                    <li @click="search = option.name; value = option.id; isDropdownVisible = false;onSelected(option.id)"
                         class="p-2 md:px-3 cursor-pointer hover:bg-gray-100" x-text="option.name"></li>
                 </template>
 

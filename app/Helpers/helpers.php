@@ -43,3 +43,8 @@ function is_sekdes() {
 function format_rupiah($number) {
     return 'Rp. ' . number_format($number, 0, ',', '.');
 }
+
+function format_price($string = null)
+{
+    return str_replace('.', '', $string);
+}
