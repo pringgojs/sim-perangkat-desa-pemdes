@@ -27,7 +27,7 @@ class VillagePositionTypeForm extends Form
     public function rules()
     {
         return [
-            'district' => 'required',
+            'district' => 'nullable',
             'village' => 'required',
             'positionType' => [
                 'required',
@@ -38,8 +38,7 @@ class VillagePositionTypeForm extends Form
             'positionName' => 'required|max:20',
             'siltap' => 'required',
             'tunjangan' => 'required',
-            'isParkir' => 'required',
-            'code' => 'required|max:50',
+            'code' => 'required|string|max:50',
         ];
 
     }
@@ -47,7 +46,6 @@ class VillagePositionTypeForm extends Form
     public function messages() 
     {
         return [
-            'district.required' => 'Kecamatan wajib diisi.',
             'village.required' => 'Desa wajib diisi.',
             'positionType.required' => 'Jabatan wajib diisi.',
             'positionTypeStatus.required' => 'Status jabatan wajib diisi.',
@@ -55,6 +53,7 @@ class VillagePositionTypeForm extends Form
             'siltap.required' => 'Siltap wajib diisi.',
             'tunjangan.required' => 'Tunjangan wajib diisi.',
             'isParkir.required' => 'Status parkir wajib diisi.',
+            'code.max' => 'Kode jabatan maksimal 50 karakter.',
             'code.required' => 'Kode jabatan wajib diisi.',
         ];
     }

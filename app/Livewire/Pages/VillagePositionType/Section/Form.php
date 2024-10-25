@@ -6,10 +6,13 @@ use App\Models\Option;
 use App\Models\Village;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Livewire\Forms\VillagePositionTypeForm;
 
 class Form extends Component
 {
+    use LivewireAlert;
+
     public VillagePositionTypeForm $form;
     
     public $districts;

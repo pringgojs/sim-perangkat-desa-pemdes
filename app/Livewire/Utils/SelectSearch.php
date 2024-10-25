@@ -26,10 +26,17 @@ class SelectSearch extends Component
         }
     }
 
-    public function updatedOptions()
-    {
-        
-    }
+    // #[On('updateValue')]
+    // public function updateValue($value)
+    // {
+    //     $this->value = $value;
+    // }
+
+    // public function updatedValue($value)
+    // {
+    //     // Emit perubahan ke parent component
+    //     $this->dispatch('inputUpdated', $value);
+    // }
 
     public function render()
     {
