@@ -26,6 +26,16 @@ class Table extends Component
         info($params);
         $this->filter = $params;
     }
+    
+    public function delete($id)
+    {
+        dd($id);
+        $model = VillagePositionType::findOrFail($id);
+        $model->delete();
+
+        $this->alert('success', 'Success!');
+        $this->dispatch('refreshComponent')->self();
+    }
 
     public function updatingSearch()
     {

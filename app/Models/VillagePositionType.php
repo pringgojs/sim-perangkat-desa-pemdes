@@ -18,9 +18,11 @@ class VillagePositionType extends Model
         'position_type_id',
         'position_type_status_id',
         'siltap',
+        'position_name',
         'tunjangan',
         'thp',
         'code',
+        'is_parkir',
     ];
 
     public $incrementing = false;

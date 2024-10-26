@@ -87,9 +87,10 @@ class VillagePositionTypeForm extends Form
 
     public function setModel(VillagePositionType $model)
     {
+        $this->id = $model->id;
         $this->villagePositionType = $model; // untuk validasi email unique
 
-        $this->district = $model->district->id;
+        $this->district = $model->village->district->id;
         $this->village = $model->village_id;
         $this->positionType = $model->position_type_id;
         $this->positionTypeStatus = $model->position_type_status_id;

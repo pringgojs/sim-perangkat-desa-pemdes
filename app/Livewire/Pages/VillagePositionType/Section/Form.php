@@ -6,6 +6,7 @@ use App\Models\Option;
 use App\Models\Village;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use App\Models\VillagePositionType;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Livewire\Forms\VillagePositionTypeForm;
 
@@ -15,17 +16,26 @@ class Form extends Component
 
     public VillagePositionTypeForm $form;
     
+    public $id;
     public $districts;
     public $villages = [];
     public $positionTypes;
     public $positionTypeStatus;
+    public $villagePositionType;
     
-    public function mount()
+    public function mount($id = null)
     {
         $this->districts = Option::districts()->get();
         $this->positionTypes = Option::positionTypes()->get();
         // $this->villages = Village::with(['district'])->orderByDefault()->get();
         $this->positionTypeStatus = Option::positionTypeStatus()->get();
+
+        if ($id) {
+            $model = VillagePositionType::findOrFail($id);
+            $this->form->setModel($model);
+            self::getVillage($model->village->district_id);
+        }
+
     }
 
     public function getVillage($id)
