@@ -17,6 +17,6 @@
 
     {{-- panggil component table.staff --}}
     {{-- <x-staff.table :$staffs :$staff /> --}}
-    @livewire('utils.filter', ['table' => \App\Livewire\Pages\Village\Section\Table::class])
+    @livewire('utils.filter', ['table' => 'pages.village-staff.section.table'])
     @livewire('pages.village-staff.section.table')
 </div>

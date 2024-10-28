@@ -35,7 +35,7 @@ class Option extends Model
     // Relasi ke tabel village_staff (jika diperlukan)
     public function villageStaff()
     {
-        return $this->hasMany(VillageStaff::class, 'position_type_id');
+        return $this->hasMany(VillageStaff::class, 'position_id');
     }
 
      // Relasi ke tabel village_staff (jika diperlukan)

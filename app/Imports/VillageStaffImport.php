@@ -109,6 +109,7 @@ class VillageStaffImport implements ToCollection
             $staff->phone_number = null;
             $staff->is_active = true;
             $staff->gender = $jenis_kelamin;
+            $staff->education_level_id = $education_level_id;
             $staff->position_id = $position_type_id;
             $staff->position_plt_id = $position_type_plt_id;
             $staff->reason_note = null;
