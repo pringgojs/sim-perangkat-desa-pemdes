@@ -24,6 +24,7 @@ class Table extends Component
     public function filter($params = [])
     {
         $this->filter = $params;
+        $this->resetPage();
     }
     
     public function delete($id)
