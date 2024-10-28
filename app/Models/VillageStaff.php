@@ -32,9 +32,14 @@ class VillageStaff extends Model
         'address',
         'ktp_scan',
         'phone_number',
-        'position_type_id',
+        'position_id',
+        'position_plt_id',
         'is_active',
         'position_name',
+        'position_code',
+        'position_plt_name',
+        'position_plt_code',
+        'position_plt_status_id',
         'data_status_id',
         'sk_number',
         'sk_tmt',
@@ -58,7 +63,12 @@ class VillageStaff extends Model
     // Relasi ke tabel options
     public function positionType()
     {
-        return $this->belongsTo(Option::class, 'position_type_id');
+        return $this->belongsTo(Option::class, 'position_id');
+    }
+
+    public function educationLevel()
+    {
+        return $this->belongsTo(Option::class, 'education_level_id');
     }
 
     // Relasi ke tabel options
@@ -71,7 +81,7 @@ class VillageStaff extends Model
     {
         if (!$type) return;
         
-        $q->where('position_type_id', $type);
+        $q->where('position_id', $type);
     }
 
     public function scopeVillage($q, $village = null)
@@ -86,6 +96,40 @@ class VillageStaff extends Model
         if ($district) {
             $villages = Village::where('district_id', $district)->pluck('id')->toArray();
             $q->whereIn('village_id', $villages);
+        }
+    }
+
+    public function scopeFilter($q,$params = [])
+    {
+        if (!isset($params['area'])) return;
+
+        if ($params['search']) {
+            $q->search($params['search']);
+            
+            return;
+        }
+
+        /* filter berdasarkan array village_id */
+        if ($params['area'] == 'village' && $params['selectedVillage']) {
+            $q->whereIn('village_id', $params['selectedVillage']);
+        }
+
+        if ($params['area'] == 'district' && $params['selectedDistrict']) {
+            $villages = Village::whereIn('district_id', $params['selectedDistrict'])->pluck('id')->toArray();
+            $q->whereIn('village_id', $villages);
+        }
+
+        if ($params['positionType']) {
+            $q->where('position_id', $params['positionType']);
+            $q->orWhere('position_plt_id', $params['positionType']);
+        }
+
+        if ($params['positionStatus']) {
+            $q->where('position_plt_status_id', $params['positionStatus']);
+        }
+        
+        if ($params['isParkir']) {
+            $q->where('is_parkir', $params['isParkir']);
         }
     }
 

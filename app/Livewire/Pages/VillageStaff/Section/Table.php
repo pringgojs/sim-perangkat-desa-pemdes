@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Livewire\Pages\VillagePositionType\Section;
+namespace App\Livewire\Pages\VillageStaff\Section;
 
+use App\Models\User;
 use Livewire\Component;
 use Livewire\Attributes\On;
+use App\Models\VillageStaff;
 use Livewire\WithPagination;
 use App\Models\VillagePositionType;
 
@@ -15,8 +17,8 @@ class Table extends Component
     public $filter;
     public function render()
     {
-        return view('livewire.pages.village-position-type.section.table', [
-            'village_position_types' => VillagePositionType::filter($this->filter)->search($this->search)->with(['village.district', 'positionType', 'positionTypeStatus'])->orderByDefault()->paginate(),
+        return view('livewire.pages.village-staff.section.table', [
+            'staffs' => VillageStaff::filter($this->filter)->search($this->search)->with(['village.district', 'positionType'])->orderByDefault()->paginate(),
         ]);
     }
 
@@ -29,9 +31,12 @@ class Table extends Component
     
     public function delete($id)
     {
-        $model = VillagePositionType::findOrFail($id);
+        $model = VillageStaff::findOrFail($id);
         $model->delete();
-
+        
+        $user = User::findOrFail($userId);
+        $user->delete();
+        
         $this->alert('success', 'Success!');
         $this->dispatch('refreshComponent')->self();
     }

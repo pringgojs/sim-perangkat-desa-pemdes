@@ -69,15 +69,17 @@ class VillageStaffImport implements ToCollection
             $position_type_definitif = VillagePositionType::code($jabatan_definitif)->first();
             $position_type_plt = VillagePositionType::code($jabatan_plt)->first();
             $village = $position_type_definitif ? $position_type_definitif->village : null;
-
+            
             $position_type_id = null;
             if ($position_type_definitif) {
                 $position_type_id = $position_type_definitif->position_type_id;
             }
-
+            
+            $position_type_plt_status_id = null; 
             $position_type_plt_id = null;
             if ($position_type_plt) {
                 $position_type_plt_id = $position_type_plt->position_type_id;
+                $position_type_plt_status_id = $position_type_plt->positionTypeStatus->id;
             }
 
             if (!$village) {
@@ -95,7 +97,6 @@ class VillageStaffImport implements ToCollection
                 $carbon = Carbon::createFromFormat('d/m/Y', $date);
             }
             
-
             $staff = new VillageStaff;
             $staff->user_id = $user->id;
             $staff->village_id = $village->id;
@@ -108,14 +109,15 @@ class VillageStaffImport implements ToCollection
             $staff->phone_number = null;
             $staff->is_active = true;
             $staff->gender = $jenis_kelamin;
-            $staff->position_type_id = $position_type_id;
-            $staff->position_type_plt_id = $position_type_plt_id;
+            $staff->position_id = $position_type_id;
+            $staff->position_plt_id = $position_type_plt_id;
             $staff->reason_note = null;
             $staff->data_status_id = key_option('draft');
             $staff->position_name = $jabatan_definitif_nama;
             $staff->position_plt_name = $jabatan_plt_nama;
-            $staff->position_type_code = $jabatan_definitif;
-            $staff->position_type_plt_code = $jabatan_plt;
+            $staff->position_code = $jabatan_definitif;
+            $staff->position_plt_code = $jabatan_plt;
+            $staff->position_plt_status_id = $position_type_plt_status_id;
             $staff->save();
 
         }

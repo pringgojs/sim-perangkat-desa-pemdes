@@ -53,7 +53,7 @@ class VillageStaffHistoryImport implements ToCollection
             $tanggal_pelantikan = str_replace('//', '/', $tanggal_pelantikan);
             $tanggal_masa_jabatan = str_replace('//', '/', $tanggal_masa_jabatan);
 
-            $staff = VillageStaff::withoutGlobalScope(VillageStaffScope::class)->where('position_type_code', $kode_jabatan)->orWhere('position_type_plt_code', $kode_jabatan)->first();
+            $staff = VillageStaff::withoutGlobalScope(VillageStaffScope::class)->where('position_code', $kode_jabatan)->orWhere('position_plt_code', $kode_jabatan)->first();
             if (!$staff) continue;
 
             $village_postition_type = VillagePositionType::code($kode_jabatan)->first();

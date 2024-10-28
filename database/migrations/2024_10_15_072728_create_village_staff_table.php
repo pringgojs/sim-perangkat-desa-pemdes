@@ -24,15 +24,16 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->boolean('is_active')->default(true); // 
             $table->string('gender')->nullable();
-            $table->uuid('position_type_id')->nullable(); // dipake untuk query jabatan
-            $table->uuid('position_type_plt_id')->nullable(); // 
+            $table->uuid('position_id')->nullable(); // dipake untuk query jabatan
+            $table->uuid('position_plt_id')->nullable(); // 
+            $table->uuid('position_plt_status_id')->nullable(); // plt, pj, definitif
             $table->uuid('education_level_id')->nullable(); // 
             $table->text('reason_note')->nullable();
             $table->uuid('data_status_id');
             $table->string('position_name')->nullable();
+            $table->string('position_code')->nullable();
             $table->string('position_plt_name')->nullable();
-            $table->string('position_type_code')->nullable();
-            $table->string('position_type_plt_code')->nullable();
+            $table->string('position_plt_code')->nullable();
             // $table->string('sk_number')->nullable();
             // $table->date('sk_tmt')->nullable();
             // $table->date('sk_date')->nullable();
@@ -43,8 +44,9 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('village_id')->references('id')->on('villages')->onDelete('cascade');
             $table->foreign('education_level_id')->references('id')->on('options')->onDelete('cascade');
-            $table->foreign('position_type_id')->references('id')->on('options')->onDelete('cascade');
-            $table->foreign('position_type_plt_id')->references('id')->on('options')->onDelete('cascade');
+            $table->foreign('position_id')->references('id')->on('options')->onDelete('cascade');
+            $table->foreign('position_plt_id')->references('id')->on('options')->onDelete('cascade');
+            $table->foreign('position_plt_status_id')->references('id')->on('options')->onDelete('cascade');
             $table->foreign('data_status_id')->references('id')->on('options')->onDelete('cascade');
         });
     }
