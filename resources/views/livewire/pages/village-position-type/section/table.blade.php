@@ -1,7 +1,5 @@
 <div>
     {{-- Knowing others is intelligence; knowing yourself is true wisdom. --}}
-    @livewire('pages.village-position-type.section.filter')
-
     <div class="border rounded shadow-sm p-6 bg-white dark:bg-neutral-800 dark:border-neutral-700">
         <div class="flex flex-col">
             <div class="-m-1.5 overflow-x-auto mb-5">

@@ -23,13 +23,11 @@ class Table extends Component
     #[On('filter')] 
     public function filter($params = [])
     {
-        info($params);
         $this->filter = $params;
     }
     
     public function delete($id)
     {
-        dd($id);
         $model = VillagePositionType::findOrFail($id);
         $model->delete();
 
