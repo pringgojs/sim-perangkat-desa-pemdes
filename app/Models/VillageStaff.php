@@ -109,6 +109,7 @@ class VillageStaff extends Model
             return;
         }
 
+        info($params);
         /* filter berdasarkan array village_id */
         if ($params['area'] == 'village' && $params['selectedVillage']) {
             $q->whereIn('village_id', $params['selectedVillage']);
@@ -119,18 +120,35 @@ class VillageStaff extends Model
             $q->whereIn('village_id', $villages);
         }
 
-        if ($params['positionType']) {
+        if ($params['positionStatus'] && $params['positionType']) {
+            $is_definitif = option_is_match('definitif', $params['positionStatus']);
+            if (!$is_definitif) {
+                /* jika bukan definitf, cari berdasarkan kolom position_plt_id */
+                $q->where('position_plt_status_id', $params['positionStatus']);
+                $q->where('position_plt_id', $params['positionType']);
+            } else {
+                $q->where('position_id', $params['positionType']);
+            }
+        } else if ($params['positionType'] && !$params['positionStatus']) {
             $q->where('position_id', $params['positionType']);
             $q->orWhere('position_plt_id', $params['positionType']);
         }
 
-        if ($params['positionStatus']) {
-            $q->where('position_plt_status_id', $params['positionStatus']);
-        }
-        
         if ($params['isParkir']) {
             $q->where('is_parkir', $params['isParkir']);
         }
+    }
+
+    public function getDateOfBirthAttribute($value)
+    {
+        // Set locale ke bahasa Indonesia
+        Carbon::setLocale('id');
+
+        // Buat instance Carbon dari created_at yang diberikan
+        $carbonDate = Carbon::parse($value);
+
+        // Format datetime menjadi 'd F Y H:i' (contoh: 24 Januari 2024 25:56)
+        return $carbonDate->translatedFormat('d F Y');
     }
 
     public function scopePending($q)
