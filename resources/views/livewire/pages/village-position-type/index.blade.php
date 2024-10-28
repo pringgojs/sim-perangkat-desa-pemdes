@@ -13,7 +13,7 @@
 
     {{-- panggil component table.staff --}}
     {{-- <x-staff.table :$staffs :$staff /> --}}
-    @livewire('pages.village-position-type.section.filter')
+    @livewire('utils.filter', ['table' => \App\Livewire\Pages\VillagePositionType\Section\Table::class])
 
     @livewire('pages.village-position-type.section.table')
 </div>
