@@ -17,10 +17,18 @@ class Table extends Component
 
     public $search;
     public $filter;
+    public $type;
+    public $modalConfirm;
+
+    public function mount($type = null)
+    {
+        $this->type = $type;
+    }
+
     public function render()
     {
         return view('livewire.pages.village-staff.section.table', [
-            'staffs' => VillageStaff::filter($this->filter)->search($this->search)->with(['village.district', 'positionType', 'dataStatus', 'educationLevel'])->orderByDefault()->paginate(),
+            'staffs' => VillageStaff::filter($this->filter)->type($this->type)->search($this->search)->with(['village.district', 'positionType', 'dataStatus', 'educationLevel'])->orderByDefault()->paginate(),
         ]);
     }
 

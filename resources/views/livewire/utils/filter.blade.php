@@ -218,7 +218,7 @@
             </div>
             <div class="relative flex items-center space-x-1">
                 <button class="hidden" x-ref="btnFilter"
-                    @click="$wire.filter(area, search,positionType,selectedDistrict, selectedVillage, positionStatus, isParkir)"></button>
+                    @click="$wire.filter(area, search, positionType, selectedDistrict, selectedVillage, positionStatus, isParkir)"></button>
             </div>
         </div>
 
@@ -226,7 +226,7 @@
             function filter() {
                 return {
                     area: '',
-                    positionType: '',
+                    positionType: @entangle('positionType'),
                     positionStatus: '',
                     isParkir: false,
                     search: '',
