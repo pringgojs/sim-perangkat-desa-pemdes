@@ -30,15 +30,3 @@
         </div>
     </div>
 </div>
-
-@script
-    <script>
-        Livewire.hook('morph.updated', ({
-            el,
-            component
-        }) => {
-            initFlowbite();
-            window.HSStaticMethods.autoInit();
-        })
-    </script>
-@endscript

@@ -20,6 +20,7 @@ class Form extends Component
     public $staff;
     public $modalPreview = false;
     public $position_type;
+    public $positions;
     public $isReadonly = false;
     public $from;
 
@@ -27,7 +28,8 @@ class Form extends Component
     {
         $this->staff = $staff;
         $this->form = $form;
-        $this->position_type = Option::find($staff->position_type_id);
+        $this->position_type = Option::find($staff->position_id);
+        $this->positions = Option::positionTypes()->get();
         $this->from = $from; // isinya 'admin
 
         /* jika mode edit dari admin pemdes, maka readonly dibuat false */

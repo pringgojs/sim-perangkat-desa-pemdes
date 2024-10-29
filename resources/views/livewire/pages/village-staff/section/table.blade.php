@@ -44,9 +44,10 @@
                             </a> --}}
                             @php
                                 $arr = ['diajukan', 'final'];
+                                $menuItems = [];
                             @endphp
                             @if (!in_array($item->dataStatus->key, $arr))
-                                <a onclick="Livewire.dispatch('openModal', { component: 'modals.form-village-staff', arguments: {id: '{{ $item->id }}'} })"
+                                {{-- <a onclick="Livewire.dispatch('openModal', { component: 'modals.form-village-staff', arguments: {id: '{{ $item->id }}'} })"
                                     class="inline-flex rounded-lg p-2 bg-purple-50 text-purple-700 ring-4 ring-white cursor-pointer">
                                     <x-heroicon-o-pencil class="h-5 w-5" />
                                 </a>
@@ -72,24 +73,24 @@
                                             Ya, hapus!
                                         </a>
                                     </div>
-                                </div>
+                                </div> --}}
+                                @php
+                                    $menuItems = [
+                                        [
+                                            'type' => 'link',
+                                            'label' => 'Edit',
+                                            'url' => route('village-staff.edit', ['id' => $item->id]),
+                                            'color' => 'text-gray-800',
+                                        ],
+                                        [
+                                            'type' => 'delete',
+                                            'label' => 'Delete',
+                                            'color' => 'text-red-600',
+                                        ],
+                                    ];
+                                @endphp
                             @endif
-                            @php
-                                $menuItems = [
-                                    [
-                                        'type' => 'link',
-                                        'label' => 'Detil Informasi',
-                                        'url' => '/archive',
-                                        'color' => 'text-gray-800',
-                                    ],
-                                    [
-                                        'type' => 'delete',
-                                        'label' => 'Delete',
-                                        'parameter' => ['id' => $item->id, 'label' => $item->name],
-                                        'color' => 'text-red-600',
-                                    ],
-                                ];
-                            @endphp
+
 
                             <x-utils.dropdown-menu-action :id="$item->id" :items="$menuItems" />
                         </div>
@@ -107,3 +108,18 @@
     {{-- modal confirm --}}
     <x-utils.modal-delete id="modalConfirm" wire:ignore />
 </div>
+
+
+@script
+    <script>
+        Livewire.hook('morph.updated', ({
+            el,
+            component
+        }) => {
+            console.log('Reinitializing dropdown');
+
+            initFlowbite();
+            window.HSStaticMethods.autoInit(['dropdown']);
+        })
+    </script>
+@endscript

@@ -141,17 +141,17 @@ class VillageStaff extends Model
         }
     }
 
-    public function getDateOfBirthAttribute($value)
-    {
-        // Set locale ke bahasa Indonesia
-        Carbon::setLocale('id');
+    // public function getDateOfBirthAttribute($value)
+    // {
+    //     // Set locale ke bahasa Indonesia
+    //     Carbon::setLocale('id');
 
-        // Buat instance Carbon dari created_at yang diberikan
-        $carbonDate = Carbon::parse($value);
+    //     // Buat instance Carbon dari created_at yang diberikan
+    //     $carbonDate = Carbon::parse($value);
 
-        // Format datetime menjadi 'd F Y H:i' (contoh: 24 Januari 2024 25:56)
-        return $carbonDate->translatedFormat('d F Y');
-    }
+    //     // Format datetime menjadi 'd F Y H:i' (contoh: 24 Januari 2024 25:56)
+    //     return $carbonDate->translatedFormat('d F Y');
+    // }
 
     public function scopePending($q)
     {

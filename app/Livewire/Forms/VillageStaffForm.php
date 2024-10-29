@@ -208,7 +208,7 @@ class VillageStaffForm extends Form
         $this->user = $village_staff->user;
         $this->data_status = $village_staff->dataStatus->id;
         $this->village = $village_staff->village->id;
-        $this->position_type = $village_staff->position_type_id;
+        $this->position_type = $village_staff->position_id;
         $this->district = $village_staff->village->district_id;
         $this->ktp_old = $village_staff->ktp_scan;
 

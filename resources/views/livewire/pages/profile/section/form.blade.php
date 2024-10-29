@@ -257,9 +257,9 @@
                     <select id="positionTypes" wire:model="form.position_type"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
                         {{-- <option selected>Choose a position type</option> --}}
-                        {{-- @foreach ($position_types as $item) --}}
-                        <option value="{{ $position_type->id }}">{{ ucfirst($position_type->name) }}</option>
-                        {{-- @endforeach --}}
+                        @foreach ($positions as $item)
+                            <option value="{{ $item->id }}">{{ ucfirst($item->name) }}</option>
+                        @endforeach
                     </select>
                 </div>
 
