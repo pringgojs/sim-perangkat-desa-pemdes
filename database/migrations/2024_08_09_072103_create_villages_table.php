@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('no_sotk')->nullable();
             $table->integer('total_kasi')->default(0);
             $table->integer('total_kaur')->default(0);
+            $table->softDeletes();
             $table->timestamps();
 
             // Foreign keys

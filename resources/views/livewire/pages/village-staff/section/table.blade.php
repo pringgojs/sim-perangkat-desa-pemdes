@@ -34,12 +34,14 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
                         {{ $item->educationLevel->name ?? '-' }}
                     </td>
+                    <td>{!! $item->labelDataStatus() !!}</td>
                     <td>
                         <div class="flex flex-none items-center gap-x-2">
-                            <a @click="$dispatch('set-open-detail', true); $wire.detail('{{ $item->id }}')"
+
+                            {{-- <a @click="$dispatch('set-open-detail', true); $wire.detail('{{ $item->id }}')"
                                 class="inline-flex rounded-lg p-2 bg-green-50 text-green-700 ring-4 ring-white cursor-pointer">
                                 <x-heroicon-o-document-text class="h-5 w-5" />
-                            </a>
+                            </a> --}}
                             @php
                                 $arr = ['diajukan', 'final'];
                             @endphp
@@ -72,6 +74,15 @@
                                     </div>
                                 </div>
                             @endif
+                            @php
+                                $menuItems = [
+                                    ['label' => 'Detil Informasi', 'url' => '/archive', 'color' => 'text-gray-800'],
+                                    ['label' => 'Riwayat Jabatan', 'url' => '/favorites', 'color' => 'text-gray-800'],
+                                    ['label' => 'Delete', 'url' => '/delete', 'color' => 'text-red-600'],
+                                ];
+                            @endphp
+
+                            <x-utils.dropdown-menu-action :id="$item->id" :items="$menuItems" />
                         </div>
                     </td>
                 </tr>

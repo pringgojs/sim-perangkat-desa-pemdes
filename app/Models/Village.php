@@ -5,12 +5,14 @@ namespace App\Models;
 use Carbon\Carbon;
 use App\Traits\GenerateUuid;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Village extends Model
 {
     use HasFactory, HasUuids, GenerateUuid;
+    use SoftDeletes;
 
     // UUID sebagai primary key
     protected $keyType = 'string';
