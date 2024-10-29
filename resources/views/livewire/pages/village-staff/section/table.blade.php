@@ -1,5 +1,6 @@
 <div>
     <x-table :headers="[
+        'Aksi',
         'Kecamatan',
         'Desa',
         'Nama',
@@ -9,32 +10,11 @@
         'Tempat, Tgl. Lahir',
         'Pendidikan',
         'Status Data',
-        'Aksi',
     ]" title="Data Perangkat Desa">
         <!-- Table Content -->
         <x-slot:table>
             @foreach ($staffs as $index => $item)
                 <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
-                        {{ $item->village->district->name }} <br>{{ $item->village->district->code }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
-                        {{ $item->village->name }} <br>{{ $item->village->code }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
-                        {{ $item->name }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                        {{ $item->another_name }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                        {{ $item->position_name }} <br> {{ $item->position_code }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                        {{ $item->position_plt_name }} <br> {{ $item->position_plt_code }}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                        {{ $item->place_of_birth }}{{ $item->place_of_birth ? ', ' . $item->date_of_birth : '' }}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                        {{ $item->educationLevel->name ?? '-' }}
-                    </td>
-                    <td>{!! $item->labelDataStatus() !!}</td>
                     <td>
                         <div class="flex flex-none items-center gap-x-2">
 
@@ -95,6 +75,27 @@
                             <x-utils.dropdown-menu-action :id="$item->id" :items="$menuItems" />
                         </div>
                     </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
+                        {{ $item->village->district->name }} <br>{{ $item->village->district->code }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
+                        {{ $item->village->name }} <br>{{ $item->village->code }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
+                        {{ $item->name }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                        {{ $item->another_name }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                        {{ $item->position_name }} <br> {{ $item->position_code }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                        {{ $item->position_plt_name }} <br> {{ $item->position_plt_code }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                        {{ $item->place_of_birth }}{{ $item->place_of_birth ? ', ' . $item->date_of_birth : '' }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                        {{ $item->educationLevel->name ?? '-' }}
+                    </td>
+                    <td>{!! $item->labelDataStatus() !!}</td>
+
                 </tr>
             @endforeach
         </x-slot:table>
