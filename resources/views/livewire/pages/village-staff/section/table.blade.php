@@ -76,9 +76,18 @@
                             @endif
                             @php
                                 $menuItems = [
-                                    ['label' => 'Detil Informasi', 'url' => '/archive', 'color' => 'text-gray-800'],
-                                    ['label' => 'Riwayat Jabatan', 'url' => '/favorites', 'color' => 'text-gray-800'],
-                                    ['label' => 'Delete', 'url' => '/delete', 'color' => 'text-red-600'],
+                                    [
+                                        'type' => 'link',
+                                        'label' => 'Detil Informasi',
+                                        'url' => '/archive',
+                                        'color' => 'text-gray-800',
+                                    ],
+                                    [
+                                        'type' => 'delete',
+                                        'label' => 'Delete',
+                                        'parameter' => ['id' => $item->id, 'label' => $item->name],
+                                        'color' => 'text-red-600',
+                                    ],
                                 ];
                             @endphp
 
@@ -94,4 +103,7 @@
             {{ $staffs->links() }}
         </x-slot:footer>
     </x-table>
+
+    {{-- modal confirm --}}
+    <x-utils.modal-delete id="modalConfirm" wire:ignore />
 </div>

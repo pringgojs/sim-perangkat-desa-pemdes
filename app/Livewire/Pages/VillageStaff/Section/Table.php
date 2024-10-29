@@ -8,10 +8,12 @@ use Livewire\Attributes\On;
 use App\Models\VillageStaff;
 use Livewire\WithPagination;
 use App\Models\VillagePositionType;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Table extends Component
 {
     use WithPagination;
+    use LivewireAlert;
 
     public $search;
     public $filter;
@@ -32,13 +34,14 @@ class Table extends Component
     public function delete($id)
     {
         $model = VillageStaff::findOrFail($id);
+        $userId = $model->user_id;
         $model->delete();
         
         $user = User::findOrFail($userId);
         $user->delete();
         
         $this->alert('success', 'Success!');
-        $this->dispatch('refreshComponent')->self();
+        $this->redirectRoute('village-staff.index', navigate: true);
     }
 
     public function updatingSearch()

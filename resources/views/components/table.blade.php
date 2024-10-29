@@ -37,7 +37,8 @@
             el,
             component
         }) => {
-            initFlowbite()
+            initFlowbite();
+            window.HSStaticMethods.autoInit();
         })
     </script>
 @endscript

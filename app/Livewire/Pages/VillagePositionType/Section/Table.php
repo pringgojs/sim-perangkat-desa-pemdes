@@ -6,9 +6,12 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
 use App\Models\VillagePositionType;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Table extends Component
 {
+    use LivewireAlert;
+
     use WithPagination;
 
     public $search;
