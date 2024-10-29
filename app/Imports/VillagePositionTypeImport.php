@@ -26,6 +26,7 @@ class VillagePositionTypeImport implements ToCollection
         //     7 => "TUNJANGAN"
         //     8 => "JUMLAH"
         //     9 => "STATUS"
+        //     10 => "PARKIR"
         // ]
 
         foreach ($collection as $i => $item) {
@@ -63,7 +64,7 @@ class VillagePositionTypeImport implements ToCollection
             $model->siltap = $siltap ?? 0;
             $model->tunjangan = $tunjangan ?? 0;
             $model->thp = $total ?? 0;
-            $model->is_parkir = $is_parkir == 'parkir' ? true : false;
+            $model->is_parkir = $is_parkir ? true : false;
             $model->save();
         }
     }

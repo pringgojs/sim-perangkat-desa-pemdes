@@ -20,7 +20,7 @@ class Table extends Component
     public function render()
     {
         return view('livewire.pages.village-staff.section.table', [
-            'staffs' => VillageStaff::filter($this->filter)->search($this->search)->with(['village.district', 'positionType'])->orderByDefault()->paginate(),
+            'staffs' => VillageStaff::filter($this->filter)->search($this->search)->with(['village.district', 'positionType', 'dataStatus', 'educationLevel'])->orderByDefault()->paginate(),
         ]);
     }
 
