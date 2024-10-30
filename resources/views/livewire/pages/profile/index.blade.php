@@ -10,7 +10,8 @@
         @endif
 
         @livewire('pages.profile.section.header', ['staff' => $staff, 'form' => $form])
-        @livewire('pages.profile.section.form', ['form' => $form, 'staff' => $staff])
+        @livewire('pages.profile.section.tab', ['staff' => $staff, 'form' => $form])
+        {{-- @livewire('pages.profile.section.form', ['staff' => $staff, 'form' => $form]) --}}
     </div>
     {{-- @filepondScripts --}}
 </div>

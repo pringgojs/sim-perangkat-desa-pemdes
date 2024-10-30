@@ -11,7 +11,7 @@
             }
         }
     @endphp
-    <div class="bg-white rounded-sm shadow p-4 mt-5 sm:p-7 relative overflow-hidden dark:bg-neutral-800">
+    <div x-cloak class="bg-white  p-4 mt-5  relative overflow-hidden dark:bg-neutral-800">
         @php
             $color = $form->village_staff->colorDataStatus();
         @endphp
@@ -206,7 +206,7 @@
                     <div class="sm:flex">
                         <label for="af-account-gender-checkbox"
                             class="flex py-2 px-3 w-full border border-gray-200 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
-                            <input type="radio" wire:model="form.gender" value="1"
+                            <input type="radio" wire:model="form.gender" value="L"
                                 name="af-account-gender-checkbox"
                                 class="shrink-0 mt-0.5 border-gray-300 rounded-full text-green-600 focus:ring-green-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-500 dark:checked:bg-green-500 dark:checked:border-green-500 dark:focus:ring-offset-gray-800"
                                 id="af-account-gender-checkbox" checked>
@@ -215,7 +215,7 @@
 
                         <label for="af-account-gender-checkbox-female"
                             class="flex py-2 px-3 w-full border border-gray-200 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
-                            <input type="radio" wire:model="form.gender" value="0"
+                            <input type="radio" wire:model="form.gender" value="P"
                                 name="af-account-gender-checkbox"
                                 class="shrink-0 mt-0.5 border-gray-300 rounded-full text-green-600 focus:ring-green-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-500 dark:checked:bg-green-500 dark:checked:border-green-500 dark:focus:ring-offset-gray-800"
                                 id="af-account-gender-checkbox-female">
