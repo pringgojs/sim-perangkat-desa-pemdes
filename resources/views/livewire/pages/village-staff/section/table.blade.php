@@ -14,7 +14,7 @@
             @foreach ($staffs as $index => $item)
                 <tr>
                     <td>
-                        <div class="flex flex-none items-center gap-x-2">
+                        <div class="m-5">
 
                             {{-- <a @click="$dispatch('set-open-detail', true); $wire.detail('{{ $item->id }}')"
                                 class="inline-flex rounded-lg p-2 bg-green-50 text-green-700 ring-4 ring-white cursor-pointer">

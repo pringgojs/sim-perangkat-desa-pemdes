@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use App\Models\Option;
 
 /** initials */
@@ -47,4 +48,14 @@ function format_rupiah($number) {
 function format_price($string = null)
 {
     return str_replace('.', '', $string);
+}
+
+function date_format_view($date)
+{
+    Carbon::setLocale('id');
+    // Buat instance Carbon dari created_at yang diberikan
+    $carbonDate = Carbon::parse($date);
+
+    // Format datetime menjadi 'd F Y H:i' (contoh: 24 Januari 2024 25:56)
+    return $carbonDate->translatedFormat('d F Y');
 }

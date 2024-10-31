@@ -6,6 +6,8 @@ use Livewire\Component;
 
 class Tab extends Component
 {
+    public $isReadonly;
+    public $from;
     public $staff;
     public $form;
     public $tabActive;
@@ -13,7 +15,9 @@ class Tab extends Component
     {
         $this->staff = $staff;
         $this->form = $form;
-        $this->tabActive = 'identity';
+        $this->isReadonly = $isReadonly;
+        $this->from = $from;
+        $this->tabActive = 'history';
     }
 
     public function setActive($v)

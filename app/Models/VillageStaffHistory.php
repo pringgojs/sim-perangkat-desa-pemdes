@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class VillageStaffHistory extends Model
 {
@@ -76,4 +77,26 @@ class VillageStaffHistory extends Model
     {
         return $this->belongsTo(Option::class, 'position_type_status_id');
     }
+
+    public function scopeStaffId($q, $id)
+    {
+        if (!$id) return;
+
+        $q->where('village_staff_id', $id);
+    }
+
+    public function getDateOfApp()
+    {
+        if (!$this->date_of_appointment) return '-';
+
+        return date_format_view($this->date_of_appointment);
+    }
+
+    public function getEndDateOfOff()
+    {
+        if (!$this->enddate_of_office) return '-';
+
+        return date_format_view($this->enddate_of_office);
+    }
+
 }
