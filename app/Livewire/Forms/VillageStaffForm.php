@@ -13,6 +13,7 @@ use App\Rules\UniqueUsername;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Validate;
 use Spatie\Permission\Models\Role;
+use App\Models\VillagePositionType;
 use Illuminate\Support\Facades\Storage;
 use Spatie\LivewireFilepond\WithFilePond;
 use App\Rules\UniqueStaffPositionInVillage;
@@ -44,6 +45,7 @@ class VillageStaffForm extends Form
     public $village;
     public $village_staff;
     public $position_type;
+    public $position_type_status;
     public $data_status;
     public $user;
     public $ktp_old;
@@ -68,9 +70,10 @@ class VillageStaffForm extends Form
                 'exists:options,id',
                 new UniqueStaffPositionInVillage($this->village, $this->position_type, $this->id),
             ],
+            'position_type_status' => 'required',
             'district' => 'required',
             'village' => 'required',
-            'position_name' => $this->isMyAccount() ? 'required|max:250': 'nullable',
+            // 'position_name' => $this->isMyAccount() ? 'required|max:250': 'nullable',
             'sk_number' => $this->isMyAccount() && $this->isBPD() ? 'required|max:250' : 'nullable',
             'sk_tmt' => $this->isMyAccount() && $this->isBPD() ? 'required|max:250' : 'nullable',
             'sk_date' => $this->isMyAccount() && $this->isBPD() ? 'required|max:250' : 'nullable',
@@ -88,6 +91,7 @@ class VillageStaffForm extends Form
     public function messages() 
     {
         return [
+            'position_type_status.required' => 'Status jabatan wajib diisi.',
             'position_type.required' => 'Jenis jabatan wajib diisi.',
             'district.required' => 'Kecamatan wajib diisi.',
             'village.required' => 'Desa wajib diisi.',
@@ -102,7 +106,7 @@ class VillageStaffForm extends Form
             'place_of_birth.required' => 'Tempat lahir wajib diisi.',
             'date_of_birth.required' => 'Tanggal lahir wajib diisi.',
             'place_of_birth.required' => 'Tempat lahir wajib diisi.',
-            'position_name.required' => 'Jabatan wajib diisi.',
+            // 'position_name.required' => 'Jabatan wajib diisi.',
             'ktp.required' => 'Gambar harus diunggah.',
             'ktp.image' => 'File yang diunggah harus berupa gambar.',
             'ktp.mimes' => 'Gambar harus berformat JPEG atau PNG.',
@@ -127,17 +131,29 @@ class VillageStaffForm extends Form
             'village_id' => $this->village,
             'address' => $this->address ?? null,
             'phone_number' => $this->phone ?? null,
-            'position_type_id' => $this->position_type,
             'date_of_birth' => $this->date_of_birth ?? null,
             'place_of_birth' => $this->place_of_birth ?? null,
-            'position_name' => $this->position_name ?? null,
-            'sk_number' => $this->sk_number ?? null,
-            'sk_tmt' => $this->sk_tmt ?? null,
-            'gender' => $this->gender ?? 1,
-            'sk_date' => $this->sk_date ?? null,
+            'gender' => $this->gender ?? 'L',
+            // 'position_name' => $this->position_name ?? null,
+            // 'sk_number' => $this->sk_number ?? null,
+            // 'sk_tmt' => $this->sk_tmt ?? null,
+            // 'sk_date' => $this->sk_date ?? null,
             'date_of_pensiun' => $this->pensiun ?? null,
         ];
 
+        $is_definitif = option_is_match('definitif', $this->position_type_status);
+        $village_position_type = VillagePositionType::villageId($this->village)->positionTypeId($this->position_type)->first();
+        if ($is_definitif) {
+            $payload['position_id'] = $this->position_type;
+            $payload['position_code'] = $village_position_type->code ?? null;
+            $payload['position_name'] = $village_position_type->position_name ?? null;
+            $payload['position_plt_status_id'] = $this->position_type_status;
+        } else {
+            $payload['position_plt_id'] = $this->position_type;
+            $payload['position_plt_code'] = $village_position_type->code ?? null;
+            $payload['position_plt_name'] = $village_position_type->position_name ?? null;
+            $payload['position_plt_status_id'] = $this->position_type_status;
+        }
         /* jika dari mode tinjau admin, status tidak perlu di rubah ke draft */
         if ($from != 'admin') {
             $payload['data_status_id'] = key_option('draft');

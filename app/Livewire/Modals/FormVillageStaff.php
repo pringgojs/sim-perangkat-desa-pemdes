@@ -20,12 +20,14 @@ class FormVillageStaff extends ModalComponent
     public $id;
     public $position_type_id;
     public $position_types;
+    public $position_type_status;
     public $districts = [];
     public $villages = [];
 
     public function mount()
     {
         $this->position_types = Option::positionTypes()->get();
+        $this->position_type_status = Option::positionTypeStatus()->get();
         $this->districts = Option::districts()->get();
         if ($this->id) {
             $model = VillageStaff::find($this->id);
