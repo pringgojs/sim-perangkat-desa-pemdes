@@ -53,19 +53,8 @@ class VillageStaffImport implements ToCollection
             $ket = $item[11];
             $kode_desa = explode('-', $jabatan_definitif);
             
-            
             if (!$nama) return;
-
-            /* user seeder */
-            $user = User::create([
-                'name' => $nama,
-                'username' => $username,
-                'email' => $username.'@gmail.com',
-                'password' => bcrypt('password'),
-            ]);
-    
-            $user->assignRole('operator');
-
+            
             $position_type_definitif = VillagePositionType::code($jabatan_definitif)->first();
             $position_type_plt = VillagePositionType::code($jabatan_plt)->first();
             $village = $position_type_definitif ? $position_type_definitif->village : null;
@@ -96,7 +85,17 @@ class VillageStaffImport implements ToCollection
             if ($date) {
                 $carbon = Carbon::createFromFormat('d/m/Y', $date);
             }
-            
+
+            /* user seeder */
+            $user = User::create([
+                'name' => $nama,
+                'username' => $username,
+                'email' => $username.'@gmail.com',
+                'password' => bcrypt('password'),
+            ]);
+    
+            $user->assignRole('operator');
+
             $staff = new VillageStaff;
             $staff->user_id = $user->id;
             $staff->village_id = $village->id;

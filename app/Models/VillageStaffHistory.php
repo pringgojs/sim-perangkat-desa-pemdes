@@ -80,8 +80,6 @@ class VillageStaffHistory extends Model
 
     public function scopeStaffId($q, $id)
     {
-        if (!$id) return;
-
         $q->where('village_staff_id', $id);
     }
 

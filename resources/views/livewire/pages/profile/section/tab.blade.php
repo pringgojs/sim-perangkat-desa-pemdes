@@ -32,8 +32,10 @@
                         d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                 </svg>
 
-                <svg x-show="activeTab === 'history'" class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg"
-                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg x-show="activeTab === 'history'"
+                    onclick="document.getElementById('formModalHistory')._x_dataStack[0].show = true"
+                    class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
             </button>
@@ -46,7 +48,7 @@
             @endif
 
             @if ($tabActive == 'history')
-                @livewire('pages.profile.history.table', ['from' => $from, 'staff' => $staff])
+                @livewire('pages.village-staff-history.section.table', ['from' => $from, 'staff' => $staff])
                 {{-- <div class="space-y-2">
                     <div class="flex items-center space-x-2 p-3 bg-gray-100 rounded-md">
                         <div class="w-8 h-8 bg-gray-300 rounded-full"></div>

@@ -35,7 +35,6 @@ class Filter extends Component
             'isParkir' => $isParkir,
             'positionStatus' => $positionStatus,
         ];
-info($params);
         $this->dispatch('filter', $params )->to($this->table);
     }
 

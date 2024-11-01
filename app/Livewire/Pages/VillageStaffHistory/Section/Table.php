@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Livewire\Pages\Profile\History;
+namespace App\Livewire\Pages\VillageStaffHistory\Section;
 
 use Livewire\Component;
 use App\Models\VillageStaffHistory;
+
 
 class Table extends Component
 {
@@ -19,6 +20,6 @@ class Table extends Component
 
     public function render()
     {
-        return view('livewire.pages.profile.history.table');
+        return view('livewire.pages.village-staff-history.section.table');
     }
 }

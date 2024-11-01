@@ -50,29 +50,21 @@ class VillagePositionType extends Model
 
     public function scopeCode($q, $code = null)
     {
-        if (!$code) return;
-
         $q->where('code', $code);
     }
 
     public function scopeVillageId($q, $id = null)
     {
-        if (!$id) return;
-
         $q->where('village_id', $id);
     }
 
     public function scopePositionTypeId($q, $id = null)
     {
-        if (!$id) return;
-
         $q->where('position_type_id', $id);
     }
 
     public function scopeSearch($q, $search = null)
     {
-        if (!$search) return;
-
         $q->where('code', 'like', '%'.$search.'%');
             // ->orWhere('address', 'like', '%' . $search . '%');
     }

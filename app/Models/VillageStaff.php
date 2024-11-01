@@ -81,16 +81,12 @@ class VillageStaff extends Model
 
     public function scopeType($q, $type)
     {
-        if (!$type) return;
-        
         $q->where('position_id', $type);
     }
 
     public function scopeVillage($q, $village = null)
     {
-        if ($village) {
-            $q->where('village_id', $village);
-        }
+        $q->where('village_id', $village);
     }
 
     public function scopeDistrict($q, $district = null)
@@ -103,6 +99,9 @@ class VillageStaff extends Model
 
     public function scopeFilter($q,$params = [])
     {
+        // dd($params);
+        info($params);
+
         if (!isset($params['area'])) return;
 
         if ($params['search']) {
@@ -111,7 +110,6 @@ class VillageStaff extends Model
             return;
         }
 
-        info($params);
         /* filter berdasarkan array village_id */
         if ($params['area'] == 'village' && $params['selectedVillage']) {
             $q->whereIn('village_id', $params['selectedVillage']);
@@ -129,16 +127,21 @@ class VillageStaff extends Model
                 $q->where('position_plt_status_id', $params['positionStatus']);
                 $q->where('position_plt_id', $params['positionType']);
             } else {
+                info(1);
                 $q->where('position_id', $params['positionType']);
             }
         } else if (!$params['positionType'] && $params['positionStatus']) {
+                info(2);
             $q->where('position_plt_status_id', $params['positionStatus']);
         }  else if ($params['positionType'] && !$params['positionStatus']) {
+                info(3);
             $q->where('position_id', $params['positionType']);
-            $q->orWhere('position_plt_id', $params['positionType']);
+            // $q->orWhere('position_plt_id', $params['positionType']);
         }
 
         if ($params['isParkir']) {
+            info(4);
+
             $q->where('is_parkir', $params['isParkir']);
         }
     }
