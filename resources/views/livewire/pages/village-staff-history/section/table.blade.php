@@ -67,7 +67,7 @@
                             ];
                         @endphp
 
-                        <x-utils.dropdown-menu-action id="jasd8asd" :items="$menuItems" />
+                        <x-utils.dropdown-menu-action :id="$item->id" :items="$menuItems" />
                     </div>
                 </div>
             </div>
