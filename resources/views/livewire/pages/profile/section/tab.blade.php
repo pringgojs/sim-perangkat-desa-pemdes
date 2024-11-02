@@ -33,7 +33,7 @@
                 </svg>
 
                 <a x-show="activeTab === 'history'"
-                    href="{{ route('village-staff-history.create', ['id' => $staff->id]) }}" wire:navigate>
+                    href="{{ route('village-staff-history.create', ['staffId' => $staff->id]) }}" wire:navigate>
                     <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

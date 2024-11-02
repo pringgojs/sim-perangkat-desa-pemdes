@@ -17,6 +17,7 @@ class Form extends Component
 
     public VillageStaffHistoryForm $form;
     
+    public $id;
     public $staffId;
     public $districts;
     public $villages = [];
@@ -26,19 +27,27 @@ class Form extends Component
     
     public function mount($staffId = null, $id = null)
     {
-        $this->staffId = $staffId;
-        $staff = VillageStaff::findOrFail($staffId);
-
-        if (!$staff) return;
-
-        $this->form->setStaffId($staffId);
+        $this->id = $id;
         $this->positionTypeStatus = Option::positionTypeStatus()->get();
-        $this->villagePositionTypes = VillagePositionType::with(['positionType'])->villageId($staff->village_id)->get();
 
+        /* jika mode edit parameter $id terisi */
         if ($id) {
             $model = VillageStaffHistory::findOrFail($id);
+            $staff = $model->villageStaff;
+            $this->staffId = $staff->id;
             $this->form->setModel($model);
         }
+
+        /* jika mode create, parameter $staffId terisi */
+        if ($staffId) {
+            $staff = VillageStaff::findOrFail($staffId);
+            $this->staffId = $staffId;
+            $this->form->setStaffId($staffId);
+
+        }
+
+        $this->villagePositionTypes = VillagePositionType::with(['positionType'])->villageId($staff->village_id)->get();
+
 
     }
 

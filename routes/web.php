@@ -44,7 +44,7 @@ Route::middleware([
     //     'role:administrator'
     // ])->group(function () {
         Route::get('village-staff-history/{id}/edit', VillageStaffHistoryForm::class)->name('village-staff-history.edit');
-        Route::get('village-staff-history/{id}/create', VillageStaffHistoryCreate::class)->name('village-staff-history.create');
+        Route::get('village-staff-history/{staffId}/create', VillageStaffHistoryForm::class)->name('village-staff-history.create');
         Route::get('village-position-type/{id}/edit', Edit::class)->name('village-position-type.edit');
         Route::get('village-position-type/create', Create::class)->name('village-position-type.create');
         Route::get('village-position-type', VillagePositionTypeIndex::class)->name('village-position-type.index');

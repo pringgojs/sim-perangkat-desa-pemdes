@@ -50,13 +50,13 @@
                                 [
                                     'type' => 'link',
                                     'label' => 'Detil jabatan',
-                                    'url' => route('village-staff.history', ['id' => '3424']),
+                                    'url' => route('village-staff.history', ['id' => $item->id]),
                                     'color' => 'text-gray-800',
                                 ],
                                 [
                                     'type' => 'link',
                                     'label' => 'Ubah',
-                                    'url' => route('village-staff.edit', ['id' => '920']),
+                                    'url' => route('village-staff-history.edit', ['id' => $item->id]),
                                     'color' => 'text-gray-800',
                                 ],
                                 [
