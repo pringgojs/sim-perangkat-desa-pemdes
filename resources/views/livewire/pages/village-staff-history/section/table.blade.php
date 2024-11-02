@@ -77,3 +77,15 @@
     <x-utils.modal-delete desc="Anda yakin ingin menghapus data ini ? data yang sudah dihapus tidak dapat dikembalikan!"
         id="modalConfirmDelete" wire:ignore />
 </div>
+
+@script
+    <script>
+        Livewire.hook('morph.updated', ({
+            el,
+            component
+        }) => {
+            initFlowbite();
+            window.HSStaticMethods.autoInit(['dropdown']);
+        })
+    </script>
+@endscript
