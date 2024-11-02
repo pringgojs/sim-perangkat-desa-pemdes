@@ -10,11 +10,13 @@ class DropdownMenuAction extends Component
 {
     public $items;
     public $id;
+    public $modalName;
 
-    public function __construct($id, $items = [])
+    public function __construct($id, $items = [], $modalName = 'modalConfirm')
     {
         $this->id = $id;
         $this->items = $items;
+        $this->modalName = $modalName;
     }
 
     /**

@@ -25,7 +25,7 @@
         @foreach ($items as $item)
             <a class="flex cursor-pointer items-center gap-x-3 py-2 px-3 rounded-lg border-none text-sm {{ $item['color'] ?? 'text-gray-800' }} hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300"
                 @if ($item['type'] == 'link') href="{{ $item['url'] }}" wire:navigate @endif
-                @if ($item['type'] == 'delete') onclick="document.getElementById('modalConfirm')._x_dataStack[0].show = true;document.getElementById('modalConfirm')._x_dataStack[0].id = '{{ $id }}';" @endif>{{ $item['label'] }}
+                @if ($item['type'] == 'delete') onclick="document.getElementById('{{ $modalName }}')._x_dataStack[0].show = true;document.getElementById('{{ $modalName }}')._x_dataStack[0].id = '{{ $id }}';" @endif>{{ $item['label'] }}
             </a>
         @endforeach
     </div>

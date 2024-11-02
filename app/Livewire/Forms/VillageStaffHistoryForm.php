@@ -71,11 +71,12 @@ class VillageStaffHistoryForm extends Form
 
     public function setModel(VillageStaffHistory $model)
     {
+        $this->id = $model->id;
         $this->villagePositionType = $model->village_position_type_id;
         $this->skNumber = $model->no_sk;
-        $this->skDate = $model->date_of_sk;
-        $this->dateOfAppointment = $model->date_of_appointment;
-        $this->enddateOfOffice = $model->enddate_of_office;
+        $this->skDate = $model->date_of_sk ? $model->date_of_sk->format('Y-m-d') : null;
+        $this->dateOfAppointment = $model->date_of_appointment ? $model->date_of_appointment->format('Y-m-d') : null;
+        $this->enddateOfOffice = $model->enddate_of_office ? $model->enddate_of_office->format('Y-m-d') : null;
         $this->staffId = $model->village_staff_id;
     }
 

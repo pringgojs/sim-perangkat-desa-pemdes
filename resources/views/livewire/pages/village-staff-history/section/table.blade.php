@@ -67,10 +67,13 @@
                             ];
                         @endphp
 
-                        <x-utils.dropdown-menu-action :id="$item->id" :items="$menuItems" />
+                        <x-utils.dropdown-menu-action :id="$item->id" :items="$menuItems"
+                            modalName="modalConfirmDelete" />
                     </div>
                 </div>
             </div>
         @endforeach
     </div>
+    <x-utils.modal-delete desc="Anda yakin ingin menghapus data ini ? data yang sudah dihapus tidak dapat dikembalikan!"
+        id="modalConfirmDelete" wire:ignore />
 </div>

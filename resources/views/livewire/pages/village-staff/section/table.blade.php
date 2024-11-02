@@ -25,33 +25,6 @@
                                 $menuItems = [];
                             @endphp
                             @if (!in_array($item->dataStatus->key, $arr))
-                                {{-- <a onclick="Livewire.dispatch('openModal', { component: 'modals.form-village-staff', arguments: {id: '{{ $item->id }}'} })"
-                                    class="inline-flex rounded-lg p-2 bg-purple-50 text-purple-700 ring-4 ring-white cursor-pointer">
-                                    <x-heroicon-o-pencil class="h-5 w-5" />
-                                </a>
-
-                                <a id="dropdownDefaultButton-{{ $item->id }}"
-                                    data-dropdown-toggle="dropdown-{{ $item->id }}"
-                                    class="inline-flex rounded-lg p-2 bg-red-50 text-red-700 ring-4 ring-white cursor-pointer">
-                                    <x-heroicon-o-trash class="h-5 w-5" />
-                                </a>
-
-                                <div id="dropdown-{{ $item->id }}"
-                                    class="z-10 hidden  mr-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-64 dark:bg-gray-700">
-                                    <div
-                                        class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-
-                                        <p class="mb-3 font-normal text-sm text-gray-500 dark:text-gray-400">Are you
-                                            sure
-                                            you
-                                            want to delete <b>{{ ucwords(strtolower($item->user->name)) }}</b>?</p>
-                                        <a wire:key="item-{{ $item->id }}"
-                                            wire:click="delete('{{ $item->id }}')"
-                                            class="cursor-pointer item-right rounded-md bg-red-50 px-2.5 py-1.5 text-sm font-semibold text-red-900 shadow-sm ring-1 ring-inset ring-red-300 hover:bg-red-50">
-                                            Ya, hapus!
-                                        </a>
-                                    </div>
-                                </div> --}}
                                 @php
                                     $menuItems = [
                                         [
@@ -75,8 +48,8 @@
                                 @endphp
                             @endif
 
-
-                            <x-utils.dropdown-menu-action :id="$item->id" :items="$menuItems" />
+                            <x-utils.dropdown-menu-action :id="$item->id" :items="$menuItems"
+                                modalName="modalConfirmDelete" />
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
@@ -108,7 +81,8 @@
     </x-table>
 
     {{-- modal confirm --}}
-    <x-utils.modal-delete id="modalConfirm" wire:ignore />
+    <x-utils.modal-delete desc="Anda yakin ingin menghapus data ini ? data yang sudah dihapus tidak dapat dikembalikan!"
+        id="modalConfirmDelete" wire:ignore />
 </div>
 
 
@@ -118,8 +92,6 @@
             el,
             component
         }) => {
-            console.log('Reinitializing dropdown');
-
             initFlowbite();
             window.HSStaticMethods.autoInit(['dropdown']);
         })
