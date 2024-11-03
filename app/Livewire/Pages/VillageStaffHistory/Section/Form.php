@@ -24,6 +24,7 @@ class Form extends Component
     public $positionTypes;
     public $positionTypeStatus;
     public $villagePositionTypes;
+    public $villagePositionType;
     
     public function mount($staffId = null, $id = null)
     {
@@ -34,6 +35,8 @@ class Form extends Component
         if ($id) {
             $model = VillageStaffHistory::findOrFail($id);
             $staff = $model->villageStaff;
+            
+            $this->villagePositionType = VillagePositionType::with(['positionType', 'positionTypeStatus'])->whereId($model->village_position_type_id)->first();
             $this->staffId = $staff->id;
             $this->form->setModel($model);
         }
@@ -48,6 +51,13 @@ class Form extends Component
 
         $this->villagePositionTypes = VillagePositionType::with(['positionType'])->villageId($staff->village_id)->get();
 
+
+    }
+
+    public function viewPositionType()
+    {
+        if (!$this->form->villagePositionType) return;
+        $this->villagePositionType = VillagePositionType::with(['positionType', 'positionTypeStatus'])->whereId($this->form->villagePositionType)->first();
 
     }
 
