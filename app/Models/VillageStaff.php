@@ -279,6 +279,27 @@ class VillageStaff extends Model
         }
     }
 
+    public function labelDifinitifStatus()
+    {
+        if (!$this->position_id) return '';
+
+        if ($this->position_is_active) {
+            return '<span class="inline-flex items-center rounded-md bg-green-200 px-2 py-1 text-xs font-medium text-green-700">Aktif</span>';
+        }
+        return '<span class="inline-flex items-center rounded-md bg-red-200 px-2 py-1 text-xs font-medium text-red-700">Non-aktif</span>';
+    }
+
+    public function labelPltStatus()
+    {
+        if (!$this->position_plt_id) return '';
+
+        if ($this->position_plt_is_active) {
+            return '<span class="inline-flex items-center rounded-md bg-green-200 px-2 py-1 text-xs font-medium text-green-700">Aktif</span>';
+        }
+
+        return '<span class="inline-flex items-center rounded-md bg-red-200 px-2 py-1 text-xs font-medium text-red-700">Non-aktif</span>';
+    }
+
     public function colorDataStatus()
     {
         $status = $this->dataStatus;

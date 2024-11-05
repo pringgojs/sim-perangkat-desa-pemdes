@@ -88,6 +88,7 @@ class Form extends Component
             $this->staff->position_id = $this->villagePositionType->position_type_id;
             $this->staff->position_name = $this->villagePositionType->position_name;
             $this->staff->position_code = $this->villagePositionType->code;
+            $this->staff->position_is_active = true;
             $this->staff->save();
 
             /* ubah status perangkat definitif menjadi not-active*/
@@ -95,19 +96,26 @@ class Form extends Component
                 ->where('village_staff_id', $this->staff->id)
                 ->where('position_type_status_id', key_option('definitif'))
                 ->update(['is_active' => 0]);
-            
-            
+
+            $update = VillageStaff::where('position_code', $this->villagePositionType->code)
+                ->where('id', '!=', $this->staff->id)
+                ->update(['position_is_active' => 0]);
 
         } else {
             $this->staff->position_plt_id = $this->villagePositionType->position_type_id;
             $this->staff->position_plt_name = $this->villagePositionType->position_name;
             $this->staff->position_code = $this->villagePositionType->code;
+            $this->staff->position_plt_is_active = true;
             $this->staff->save();
 
             $update = VillageStaffHistory::active()
                 ->where('village_staff_id', $this->staff->id)
                 ->where('position_type_status_id', '!=', key_option('definitif'))
                 ->update(['is_active' => false]);
+
+            $update = VillageStaff::where('position_plt_code', $this->villagePositionType->code)
+                ->where('id', '!=', $this->staff->id)
+                ->update(['position_plt_is_active' => 0]);
         }
 
 
