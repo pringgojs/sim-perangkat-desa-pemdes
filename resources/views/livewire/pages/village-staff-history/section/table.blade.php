@@ -41,15 +41,15 @@
 
                 <!-- Right Section -->
                 <div class="col-span-3 flex items-center justify-end space-x-4">
-                    <a href="" wire:navigate
-                        class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">Non-aktifkan
-                    </a>
+                    {{-- <a @click=""
+                        class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">{{ $item->is_active ? 'Non-aktifkan' : 'Aktifkan' }}
+                    </a> --}}
                     <div class="relative inline-block text-left">
                         @php
                             $menuItems = [
                                 [
                                     'type' => 'link',
-                                    'label' => 'Detil jabatan',
+                                    'label' => $item->is_active ? 'Non-aktifkan' : 'Aktifkan',
                                     'url' => route('village-staff.history', ['id' => $item->id]),
                                     'color' => 'text-gray-800',
                                 ],

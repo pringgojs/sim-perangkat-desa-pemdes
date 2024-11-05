@@ -1,7 +1,7 @@
 <div>
     <div class="w-full px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
         <!-- Card -->
-        <div class="bg-white rounded-md shadow p-4 sm:p-7 dark:bg-neutral-900">
+        <div class="bg-gradient-to-bl from-blue-100 via-transparent rounded-md p-4 sm:p-7 dark:bg-neutral-900">
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div class=" text-white p-4 rounded">
                     <!-- Konten kolom pertama -->
@@ -35,7 +35,7 @@
                                         <option selected>Pilih jenis jabatan</option>
                                         @foreach ($villagePositionTypes as $item)
                                             <option value="{{ $item->id }}">{{ ucfirst($item->position_name) }} -
-                                                {{ $item->code }}</option>
+                                                {{ $item->code }} ({{ $item->positionTypeStatus->name }})</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -123,29 +123,72 @@
                                 <span class="text-red-500">{{ $message }}</span>
                             @enderror --}}
                             </div>
+
+                            @if ($positionNow)
+                                <div class="col-span-12">
+                                    <div class="flex p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400"
+                                        role="alert">
+                                        <svg class="flex-shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                            <path
+                                                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                                        </svg>
+                                        <span class="sr-only">Info</span>
+                                        <div>
+                                            <span class="font-medium">Ketentuan:</span>
+                                            <ul class="mt-1.5 list-disc list-inside">
+                                                <li>Apabila jabatan yang dipilih sudah diisi oleh perangkat dengan
+                                                    status aktif, maka perangkat tersebut akan dinon-aktifkan dari
+                                                    jabatan yang dipilih.</li>
+                                                <li>Apabila jabatan yang dipilih merupakan jabatan definitif, maka akan
+                                                    mengganti status jabatan definitif saat ini dari
+                                                    {{ $staff->name }}.</li>
+                                                <li>Apabila jabatan yang dipilih merupakan jabatan Plt/Plh/Pj, maka akan
+                                                    mengganti status jabatan Plt/Plh/Pj saat ini dari
+                                                    {{ $staff->name }}.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                         <div class="mt-5 flex justify-end gap-x-2">
                             <div wire:key="{{ str()->random(50) }}" class="justify-end flex-initial ml-5 -mt-5"
                                 wire:loading wire:target='store'>
                                 <x-loading />
                             </div>
-                            <a href="{{ route('village-staff.edit', ['id' => $staffId]) }}" wire:navigate
+                            <a href="{{ route('village-staff.edit', ['id' => $staff->id]) }}" wire:navigate
                                 class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
                                 Batal
                             </a>
                             <button type="submit" wire:loading.attr="disabled" wire:target='store'
-                                class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-green-600 text-white hover:bg-green-700 focus:outline-none focus:bg-green-700 disabled:opacity-50 disabled:pointer-events-none">
+                                class="py-2 px-3 w-full items-center gap-x-2 text-center text-sm font-medium rounded-lg border border-transparent bg-green-600 text-white hover:bg-green-700 focus:outline-none focus:bg-green-700 disabled:opacity-50 disabled:pointer-events-none">
                                 {{ $id ? 'Simpan Perubahan' : 'Simpan' }}
                             </button>
                         </div>
                     </form>
                 </div>
-                <div class="bg-gray-100 text-white p-4 rounded">
-                    <!-- Konten kolom kedua -->
-                    <!-- List -->
-                    @if ($villagePositionType)
+                @if ($villagePositionType)
+                    <div class="bg-white text-white p-4 shadow-lg rounded">
+                        <!-- Konten kolom kedua -->
+                        <!-- List -->
                         <div class="space-y-3">
                             <h2 class="text-sm font-medium text-gray-900">Detil Jabatan</h2>
+                            <dl class="flex flex-col sm:flex-row gap-1">
+                                <dt class="min-w-40">
+                                    <span class="block text-sm text-gray-500 dark:text-neutral-500">Desa:</span>
+                                </dt>
+                                <dd>
+                                    <ul>
+                                        <li
+                                            class="me-1 inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
+
+                                            {{ $villagePositionType->village->name }} -
+                                            {{ $villagePositionType->village->code }}
+                                        </li>
+                                    </ul>
+                                </dd>
+                            </dl>
                             <dl class="flex flex-col sm:flex-row gap-1">
                                 <dt class="min-w-40">
                                     <span class="block text-sm text-gray-500 dark:text-neutral-500">Jenis
@@ -232,13 +275,70 @@
                                     </ul>
                                 </dd>
                             </dl>
+
+                            @if ($positionNow)
+                                <h2 class="text-sm font-medium text-gray-900">Pejabat Saat ini</h2>
+                                <dl class="flex flex-col sm:flex-row gap-1">
+                                    <dt class="min-w-40">
+                                        <span class="block text-sm text-gray-500 dark:text-neutral-500">Nama:</span>
+                                    </dt>
+                                    <dd>
+                                        <ul>
+                                            <li
+                                                class="me-1 inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
+                                                {{ $positionNow->villageStaff->name }}
+                                            </li>
+                                        </ul>
+                                    </dd>
+                                </dl>
+                                <dl class="flex flex-col sm:flex-row gap-1">
+                                    <dt class="min-w-40">
+                                        <span class="block text-sm text-gray-500 dark:text-neutral-500">Tanggal
+                                            Dilantik:</span>
+                                    </dt>
+                                    <dd>
+                                        <ul>
+                                            <li
+                                                class="me-1 inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
+                                                {{ date_format_view($positionNow->date_of_appointment) }}
+                                            </li>
+                                        </ul>
+                                    </dd>
+                                </dl>
+                                <dl class="flex flex-col sm:flex-row gap-1">
+                                    <dt class="min-w-40">
+                                        <span class="block text-sm text-gray-500 dark:text-neutral-500">Tanggal
+                                            Berakhir:</span>
+                                    </dt>
+                                    <dd>
+                                        <ul>
+                                            <li
+                                                class="me-1 inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
+                                                {{ date_format_view($positionNow->enddate_of_office) }}
+                                            </li>
+                                        </ul>
+                                    </dd>
+                                </dl>
+
+                                <dl class="flex flex-col sm:flex-row gap-1">
+                                    <dt class="min-w-40">
+                                        <span class="block text-sm text-gray-500 dark:text-neutral-500">Status:</span>
+                                    </dt>
+                                    <dd>
+                                        <ul>
+                                            <li
+                                                class="me-1 inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
+                                                {{ $positionNow->is_active ? 'Aktif' : 'Non-aktif' }}
+                                            </li>
+                                        </ul>
+                                    </dd>
+                                </dl>
+                            @endif
                         </div>
-                    @endif
-                    <!-- End List -->
-                </div>
+                        <!-- End List -->
+                    </div>
             </div>
-
-
+            @endif
         </div>
     </div>
 </div>

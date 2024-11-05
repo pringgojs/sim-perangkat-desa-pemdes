@@ -31,6 +31,7 @@ class VillageStaffHistory extends Model
         'thp',
         'no_sk',
         'date_of_sk',
+        'is_active',
         'date_of_appointment',
         'enddate_of_office',
     ];
@@ -81,6 +82,16 @@ class VillageStaffHistory extends Model
     public function scopeStaffId($q, $id)
     {
         $q->where('village_staff_id', $id);
+    }
+
+    public function scopeActive($q)
+    {
+        $q->where('is_active', true);
+    }
+
+    public function scopeNonActive($q, $id)
+    {
+        $q->where('is_active', false);
     }
 
     public function getDateOfApp()

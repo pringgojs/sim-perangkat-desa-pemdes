@@ -52,6 +52,7 @@ function format_price($string = null)
 
 function date_format_view($date)
 {
+    if (!$date) return '-';
     Carbon::setLocale('id');
     // Buat instance Carbon dari created_at yang diberikan
     $carbonDate = Carbon::parse($date);

@@ -59,8 +59,9 @@ class VillageStaffHistoryForm extends Form
             'date_of_sk' => $this->skDate,
             'date_of_appointment' => $this->dateOfAppointment,
             'enddate_of_office' => $this->enddateOfOffice,
+            'is_active' => true,
         ];
-
+        
         /* proses simpan */
         $model = VillageStaffHistory::updateOrCreate([
             'id' => $this->id
