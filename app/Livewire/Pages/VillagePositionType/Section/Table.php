@@ -16,10 +16,11 @@ class Table extends Component
 
     public $search;
     public $filter;
+    public $modalConfirmDelete = false;
     public function render()
     {
         return view('livewire.pages.village-position-type.section.table', [
-            'village_position_types' => VillagePositionType::filter($this->filter)->search($this->search)->with(['village.district', 'positionType', 'positionTypeStatus'])->orderByDefault()->paginate(),
+            'village_position_types' => VillagePositionType::filter($this->filter)->search($this->search)->with(['village.district', 'positionType', 'positionTypeStatus', 'staffHistory.villageStaff'])->orderByDefault()->paginate(),
         ]);
     }
 
@@ -36,7 +37,8 @@ class Table extends Component
         $model->delete();
 
         $this->alert('success', 'Success!');
-        $this->dispatch('refreshComponent')->self();
+        $this->redirectRoute('village-position-type.index', navigate: true);
+
     }
 
     public function updatingSearch()

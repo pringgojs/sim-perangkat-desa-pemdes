@@ -43,6 +43,11 @@ class VillagePositionType extends Model
         return $this->belongsTo(Option::class, 'position_type_status_id');
     }
 
+    public function staffHistory()
+    {
+        return $this->hasOne(VillageStaffHistory::class, 'village_position_type_id');
+    }
+
     public function scopeOrderByDefault($q)
     {
         $q->orderBy('code');

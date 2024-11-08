@@ -64,7 +64,6 @@ class Form extends Component
     {
         DB::beginTransaction();
 
-        /* simpan history */
         $model = $this->form->store();
 
         DB::commit();
@@ -74,7 +73,7 @@ class Form extends Component
         $this->redirectRoute('village-staff.edit', ['id' => $this->staff->id], navigate: true);
 
     }
-    
+
     public function render()
     {
         return view('livewire.pages.village-staff-history.section.form');
