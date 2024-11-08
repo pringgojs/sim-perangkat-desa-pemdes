@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('village_staff', function (Blueprint $table) {
-            $table->date('date_of_pensiun')->nullable();
+        Schema::table('village_staff_histories', function (Blueprint $table) {
+            $table->dateTime('non_active_at')->nullable();
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('village_staff', function (Blueprint $table) {
-            $table->dropColumn(['date_of_pensiun']);
+        Schema::table('village_staff_histories', function (Blueprint $table) {
+            $table->dropColumn(['non_active_at']);
         });
     }
 };

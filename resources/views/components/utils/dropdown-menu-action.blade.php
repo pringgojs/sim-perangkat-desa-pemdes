@@ -1,5 +1,5 @@
 <!-- resources/views/components/dropdown.blade.php -->
-<div class="">
+<div>
     <button id="toggle-menu-action-{{ $id }}" data-dropdown-toggle="dropdown-menu-action-{{ $id }}"
         type="button"
         class="py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-lg text-gray-700 align-middle disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-green-600 transition-all text-sm dark:text-neutral-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
@@ -25,8 +25,14 @@
         @foreach ($items as $item)
             <a class="flex cursor-pointer items-center gap-x-3 py-2 px-3 rounded-lg border-none text-sm {{ $item['color'] ?? 'text-gray-800' }} hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300"
                 @if ($item['type'] == 'link') href="{{ $item['url'] }}" wire:navigate @endif
-                @if ($item['type'] == 'delete') onclick="document.getElementById('{{ $modalName }}')._x_dataStack[0].show = true;document.getElementById('{{ $modalName }}')._x_dataStack[0].id = '{{ $id }}';" @endif>{{ $item['label'] }}
+                @if ($item['type'] == 'delete') onclick="document.getElementById('modalConfirmDelete')._x_dataStack[0].show = true;document.getElementById('{{ $modalName }}')._x_dataStack[0].id = '{{ $id }}';" @endif>{{ $item['label'] }}
             </a>
         @endforeach
     </div>
 </div>
+
+@script
+    <script>
+        initFlowbite();
+    </script>
+@endscript

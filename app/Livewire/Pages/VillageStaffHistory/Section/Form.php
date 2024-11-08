@@ -64,12 +64,6 @@ class Form extends Component
     {
         DB::beginTransaction();
 
-        /* update status aktif perangkat yang masih menjabat */
-        self::updateStatusOldStaff();
-
-        /* update perangkat */
-        self::updateStaff();
-
         /* simpan history */
         $model = $this->form->store();
 
@@ -79,54 +73,6 @@ class Form extends Component
         $this->alert('success', 'Success!');
         $this->redirectRoute('village-staff.edit', ['id' => $this->staff->id], navigate: true);
 
-    }
-
-    public function updateStaff()
-    {
-        /* ubah status staff */
-        if (option_is_match('definitif', $this->villagePositionType->position_type_status_id)) {
-            $this->staff->position_id = $this->villagePositionType->position_type_id;
-            $this->staff->position_name = $this->villagePositionType->position_name;
-            $this->staff->position_code = $this->villagePositionType->code;
-            $this->staff->position_is_active = true;
-            $this->staff->save();
-
-            /* ubah status perangkat definitif menjadi not-active*/
-            $update = VillageStaffHistory::active()
-                ->where('village_staff_id', $this->staff->id)
-                ->where('position_type_status_id', key_option('definitif'))
-                ->update(['is_active' => 0]);
-
-            $update = VillageStaff::where('position_code', $this->villagePositionType->code)
-                ->where('id', '!=', $this->staff->id)
-                ->update(['position_is_active' => 0]);
-
-        } else {
-            $this->staff->position_plt_id = $this->villagePositionType->position_type_id;
-            $this->staff->position_plt_name = $this->villagePositionType->position_name;
-            $this->staff->position_code = $this->villagePositionType->code;
-            $this->staff->position_plt_is_active = true;
-            $this->staff->save();
-
-            $update = VillageStaffHistory::active()
-                ->where('village_staff_id', $this->staff->id)
-                ->where('position_type_status_id', '!=', key_option('definitif'))
-                ->update(['is_active' => false]);
-
-            $update = VillageStaff::where('position_plt_code', $this->villagePositionType->code)
-                ->where('id', '!=', $this->staff->id)
-                ->update(['position_plt_is_active' => 0]);
-        }
-
-
-    }
-
-    public function updateStatusOldStaff()
-    {
-        if ($this->positionNow) {
-            $this->positionNow->is_active = false;
-            $this->positionNow->save();
-        }
     }
     
     public function render()

@@ -14,6 +14,8 @@ class Table extends Component
     public $staff;
     public $from;
     public $histories;
+    public $modalConfirmDelete = false;
+    
     public function mount($staff, $from = null)
     {
         $this->staff = $staff;

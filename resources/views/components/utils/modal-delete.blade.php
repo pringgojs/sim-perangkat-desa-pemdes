@@ -1,5 +1,5 @@
 <div>
-    <x-modal id="{{ $id }}" maxWidth="md" wire:model="{{ $id }}" x-data="{
+    <x-modal maxWidth="md" id="{{ $id }}" wire:model="modalConfirmDelete" x-data="{
         id: ''
     }">
         {{-- <div

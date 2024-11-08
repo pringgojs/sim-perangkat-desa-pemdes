@@ -3,16 +3,17 @@
 namespace App\Livewire\Forms;
 
 use Livewire\Form;
+use App\Models\VillageStaff;
 use Livewire\Attributes\Validate;
 use App\Models\VillagePositionType;
 use App\Models\VillageStaffHistory;
+use App\Services\StaffHistoriesService;
 use App\Rules\UniqueVillagePositionType;
 
 class VillageStaffHistoryForm extends Form
 {
     public $id;
     public $staffId;
-    
     
     public $villagePositionType;
     public $positionTypeStatus;
@@ -42,32 +43,19 @@ class VillageStaffHistoryForm extends Form
     {
         $this->validate();
  
-        $villagePositionType = VillagePositionType::find($this->villagePositionType);
-        
-        $payload = [
-            'village_staff_id' => $this->staffId,
-            'village_position_type_id' => $villagePositionType->id,
-            'village_id' => $villagePositionType->village_id,
-            'position_code' => $villagePositionType->position_name,
-            'position_type_id' => $villagePositionType->position_type_id,
-            'position_name' => $villagePositionType->position_name,
-            'position_type_status_id' => $villagePositionType->position_type_status_id,
-            'siltap' => $villagePositionType->siltap,
-            'tunjangan' => $villagePositionType->tunjangan,
-            'thp' => $villagePositionType->siltap + $villagePositionType->tunjangan,
+        $villagePositionType = VillagePositionType::findOrFail($this->villagePositionType);
+        $staff = VillageStaff::findOrFail($this->staffId);
+
+        $historyService = new StaffHistoriesService($villagePositionType, $staff);
+        $historyService->store([
             'no_sk' => $this->skNumber,
             'date_of_sk' => $this->skDate,
             'date_of_appointment' => $this->dateOfAppointment,
             'enddate_of_office' => $this->enddateOfOffice,
-            'is_active' => true,
-        ];
-        
-        /* proses simpan */
-        $model = VillageStaffHistory::updateOrCreate([
-            'id' => $this->id
-        ], $payload);
+            'is_active' => true
+        ], $this->id);
 
-        return $model;
+        return $historyService;
     }
 
     public function setModel(VillageStaffHistory $model)
