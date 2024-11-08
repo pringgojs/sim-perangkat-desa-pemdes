@@ -11,7 +11,9 @@
                                 $ar = [
                                     'type' => 'link',
                                     'label' => $item->staffHistory->villageStaff->name ?? '-',
-                                    'url' => route('village-position-type.edit', ['id' => $item->id]),
+                                    'url' => route('village-staff.edit', [
+                                        'id' => $item->staffHistory->villageStaff->id,
+                                    ]),
                                     'color' => 'text-gray-800',
                                 ];
 
@@ -69,3 +71,14 @@
     <x-utils.modal-delete desc="Anda yakin ingin menghapus data ini ? data yang sudah dihapus tidak dapat dikembalikan!"
         id="modalConfirmDelete" wire:ignore />
 </div>
+
+@script
+    <script>
+        Livewire.hook('morph.updated', ({
+            el,
+            component
+        }) => {
+            initFlowbite()
+        })
+    </script>
+@endscript

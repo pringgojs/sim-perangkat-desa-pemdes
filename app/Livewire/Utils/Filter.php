@@ -14,6 +14,9 @@ class Filter extends Component
     public $positionTypes;
     public $positionTypeStatus;
     public $table;
+    
+    public $useNullPerson = false;
+    
     public function mount($table, $positionType = null)
     {
         $this->districts = Option::districts()->get();
@@ -24,7 +27,7 @@ class Filter extends Component
         $this->positionType = $positionType;
     }
 
-    public function filter($area = null, $search = null, $positionType = null, $selectedDistrict = [], $selectedVillage = [], $positionStatus = null, $isParkir = false)
+    public function filter($area = null, $search = null, $positionType = null, $selectedDistrict = [], $selectedVillage = [], $positionStatus = null, $isParkir = false, $isNullPerson = false)
     {
         $params = [
             'area' => $area,
@@ -34,6 +37,7 @@ class Filter extends Component
             'selectedVillage' => $selectedVillage,
             'isParkir' => $isParkir,
             'positionStatus' => $positionStatus,
+            'isNullPerson' => $isNullPerson,
         ];
         $this->dispatch('filter', $params )->to($this->table);
     }

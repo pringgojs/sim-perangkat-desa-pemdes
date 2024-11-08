@@ -30,3 +30,10 @@
         </div>
     </div>
 </div>
+
+
+@script
+    <script>
+        initFlowbite();
+    </script>
+@endscript

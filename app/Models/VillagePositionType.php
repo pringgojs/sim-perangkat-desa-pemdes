@@ -105,6 +105,10 @@ class VillagePositionType extends Model
         if ($params['isParkir']) {
             $q->where('is_parkir', $params['isParkir']);
         }
+
+        if ($params['isNullPerson']) {
+            $q->doesntHave('staffHistory') ;
+        }
     }
     
 }

@@ -122,7 +122,7 @@
                             class="block pt-2 pb-1 px-3 text-xs font-medium uppercase text-gray-400 dark:text-neutral-500">
                             Jabatan
                         </span>
-                        <div class="overflow-y-scroll max-h-48 space-y-0.5 ">
+                        <div class="overflow-y-scroll max-h-32 space-y-0.5 ">
                             <template x-for="item in positionTypes">
                                 <a @click="positionType == item.id ? positionType = '' : positionType=item.id;doFilter()"
                                     class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
@@ -143,7 +143,7 @@
                             class="block pt-2 pb-1 px-3 text-xs font-medium uppercase text-gray-400 dark:text-neutral-500">
                             Status Jabatan
                         </span>
-                        <div class="space-y-0.5 ">
+                        <div class="overflow-y-scroll max-h-32 space-y-0.5 ">
                             <template x-for="item in positionTypeStatus">
                                 <a @click="positionStatus == item.id ? positionStatus = '' : positionStatus=item.id;doFilter()"
                                     class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
@@ -162,7 +162,7 @@
                     <div class="p-1 space-y-0.5">
                         <span
                             class="block pt-2 pb-1 px-3 text-xs font-medium uppercase text-gray-400 dark:text-neutral-500">
-                            Parkir
+                            Lainnya
                         </span>
                         <a @click="isParkir = !isParkir;doFilter()"
                             class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
@@ -174,6 +174,18 @@
                             </svg>
                             Jabatan parkir
                         </a>
+                        @if ($useNullPerson)
+                            <a @click="isNullPerson = !isNullPerson;doFilter()"
+                                class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
+                                :class="isNullPerson ? 'bg-green-100' : ''" href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 size-4" fill="none"
+                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 0 1-1.125-1.125v-3.75ZM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-8.25ZM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-2.25Z" />
+                                </svg>
+                                Jabatan kosong
+                            </a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -218,7 +230,7 @@
             </div>
             <div class="relative flex items-center space-x-1">
                 <button class="hidden" x-ref="btnFilter"
-                    @click="$wire.filter(area, search, positionType, selectedDistrict, selectedVillage, positionStatus, isParkir)"></button>
+                    @click="$wire.filter(area, search, positionType, selectedDistrict, selectedVillage, positionStatus, isParkir, isNullPerson)"></button>
             </div>
         </div>
 
@@ -229,6 +241,7 @@
                     positionType: @entangle('positionType'),
                     positionStatus: '',
                     isParkir: false,
+                    isNullPerson: false,
                     search: '',
                     villages: @js($villages),
                     districts: @js($districts),
