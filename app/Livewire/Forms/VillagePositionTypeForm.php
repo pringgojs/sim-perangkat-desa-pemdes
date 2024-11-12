@@ -5,6 +5,7 @@ namespace App\Livewire\Forms;
 use Livewire\Form;
 use Livewire\Attributes\Validate;
 use App\Models\VillagePositionType;
+use App\Services\StaffHistoriesService;
 use App\Rules\UniqueVillagePositionType;
 
 class VillagePositionTypeForm extends Form
@@ -77,10 +78,29 @@ class VillagePositionTypeForm extends Form
             'code' => $this->code,
         ];
 
+
         /* proses simpan */
         $model = VillagePositionType::updateOrCreate([
             'id' => $this->id
         ], $payload);
+
+        $history = $model->staffHistory;
+        if (!$history) return $model;
+
+        $staff = $history->villageStaff;
+
+        /* ambil data seperti no_sk, date_of sk, dll dari old history. */
+        $params = [
+            'no_sk' => $history->no_sk,
+            'date_of_sk' => $history->date_of_sk,
+            'date_of_appointment' => $history->date_of_appointment,
+            'enddate_of_office' => $history->enddate_of_office,
+            'is_active' => $history->is_active,
+        ];
+        
+        /* update data history user */
+        $historyService = new StaffHistoriesService($model, $staff);
+        $historyService->store($params, null);
 
         return $model;
     }

@@ -47,7 +47,7 @@ function format_rupiah($number) {
 
 function format_price($string = null)
 {
-    return str_replace('.', '', $string);
+    return str_replace(',', '', $string);
 }
 
 function date_format_view($date)

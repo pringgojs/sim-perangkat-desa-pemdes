@@ -41,7 +41,7 @@ class StaffHistoriesService
             'village_staff_id' => $this->staff->id,
             'village_position_type_id' => $this->villagePositionType->id,
             'village_id' => $this->villagePositionType->village_id,
-            'position_code' => $this->villagePositionType->position_name,
+            'position_code' => $this->villagePositionType->code,
             'position_type_id' => $this->villagePositionType->position_type_id,
             'position_name' => $this->villagePositionType->position_name,
             'position_type_status_id' => $this->villagePositionType->position_type_status_id,
@@ -90,7 +90,6 @@ class StaffHistoriesService
                 ->update(['position_is_active' => 0]);
 
             return;
-
         }
 
         /* ubah status staff jika jabatan plt */
@@ -108,8 +107,6 @@ class StaffHistoriesService
         $update = VillageStaff::where('position_plt_code', $this->villagePositionType->code)
             ->where('id', '!=', $this->staff->id)
             ->update(['position_plt_is_active' => 0]);
-
-
     }
 
     public function updateStatusCurrentStaff()
@@ -119,6 +116,7 @@ class StaffHistoriesService
         if (!$positionNow) return;
 
         $positionNow->is_active = false;
+        $positionNow->non_active_at = date('Y-m-d H:i:s');
         $positionNow->save();
     }
 }

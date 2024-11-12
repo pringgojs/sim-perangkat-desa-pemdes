@@ -183,7 +183,7 @@
                             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                 <span class="text-gray-500 sm:text-sm">Rp</span>
                             </div>
-                            <input x-mask:dynamic="$money($input, ',')" wire:model="form.tunjangan" type="text"
+                            <input x-mask:dynamic="$money($input, '.')" wire:model="form.tunjangan" type="text"
                                 class="block w-full rounded-md border-0 py-2 pl-9 pr-12 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                                 placeholder="" aria-describedby="price-currency">
                         </div>
@@ -209,7 +209,7 @@
                             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                 <span class="text-gray-500 sm:text-sm">Rp</span>
                             </div>
-                            <input x-mask:dynamic="$money($input, ',')" wire:model="form.siltap" type="text"
+                            <input x-mask:dynamic="$money($input, '.')" wire:model="form.siltap" type="text"
                                 class="block w-full rounded-md border-0 py-2 pl-9 pr-12 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                                 placeholder="" aria-describedby="price-currency">
                         </div>
