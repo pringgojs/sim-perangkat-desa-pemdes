@@ -109,4 +109,11 @@ class VillageStaffHistory extends Model
         return date_format_view($this->enddate_of_office);
     }
 
+    public function getNonActiveAt()
+    {
+        if (!$this->non_active_at) return '-';
+
+        return date_format_view($this->non_active_at);
+    }
+
 }

@@ -10,14 +10,15 @@
                         @if ($item->is_active)
                             <span class="bg-green-100 text-green-600 text-sm px-2 py-1 rounded">Aktif</span>
                         @else
-                            <span class="bg-yellow-100 text-yellow-600 text-sm px-2 py-1 rounded">Non-aktif</span>
+                            <span data-tooltip-target="tooltip-non-active-{{ $item->id }}"
+                                class="bg-yellow-100 text-yellow-600 text-sm px-2 py-1 rounded">Non-aktif</span>
                         @endif
                     </h3>
                     <p class="text-gray-500 text-sm">{{ $item->positionTypeStatus->name ?? '' }} per
                         {{ $item->getDateOfApp() }}
                     </p>
                     <div class="flex space-x-2 text-sm mt-2">
-                        <span data-tooltip-target="tooltip-approver-default-"
+                        <span data-tooltip-target="tooltip-approver-default-{{ $item->id }}"
                             class="flex items-center bg-gray-100 text-gray-600 text-sm px-2 py-1 rounded">
                             <svg class="h-4 w-4 rounded-full mr-2" xmlns="http://www.w3.org/2000/svg" fill="none"
                                 viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -26,11 +27,8 @@
                             </svg>
                             {{ $item->getEndDateOfOff() }}
                         </span>
-                        <div id="tooltip-approver-default-" role="tooltip"
-                            class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                            Tanggal berakhir - {{ $item->getEndDateOfOff() }}
-                            <div class="tooltip-arrow" data-popper-arrow></div>
-                        </div>
+                        @livewire('utils.tooltip', ['id' => 'tooltip-approver-default-' . $item->id, 'title' => 'Tanggal berakhir - ' . $item->getEndDateOfOff()])
+                        @livewire('utils.tooltip', ['id' => 'tooltip-non-active-' . $item->id, 'title' => 'Non-aktif per - ' . $item->getNonActiveAt()])
                     </div>
                 </div>
 
