@@ -24,6 +24,7 @@ return new class extends Migration {
             $table->dateTime('date_of_sk')->nullable();
             $table->dateTime('date_of_appointment')->nullable();
             $table->dateTime('enddate_of_office')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
@@ -32,6 +33,7 @@ return new class extends Migration {
             $table->foreign('village_position_type_id')->references('id')->on('village_position_type')->onDelete('cascade');
             $table->foreign('village_id')->references('id')->on('villages')->onDelete('cascade');
             $table->foreign('position_type_id')->references('id')->on('options')->onDelete('cascade');
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('position_type_status_id')->references('id')->on('options')->onDelete('cascade');
         });
     }

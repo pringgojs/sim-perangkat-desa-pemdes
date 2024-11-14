@@ -43,6 +43,7 @@ class VillagePositionTypeImport implements ToCollection
             $total = $item[8];
             $status = $item[9];
             $is_parkir = $item[10];
+            // dd($item);
 
             if ($position_type == 'Staf Seksi') $key = 'staf';
             if ($position_type == 'Staf Urusan') $key = 'staf';

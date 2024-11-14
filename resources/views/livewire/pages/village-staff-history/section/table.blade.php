@@ -43,9 +43,10 @@
                         @php
                             $menuItems = [
                                 [
-                                    'type' => 'link',
+                                    'type' => 'click',
                                     'label' => $item->is_active ? 'Non-aktifkan' : 'Aktifkan',
-                                    'url' => route('village-staff.history', ['id' => $item->id]),
+                                    'action' => 'setActive',
+                                    'param' => $item->id,
                                     'color' => 'text-gray-800',
                                 ],
                                 [

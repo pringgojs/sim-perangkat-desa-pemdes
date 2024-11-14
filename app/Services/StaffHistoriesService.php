@@ -49,6 +49,7 @@ class StaffHistoriesService
             'tunjangan' => $this->villagePositionType->tunjangan,
             'thp' => $this->villagePositionType->siltap + $this->villagePositionType->tunjangan,
             'non_active_at' => null,
+            'created_by' => auth()->user()->id
         ];
 
         if ($params) {
@@ -69,6 +70,31 @@ class StaffHistoriesService
         return $model;
     }
 
+    public function updateDefinitif()
+    {
+        /* ubah status perangkat definitif menjadi not-active*/
+        $update = VillageStaffHistory::active()
+        ->where('village_staff_id', $this->staff->id)
+        ->where('position_type_status_id', key_option('definitif'))
+        ->update(['is_active' => 0, 'non_active_at' => date('Y-m-d H:i:s')]);
+
+        $update = VillageStaff::where('position_code', $this->villagePositionType->code)
+        ->where('id', '!=', $this->staff->id)
+        ->update(['position_is_active' => 0]);
+    }
+
+    public function updateNotDefinitif()
+    {
+        $update = VillageStaffHistory::active()
+            ->where('village_staff_id', $this->staff->id)
+            ->where('position_type_status_id', '!=', key_option('definitif'))
+            ->update(['is_active' => false, 'non_active_at' => date('Y-m-d H:i:s')]);
+
+        $update = VillageStaff::where('position_plt_code', $this->villagePositionType->code)
+            ->where('id', '!=', $this->staff->id)
+            ->update(['position_plt_is_active' => 0]);
+    }
+
     public function updateThisStaff()
     {
         /* ubah status staff jika jabatan definitif */
@@ -79,15 +105,7 @@ class StaffHistoriesService
             $this->staff->position_is_active = true;
             $this->staff->save();
 
-            /* ubah status perangkat definitif menjadi not-active*/
-            $update = VillageStaffHistory::active()
-                ->where('village_staff_id', $this->staff->id)
-                ->where('position_type_status_id', key_option('definitif'))
-                ->update(['is_active' => 0, 'non_active_at' => date('Y-m-d H:i:s')]);
-
-            $update = VillageStaff::where('position_code', $this->villagePositionType->code)
-                ->where('id', '!=', $this->staff->id)
-                ->update(['position_is_active' => 0]);
+            self::updateDefinitif();
 
             return;
         }
@@ -99,14 +117,7 @@ class StaffHistoriesService
         $this->staff->position_plt_is_active = true;
         $this->staff->save();
 
-        $update = VillageStaffHistory::active()
-            ->where('village_staff_id', $this->staff->id)
-            ->where('position_type_status_id', '!=', key_option('definitif'))
-            ->update(['is_active' => false, 'non_active_at' => date('Y-m-d H:i:s')]);
-
-        $update = VillageStaff::where('position_plt_code', $this->villagePositionType->code)
-            ->where('id', '!=', $this->staff->id)
-            ->update(['position_plt_is_active' => 0]);
+        self::updateNotDefinitif();
     }
 
     public function updateStatusCurrentStaff()
