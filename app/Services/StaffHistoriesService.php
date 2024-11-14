@@ -49,6 +49,7 @@ class StaffHistoriesService
             'tunjangan' => $this->villagePositionType->tunjangan,
             'thp' => $this->villagePositionType->siltap + $this->villagePositionType->tunjangan,
             'non_active_at' => null,
+            'is_active' => true,
             'created_by' => auth()->user()->id
         ];
 
@@ -57,7 +58,7 @@ class StaffHistoriesService
             $payload['date_of_sk'] = isset($params['date_of_sk']) ? $params['date_of_sk'] : null;
             $payload['date_of_appointment'] = isset($params['date_of_appointment']) ? $params['date_of_appointment'] : null;
             $payload['enddate_of_office'] = isset($params['enddate_of_office']) ? $params['enddate_of_office'] : null;
-            $payload['is_active'] = true;
+            // $payload['is_active'] = true;
         }
         
         /* proses simpan */
@@ -129,5 +130,26 @@ class StaffHistoriesService
         $positionNow->is_active = false;
         $positionNow->non_active_at = date('Y-m-d H:i:s');
         $positionNow->save();
+    }
+
+    public function ifStaffSetNonActive(VillageStaffHistory $history)
+    {
+        /* cukup buat non-aktif tanpa merubah data lain */
+        $history->is_active = false;
+        $history->non_active_at = date('Y-m-d H:i:s');
+        $history->save();
+
+        /* ubah status staff jika jabatan definitif */
+        if (option_is_match('definitif', $this->villagePositionType->position_type_status_id)) {
+            $this->staff->position_is_active = false;
+            $this->staff->save();
+            return;
+        }
+
+        /* ubah status staff jika jabatan plt */
+        $this->staff->position_plt_is_active = false;
+        $this->staff->save();
+
+        return;
     }
 }
