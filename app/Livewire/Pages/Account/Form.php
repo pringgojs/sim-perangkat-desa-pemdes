@@ -4,9 +4,12 @@ namespace App\Livewire\Pages\Account;
 
 use Livewire\Component;
 use Livewire\Attributes\Computed;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Form extends Component
 {
+    use LivewireAlert;
+
     public $from;
     public $staff;
     public $password;
@@ -20,6 +23,21 @@ class Form extends Component
     public function render()
     {
         return view('livewire.pages.account.form');
+    }
+
+    public function store()
+    {
+        if (!$this->password) {
+            $this->alert('error', 'Lengkapi kolom password!');
+            return;
+        }
+
+        $user = $this->staff->user;
+        $user->password = $this->password;
+        $user->save();
+
+        $this->password = null;
+        $this->alert('success', 'Success!');
     }
     
     #[Computed]
