@@ -8,6 +8,8 @@ use Livewire\Component;
 use App\Models\VillageStaff;
 use Livewire\Attributes\Computed;
 use Illuminate\Support\Facades\DB;
+use App\Models\VillagePositionType;
+use App\Models\VillageStaffHistory;
 use LivewireUI\Modal\ModalComponent;
 use App\Livewire\Forms\VillageStaffForm;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -21,8 +23,10 @@ class FormVillageStaff extends ModalComponent
     public $position_type_id;
     public $position_types;
     public $position_type_status;
+    public $village_position_types = [];
     public $districts = [];
     public $villages = [];
+    public $positionNow;
 
     public function mount()
     {
@@ -38,7 +42,6 @@ class FormVillageStaff extends ModalComponent
         if ($this->position_type_id) {
             $this->form->position_type = $this->position_type_id;
         }
-
 
         /* jika yang login adalah operator desa, seting village dan district otomatis terisi */
         self::ifOperator();
@@ -95,6 +98,16 @@ class FormVillageStaff extends ModalComponent
     public function getVillages()
     {
         $this->villages = Village::where('district_id', $this->form->district)->get();
+    }
+
+    public function getVillagePositionType()
+    {
+        $this->village_position_types = VillagePositionType::with('positionTypeStatus')->villageId($this->form->village)->get();
+    }
+
+    public function getPositionNow()
+    {
+        $this->positionNow = VillageStaffHistory::active()->with(['villageStaff', 'villagePositionType'])->where('village_position_type_id', $this->form->village_position_type)->first();
     }
 
     public function ifOperator()

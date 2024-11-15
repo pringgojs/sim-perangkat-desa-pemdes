@@ -14,6 +14,7 @@ use Illuminate\Validation\Rule;
 use Livewire\Attributes\Validate;
 use Spatie\Permission\Models\Role;
 use App\Models\VillagePositionType;
+use App\Services\StaffHistoriesService;
 use Illuminate\Support\Facades\Storage;
 use Spatie\LivewireFilepond\WithFilePond;
 use App\Rules\UniqueStaffPositionInVillage;
@@ -46,6 +47,7 @@ class VillageStaffForm extends Form
     public $village_staff;
     public $position_type;
     public $position_type_status;
+    public $village_position_type;
     public $data_status;
     public $user;
     public $ktp_old;
@@ -53,6 +55,7 @@ class VillageStaffForm extends Form
     public function rules()
     {
         return [
+            'village_position_type' => 'required',
             'username' => [
                 'required',
                 'max:250',
@@ -65,25 +68,25 @@ class VillageStaffForm extends Form
             'place_of_birth' => $this->isMyAccount() ? 'required|max:250' : 'nullable',
             'date_of_birth' => $this->isMyAccount() ? 'required' : 'nullable',
             'ktp' => $this->isKtp() ? 'required|image|mimes:jpeg,png|max:300' : 'nullable', // 300 KB
-            'position_type' => [
-                'required',
-                'exists:options,id',
-                new UniqueStaffPositionInVillage($this->village, $this->position_type, $this->id),
-            ],
-            'position_type_status' => 'required',
-            'district' => 'required',
-            'village' => 'required',
-            // 'position_name' => $this->isMyAccount() ? 'required|max:250': 'nullable',
-            'sk_number' => $this->isMyAccount() && $this->isBPD() ? 'required|max:250' : 'nullable',
-            'sk_tmt' => $this->isMyAccount() && $this->isBPD() ? 'required|max:250' : 'nullable',
-            'sk_date' => $this->isMyAccount() && $this->isBPD() ? 'required|max:250' : 'nullable',
-            'password' => $this->user ? 'nullable' : 'required|string|regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/',
-            // 'email' => [
+            // 'position_type' => [
             //     'required',
-            //     'string',
-            //     'email',
-            //     Rule::unique('users')->ignore($this->user), 
+            //     'exists:options,id',
+            //     new UniqueStaffPositionInVillage($this->village, $this->position_type, $this->id),
             // ],
+            // 'position_type_status' => 'required',
+            'district' => !$this->isMyAccount() ? 'nullable':'required',
+            'village' => !$this->isMyAccount() ? 'nullable': 'required',
+            // 'position_name' => $this->isMyAccount() ? 'required|max:250': 'nullable',
+            // 'sk_number' => $this->isMyAccount() && $this->isBPD() ? 'required|max:250' : 'nullable',
+            // 'sk_tmt' => $this->isMyAccount() && $this->isBPD() ? 'required|max:250' : 'nullable',
+            // 'sk_date' => $this->isMyAccount() && $this->isBPD() ? 'required|max:250' : 'nullable',
+            'password' => $this->user ? 'nullable' : 'required|string|regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/',
+            'email' => [
+                'nullable',
+                'string',
+                'email',
+                Rule::unique('users')->ignore($this->user), 
+            ],
         ];
 
     }
@@ -118,7 +121,7 @@ class VillageStaffForm extends Form
     public function store($from = null) 
     {
         /* untuk jabatan tertentu tidak perlu ngisi nama jabatan */
-        self::setPositionName();
+        // self::setPositionName();
 
         $this->validate();
         
@@ -138,22 +141,10 @@ class VillageStaffForm extends Form
             // 'sk_number' => $this->sk_number ?? null,
             // 'sk_tmt' => $this->sk_tmt ?? null,
             // 'sk_date' => $this->sk_date ?? null,
-            'date_of_pensiun' => $this->pensiun ?? null,
+            // 'date_of_pensiun' => $this->pensiun ?? null,
         ];
 
-        $is_definitif = option_is_match('definitif', $this->position_type_status);
-        $village_position_type = VillagePositionType::villageId($this->village)->positionTypeId($this->position_type)->first();
-        if ($is_definitif) {
-            $payload['position_id'] = $this->position_type;
-            $payload['position_code'] = $village_position_type->code ?? null;
-            $payload['position_name'] = $village_position_type->position_name ?? null;
-            $payload['position_plt_status_id'] = $this->position_type_status;
-        } else {
-            $payload['position_plt_id'] = $this->position_type;
-            $payload['position_plt_code'] = $village_position_type->code ?? null;
-            $payload['position_plt_name'] = $village_position_type->position_name ?? null;
-            $payload['position_plt_status_id'] = $this->position_type_status;
-        }
+
         /* jika dari mode tinjau admin, status tidak perlu di rubah ke draft */
         if ($from != 'admin') {
             $payload['data_status_id'] = key_option('draft');
@@ -178,7 +169,17 @@ class VillageStaffForm extends Form
             'id' => $this->id
         ], $payload);
 
+
+        self::storeHistory($model);
         return $model;
+    }
+
+    public function storeHistory($staff)
+    {
+        $villagePositionType = VillagePositionType::findOrFail($this->village_position_type);
+
+        $historyService = new StaffHistoriesService($villagePositionType, $staff);
+        $historyService->store([], $this->id);
     }
 
     /* untuk jabatan tertentu tidak perlu ngisi nama jabatan */
