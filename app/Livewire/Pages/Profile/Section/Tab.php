@@ -17,7 +17,7 @@ class Tab extends Component
         $this->form = $form;
         $this->isReadonly = $isReadonly;
         $this->from = $from;
-        $this->tabActive = 'account';
+        $this->tabActive = 'identity';
     }
 
     public function setActive($v)

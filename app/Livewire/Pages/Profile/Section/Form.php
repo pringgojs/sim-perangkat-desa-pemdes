@@ -4,6 +4,7 @@ namespace App\Livewire\Pages\Profile\Section;
 
 use App\Models\Option;
 use Livewire\Component;
+use App\Constants\Constants;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use App\Livewire\Forms\VillageStaffForm;
@@ -50,7 +51,8 @@ class Form extends Component
     {
         DB::beginTransaction();
 
-        $model = $this->form->store($this->from);
+        // dd($this->from);
+        $model = $this->form->store(Constants::FROM_PAGE_PROFILE);
         
         DB::commit();
         

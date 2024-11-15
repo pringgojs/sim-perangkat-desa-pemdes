@@ -52,12 +52,14 @@ class VillageStaffForm extends Form
     public $user;
     public $ktp_old;
 
+    public $from;
+
     public function rules()
     {
         return [
-            'village_position_type' => 'required',
+            'village_position_type' => $this->from == Constants::FROM_PAGE_STAFF ? 'required' : 'nullable',
             'username' => [
-                'required',
+                $this->from == Constants::FROM_PAGE_STAFF ? 'required' : 'nullable',
                 'max:250',
                 new UniqueUsername($this->username, $this->user)
             ],
@@ -74,13 +76,13 @@ class VillageStaffForm extends Form
             //     new UniqueStaffPositionInVillage($this->village, $this->position_type, $this->id),
             // ],
             // 'position_type_status' => 'required',
-            'district' => !$this->isMyAccount() ? 'nullable':'required',
-            'village' => !$this->isMyAccount() ? 'nullable': 'required',
+            'district' => $this->from == Constants::FROM_PAGE_STAFF ? 'required' : 'nullable',
+            'village' => $this->from == Constants::FROM_PAGE_STAFF ? 'required' : 'nullable',
             // 'position_name' => $this->isMyAccount() ? 'required|max:250': 'nullable',
             // 'sk_number' => $this->isMyAccount() && $this->isBPD() ? 'required|max:250' : 'nullable',
             // 'sk_tmt' => $this->isMyAccount() && $this->isBPD() ? 'required|max:250' : 'nullable',
             // 'sk_date' => $this->isMyAccount() && $this->isBPD() ? 'required|max:250' : 'nullable',
-            'password' => $this->user ? 'nullable' : 'required|string|regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/',
+            'password' => $this->from == Constants::FROM_PAGE_STAFF ? 'required|string|regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/' : 'nullable',
             'email' => [
                 'nullable',
                 'string',
@@ -94,6 +96,7 @@ class VillageStaffForm extends Form
     public function messages() 
     {
         return [
+            'village_position_type.required' => 'Jabatan wajib diisi.',
             'position_type_status.required' => 'Status jabatan wajib diisi.',
             'position_type.required' => 'Jenis jabatan wajib diisi.',
             'district.required' => 'Kecamatan wajib diisi.',
@@ -120,10 +123,13 @@ class VillageStaffForm extends Form
     /* $from = admin, maka jangan rubah statusnya */
     public function store($from = null) 
     {
+        $this->from = $from;
+
         /* untuk jabatan tertentu tidak perlu ngisi nama jabatan */
         // self::setPositionName();
 
         $this->validate();
+
         
         $user = self::createUser();
 
@@ -170,7 +176,11 @@ class VillageStaffForm extends Form
         ], $payload);
 
 
-        self::storeHistory($model);
+        /* jika bukan dari halaman form staff, maka abaikan fungsi simpan history  */
+        if ($this->from == Constants::FROM_PAGE_STAFF) {
+            self::storeHistory($model);
+        }
+
         return $model;
     }
 

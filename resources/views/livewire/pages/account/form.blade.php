@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div>
-                <label for="hs-trailing-multiple-add-on" class="sr-only">Multiple add-on</label>
+                <label for="hs-trailing-multiple-add-on" class="sr-only"></label>
                 <div class="flex rounded-lg shadow-sm">
                     <input type="text" wire:model='password' x-model="password" id="hs-trailing-multiple-add-on"
                         name="inline-add-on"

@@ -33,10 +33,9 @@ function is_administrator() {
 function is_sekdes() {
     $user = auth()->user();
     if ($user->hasRole('operator')) {
-        if ($user->staff()->position_type_id == key_option('sekretaris_desa')) {
+        if ($user->staff()->position_id == key_option('sekretaris_desa') || $user->staff()->position_plt_id == key_option('sekretaris_desa')) {
             return true;
         }
-
     }
     return false;
 }

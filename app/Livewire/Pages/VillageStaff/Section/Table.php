@@ -20,6 +20,9 @@ class Table extends Component
     public $type;
     public $modalConfirm;
 
+    protected $listeners = [
+        'refreshComponent' => '$refresh'
+    ];
     public function mount($type = null)
     {
         $this->filter = [

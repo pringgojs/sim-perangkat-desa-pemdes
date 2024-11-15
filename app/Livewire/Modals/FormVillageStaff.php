@@ -5,6 +5,7 @@ namespace App\Livewire\Modals;
 use App\Models\Option;
 use App\Models\Village;
 use Livewire\Component;
+use App\Constants\Constants;
 use App\Models\VillageStaff;
 use Livewire\Attributes\Computed;
 use Illuminate\Support\Facades\DB;
@@ -47,7 +48,7 @@ class FormVillageStaff extends ModalComponent
     {
         DB::beginTransaction();
 
-        $model = $this->form->store();
+        $model = $this->form->store(Constants::FROM_PAGE_STAFF);
         
         DB::commit();
         
@@ -109,7 +110,8 @@ class FormVillageStaff extends ModalComponent
             $this->form->village = $village->id;
             $this->form->district = $village->district_id;
 
-            self::getVillages();
+            // self::getVillages();
+            self::getVillagePositionType();
         }
     }
 

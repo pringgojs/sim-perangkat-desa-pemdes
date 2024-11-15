@@ -29,12 +29,6 @@
                                     $menuItems = [
                                         [
                                             'type' => 'link',
-                                            'label' => 'Riwayat Jabatan',
-                                            'url' => route('village-staff.history', ['id' => $item->id]),
-                                            'color' => 'text-gray-800',
-                                        ],
-                                        [
-                                            'type' => 'link',
                                             'label' => 'Edit',
                                             'url' => route('village-staff.edit', ['id' => $item->id]),
                                             'color' => 'text-gray-800',
