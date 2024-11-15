@@ -37,39 +37,41 @@
                 <div class="col-span-3 flex items-center justify-center text-sm">
                 </div>
 
-                <!-- Right Section -->
-                <div class="col-span-3 flex items-center justify-end space-x-4">
-                    <div class="relative inline-block text-left">
-                        @php
-                            $menuItems = [
-                                [
-                                    'type' => 'click',
-                                    'label' => $item->is_active ? 'Non-aktifkan' : 'Aktifkan',
-                                    'action' => 'setActive',
-                                    'param' => $item->id,
-                                    'color' => 'text-gray-800',
-                                ],
-                                [
-                                    'type' => 'link',
-                                    'label' => 'Ubah',
-                                    'url' => route('village-staff-history.edit', ['id' => $item->id]),
-                                    'color' => 'text-gray-800',
-                                ],
-                                [
-                                    'type' => 'delete',
-                                    'label' => 'Hapus',
-                                    'color' => 'text-red-600',
-                                ],
-                            ];
-                        @endphp
+                @if (is_sekdes() || is_administrator())
+                    <!-- Right Section -->
+                    <div class="col-span-3 flex items-center justify-end space-x-4">
+                        <div class="relative inline-block text-left">
+                            @php
+                                $menuItems = [
+                                    [
+                                        'type' => 'click',
+                                        'label' => $item->is_active ? 'Non-aktifkan' : 'Aktifkan',
+                                        'action' => 'setActive',
+                                        'param' => $item->id,
+                                        'color' => 'text-gray-800',
+                                    ],
+                                    [
+                                        'type' => 'link',
+                                        'label' => 'Ubah',
+                                        'url' => route('village-staff-history.edit', ['id' => $item->id]),
+                                        'color' => 'text-gray-800',
+                                    ],
+                                    [
+                                        'type' => 'delete',
+                                        'label' => 'Hapus',
+                                        'color' => 'text-red-600',
+                                    ],
+                                ];
+                            @endphp
 
-                        <x-utils.dropdown-menu-action :id="$item->id" :items="$menuItems"
-                            modalName="modalConfirmDelete" />
+                            <x-utils.dropdown-menu-action :id="$item->id" :items="$menuItems"
+                                modalName="modalConfirmDelete" />
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
         @endforeach
     </div>
     <x-utils.modal-delete id="modalConfirmDelete" wire:ignore
-        desc="Anda yakin ingin menghapus data ini ? data yang sudah dihapus tidak dapat dikembalikan!" />
+        desc="Anda yakin ingin menghapus data ini ? Jika status jabatan masih aktif, maka perangkat desa tersebut akan kehilangan jabatan ini. Data yang sudah dihapus tidak dapat dikembalikan!" />
 </div>

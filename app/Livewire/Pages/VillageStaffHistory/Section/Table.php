@@ -26,8 +26,13 @@ class Table extends Component
 
     public function delete($id)
     {
-        $model = VillageStaffHistory::findOrFail($id);
-        $model->delete();
+        $history = VillageStaffHistory::findOrFail($id);
+
+        $service = new StaffHistoriesService($history->villagePositionType, $history->villageStaff);
+        $service->ifStaffSetNonActive($history);
+
+        /* update data history */
+        $history->delete();
         
         $this->alert('success', 'Success!');
         $this->redirectRoute('village-staff.edit', ['id' => $this->staff->id], navigate: true);

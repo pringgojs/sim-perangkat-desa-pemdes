@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 <div class="mt-5 flex justify-center sm:mt-0">
-                    @if ($from == 'admin' && $form->village_staff->dataStatus->key != 'final')
+                    @if (is_administrator() && $form->village_staff->dataStatus->key != 'final')
                         <a onclick="document.getElementById('modalConfirm')._x_dataStack[0].show = true"
                             class="flex items-center mr-2 justify-center cursor-pointer rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm  hover:bg-green-700 focus:outline-none focus:bg-green-700">Finalisasi
                             Data
