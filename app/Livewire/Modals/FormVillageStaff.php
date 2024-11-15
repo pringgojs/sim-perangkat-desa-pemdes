@@ -33,15 +33,6 @@ class FormVillageStaff extends ModalComponent
         $this->position_types = Option::positionTypes()->get();
         $this->position_type_status = Option::positionTypeStatus()->get();
         $this->districts = Option::districts()->get();
-        if ($this->id) {
-            $model = VillageStaff::find($this->id);
-            $this->form->setModel($model);
-            self::getVillages(); // memanggil list desa
-        }
-
-        if ($this->position_type_id) {
-            $this->form->position_type = $this->position_type_id;
-        }
 
         /* jika yang login adalah operator desa, seting village dan district otomatis terisi */
         self::ifOperator();

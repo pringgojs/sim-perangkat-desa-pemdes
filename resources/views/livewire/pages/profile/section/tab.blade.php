@@ -62,6 +62,10 @@
                     </div>
                 </div> --}}
             @endif
+
+            @if ($tabActive == 'account')
+                @livewire('pages.account.form', ['form' => $form, 'staff' => $staff])
+            @endif
         </div>
     </div>
 </div>
