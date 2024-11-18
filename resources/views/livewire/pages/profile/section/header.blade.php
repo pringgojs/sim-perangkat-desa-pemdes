@@ -15,7 +15,9 @@
                     <div class="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
                         <p class="text-sm font-medium text-gray-600">Identitas,</p>
                         <p class="text-xl font-bold text-gray-900 sm:text-2xl">{{ $staff->name ?? '**' }}</p>
-                        <p class="text-sm font-medium text-gray-600">{{ $staff->position_name ?? '' }} -
+                        <p class="text-sm font-medium text-gray-600">
+                            {{ $staff->position_name ? '(definitif) ' . $staff->position_name : '' }} -
+                            {{ $staff->position_plt_name ? '(definitif) ' . $staff->position_name : '' }} -
                             {{ $staff->village->name ?? '' }} - {{ $staff->village->district->name ?? '' }}</p>
                     </div>
                 </div>
