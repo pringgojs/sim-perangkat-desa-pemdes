@@ -135,8 +135,11 @@ class VillageStaff extends Model
             $q->where('position_plt_status_id', $params['positionStatus']);
         }  else if ($params['positionType'] && !$params['positionStatus']) {
                 info(3);
-            $q->where('position_id', $params['positionType']);
-            // $q->orWhere('position_plt_id', $params['positionType']);
+                $q->where(function ($t) use ($params) {
+                    $t->where('position_id', $params['positionType'])
+                        ->orWhere('position_plt_id', $params['positionType']);
+                    
+                });
         }
 
         if ($params['isParkir']) {
