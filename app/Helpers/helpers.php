@@ -33,9 +33,9 @@ function is_administrator() {
 function is_sekdes() {
     $user = auth()->user();
     if ($user->hasRole('operator')) {
-        if ($user->staff()->position_id == key_option('sekretaris_desa') || $user->staff()->position_plt_id == key_option('sekretaris_desa')) {
-            return true;
-        }
+        /* cek status aktif */
+        if ($user->staff()->position_id == key_option('sekretaris_desa') && ($user->staff()->position_is_active)) return true;
+        if ($user->staff()->position_plt_id == key_option('sekretaris_desa') && ($user->staff()->position_plt_is_active)) return true;
     }
     return false;
 }

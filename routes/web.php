@@ -56,7 +56,7 @@ Route::middleware([
         Route::get('profile', ProfileIndex::class)->name('profile.index')->middleware('role:operator');
         Route::get('village-staff/pensiun', Pensiun::class)->name('village-staff.pensiun');
         Route::get('village-staff/{id}/history', History::class)->name('village-staff.history');
-        Route::get('village-staff/{id}/edit', VillageStaffEdit::class)->name('village-staff.edit');
+        Route::get('village-staff/{id}', VillageStaffEdit::class)->name('village-staff.edit');
         Route::get('village-staff', VillageStaffIndex::class)->name('village-staff.index');
         Route::get('village-type', VillageTypeIndex::class)->name('village-type.index');
         Route::get('village', VillageIndex::class)->name('village.index');

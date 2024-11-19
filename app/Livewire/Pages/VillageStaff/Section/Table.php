@@ -19,6 +19,7 @@ class Table extends Component
     public $filter;
     public $type;
     public $modalConfirm;
+    public $modalConfirmDelete;
 
     protected $listeners = [
         'refreshComponent' => '$refresh'

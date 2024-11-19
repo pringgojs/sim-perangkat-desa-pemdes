@@ -16,9 +16,14 @@
                         <p class="text-sm font-medium text-gray-600">Identitas,</p>
                         <p class="text-xl font-bold text-gray-900 sm:text-2xl">{{ $staff->name ?? '**' }}</p>
                         <p class="text-sm font-medium text-gray-600">
-                            {{ $staff->position_name ? '(definitif) ' . $staff->position_name : '' }} -
-                            {{ $staff->position_plt_name ? '(definitif) ' . $staff->position_name : '' }} -
-                            {{ $staff->village->name ?? '' }} - {{ $staff->village->district->name ?? '' }}</p>
+                            @if ($staff->position_is_active)
+                                {{ $staff->position_name ? $staff->position_name : '' }}
+                            @endif
+                            @if ($staff->position_plt_is_active)
+                                {!! $staff->position_plt_name ? '<br>' . $staff->position_plt_name : '' !!}
+                            @endif
+                            <br>{{ $staff->village->name ?? '' }} - {{ $staff->village->district->name ?? '' }}
+                        </p>
                     </div>
                 </div>
                 <div class="mt-5 flex justify-center sm:mt-0">
