@@ -11,6 +11,7 @@ class Filter extends Component
     public $districts;
     public $villages;
     public $positionType;
+    public $positionTypeName;
     public $positionTypes;
     public $positionTypeStatus;
     public $table;
@@ -26,6 +27,7 @@ class Filter extends Component
         $this->positionTypeStatus = Option::positionTypeStatus()->get();
         $this->table = $table;
         $this->positionType = $positionType;
+        $this->positionTypeName = $positionType ? Option::findOrFail($positionType)->name : '';
     }
 
     public function filter($area = null, $search = null, $positionType = null, $selectedDistrict = [], $selectedVillage = [], $positionStatus = null, $isParkir = false, $isNullPerson = false)

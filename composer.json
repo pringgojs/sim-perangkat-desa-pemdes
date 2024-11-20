@@ -12,6 +12,7 @@
         "blade-ui-kit/blade-heroicons": "^2.3",
         "codeat3/blade-bytesize-icons": "^1.5",
         "davidhsianturi/blade-bootstrap-icons": "^1.5",
+        "faisal50x/blade-ionicons": "^1.0",
         "jantinnerezo/livewire-alert": "^3.0",
         "laravel/fortify": "*",
         "laravel/framework": "^11.9",
