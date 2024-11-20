@@ -238,7 +238,7 @@
             </div>
         </div>
         <div class="flex mb-5">
-            Filter:
+            {{-- Filter: --}}
             <template x-if="positionTypeName">
                 <span
                     class="inline-flex items-center gap-x-1.5 py-1.5 ps-3 pe-2 mr-1 rounded-md text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500">
@@ -266,8 +266,20 @@
             <template x-if="isParkir">
                 <span
                     class="inline-flex items-center gap-x-1.5 py-1.5 ps-3 pe-2 mr-1 rounded-md text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500">
-                    Parkir Ya
+                    Jabatan parkir Ya
                     <button @click="isParkir = !isParkir;doFilter()" type="button"
+                        class="shrink-0 size-4 inline-flex items-center justify-center rounded-md hover:bg-blue-200 focus:outline-none focus:bg-blue-200 focus:text-blue-500 dark:hover:bg-blue-900">
+                        <span class="sr-only">Remove badge</span>
+                        <x-ionicon-close-outline class="shrink-0 size-3" />
+                    </button>
+                </span>
+            </template>
+
+            <template x-if="isNullPerson">
+                <span
+                    class="inline-flex items-center gap-x-1.5 py-1.5 ps-3 pe-2 mr-1 rounded-md text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500">
+                    Jabatan kosong Ya
+                    <button @click="isNullPerson = !isNullPerson;doFilter()" type="button"
                         class="shrink-0 size-4 inline-flex items-center justify-center rounded-md hover:bg-blue-200 focus:outline-none focus:bg-blue-200 focus:text-blue-500 dark:hover:bg-blue-900">
                         <span class="sr-only">Remove badge</span>
                         <x-ionicon-close-outline class="shrink-0 size-3" />
