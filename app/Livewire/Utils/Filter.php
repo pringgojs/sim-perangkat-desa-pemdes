@@ -10,27 +10,34 @@ class Filter extends Component
 {
     public $districts;
     public $villages;
+    public $positionTypes;
+    public $listStatusData;
+    
+    public $statusData;
+    public $statusDataName;
     public $positionType;
     public $positionTypeName;
-    public $positionTypes;
     public $positionTypeStatus;
     public $table;
     public $params;
     
     public $useNullPerson = false;
+    public $useStatusData = false;
     
     public function mount($table, $positionType = null)
     {
         $this->districts = Option::districts()->get();
         $this->positionTypes = Option::positionTypes()->get();
+        $this->listStatusData = Option::statusData()->get();
         $this->villages = Village::with(['district'])->orderByDefault()->get();
         $this->positionTypeStatus = Option::positionTypeStatus()->get();
         $this->table = $table;
         $this->positionType = $positionType;
         $this->positionTypeName = $positionType ? Option::findOrFail($positionType)->name : '';
+        $this->statusDataName = $this->statusData ? Option::findOrFail($this->statusData)->name : '';
     }
 
-    public function filter($area = null, $search = null, $positionType = null, $selectedDistrict = [], $selectedVillage = [], $positionStatus = null, $isParkir = false, $isNullPerson = false)
+    public function filter($area = null, $search = null, $positionType = null, $selectedDistrict = [], $selectedVillage = [], $positionStatus = null, $isParkir = false, $isNullPerson = false, $statusData= null)
     {
         $params = [
             'area' => $area,
@@ -41,7 +48,10 @@ class Filter extends Component
             'isParkir' => $isParkir,
             'positionStatus' => $positionStatus,
             'isNullPerson' => $isNullPerson,
+            'statusData' => $statusData,
         ];
+
+        info($params);
 
         $this->params = $params;
 

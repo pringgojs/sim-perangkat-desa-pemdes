@@ -127,14 +127,11 @@ class VillageStaff extends Model
                 $q->where('position_plt_status_id', $params['positionStatus']);
                 $q->where('position_plt_id', $params['positionType']);
             } else {
-                info(1);
                 $q->where('position_id', $params['positionType']);
             }
         } else if (!$params['positionType'] && $params['positionStatus']) {
-                info(2);
             $q->where('position_plt_status_id', $params['positionStatus']);
         }  else if ($params['positionType'] && !$params['positionStatus']) {
-                info(3);
                 $q->where(function ($t) use ($params) {
                     $t->where('position_id', $params['positionType'])
                         ->orWhere('position_plt_id', $params['positionType']);
@@ -143,9 +140,12 @@ class VillageStaff extends Model
         }
 
         if ($params['isParkir']) {
-            info(4);
 
             $q->where('is_parkir', $params['isParkir']);
+        }
+
+        if ($params['statusData']) {
+            $q->where('data_status_id', $params['statusData']);
         }
     }
 

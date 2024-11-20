@@ -22,6 +22,7 @@ class Table extends Component
     public $type;
     public $modalConfirm;
     public $modalConfirmDelete;
+    public $statusData;
 
     protected $listeners = [
         'refreshComponent' => '$refresh'
@@ -36,6 +37,7 @@ class Table extends Component
             'selectedVillage' => '',
             'isParkir' => '',
             'positionStatus' => '',
+            'statusData' => $this->statusData,
         ];
     }
 

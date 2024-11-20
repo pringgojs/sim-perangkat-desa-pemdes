@@ -17,6 +17,6 @@
 
     {{-- panggil component table.staff --}}
     {{-- <x-staff.table :$staffs :$staff /> --}}
-    @livewire('utils.filter', ['table' => 'pages.village-staff.section.table', 'positionType' => $option->id])
+    @livewire('utils.filter', ['table' => 'pages.village-staff.section.table', 'positionType' => $option->id, 'useStatusData' => true])
     @livewire('pages.village-staff.section.table', ['type' => $option->id])
 </div>

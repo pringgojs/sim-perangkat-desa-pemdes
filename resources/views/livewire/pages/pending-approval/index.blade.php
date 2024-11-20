@@ -11,5 +11,6 @@
     </div>
 
     {{-- @livewire('pages.report.section.filter') --}}
-    @livewire('pages.village-staff.section.table', ['status' => key_option('diajukan')])
+    @livewire('utils.filter', ['table' => 'pages.village-staff.section.table', 'useStatusData' => true, 'statusData' => key_option('diajukan')])
+    @livewire('pages.village-staff.section.table', ['statusData' => key_option('diajukan')])
 </div>
