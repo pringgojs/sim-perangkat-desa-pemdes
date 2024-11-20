@@ -57,7 +57,6 @@ class Table extends Component
     public function export()
     {
         return Excel::download(new VillageStaffExport($this->filter), 'perangakat-daerah-'.date('Ymd').'.xlsx');
-
     }
     
     public function delete($id)

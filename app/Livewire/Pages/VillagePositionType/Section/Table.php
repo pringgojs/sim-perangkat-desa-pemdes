@@ -6,6 +6,8 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
 use App\Models\VillagePositionType;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\VillagePositionTypeExport;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Table extends Component
@@ -31,6 +33,12 @@ class Table extends Component
         $this->resetPage();
     }
     
+    #[On('export')] 
+    public function export()
+    {
+        return Excel::download(new VillagePositionTypeExport($this->filter), 'desa-jabatan-'.date('Ymd').'.xlsx');
+    }
+
     public function delete($id)
     {
         $model = VillagePositionType::findOrFail($id);
