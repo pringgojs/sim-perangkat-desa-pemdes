@@ -14,6 +14,7 @@ class Filter extends Component
     public $positionTypes;
     public $positionTypeStatus;
     public $table;
+    public $params;
     
     public $useNullPerson = false;
     
@@ -39,7 +40,15 @@ class Filter extends Component
             'positionStatus' => $positionStatus,
             'isNullPerson' => $isNullPerson,
         ];
+
+        $this->params = $params;
+
         $this->dispatch('filter', $params )->to($this->table);
+    }
+
+    public function export()
+    {
+        $this->dispatch('export')->to($this->table);
     }
 
     public function render()

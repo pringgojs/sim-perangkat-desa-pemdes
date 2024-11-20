@@ -10,98 +10,78 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 class VillageStaffExport implements FromCollection, WithHeadings, WithMapping
 {
     public $i = 0;
-    public $search;
-    public $type;
-    public $status;
-    public $isActive;
-    public $village;
-    public $district;
-    public $isWillRetire;
+    public $filter;
 
-    public function __construct($params = [])
+    public function __construct($filter = [])
     {
-        if(isset($params['district'])) {
-            $this->district = $params['district'];
-        }
-
-        if(isset($params['type'])) {
-            $this->type = $params['type'];
-        }
-
-        if(isset($params['village'])) {
-            $this->village = $params['village'];
-        }
-
-        if(isset($params['status'])) {
-            $this->status = $params['status'];
-        }
-
-        if(isset($params['search'])) {
-            $this->search = $params['search'];
-        }
-        
-        if(isset($params['isWillRetire'])) {
-            $this->isWillRetire = $params['isWillRetire'];
-        }
-
+        $this->filter = $filter;
     }
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return VillageStaff::search($this->search)
-                ->district($this->district)
-                ->village($this->village)
-                ->type($this->type)
-                ->pensiun($this->isWillRetire)
-                ->activeStatus($this->isActive, $this->status)
-                ->with(['village', 'positionType'])
-                ->get();
+        return VillageStaff::filter($this->filter)->with(['village.district', 'positionType', 'dataStatus', 'educationLevel'])->orderByDefault()->get();
     }
 
     public function headings(): array
     {
         return [
             '#',
-            'Nama',
+            'Kode Kecamatan',
+            'Nama Kecamatan',
+            'Kode Desa',
+            'Nama Desa',
+            'Nama 1',
+            'Nama 2',
             'Jenis Kelamin',
-            'Jenis Jabatan',
-            'Nama Jabatan',
-            'Desa',
-            'Kecamatan',
+            'Tempat Lahir',
+            'Tanggal Lahir',
             'No. HP',
-            'Email',
             'Alamat',
-            'No. SK',
-            'TMT. SK',
-            'Tanggal SK',
+            'Pendidikan',
             'Status Data',
-            'Tanggal Pensiun'
+            /* jabatan definitif */
+            'Kode Jabatan Definitif',
+            'Nama Jabatan Definitif',
+            'Status Jabatan Definitif',
+            /* jabatan plt */
+            'Kode Jabatan Plt/Plh/Pj',
+            'Nama Jabatan Plt/Plh/Pj',
+            'Status Jabatan Plt/Plh/Pj',
+
         ];
     }
 
-    public function map($staff): array
+    public function map($item): array
     {
         return [
             ++$this->i,
-            $staff->name,
-            $staff->gender ? 'L': 'P',
-            $staff->positionType->name,
-            $staff->position_name,
-            $staff->village->name,
-            $staff->village->district->name,
-            $staff->phone_number,
-            $staff->user->email,
-            $staff->address,
-            $staff->sk_number,
-            $staff->sk_tmt,
-            $staff->sk_date,
-            $staff->dataStatus->name,
-            $staff->date_of_pensiun,
+            $item->village->district->getCode(),
+            $item->village->district->name,
+            $item->village->code,
+            $item->village->name,
+            $item->name,
+            $item->another_name,
+            $item->gender,
+            $item->place_of_birth,
+            $item->date_of_birth,
+            $item->phone_number,
+            $item->address,
+            $item->educationLevel->name ?? '-',
+            $item->dataStatus->name,
+            /* jabatan definitif */
+            $item->position_code,
+            $item->position_name,
+            $item->position_is_active ? 'Aktif' : 'Tidak Aktif',
+            /* jabatan plt */
+            /* jabatan definitif */
+            $item->position_plt_code,
+            $item->position_plt_name,
+            $item->position_plt_is_active ? 'Aktif' : 'Tidak Aktif',
         ];
     }
 
 
-    
+
 }

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true); // 
             $table->string('gender')->nullable();
             $table->uuid('position_id')->nullable(); // dipake untuk query jabatan
-            $table->uuid('position_is_active')->default(1); // untuk cek jabatan definitif aktif apa enggak
+            $table->uuid('position_is_active')->default(0); // untuk cek jabatan definitif aktif apa enggak
             $table->uuid('position_plt_id')->nullable(); // 
             $table->uuid('position_plt_status_id')->nullable(); // plt, pj, definitif
             $table->uuid('education_level_id')->nullable(); // 
@@ -33,7 +33,7 @@ return new class extends Migration
             $table->uuid('data_status_id');
             $table->string('position_name')->nullable();
             $table->string('position_code')->nullable();
-            $table->string('position_plt_is_active')->default(1);
+            $table->string('position_plt_is_active')->default(0);
             $table->string('position_plt_name')->nullable();
             $table->string('position_plt_code')->nullable();
             // $table->string('sk_number')->nullable();

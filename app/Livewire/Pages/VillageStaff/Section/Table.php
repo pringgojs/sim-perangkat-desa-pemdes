@@ -7,7 +7,9 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use App\Models\VillageStaff;
 use Livewire\WithPagination;
+use App\Exports\VillageStaffExport;
 use App\Models\VillagePositionType;
+use Maatwebsite\Excel\Facades\Excel;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Table extends Component
@@ -49,6 +51,13 @@ class Table extends Component
     {
         $this->filter = $params;
         $this->resetPage();
+    }
+
+    #[On('export')] 
+    public function export()
+    {
+        return Excel::download(new VillageStaffExport($this->filter), 'perangakat-daerah-'.date('Ymd').'.xlsx');
+
     }
     
     public function delete($id)
