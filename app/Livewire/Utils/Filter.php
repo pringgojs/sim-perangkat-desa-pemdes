@@ -26,6 +26,8 @@ class Filter extends Component
     
     public function mount($table, $positionType = null)
     {
+        $statusData = request()->input('statusData');
+        $this->statusData = $statusData ? : null;
         $this->districts = Option::districts()->get();
         $this->positionTypes = Option::positionTypes()->get();
         $this->listStatusData = Option::statusData()->get();
