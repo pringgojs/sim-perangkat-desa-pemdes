@@ -38,37 +38,39 @@
                         class="flex items-center justify-center cursor-pointer rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Unduh
                         Data
                     </a> --}}
-                    <div class="relative inline-block text-left">
-                        @php
-                            $menuItems = [
-                                [
-                                    'type' => 'click',
-                                    'label' => 'Unduh data',
-                                    'action' => 'download',
-                                    'param' => $staff->id,
-                                    'color' => 'text-gray-800',
-                                ],
-                                [
-                                    'type' => 'modal',
-                                    'modalName' => 'modalFormRevision',
-                                    'label' => 'Minta perbaikan',
-                                    'action' => 'revision',
-                                    'param' => key_option('revisi'),
-                                    'color' => 'text-gray-800',
-                                ],
-                                [
-                                    'type' => 'click',
-                                    'label' => 'Batalkan status final',
-                                    'action' => 'updateStatus',
-                                    'param' => key_option('diajukan'),
-                                    'color' => 'text-red-800',
-                                ],
-                            ];
-                        @endphp
+                    @if (is_administrator())
+                        <div class="relative inline-block text-left">
+                            @php
+                                $menuItems = [
+                                    [
+                                        'type' => 'click',
+                                        'label' => 'Unduh data',
+                                        'action' => 'download',
+                                        'param' => $staff->id,
+                                        'color' => 'text-gray-800',
+                                    ],
+                                    [
+                                        'type' => 'modal',
+                                        'modalName' => 'modalFormRevision',
+                                        'label' => 'Minta perbaikan',
+                                        'action' => 'revision',
+                                        'param' => key_option('revisi'),
+                                        'color' => 'text-gray-800',
+                                    ],
+                                    [
+                                        'type' => 'click',
+                                        'label' => 'Batalkan status final',
+                                        'action' => 'updateStatus',
+                                        'param' => key_option('diajukan'),
+                                        'color' => 'text-red-800',
+                                    ],
+                                ];
+                            @endphp
 
-                        <x-utils.dropdown-menu-action :id="$staff->id" :items="$menuItems"
-                            modalName="modalConfirmDelete" />
-                    </div>
+                            <x-utils.dropdown-menu-action :id="$staff->id" :items="$menuItems"
+                                modalName="modalConfirmDelete" />
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

@@ -36,6 +36,7 @@ class Header extends Component
 
         $this->alert('success', 'Success!');
         $this->dispatch('refreshComponent');
+        $this->dispatch('modal-close');
     }
     
     public function updateStatus($status)
