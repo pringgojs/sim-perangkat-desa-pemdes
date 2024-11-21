@@ -2,13 +2,16 @@
 
 namespace App\Livewire\Pages\VillageStaff\Section;
 
+use Carbon\Carbon;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\Attributes\On;
+use App\Constants\Constants;
 use App\Models\VillageStaff;
 use Livewire\WithPagination;
 use App\Exports\VillageStaffExport;
 use App\Models\VillagePositionType;
+use App\Models\VillageStaffHistory;
 use Maatwebsite\Excel\Facades\Excel;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
@@ -23,6 +26,7 @@ class Table extends Component
     public $modalConfirm;
     public $modalConfirmDelete;
     public $statusData;
+    public $isWillRetire; // akan pensiun
 
     protected $listeners = [
         'refreshComponent' => '$refresh'
@@ -44,7 +48,7 @@ class Table extends Component
     public function render()
     {
         return view('livewire.pages.village-staff.section.table', [
-            'staffs' => VillageStaff::filter($this->filter)->search($this->search)->with(['village.district', 'positionType', 'dataStatus', 'educationLevel'])->orderByDefault()->paginate(),
+            'staffs' => VillageStaff::filter($this->filter)->pensiun($this->filter, $this->isWillRetire)->with(['village.district', 'positionType', 'dataStatus', 'educationLevel'])->orderByDefault()->paginate(),
         ]);
     }
 
@@ -58,7 +62,7 @@ class Table extends Component
     #[On('export')] 
     public function export()
     {
-        return Excel::download(new VillageStaffExport($this->filter), 'perangakat-daerah-'.date('Ymd').'.xlsx');
+        return Excel::download(new VillageStaffExport($this->filter, $this->isWillRetire), 'perangakat-daerah-'.date('Ymd').'.xlsx');
     }
     
     public function delete($id)

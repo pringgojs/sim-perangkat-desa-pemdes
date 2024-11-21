@@ -11,17 +11,19 @@ class VillageStaffExport implements FromCollection, WithHeadings, WithMapping
 {
     public $i = 0;
     public $filter;
+    public $isWillRetire;
 
-    public function __construct($filter = [])
+    public function __construct($filter = [], $isWillRetire = false)
     {
         $this->filter = $filter;
+        $this->isWillRetire = $isWillRetire;
     }
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return VillageStaff::filter($this->filter)->with(['village.district', 'positionType', 'dataStatus', 'educationLevel'])->orderByDefault()->get();
+        return VillageStaff::filter($this->filter)->pensiun($this->filter, $this->isWillRetire)->with(['village.district', 'positionType', 'dataStatus', 'educationLevel'])->orderByDefault()->get();
     }
 
     public function headings(): array

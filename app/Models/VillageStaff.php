@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use App\Models\AutoUuid;
+use App\Constants\Constants;
 use App\Traits\GenerateUuid;
 use App\Scopes\VillageStaffScope;
 use Illuminate\Database\Eloquent\Model;
@@ -227,18 +228,24 @@ class VillageStaff extends Model
         )->type($bpd)->count();
     }
 
-
     /* scope pensiun */
-    public function scopePensiun($q, $isWillRetire = false)
+    public function scopePensiun($q, $filter = [], $isWillRetire = false)
     {
         if (!$isWillRetire) return;
         
-        // Tanggal 6 bulan dari sekarang
         $now = Carbon::now()->format('Y-m-d');
-        $sixMonthsFromNow = Carbon::now()->addMonths(6)->format('Y-m-d');
+        $sixMonthsFromNow = Carbon::now()->addMonths(Constants::COMMING_SOON_PENSIUN)->format('Y-m-d');
+        
+        /* menyeleksi staff yg akan pensiun */
+        if ($isWillRetire) {
+            /* cari data berdasarkan table history */
+            $staff_ids = VillageStaffHistory::filter($filter)->active()->whereBetween(
+                'enddate_of_office', 
+                [$now, $sixMonthsFromNow]
+            )->groupBy('village_staff_id')->pluck('village_staff_id');
 
-        // Query untuk mencari jumlah perangkat desa yang akan pensiun dalam 6 bulan
-        $q->whereBetween( 'date_of_pensiun', [$now, $sixMonthsFromNow]);
+            $q->whereIn('id', $staff_ids);
+        }
     }
     
     public function scopeSearch($q, $search = null)
