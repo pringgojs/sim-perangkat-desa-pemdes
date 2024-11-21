@@ -39,26 +39,26 @@ class Filter extends Component
         $this->statusDataName = $this->statusData ? Option::findOrFail($this->statusData)->name : '';
     }
 
-    public function filter($area = null, $search = null, $positionType = null, $selectedDistrict = [], $selectedVillage = [], $positionStatus = null, $isParkir = false, $isNullPerson = false, $statusData= null)
-    {
-        $params = [
-            'area' => $area,
-            'search' => $search,
-            'positionType' => $positionType,
-            'selectedDistrict' => $selectedDistrict,
-            'selectedVillage' => $selectedVillage,
-            'isParkir' => $isParkir,
-            'positionStatus' => $positionStatus,
-            'isNullPerson' => $isNullPerson,
-            'statusData' => $statusData,
-        ];
+    // public function filter($area = null, $search = null, $positionType = null, $selectedDistrict = [], $selectedVillage = [], $positionStatus = null, $isParkir = false, $isNullPerson = false, $statusData= null)
+    // {
+    //     $params = [
+    //         'area' => $area,
+    //         'search' => $search,
+    //         'positionType' => $positionType,
+    //         'selectedDistrict' => $selectedDistrict,
+    //         'selectedVillage' => $selectedVillage,
+    //         'isParkir' => $isParkir,
+    //         'positionStatus' => $positionStatus,
+    //         'isNullPerson' => $isNullPerson,
+    //         'statusData' => $statusData,
+    //     ];
 
-        info($params);
+    //     info($params);
 
-        $this->params = $params;
+    //     $this->params = $params;
 
-        $this->dispatch('filter', $params )->to($this->table);
-    }
+    //     $this->dispatch('filter', $params )->to($this->table);
+    // }
 
     public function export()
     {

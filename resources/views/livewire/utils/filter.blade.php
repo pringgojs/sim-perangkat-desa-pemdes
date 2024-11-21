@@ -257,7 +257,8 @@
                 </div>
                 <div class="relative flex items-center space-x-1">
                     <button class="hidden" x-ref="btnFilter"
-                        @click="$wire.filter(area, search, positionType, selectedDistrict, selectedVillage, positionStatus, isParkir, isNullPerson, statusData)"></button>
+                        wire:click="$dispatchTo('{{ $table }}','filter', {area, search, positionType, selectedDistrict, selectedVillage, positionStatus, isParkir, isNullPerson, statusData})"></button>
+                    {{-- @click="$wire.filter(area, search, positionType, selectedDistrict, selectedVillage, positionStatus, isParkir, isNullPerson, statusData)"></button> --}}
                 </div>
             </div>
         </div>

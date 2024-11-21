@@ -54,9 +54,22 @@ class Table extends Component
         ]);
     }
 
+    /* mendengarkan acara daril filter alpine */
     #[On('filter')] 
-    public function filter($params = [])
+    public function filter($area = null, $search = null, $positionType = null, $selectedDistrict = [], $selectedVillage = [], $positionStatus = null, $isParkir = false, $isNullPerson = false, $statusData= null)
     {
+        $params = [
+            'area' => $area,
+            'search' => $search,
+            'positionType' => $positionType,
+            'selectedDistrict' => $selectedDistrict,
+            'selectedVillage' => $selectedVillage,
+            'isParkir' => $isParkir,
+            'positionStatus' => $positionStatus,
+            'isNullPerson' => $isNullPerson,
+            'statusData' => $statusData,
+        ];
+
         $this->filter = $params;
         $this->resetPage();
     }
