@@ -24,23 +24,35 @@
                                 $arr = ['diajukan', 'final'];
                                 $menuItems = [];
                             @endphp
-                            @if (!in_array($item->dataStatus->key, $arr))
-                                @php
-                                    $menuItems = [
-                                        [
-                                            'type' => 'link',
-                                            'label' => 'Edit',
-                                            'url' => route('village-staff.edit', ['id' => $item->id]),
-                                            'color' => 'text-gray-800',
-                                        ],
-                                        [
-                                            'type' => 'delete',
-                                            'label' => 'Delete',
-                                            'color' => 'text-red-600',
-                                        ],
-                                    ];
-                                @endphp
-                            @endif
+                            {{-- @if (!in_array($item->dataStatus->key, $arr)) --}}
+                            @php
+                                $menuItems = [
+                                    [
+                                        'type' => 'link',
+                                        'label' => 'Data Diri',
+                                        'url' => route('village-staff.edit', ['id' => $item->id, 'tab' => 'identity']),
+                                        'color' => 'text-gray-800',
+                                    ],
+                                    [
+                                        'type' => 'link',
+                                        'label' => 'Riwayat Jabatan',
+                                        'url' => route('village-staff.edit', ['id' => $item->id, 'tab' => 'history']),
+                                        'color' => 'text-gray-800',
+                                    ],
+                                    [
+                                        'type' => 'link',
+                                        'label' => 'Reset Password',
+                                        'url' => route('village-staff.edit', ['id' => $item->id, 'tab' => 'account']),
+                                        'color' => 'text-gray-800',
+                                    ],
+                                    [
+                                        'type' => 'delete',
+                                        'label' => 'Delete',
+                                        'color' => 'text-red-600',
+                                    ],
+                                ];
+                            @endphp
+                            {{-- @endif --}}
 
                             <x-utils.dropdown-menu-action :id="$item->id" :items="$menuItems"
                                 modalName="modalConfirmDelete" />
