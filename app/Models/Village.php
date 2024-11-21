@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use App\Constants\Constants;
 use App\Traits\GenerateUuid;
 use App\Models\VillageStaffHistory;
 use Illuminate\Database\Eloquent\Model;
@@ -123,7 +124,7 @@ class Village extends Model
     {
         // Tanggal 6 bulan dari sekarang
         $now = Carbon::now()->format('Y-m-d');
-        $sixMonthsFromNow = Carbon::now()->addMonths(6)->format('Y-m-d');
+        $sixMonthsFromNow = Carbon::now()->addMonths(Constants::COMMING_SOON_PENSIUN)->format('Y-m-d');
 
         // Query untuk mencari jumlah perangkat desa yang akan pensiun dalam 6 bulan
         return $staffRetiringSoon = VillageStaffHistory::where('village_id', $this->id)->active()->whereBetween(

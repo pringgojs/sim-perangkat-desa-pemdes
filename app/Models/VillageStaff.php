@@ -203,29 +203,14 @@ class VillageStaff extends Model
     {
         // Tanggal 6 bulan dari sekarang
         $now = Carbon::now()->format('Y-m-d');
-        $sixMonthsFromNow = Carbon::now()->addMonths(6)->format('Y-m-d');
+        $sixMonthsFromNow = Carbon::now()->addMonths(Constants::COMMING_SOON_PENSIUN)->format('Y-m-d');
 
-        // dd($sixMonthsFromNow);
         // Query untuk mencari jumlah perangkat desa yang akan pensiun dalam 6 bulan
-        return $staffRetiringSoon = VillageStaff::active()->whereBetween(
-            'date_of_pensiun', 
+        return $staffRetiringSoon = VillageStaffHistory::active()->whereBetween(
+            'enddate_of_office', 
             [$now, $sixMonthsFromNow]
-        )->count();
+        )->groupBy('village_staff_id')->pluck('village_staff_id')->count();
 
-    }
-
-    /* menghitung yang 6 bulan lagi pensiun */
-    public static function totalBpdRetiringSoon()
-    {
-        $now = Carbon::now()->format('Y-m-d');
-        $sixMonthsFromNow = Carbon::now()->addMonths(6)->format('Y-m-d');
-
-        $bpd = key_option('bpd');
-        // Query untuk mencari jumlah perangkat desa yang akan pensiun dalam 6 bulan
-        return $staffRetiringSoon = VillageStaff::active()->whereBetween(
-            'date_of_pensiun', 
-            [$now, $sixMonthsFromNow]
-        )->type($bpd)->count();
     }
 
     /* scope pensiun */
