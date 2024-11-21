@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use App\Traits\GenerateUuid;
+use App\Models\VillageStaffHistory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -125,10 +126,10 @@ class Village extends Model
         $sixMonthsFromNow = Carbon::now()->addMonths(6)->format('Y-m-d');
 
         // Query untuk mencari jumlah perangkat desa yang akan pensiun dalam 6 bulan
-        return $staffRetiringSoon = VillageStaff::where('village_id', $this->id)->active()->whereBetween(
-            'date_of_pensiun', 
+        return $staffRetiringSoon = VillageStaffHistory::where('village_id', $this->id)->active()->whereBetween(
+            'enddate_of_office', 
             [$now, $sixMonthsFromNow]
-        )->count();
+        )->groupBy('village_staff_id')->count();
 
     }
 

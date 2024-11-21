@@ -39,7 +39,6 @@ class StatisticVillageStaffPensiunExport implements FromCollection, WithHeadings
             'Desa',
             'Total Perangkat Desa',
             'Total Perangkat Mau Pensiun dalam 6 Bulan',
-            'BPD Mau Pensiun dalam 6 Bulan'
         ];
     }
 
@@ -50,7 +49,6 @@ class StatisticVillageStaffPensiunExport implements FromCollection, WithHeadings
             $village->name,
             $village->staff_count ?? 0,
             $village->totalStaffRetiringSoon() ?? 0,
-            $village->totalBpdRetiringSoon() ?? 0
         ];
     }
 }

@@ -10,7 +10,7 @@
                     <th class="border border-gray-300 px-4 py-2 text-center">Desa</th>
                     <th class="border border-gray-300 px-4 py-2 text-center">Total Perangkat Desa</th>
                     <th class="border border-gray-300 px-4 py-2 text-center">Perangkat Mau Pensiun</th>
-                    <th class="border border-gray-300 px-4 py-2 text-center">BPD Mau Pensiun</th>
+                    {{-- <th class="border border-gray-300 px-4 py-2 text-center">BPD Mau Pensiun</th> --}}
                 </tr>
             </thead>
             <tbody>
@@ -23,8 +23,8 @@
                         <td class="border border-gray-300 px-4 py-2 text-center">{{ $item->staff_count }}</td>
                         <td class="border border-gray-300 px-4 py-2 text-center">{{ $item->totalStaffRetiringSoon() }}
                         </td>
-                        <td class="border border-gray-300 px-4 py-2 text-center">{{ $item->totalBpdRetiringSoon() }}
-                        </td>
+                        {{-- <td class="border border-gray-300 px-4 py-2 text-center">{{ $item->totalBpdRetiringSoon() }}
+                        </td> --}}
                     </tr>
                 @endforeach
             </tbody>

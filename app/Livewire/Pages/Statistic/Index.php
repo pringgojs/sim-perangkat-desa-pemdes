@@ -38,13 +38,13 @@ class Index extends Component
             $data_male[] = VillageStaff::district($districtId)
                 ->type($item->id)
                 ->activeStatus(true)
-                ->gender(true)
+                ->gender('L')
                 ->count();
 
             $data_famale[] = VillageStaff::district($districtId)
                 ->type($item->id)
                 ->activeStatus(true)
-                ->gender(false)
+                ->gender('P')
                 ->count();
         }
 
