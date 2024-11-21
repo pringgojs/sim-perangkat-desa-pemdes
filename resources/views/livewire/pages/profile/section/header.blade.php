@@ -1,8 +1,8 @@
 <div>
 
-    <div class="overflow-hidden rounded-lg bg-white shadow">
+    <div class=" ">
         <h2 class="sr-only" id="profile-overview-title">Profile Overview</h2>
-        <div class="bg-white p-6">
+        <div class="bg-white p-6 rounded-lg bg-white shadow">
             <div class="sm:flex sm:items-center sm:justify-between">
                 <div class="sm:flex sm:space-x-5">
                     <div class="flex-shrink-0">
@@ -14,7 +14,8 @@
 
                     <div class="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left">
                         <p class="text-sm font-medium text-gray-600">Identitas,</p>
-                        <p class="text-xl font-bold text-gray-900 sm:text-2xl">{{ $staff->name ?? '**' }}</p>
+                        <p class="text-xl font-bold text-gray-900 sm:text-2xl">{{ $staff->name ?? '**' }}
+                            {!! $staff->labelDataStatus() !!}</p>
                         <p class="text-sm font-medium text-gray-600">
                             @if ($staff->position_is_active)
                                 {{ $staff->position_name ? $staff->position_name : '' }}
@@ -28,21 +29,52 @@
                 </div>
                 <div class="mt-5 flex justify-center sm:mt-0">
                     @if (is_administrator() && $form->village_staff->dataStatus->key != 'final')
-                        <a onclick="document.getElementById('modalConfirm')._x_dataStack[0].show = true"
+                        <a onclick="document.getElementById('modalConfirmDelete')._x_dataStack[0].show = true"
                             class="flex items-center mr-2 justify-center cursor-pointer rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm  hover:bg-green-700 focus:outline-none focus:bg-green-700">Finalisasi
                             Data
                         </a>
                     @endif
-                    <a href="#"
+                    {{-- <a href="#"
                         class="flex items-center justify-center cursor-pointer rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Unduh
                         Data
-                    </a>
+                    </a> --}}
+                    <div class="relative inline-block text-left">
+                        @php
+                            $menuItems = [
+                                [
+                                    'type' => 'click',
+                                    'label' => 'Unduh data',
+                                    'action' => 'download',
+                                    'param' => $staff->id,
+                                    'color' => 'text-gray-800',
+                                ],
+                                [
+                                    'type' => 'modal',
+                                    'modalName' => 'modalFormRevision',
+                                    'label' => 'Minta perbaikan',
+                                    'action' => 'revision',
+                                    'param' => key_option('revisi'),
+                                    'color' => 'text-gray-800',
+                                ],
+                                [
+                                    'type' => 'click',
+                                    'label' => 'Batalkan status final',
+                                    'action' => 'updateStatus',
+                                    'param' => key_option('diajukan'),
+                                    'color' => 'text-red-800',
+                                ],
+                            ];
+                        @endphp
+
+                        <x-utils.dropdown-menu-action :id="$staff->id" :items="$menuItems"
+                            modalName="modalConfirmDelete" />
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <x-modal id="modalConfirm" maxWidth="md" wire:model="modalConfirm">
+    <x-modal id="modalConfirmDelete" maxWidth="md" wire:model="modalConfirmDelete">
         {{-- <div
             class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"> --}}
 
@@ -76,5 +108,53 @@
             </div>
         </div>
         {{-- </div> --}}
+    </x-modal>
+
+    <x-modal id="modalFormRevision" maxWidth="md" wire:model="modalFormRevision">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                    Form Revisi
+                </h3>
+                <button type="button" @click="$dispatch('modal-close')"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                    data-modal-toggle="crud-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <form class="p-4 md:p-5">
+                <div class="grid gap-4 mb-4 grid-cols-2">
+
+                    <div class="col-span-2">
+                        <label for="description"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tuliskan alasan
+                            revisi</label>
+                        <textarea id="description" rows="4" wire:model="notes"
+                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-green-500 focus:border-green-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+                            placeholder="Write product description here"></textarea>
+                        @if ($this->error)
+                            <p class="text-red-500 text-sm">Kolom alasan harus diisi</p>
+                        @endif
+                    </div>
+                </div>
+                <div class="sm:flex sm:flex-row-reverse">
+                    <button type="button" <button wire:click="revision" type="button"
+                        class="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-800 sm:ml-3 sm:w-auto">
+                        Simpan</button>
+                    <div wire:key="{{ str()->random(50) }}" class="justify-end flex-initial ml-5 -mt-5" wire:loading
+                        wire:target='revision'>
+                        <x-loading />
+                    </div>
+                </div>
+            </form>
+        </div>
     </x-modal>
 </div>
