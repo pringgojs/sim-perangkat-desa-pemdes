@@ -21,10 +21,25 @@ class Table extends Component
     public $modalConfirmDelete = false;
     public $isLoading = false;
 
+    public function mount($type = null)
+    {
+        $this->filter = [
+            'area' => '',
+            'search' => '',
+            'positionType' => '',
+            'selectedDistrict' => '',
+            'selectedVillage' => '',
+            'isParkir' => '',
+            'positionStatus' => '',
+            'statusData' => '',
+            'isNullPerson' => '',
+        ];
+    }
+
     public function render()
     {
         return view('livewire.pages.village-position-type.section.table', [
-            'village_position_types' => VillagePositionType::filter($this->filter)->search($this->search)->with(['village.district', 'positionType', 'positionTypeStatus', 'staffHistory.villageStaff'])->orderByDefault()->paginate(),
+            'village_position_types' => VillagePositionType::filter($this->filter)->with(['village.district', 'positionType', 'positionTypeStatus', 'staffHistory.villageStaff'])->orderByDefault()->paginate(),
         ]);
     }
 
@@ -52,7 +67,6 @@ class Table extends Component
     #[On('export')] 
     public function export()
     {
-        dd($this->filter);
         return Excel::download(new VillagePositionTypeExport($this->filter), 'desa-jabatan-'.date('Ymd').'.xlsx');
     }
 

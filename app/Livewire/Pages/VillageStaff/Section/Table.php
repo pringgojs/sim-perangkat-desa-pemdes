@@ -31,6 +31,7 @@ class Table extends Component
     protected $listeners = [
         'refreshComponent' => '$refresh'
     ];
+    
     public function mount($type = null)
     {
         $statusData = request()->input('statusData');

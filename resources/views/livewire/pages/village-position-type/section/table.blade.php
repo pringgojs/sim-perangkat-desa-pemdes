@@ -1,8 +1,4 @@
 <div>
-    {{-- <div wire:loading class="w-full">
-        <livewire:utils.skeleton-table />
-    </div> --}}
-
     {{-- <p wire:loading class="text-red-500">loading....</p> --}}
     <x-table :headers="['', 'Kecamatan', 'Desa', 'Jabatan', 'Siltap', 'Tunjangan', 'Status Jabatan', 'Status Parkir']" title="Daftar Jabatan Desa">
         <!-- Table Content -->
