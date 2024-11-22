@@ -19,6 +19,8 @@ class Table extends Component
     public $search;
     public $filter;
     public $modalConfirmDelete = false;
+    public $isLoading = false;
+
     public function render()
     {
         return view('livewire.pages.village-position-type.section.table', [
@@ -29,6 +31,7 @@ class Table extends Component
     #[On('filter')] 
     public function filter($area = null, $search = null, $positionType = null, $selectedDistrict = [], $selectedVillage = [], $positionStatus = null, $isParkir = false, $isNullPerson = false, $statusData= null)
     {
+        $this->isLoading = true;
         $params = [
             'area' => $area,
             'search' => $search,
@@ -43,11 +46,13 @@ class Table extends Component
 
         $this->filter = $params;
         $this->resetPage();
+        $this->isLoading = false;
     }
     
     #[On('export')] 
     public function export()
     {
+        dd($this->filter);
         return Excel::download(new VillagePositionTypeExport($this->filter), 'desa-jabatan-'.date('Ymd').'.xlsx');
     }
 

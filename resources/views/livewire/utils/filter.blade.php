@@ -240,8 +240,10 @@
                     {{-- <button type="button" class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Button text</button> --}}
                     <div class="relative flex items-center">
                         {{-- @can('transaksi.pengeluaran.barang.export transaction') --}}
-                        <button wire:click="export"
-                            class="flex items-center rounded-md bg-white  py-2.5 px-4 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                        <button wire:click="$dispatchTo('{{ $table }}','export')"
+                            class="flex
+                            items-center rounded-md bg-white py-2.5 px-4 text-sm font-semibold text-gray-900 shadow-sm
+                            ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                             <x-bytesize-download class="h-5 w-5 mr-2" />
                             Unduh
                         </button>
