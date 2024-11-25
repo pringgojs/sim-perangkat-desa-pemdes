@@ -5,6 +5,7 @@ namespace App\Livewire\Pages\VillagePositionType\Section;
 use App\Models\Option;
 use App\Models\Village;
 use Livewire\Component;
+use App\Models\VillageSiltap;
 use Illuminate\Support\Facades\DB;
 use App\Models\VillagePositionType;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -42,6 +43,17 @@ class Form extends Component
     {
         if (!$id) return;
         $this->villages = Village::where('district_id', $id)->with(['district'])->orderByDefault()->get();
+    }
+
+    public function getSiltap()
+    {
+        if (!$this->form->positionType) return;
+        if (!$this->form->village) return;
+
+        $villageSiltap = VillageSiltap::where('village_id', $this->form->village)->where('position_type_id', $this->form->positionType)->first();
+
+        $this->form->tunjangan = $villageSiltap->tunjangan;
+        $this->form->siltap = $villageSiltap->siltap;
     }
 
     public function store()

@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App\Models\Option;
 use App\Models\Village;
+use App\Models\VillageSiltap;
 use Illuminate\Support\Collection;
 use App\Models\VillagePositionType;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -56,9 +57,13 @@ class VillagePositionTypeImport implements ToCollection
             $position_type_id = key_option($key);
             $status = Option::search($status)->first();
             
+            $villageSiltap = VillageSiltap::where('village_id', $villageId)->where('position_type_id', $position_type_id)->first();
+            if (!$villageSiltap) return;
+
             $model = new VillagePositionType;
             $model->code = $code;
             $model->village_id = $villageId;
+            $model->villag_siltap_id = $villageSiltap->id;
             $model->position_name = $position_name;
             $model->position_type_id = $position_type_id;
             $model->position_type_status_id = $status->id;

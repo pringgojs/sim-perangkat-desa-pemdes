@@ -72,7 +72,7 @@
 
                     <div class="sm:col-span-9">
                         <div class="sm:flex p-1 space-y-1 ">
-                            <select id="positionTypes" wire:model="form.positionType"
+                            <select id="positionTypes" wire:model="form.positionType" @change="$wire.getSiltap"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
                                 <option selected>Choose a position type</option>
                                 @foreach ($positionTypes as $item)
@@ -183,7 +183,8 @@
                             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                 <span class="text-gray-500 sm:text-sm">Rp</span>
                             </div>
-                            <input x-mask:dynamic="$money($input, '.')" wire:model="form.tunjangan" type="text"
+                            <input readonly x-mask:dynamic="$money($input, '.')" wire:model="form.tunjangan"
+                                type="text"
                                 class="block w-full rounded-md border-0 py-2 pl-9 pr-12 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                                 placeholder="" aria-describedby="price-currency">
                         </div>
@@ -209,7 +210,8 @@
                             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                 <span class="text-gray-500 sm:text-sm">Rp</span>
                             </div>
-                            <input x-mask:dynamic="$money($input, '.')" wire:model="form.siltap" type="text"
+                            <input readonly x-mask:dynamic="$money($input, '.')" wire:model="form.siltap"
+                                type="text"
                                 class="block w-full rounded-md border-0 py-2 pl-9 pr-12 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                                 placeholder="" aria-describedby="price-currency">
                         </div>

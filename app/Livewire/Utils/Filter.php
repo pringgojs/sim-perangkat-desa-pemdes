@@ -21,8 +21,13 @@ class Filter extends Component
     public $table;
     public $params;
     
-    public $useNullPerson = false;
+    /* use utilitas filter */
+    public $useArea = false;
     public $useStatusData = false;
+    public $usePositionType = false;
+    public $usePositionStatus = false;
+    public $usePositionParkir = false;
+    public $useNullPerson = false;
     
     public function mount($table, $positionType = null)
     {

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->uuid('village_id');
             $table->uuid('position_type_id');
+            $table->uuid('village_siltap_id');
             $table->uuid('position_type_status_id');
             $table->string('position_name')->nullable();
             $table->decimal('siltap', 15, 2)->default(0);
@@ -28,6 +29,7 @@ return new class extends Migration
 
             // Foreign key constraints
             $table->foreign('village_id')->references('id')->on('villages')->onDelete('cascade');
+            $table->foreign('village_siltap_id')->references('id')->on('village_siltaps')->onDelete('cascade');
             $table->foreign('position_type_id')->references('id')->on('options')->onDelete('cascade');
             $table->foreign('position_type_status_id')->references('id')->on('options')->onDelete('cascade');
         });

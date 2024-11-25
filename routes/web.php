@@ -22,7 +22,9 @@ use App\Livewire\Pages\VillageStaff\Edit as VillageStaffEdit;
 use App\Livewire\Pages\VillageType\Index as VillageTypeIndex;
 use App\Livewire\Pages\Notification\Index as NotificationIndex;
 use App\Livewire\Pages\VillageStaff\Index as VillageStaffIndex;
+use App\Livewire\Pages\VillageSiltap\Index as VillageSiltapIndex;
 use App\Livewire\Pages\PendingApproval\Index as PendingApprovalIndex;
+use App\Livewire\Pages\VillageSiltap\Section\Form as VillageSiltapForm;
 use App\Livewire\Pages\Tools\RemoveBacklinks\Index as RemoveBacklinksIndex;
 use App\Livewire\Pages\StatisticStatusData\Index as StatisticStatusDataIndex;
 use App\Livewire\Pages\VillagePositionType\Index as VillagePositionTypeIndex;
@@ -48,6 +50,8 @@ Route::middleware([
         Route::get('village-position-type/{id}/edit', Edit::class)->name('village-position-type.edit');
         Route::get('village-position-type/create', Create::class)->name('village-position-type.create');
         Route::get('village-position-type', VillagePositionTypeIndex::class)->name('village-position-type.index');
+        Route::get('village-siltap/create', VillageSiltapForm::class)->name('village-siltap.create');
+        Route::get('village-siltap', VillageSiltapIndex::class)->name('village-siltap.index');
         Route::get('statistic-status-data', StatisticStatusDataIndex::class)->name('statistic-status-data')->middleware('role:administrator');
         Route::get('statistic', StatisticIndex::class)->name('statistic')->middleware('role:administrator');
         Route::get('pending-approval', PendingApprovalIndex::class)->name('pending-approval')->middleware('role:administrator');

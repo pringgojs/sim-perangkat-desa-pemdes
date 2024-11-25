@@ -101,12 +101,17 @@
                                     <a href="{{ route('village.index') }}" wire:navigate
                                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Desa</a>
                                 </li>
+
                                 <li>
                                     <a href="{{ route('village-type.index') }}" wire:navigate
                                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Jenis
                                         Desa</a>
                                 </li>
-
+                                <li>
+                                    <a href="{{ route('village-siltap.index') }}" wire:navigate
+                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Pengaturan
+                                        Siltap Desa</a>
+                                </li>
                                 <li>
                                     <a href="{{ route('village-position-type.index') }}" wire:navigate
                                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Pengaturan
