@@ -489,6 +489,7 @@
                     },
                     doFilter() {
                         // return;
+                        console.log('do filter');
                         this.$refs.btnFilter.click();
                     },
                     setPositionTypeName(value) {

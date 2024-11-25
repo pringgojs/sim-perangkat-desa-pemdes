@@ -3,6 +3,7 @@
 namespace App\Livewire\Pages\VillageSiltap\Section;
 
 use Livewire\Component;
+use Livewire\Attributes\On;
 use Livewire\WithPagination;
 use App\Models\VillageSiltap;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -36,7 +37,7 @@ class Table extends Component
     public function render()
     {
         return view('livewire.pages.village-siltap.section.table', [
-            'village_siltaps' => VillageSiltap::filter($this->filter)->with(['village', 'positionType'])->paginate(),
+            'village_siltaps' => VillageSiltap::filter($this->filter)->with(['village.district', 'positionType'])->paginate(),
         ]);
     }
 
@@ -51,6 +52,7 @@ class Table extends Component
             'selectedVillage' => $selectedVillage,
         ];
 
+        // dd($params);
         $this->filter = $params;
         $this->resetPage();
     }
