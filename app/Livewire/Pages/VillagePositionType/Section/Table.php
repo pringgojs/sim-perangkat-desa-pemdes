@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
 use App\Models\VillagePositionType;
+use App\Models\VillageStaffHistory;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Services\StaffHistoriesService;
 use App\Exports\VillagePositionTypeExport;
