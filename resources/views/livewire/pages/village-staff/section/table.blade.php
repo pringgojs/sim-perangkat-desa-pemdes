@@ -73,15 +73,10 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
                         {{ $item->name }} <br> {{ $item->another_name }}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                        @if ($item->position_is_active)
-                            {{ $item->position_name }} <br> {{ $item->position_code }} <br> {!! $item->labelDifinitifStatus() !!}
-                        @endif
-                    </td>
+                        {{ $item->position_name }} <br> {{ $item->position_code }} <br> {!! $item->labelDifinitifStatus() !!}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                        @if ($item->position_plt_is_active)
-                            {{ $item->position_plt_name }} <br> {{ $item->position_plt_code }} <br>
-                            {!! $item->labelPltStatus() !!}
-                        @endif
+                        {{ $item->position_plt_name }} <br> {{ $item->position_plt_code }} <br>
+                        {!! $item->labelPltStatus() !!}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
                         {{ $item->place_of_birth }}{{ $item->place_of_birth ? ', ' . $item->date_of_birth : '' }}

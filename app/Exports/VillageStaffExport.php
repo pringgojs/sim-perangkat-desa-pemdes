@@ -73,13 +73,13 @@ class VillageStaffExport implements FromCollection, WithHeadings, WithMapping
             $item->educationLevel->name ?? '-',
             $item->dataStatus->name,
             /* jabatan definitif */
-            $item->position_is_active ? $item->position_code : '',
-            $item->position_is_active ? $item->position_name : '',
+            $item->position_code,
+            $item->position_name,
             $item->position_is_active ? 'Aktif' : 'Tidak Aktif',
             /* jabatan plt */
             /* jabatan definitif */
-            $item->position_plt_is_active ? $item->position_plt_code : '',
-            $item->position_plt_is_active ? $item->position_plt_name : '',
+            $item->position_plt_code,
+            $item->position_plt_name,
             $item->position_plt_is_active ? 'Aktif' : 'Tidak Aktif',
         ];
     }
