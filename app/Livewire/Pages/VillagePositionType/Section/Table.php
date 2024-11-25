@@ -7,6 +7,7 @@ use Livewire\Attributes\On;
 use Livewire\WithPagination;
 use App\Models\VillagePositionType;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Services\StaffHistoriesService;
 use App\Exports\VillagePositionTypeExport;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
@@ -73,8 +74,17 @@ class Table extends Component
     public function delete($id)
     {
         $model = VillagePositionType::findOrFail($id);
-        $model->delete();
 
+        /* set non-aktif staff saat ini */
+        $history = VillageStaffHistory::where('village_position_type_id', $model->id)->active()->first();
+        if ($history) {
+            $service = new StaffHistoriesService($model, $history->villageStaff);
+            $service->ifStaffSetNonActive($history);
+        }
+
+        /* hapus */
+        $model->delete();
+        
         $this->alert('success', 'Success!');
         $this->redirectRoute('village-position-type.index', navigate: true);
 
