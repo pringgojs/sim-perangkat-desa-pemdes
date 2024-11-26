@@ -35,7 +35,7 @@
                                         <option selected>Pilih jenis jabatan</option>
                                         @foreach ($villagePositionTypes as $item)
                                             <option value="{{ $item->id }}">{{ ucfirst($item->position_name) }} -
-                                                {{ $item->code }} ({{ $item->positionTypeStatus->name }})</option>
+                                                {{ $item->code }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -43,6 +43,58 @@
                                     @error('form.positionType')
                                         <span class="text-red-500">{{ $message }}</span>
                                     @enderror
+                                </div>
+                            </div>
+                            <div class="sm:col-span-3">
+                                <label
+                                    class="inline-block text-sm font-medium text-gray-500 mt-2.5 dark:text-neutral-500">
+                                    Status Jabatan
+                                </label>
+                            </div>
+                            <!-- End Col -->
+
+                            <div class="sm:col-span-9">
+                                <div class="sm:flex p-1 space-y-1">
+                                    <select id="positionTypeStatus" wire:model="form.positionTypeStatus"
+                                        @change="$wire.checkPositionByStatus"
+                                        class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
+                                        <option selected>Pilih status jabatan</option>
+                                        @foreach ($positionTypeStatus as $item)
+                                            <option value="{{ $item->id }}">{{ ucfirst($item->name) }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div>
+                                    @error('form.positionTypeStatus')
+                                        <span class="text-red-500">{{ $message }}</span>
+                                    @enderror
+
+                                    @if ($errorCheckingPositionByStatus)
+                                        <span class="text-red-500">Pegawai ini sudah menjabat sesuai dengan status
+                                            jabatan yang dipilih. Setiap pegawai tidak boleh mempunyai jabatan yang
+                                            dua-duanya definitif atau dua-duanya plt/plh/pj.</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="sm:col-span-3">
+                                <div class="inline-block">
+                                    <label for="af-submit-application-phone"
+                                        class="inline-block text-sm font-medium text-gray-500 mt-2.5 dark:text-neutral-500">
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- End Col -->
+
+                            <div class="sm:col-span-9">
+                                <div class="flex items-center mb-4">
+                                    <input id="default-checkbox" type="checkbox" wire:model="form.isParkir"
+                                        value="1"
+                                        class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="default-checkbox"
+                                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Jabatan
+                                        Parkir</label>
+
                                 </div>
                             </div>
                             <div class="sm:col-span-3">
@@ -124,12 +176,69 @@
                             @enderror --}}
                             </div>
 
+                            <!-- End Col -->
+                            <div class="sm:col-span-3">
+                                <div class="inline-block">
+                                    <label for="af-submit-application-phone"
+                                        class="inline-block text-sm font-medium text-gray-500 mt-2.5 dark:text-neutral-500">
+                                        Tunjangan
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- End Col -->
+
+                            <div class="sm:col-span-9">
+                                <div class="relative mt-2 rounded-md shadow-sm">
+                                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                        <span class="text-gray-500 sm:text-sm">Rp</span>
+                                    </div>
+                                    <input readonly x-mask:dynamic="$money($input, '.')" wire:model="form.tunjangan"
+                                        type="text"
+                                        class="block w-full rounded-md border-0 py-2 pl-9 pr-12 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
+                                        placeholder="" aria-describedby="price-currency">
+                                </div>
+                                <div>
+                                    @error('form.tunjangan')
+                                        <span class="text-red-500">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <!-- End Col -->
+                            <div class="sm:col-span-3">
+                                <div class="inline-block">
+                                    <label for="af-submit-application-phone"
+                                        class="inline-block text-sm font-medium text-gray-500 mt-2.5 dark:text-neutral-500">
+                                        Siltap
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- End Col -->
+
+                            <div class="sm:col-span-9">
+                                <div class="relative mt-2 rounded-md shadow-sm">
+                                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                        <span class="text-gray-500 sm:text-sm">Rp</span>
+                                    </div>
+                                    <input readonly x-mask:dynamic="$money($input, '.')" wire:model="form.siltap"
+                                        type="text"
+                                        class="block w-full rounded-md border-0 py-2 pl-9 pr-12 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
+                                        placeholder="" aria-describedby="price-currency">
+                                </div>
+
+                                <div>
+                                    @error('form.siltap')
+                                        <span class="text-red-500">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
                             @if ($positionNow)
                                 <div class="col-span-12">
                                     <div class="flex p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400"
                                         role="alert">
                                         <svg class="flex-shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true"
-                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                            viewBox="0 0 20 20">
                                             <path
                                                 d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
                                         </svg>
@@ -207,70 +316,14 @@
 
                             <dl class="flex flex-col sm:flex-row gap-1">
                                 <dt class="min-w-40">
-                                    <span class="block text-sm text-gray-500 dark:text-neutral-500">Kode Jabatan:</span>
-                                </dt>
-                                <dd>
-                                    <ul>
-                                        <li
-                                            class="me-1 inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
-                                            {{ $villagePositionType->code }}
-                                        </li>
-                                    </ul>
-                                </dd>
-                            </dl>
-                            <dl class="flex flex-col sm:flex-row gap-1">
-                                <dt class="min-w-40">
-                                    <span class="block text-sm text-gray-500 dark:text-neutral-500">Status
+                                    <span class="block text-sm text-gray-500 dark:text-neutral-500">Kode
                                         Jabatan:</span>
                                 </dt>
                                 <dd>
                                     <ul>
                                         <li
                                             class="me-1 inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
-                                            {{ $villagePositionType->positionTypeStatus->name }}
-                                        </li>
-                                    </ul>
-                                </dd>
-                            </dl>
-
-
-                            <dl class="flex flex-col sm:flex-row gap-1">
-                                <dt class="min-w-40">
-                                    <span class="block text-sm text-gray-500 dark:text-neutral-500">Siltap:</span>
-                                </dt>
-                                <dd>
-                                    <ul>
-                                        <li
-                                            class="me-1 inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
-                                            {{ format_rupiah($villagePositionType->siltap) }}
-                                        </li>
-                                    </ul>
-                                </dd>
-                            </dl>
-                            <dl class="flex flex-col sm:flex-row gap-1">
-                                <dt class="min-w-40">
-                                    <span class="block text-sm text-gray-500 dark:text-neutral-500">Tunjangan:</span>
-                                </dt>
-                                <dd>
-                                    <ul>
-                                        <li
-                                            class="me-1 inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
-                                            {{ format_rupiah($villagePositionType->tunjangan) }}
-
-                                        </li>
-                                    </ul>
-                                </dd>
-                            </dl>
-                            <dl class="flex flex-col sm:flex-row gap-1">
-                                <dt class="min-w-40">
-                                    <span class="block text-sm text-gray-500 dark:text-neutral-500">Status
-                                        Parkir:</span>
-                                </dt>
-                                <dd>
-                                    <ul>
-                                        <li
-                                            class="me-1 inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
-                                            {{ $villagePositionType->is_parkir ? 'Ya' : 'Tidak' }}
+                                            {{ $villagePositionType->code }}
                                         </li>
                                     </ul>
                                 </dd>
@@ -337,8 +390,8 @@
                         </div>
                         <!-- End List -->
                     </div>
+                @endif
             </div>
-            @endif
         </div>
     </div>
 </div>

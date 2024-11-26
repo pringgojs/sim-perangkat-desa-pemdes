@@ -27,6 +27,7 @@ class Form extends Component
     public $villagePositionTypes;
     public $villagePositionType;
     
+    public $errorCheckingPositionByStatus = false;
     public $positionNow;
     public function mount($staffId = null, $id = null)
     {
@@ -49,7 +50,7 @@ class Form extends Component
 
         }
 
-        $this->villagePositionTypes = VillagePositionType::with(['positionType', 'positionTypeStatus'])->villageId($this->staff->village_id)->get();
+        $this->villagePositionTypes = VillagePositionType::doesntHave('staffHistory')->with(['positionType', 'positionTypeStatus'])->villageId($this->staff->village_id)->get();
     }
 
     public function viewPositionType()
@@ -58,6 +59,27 @@ class Form extends Component
         $this->villagePositionType = VillagePositionType::with(['positionType', 'positionTypeStatus'])->whereId($this->form->villagePositionType)->first();
 
         $this->positionNow = VillageStaffHistory::active()->with(['villageStaff', 'villagePositionType'])->where('village_position_type_id', $this->form->villagePositionType)->first();
+    }
+
+    public function checkPositionByStatus()
+    {
+        if (!$this->form->positionTypeStatus) return;
+
+        $definitif = key_option('definitif');
+        $positionStatus = $this->form->positionTypeStatus;
+
+        $history = VillageStaffHistory::active()
+            ->where('village_staff_id', $this->staff->id)
+            ->where(function ($q) use ($positionStatus, $definitif) {
+                if (option_is_match('definitif', $positionStatus)) {
+                    $q->where('position_type_status_id', $definitif);
+                } else {
+                    $q->where('position_type_status_id', '!=', $definitif);
+                }
+            })
+            ->first();
+
+        $this->errorCheckingPositionByStatus = $history ? true : false;
     }
 
     public function store()

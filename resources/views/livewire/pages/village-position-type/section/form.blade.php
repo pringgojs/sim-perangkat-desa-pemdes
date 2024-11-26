@@ -86,14 +86,14 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="sm:col-span-3">
+                    {{-- <div class="sm:col-span-3">
                         <label class="inline-block text-sm font-medium text-gray-500 mt-2.5 dark:text-neutral-500">
                             Status Jabatan
                         </label>
-                    </div>
+                    </div> --}}
                     <!-- End Col -->
 
-                    <div class="sm:col-span-9">
+                    {{-- <div class="sm:col-span-9">
                         <div class="sm:flex p-1 space-y-1">
                             <select id="positionTypeStatus" wire:model="form.positionTypeStatus"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
@@ -108,7 +108,7 @@
                                 <span class="text-red-500">{{ $message }}</span>
                             @enderror
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- End Col -->
                     <div class="sm:col-span-3">
                         <div class="inline-block">
@@ -147,17 +147,16 @@
                         </div>
                     </div>
 
-                    <div class="sm:col-span-3">
+                    {{-- <div class="sm:col-span-3">
                         <div class="inline-block">
                             <label for="af-submit-application-phone"
                                 class="inline-block text-sm font-medium text-gray-500 mt-2.5 dark:text-neutral-500">
-                                {{-- Jenis Jabatan Parkir --}}
                             </label>
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- End Col -->
 
-                    <div class="sm:col-span-9">
+                    {{-- <div class="sm:col-span-9">
                         <div class="flex items-center mb-4">
                             <input id="default-checkbox" type="checkbox" wire:model="form.isParkir" value="1"
                                 class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -165,20 +164,20 @@
                                 class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Jabatan Parkir</label>
 
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!-- End Col -->
-                    <div class="sm:col-span-3">
+                    {{-- <div class="sm:col-span-3">
                         <div class="inline-block">
                             <label for="af-submit-application-phone"
                                 class="inline-block text-sm font-medium text-gray-500 mt-2.5 dark:text-neutral-500">
                                 Tunjangan
                             </label>
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- End Col -->
 
-                    <div class="sm:col-span-9">
+                    {{-- <div class="sm:col-span-9">
                         <div class="relative mt-2 rounded-md shadow-sm">
                             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                 <span class="text-gray-500 sm:text-sm">Rp</span>
@@ -193,19 +192,19 @@
                                 <span class="text-red-500">{{ $message }}</span>
                             @enderror
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- End Col -->
-                    <div class="sm:col-span-3">
+                    {{-- <div class="sm:col-span-3">
                         <div class="inline-block">
                             <label for="af-submit-application-phone"
                                 class="inline-block text-sm font-medium text-gray-500 mt-2.5 dark:text-neutral-500">
                                 Siltap
                             </label>
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- End Col -->
 
-                    <div class="sm:col-span-9">
+                    {{-- <div class="sm:col-span-9">
                         <div class="relative mt-2 rounded-md shadow-sm">
                             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                 <span class="text-gray-500 sm:text-sm">Rp</span>
@@ -221,7 +220,7 @@
                                 <span class="text-red-500">{{ $message }}</span>
                             @enderror
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="mt-5 flex justify-end gap-x-2">
                     <div wire:key="{{ str()->random(50) }}" class="justify-end flex-initial ml-5 -mt-5" wire:loading

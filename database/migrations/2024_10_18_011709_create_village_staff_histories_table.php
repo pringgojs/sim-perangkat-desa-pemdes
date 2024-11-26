@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->uuid('position_type_status_id');
             $table->decimal('siltap', 15, 2)->default(0);
             $table->boolean('is_active')->default(1);
+            $table->boolean('is_parkir')->default(0);
             $table->decimal('tunjangan', 15, 2)->default(0);
             $table->decimal('thp', 15, 2)->default(0);
             $table->string('no_sk')->nullable();

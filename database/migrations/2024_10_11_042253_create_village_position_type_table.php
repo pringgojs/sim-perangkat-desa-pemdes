@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->uuid('village_id');
             $table->uuid('position_type_id');
-            $table->uuid('village_siltap_id');
+            $table->uuid('village_siltap_id')->nullable();
             $table->uuid('position_type_status_id');
             $table->string('position_name')->nullable();
             $table->decimal('siltap', 15, 2)->default(0);

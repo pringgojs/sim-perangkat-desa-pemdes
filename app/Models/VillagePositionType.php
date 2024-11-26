@@ -47,7 +47,7 @@ class VillagePositionType extends Model
 
     public function staffHistory()
     {
-        return $this->hasOne(VillageStaffHistory::class, 'village_position_type_id');
+        return $this->hasOne(VillageStaffHistory::class, 'village_position_type_id')->where('is_active', true);
     }
 
     public function scopeOrderByDefault($q)

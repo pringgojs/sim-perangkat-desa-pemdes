@@ -33,9 +33,8 @@ class StaffHistoriesService
 
         if (!$this->staff) return;
         
-        self::updateStatusCurrentStaff();
+        // self::updateStatusCurrentStaff();
 
-        self::updateThisStaff();
 
         $payload = [
             'village_staff_id' => $this->staff->id,
@@ -44,10 +43,6 @@ class StaffHistoriesService
             'position_code' => $this->villagePositionType->code,
             'position_type_id' => $this->villagePositionType->position_type_id,
             'position_name' => $this->villagePositionType->position_name,
-            'position_type_status_id' => $this->villagePositionType->position_type_status_id,
-            'siltap' => $this->villagePositionType->siltap,
-            'tunjangan' => $this->villagePositionType->tunjangan,
-            'thp' => $this->villagePositionType->siltap + $this->villagePositionType->tunjangan,
             'non_active_at' => null,
             'is_active' => true,
             'created_by' => auth()->user()->id
@@ -59,12 +54,21 @@ class StaffHistoriesService
             $payload['date_of_appointment'] = isset($params['date_of_appointment']) ? $params['date_of_appointment'] : null;
             $payload['enddate_of_office'] = isset($params['enddate_of_office']) ? $params['enddate_of_office'] : null;
             // $payload['is_active'] = true;
+            $payload['position_type_status_id'] = isset($params['position_type_status_id']) ? $params['position_type_status_id'] : null;
+            $payload['siltap'] = isset($params['siltap']) ? $params['siltap'] : 0;
+            $payload['tunjangan'] = isset($params['tunjangan']) ? $params['tunjangan'] : 0;
+            $payload['thp'] = isset($params['thp']) ? $params['thp'] : 0;
+            $payload['is_parkir'] = isset($params['is_parkir']) ? $params['is_parkir'] : 0;
+            
         }
         
         /* proses simpan */
         $model = VillageStaffHistory::updateOrCreate([
             'id' => $id
         ], $payload);
+
+        self::updateThisStaff($model);
+
 
         DB::commit();
 
@@ -96,17 +100,17 @@ class StaffHistoriesService
             ->update(['position_plt_is_active' => 0]);
     }
 
-    public function updateThisStaff()
+    public function updateThisStaff($history)
     {
         /* ubah status staff jika jabatan definitif */
-        if (option_is_match('definitif', $this->villagePositionType->position_type_status_id)) {
+        if (option_is_match('definitif', $history->position_type_status_id)) {
             $this->staff->position_id = $this->villagePositionType->position_type_id;
             $this->staff->position_name = $this->villagePositionType->position_name;
             $this->staff->position_code = $this->villagePositionType->code;
             $this->staff->position_is_active = true;
             $this->staff->save();
 
-            self::updateDefinitif();
+            // self::updateDefinitif();
 
             return;
         }

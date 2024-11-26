@@ -114,6 +114,10 @@ class VillageStaffHistoryImport implements ToCollection
             }
 
             $history->save();
+
+            /* update status terisi position type */
+            // $village_postition_type->is_null_position = true;
+            // $village_postition_type->save();
         }
     }
 }

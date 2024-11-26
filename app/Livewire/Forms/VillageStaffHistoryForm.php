@@ -23,11 +23,16 @@ class VillageStaffHistoryForm extends Form
     public $skDate;
     public $dateOfAppointment;
     public $enddateOfOffice;
+    public $siltap;
+    public $tunjangan;
 
     public function rules()
     {
         return [
+            'positionTypeStatus' => 'required',
             'villagePositionType' => 'required',
+            'siltap' => 'required',
+            'tunjangan' => 'required',
         ];
 
     }
@@ -36,6 +41,7 @@ class VillageStaffHistoryForm extends Form
     {
         return [
             'villagePositionType.required' => 'Jenis jabatan wajib diisi.',
+            'positionTypeStatus.required' => 'Status jabatan wajib diisi.',
         ];
     }
 
@@ -43,6 +49,10 @@ class VillageStaffHistoryForm extends Form
     {
         $this->validate();
  
+        $tunjangan = \format_price($this->tunjangan);
+        $siltap = \format_price($this->siltap);
+        $thp = $tunjangan + $siltap;
+        
         $villagePositionType = VillagePositionType::findOrFail($this->villagePositionType);
         $staff = VillageStaff::findOrFail($this->staffId);
 
@@ -52,7 +62,12 @@ class VillageStaffHistoryForm extends Form
             'date_of_sk' => $this->skDate,
             'date_of_appointment' => $this->dateOfAppointment,
             'enddate_of_office' => $this->enddateOfOffice,
-            'is_active' => true
+            'is_active' => true,
+            'siltap' => $siltap,
+            'tunjangan' => $tunjangan,
+            'thp' => $thp,
+            'is_parkir' => $this->isParkir,
+            'position_type_status_id' => $this->positionTypeStatus
         ], $this->id);
 
         return $historyService;
