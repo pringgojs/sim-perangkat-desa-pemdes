@@ -30,7 +30,7 @@
                             <div class="sm:col-span-9">
                                 <div class="sm:flex p-1 space-y-1 ">
                                     <select id="villagePositionTypes" wire:model="form.villagePositionType"
-                                        @change="$wire.viewPositionType"
+                                        @change="$wire.checkSiltap"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
                                         <option selected>Pilih jenis jabatan</option>
                                         @foreach ($villagePositionTypes as $item)
@@ -56,7 +56,6 @@
                             <div class="sm:col-span-9">
                                 <div class="sm:flex p-1 space-y-1">
                                     <select id="positionTypeStatus" wire:model="form.positionTypeStatus"
-                                        @change="$wire.checkPositionByStatus"
                                         class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
                                         <option selected>Pilih status jabatan</option>
                                         @foreach ($positionTypeStatus as $item)
@@ -68,12 +67,6 @@
                                     @error('form.positionTypeStatus')
                                         <span class="text-red-500">{{ $message }}</span>
                                     @enderror
-
-                                    @if ($errorCheckingPositionByStatus)
-                                        <span class="text-red-500">Pegawai ini sudah menjabat sesuai dengan status
-                                            jabatan yang dipilih. Setiap pegawai tidak boleh mempunyai jabatan yang
-                                            dua-duanya definitif atau dua-duanya plt/plh/pj.</span>
-                                    @endif
                                 </div>
                             </div>
 
@@ -192,7 +185,7 @@
                                     <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                         <span class="text-gray-500 sm:text-sm">Rp</span>
                                     </div>
-                                    <input readonly x-mask:dynamic="$money($input, '.')" wire:model="form.tunjangan"
+                                    <input x-mask:dynamic="$money($input, '.')" wire:model="form.tunjangan"
                                         type="text"
                                         class="block w-full rounded-md border-0 py-2 pl-9 pr-12 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                                         placeholder="" aria-describedby="price-currency">
@@ -219,7 +212,7 @@
                                     <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                         <span class="text-gray-500 sm:text-sm">Rp</span>
                                     </div>
-                                    <input readonly x-mask:dynamic="$money($input, '.')" wire:model="form.siltap"
+                                    <input x-mask:dynamic="$money($input, '.')" wire:model="form.siltap"
                                         type="text"
                                         class="block w-full rounded-md border-0 py-2 pl-9 pr-12 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                                         placeholder="" aria-describedby="price-currency">
@@ -231,35 +224,6 @@
                                     @enderror
                                 </div>
                             </div>
-
-                            @if ($positionNow)
-                                <div class="col-span-12">
-                                    <div class="flex p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400"
-                                        role="alert">
-                                        <svg class="flex-shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true"
-                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                            viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                                        </svg>
-                                        <span class="sr-only">Info</span>
-                                        <div>
-                                            <span class="font-medium">Ketentuan:</span>
-                                            <ul class="mt-1.5 list-disc list-inside">
-                                                <li>Apabila jabatan yang dipilih sudah diisi oleh perangkat dengan
-                                                    status aktif, maka perangkat tersebut akan dinon-aktifkan dari
-                                                    jabatan yang dipilih.</li>
-                                                <li>Apabila jabatan yang dipilih merupakan jabatan definitif, maka akan
-                                                    mengganti status jabatan definitif saat ini dari
-                                                    {{ $staff->name }}.</li>
-                                                <li>Apabila jabatan yang dipilih merupakan jabatan Plt/Plh/Pj, maka akan
-                                                    mengganti status jabatan Plt/Plh/Pj saat ini dari
-                                                    {{ $staff->name }}.</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
                         </div>
                         <div class="mt-5 flex justify-end gap-x-2">
                             <div wire:key="{{ str()->random(50) }}" class="justify-end flex-initial ml-5 -mt-5"
@@ -277,120 +241,6 @@
                         </div>
                     </form>
                 </div>
-                @if ($villagePositionType)
-                    <div class="bg-white text-white p-4 shadow-lg rounded">
-                        <!-- Konten kolom kedua -->
-                        <!-- List -->
-                        <div class="space-y-3">
-                            <h2 class="text-sm font-medium text-gray-900">Detil Jabatan</h2>
-                            <dl class="flex flex-col sm:flex-row gap-1">
-                                <dt class="min-w-40">
-                                    <span class="block text-sm text-gray-500 dark:text-neutral-500">Desa:</span>
-                                </dt>
-                                <dd>
-                                    <ul>
-                                        <li
-                                            class="me-1 inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
-
-                                            {{ $villagePositionType->village->name }} -
-                                            {{ $villagePositionType->village->code }}
-                                        </li>
-                                    </ul>
-                                </dd>
-                            </dl>
-                            <dl class="flex flex-col sm:flex-row gap-1">
-                                <dt class="min-w-40">
-                                    <span class="block text-sm text-gray-500 dark:text-neutral-500">Jenis
-                                        Jabatan:</span>
-                                </dt>
-                                <dd>
-                                    <ul>
-                                        <li
-                                            class="me-1 inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
-
-                                            {{ $villagePositionType->position_name }}
-                                        </li>
-                                    </ul>
-                                </dd>
-                            </dl>
-
-                            <dl class="flex flex-col sm:flex-row gap-1">
-                                <dt class="min-w-40">
-                                    <span class="block text-sm text-gray-500 dark:text-neutral-500">Kode
-                                        Jabatan:</span>
-                                </dt>
-                                <dd>
-                                    <ul>
-                                        <li
-                                            class="me-1 inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
-                                            {{ $villagePositionType->code }}
-                                        </li>
-                                    </ul>
-                                </dd>
-                            </dl>
-
-                            @if ($positionNow)
-                                <h2 class="text-sm font-medium text-gray-900">Pejabat Saat ini</h2>
-                                <dl class="flex flex-col sm:flex-row gap-1">
-                                    <dt class="min-w-40">
-                                        <span class="block text-sm text-gray-500 dark:text-neutral-500">Nama:</span>
-                                    </dt>
-                                    <dd>
-                                        <ul>
-                                            <li
-                                                class="me-1 inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
-                                                {{ $positionNow->villageStaff->name }}
-                                            </li>
-                                        </ul>
-                                    </dd>
-                                </dl>
-                                <dl class="flex flex-col sm:flex-row gap-1">
-                                    <dt class="min-w-40">
-                                        <span class="block text-sm text-gray-500 dark:text-neutral-500">Tanggal
-                                            Dilantik:</span>
-                                    </dt>
-                                    <dd>
-                                        <ul>
-                                            <li
-                                                class="me-1 inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
-                                                {{ date_format_view($positionNow->date_of_appointment) }}
-                                            </li>
-                                        </ul>
-                                    </dd>
-                                </dl>
-                                <dl class="flex flex-col sm:flex-row gap-1">
-                                    <dt class="min-w-40">
-                                        <span class="block text-sm text-gray-500 dark:text-neutral-500">Tanggal
-                                            Berakhir:</span>
-                                    </dt>
-                                    <dd>
-                                        <ul>
-                                            <li
-                                                class="me-1 inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
-                                                {{ date_format_view($positionNow->enddate_of_office) }}
-                                            </li>
-                                        </ul>
-                                    </dd>
-                                </dl>
-
-                                <dl class="flex flex-col sm:flex-row gap-1">
-                                    <dt class="min-w-40">
-                                        <span class="block text-sm text-gray-500 dark:text-neutral-500">Status:</span>
-                                    </dt>
-                                    <dd>
-                                        <ul>
-                                            <li
-                                                class="me-1 inline-flex items-center text-sm text-gray-800 dark:text-neutral-200">
-                                                {{ $positionNow->is_active ? 'Aktif' : 'Non-aktif' }}
-                                            </li>
-                                        </ul>
-                                    </dd>
-                                </dl>
-                            @endif
-                        </div>
-                        <!-- End List -->
-                    </div>
-                @endif
             </div>
         </div>
     </div>

@@ -4,11 +4,13 @@ namespace App\Livewire\Forms;
 
 use Livewire\Form;
 use App\Models\VillageStaff;
+use App\Models\VillageSiltap;
 use Livewire\Attributes\Validate;
 use App\Models\VillagePositionType;
 use App\Models\VillageStaffHistory;
 use App\Services\StaffHistoriesService;
 use App\Rules\UniqueVillagePositionType;
+use App\Rules\UniquePositionStatusHistory;
 
 class VillageStaffHistoryForm extends Form
 {
@@ -29,10 +31,13 @@ class VillageStaffHistoryForm extends Form
     public function rules()
     {
         return [
-            'positionTypeStatus' => 'required',
             'villagePositionType' => 'required',
             'siltap' => 'required',
             'tunjangan' => 'required',
+            'positionTypeStatus' => [
+                'required',
+                new UniquePositionStatusHistory($this->positionTypeStatus, $this->staffId, $this->id)
+            ],
         ];
 
     }
@@ -56,8 +61,17 @@ class VillageStaffHistoryForm extends Form
         $villagePositionType = VillagePositionType::findOrFail($this->villagePositionType);
         $staff = VillageStaff::findOrFail($this->staffId);
 
-        $historyService = new StaffHistoriesService($villagePositionType, $staff);
-        $historyService->store([
+        $payload = [
+            'village_staff_id' => $staff->id,
+            'village_position_type_id' => $villagePositionType->id,
+            'village_id' => $villagePositionType->village_id,
+            'position_code' => $villagePositionType->code,
+            'position_type_id' => $villagePositionType->position_type_id,
+            'position_name' => $villagePositionType->position_name,
+            'non_active_at' => null,
+            'is_active' => true,
+            'created_by' => auth()->user()->id,
+            // ---
             'no_sk' => $this->skNumber,
             'date_of_sk' => $this->skDate,
             'date_of_appointment' => $this->dateOfAppointment,
@@ -68,20 +82,52 @@ class VillageStaffHistoryForm extends Form
             'thp' => $thp,
             'is_parkir' => $this->isParkir,
             'position_type_status_id' => $this->positionTypeStatus
-        ], $this->id);
+        ];
 
-        return $historyService;
+        
+        /* proses simpan */
+        $model = VillageStaffHistory::updateOrCreate([
+            'id' => $this->id
+        ], $payload);
+
+        /* update village siltap */
+        $siltap = VillageSiltap::villageId($villagePositionType->village_id)->positionTypeId($villagePositionType->position_type_id)->first();
+        $siltap->tunjangan = $this->tunjangan;
+        $siltap->siltap = $this->siltap;
+        $siltap->save();
+        
+        /* update staff */
+        if (option_is_match('definitif', $villagePositionType->position_type_id)) {
+            $staff->position_id = $villagePositionType->position_type_id;
+            $staff->position_name = $villagePositionType->position_name;
+            $staff->position_code = $villagePositionType->code;
+            $staff->position_is_active = true;
+            $staff->save();
+        } else {
+            $staff->position_plt_id = $villagePositionType->position_type_id;
+            $staff->position_plt_name = $villagePositionType->position_name;
+            $staff->position_code = $villagePositionType->code;
+            $staff->position_plt_is_active = true;
+            $staff->save();
+        }
+
+        return $model;
     }
 
     public function setModel(VillageStaffHistory $model)
     {
         $this->id = $model->id;
         $this->villagePositionType = $model->village_position_type_id;
+        $this->positionTypeStatus = $model->position_type_status_id;
         $this->skNumber = $model->no_sk;
+        $this->isParkir = $model->is_parkir;
         $this->skDate = $model->date_of_sk ? $model->date_of_sk->format('Y-m-d') : null;
         $this->dateOfAppointment = $model->date_of_appointment ? $model->date_of_appointment->format('Y-m-d') : null;
         $this->enddateOfOffice = $model->enddate_of_office ? $model->enddate_of_office->format('Y-m-d') : null;
         $this->staffId = $model->village_staff_id;
+        $this->siltap = $model->siltap;
+        $this->tunjangan = $model->tunjangan;
+        // dd($this);
     }
 
     public function setStaffId($id)

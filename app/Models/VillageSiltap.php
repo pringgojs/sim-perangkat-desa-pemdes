@@ -33,6 +33,16 @@ class VillageSiltap extends Model
         return $this->belongsTo(Option::class, 'position_type_id');
     }
 
+    public function scopeVillageId($q, $id)
+    {
+        $q->where('village_id', $id);
+    }
+    
+    public function scopePositionTypeId($q, $id)
+    {
+        $q->where('position_type_id', $id);
+    }
+    
     public function scopeFilter($q,$params = [])
     {
         if (!isset($params['area'])) return;

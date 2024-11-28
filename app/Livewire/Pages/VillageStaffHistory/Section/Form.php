@@ -5,6 +5,7 @@ namespace App\Livewire\Pages\VillageStaffHistory\Section;
 use App\Models\Option;
 use Livewire\Component;
 use App\Models\VillageStaff;
+use App\Models\VillageSiltap;
 use Illuminate\Support\Facades\DB;
 use App\Models\VillagePositionType;
 use App\Models\VillageStaffHistory;
@@ -25,7 +26,6 @@ class Form extends Component
     public $positionTypes;
     public $positionTypeStatus;
     public $villagePositionTypes;
-    public $villagePositionType;
     
     public $errorCheckingPositionByStatus = false;
     public $positionNow;
@@ -40,7 +40,6 @@ class Form extends Component
             $this->staff = $model->villageStaff;
             $this->form->setModel($model);
             $this->form->villagePositionType = $model->village_position_type_id;
-            self::viewPositionType();
         }
 
         /* jika mode create, parameter $staffId terisi */
@@ -53,33 +52,15 @@ class Form extends Component
         $this->villagePositionTypes = VillagePositionType::doesntHave('staffHistory')->with(['positionType', 'positionTypeStatus'])->villageId($this->staff->village_id)->get();
     }
 
-    public function viewPositionType()
+    public function checkSiltap()
     {
         if (!$this->form->villagePositionType) return;
-        $this->villagePositionType = VillagePositionType::with(['positionType', 'positionTypeStatus'])->whereId($this->form->villagePositionType)->first();
 
-        $this->positionNow = VillageStaffHistory::active()->with(['villageStaff', 'villagePositionType'])->where('village_position_type_id', $this->form->villagePositionType)->first();
-    }
-
-    public function checkPositionByStatus()
-    {
-        if (!$this->form->positionTypeStatus) return;
-
-        $definitif = key_option('definitif');
-        $positionStatus = $this->form->positionTypeStatus;
-
-        $history = VillageStaffHistory::active()
-            ->where('village_staff_id', $this->staff->id)
-            ->where(function ($q) use ($positionStatus, $definitif) {
-                if (option_is_match('definitif', $positionStatus)) {
-                    $q->where('position_type_status_id', $definitif);
-                } else {
-                    $q->where('position_type_status_id', '!=', $definitif);
-                }
-            })
-            ->first();
-
-        $this->errorCheckingPositionByStatus = $history ? true : false;
+        $positionType = VillagePositionType::find($this->form->villagePositionType);
+        $siltap = VillageSiltap::villageId($this->staff->village_id)->positionTypeId($positionType->position_type_id)->first();
+        
+        $this->form->siltap = $siltap->siltap ?? 0;
+        $this->form->tunjangan = $siltap->tunjangan ?? 0;
     }
 
     public function store()
