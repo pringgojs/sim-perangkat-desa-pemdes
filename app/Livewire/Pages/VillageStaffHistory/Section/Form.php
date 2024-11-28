@@ -50,6 +50,10 @@ class Form extends Component
         }
 
         $this->villagePositionTypes = VillagePositionType::doesntHave('staffHistory')->with(['positionType', 'positionTypeStatus'])->villageId($this->staff->village_id)->get();
+
+        if ($id) {
+            $this->villagePositionTypes->push(VillagePositionType::find($model->village_position_type_id));
+        }
     }
 
     public function checkSiltap()

@@ -44,15 +44,14 @@ class Table extends Component
     public function setActive($id)
     {
         $history = VillageStaffHistory::findOrFail($id);
-        $is_active = $history->is_active;
-        $service = new StaffHistoriesService($history->villagePositionType, $history->villageStaff);
-
-        if ($is_active) {
-            $service->ifStaffSetNonActive($history);
+        $service = new StaffHistoriesService();
+        if ($history->is_active) {
+            /* non aktifkan */
+            $service->setNonActive($history);
         } else {
-            $service->store(null, $history->id);
+            $service->setActive($history);
         }
-
+        
         $this->alert('success', 'Success!');
         $this->redirectRoute('village-staff.edit', ['id' => $this->staff->id], navigate: true);
     }

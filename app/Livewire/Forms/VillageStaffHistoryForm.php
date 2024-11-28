@@ -57,6 +57,8 @@ class VillageStaffHistoryForm extends Form
         $tunjangan = \format_price($this->tunjangan);
         $siltap = \format_price($this->siltap);
         $thp = $tunjangan + $siltap;
+
+        // dd($tunjangan);
         
         $villagePositionType = VillagePositionType::findOrFail($this->villagePositionType);
         $staff = VillageStaff::findOrFail($this->staffId);
@@ -84,17 +86,16 @@ class VillageStaffHistoryForm extends Form
             'position_type_status_id' => $this->positionTypeStatus
         ];
 
-        
         /* proses simpan */
         $model = VillageStaffHistory::updateOrCreate([
             'id' => $this->id
         ], $payload);
 
         /* update village siltap */
-        $siltap = VillageSiltap::villageId($villagePositionType->village_id)->positionTypeId($villagePositionType->position_type_id)->first();
-        $siltap->tunjangan = $this->tunjangan;
-        $siltap->siltap = $this->siltap;
-        $siltap->save();
+        $villageSiltap = VillageSiltap::villageId($villagePositionType->village_id)->positionTypeId($villagePositionType->position_type_id)->first();
+        $villageSiltap->tunjangan = $tunjangan;
+        $villageSiltap->siltap = $siltap;
+        $villageSiltap->save();
         
         /* update staff */
         if (option_is_match('definitif', $villagePositionType->position_type_id)) {
