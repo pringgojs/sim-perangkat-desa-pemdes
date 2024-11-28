@@ -35,7 +35,7 @@ class Table extends Component
         $history->delete();
         
         $this->alert('success', 'Success!');
-        $this->redirectRoute('village-staff.edit', ['id' => $this->staff->id], navigate: true);
+        $this->redirectRoute('village-staff.edit', ['id' => $this->staff->id, 'tab' => 'history'], navigate: true);
     }
 
     /**
@@ -45,15 +45,23 @@ class Table extends Component
     {
         $history = VillageStaffHistory::findOrFail($id);
         $service = new StaffHistoriesService();
+        
         if ($history->is_active) {
             /* non aktifkan */
             $service->setNonActive($history);
         } else {
+            $check = VillageStaffHistory::active()->where('village_position_type_id', $history->village_position_type_id)->first();
+            if ($check) {
+                $this->alert('error', 'Operasi gagal. Jabatan yang dipilih tidak sedang kosong.');
+                return;
+            }
+
             $service->setActive($history);
         }
-        
+
+
         $this->alert('success', 'Success!');
-        $this->redirectRoute('village-staff.edit', ['id' => $this->staff->id], navigate: true);
+        $this->redirectRoute('village-staff.edit', ['id' => $this->staff->id, 'tab' => 'history'], navigate: true);
     }
 
     public function render()

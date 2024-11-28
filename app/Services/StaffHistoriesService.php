@@ -7,10 +7,13 @@ use App\Models\VillageStaff;
 use Illuminate\Support\Facades\DB;
 use App\Models\VillagePositionType;
 use App\Models\VillageStaffHistory;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 
 class StaffHistoriesService
 {
+    use LivewireAlert;
+    
     private $villagePositionType; 
     
     private $staff; 
@@ -48,7 +51,6 @@ class StaffHistoriesService
     public function setActive($history)
     {
         $staff = $history->villageStaff;
-
         if (option_is_match('definitif', $history->position_type_status_id)) {
             $staff->position_id = $history->villagePositionType->position_type_id;
             $staff->position_name = $history->villagePositionType->position_name;
