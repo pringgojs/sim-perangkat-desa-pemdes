@@ -35,7 +35,7 @@ class VillagePositionTypeForm extends Form
                 'exists:options,id',
                 new UniqueVillagePositionType($this->village, $this->positionType, $this->id),
             ],
-            'positionTypeStatus' => 'required',
+            // 'positionTypeStatus' => 'required',
             'positionName' => 'required|max:20',
             // 'siltap' => 'required',
             // 'tunjangan' => 'required',
@@ -49,7 +49,7 @@ class VillagePositionTypeForm extends Form
         return [
             'village.required' => 'Desa wajib diisi.',
             'positionType.required' => 'Jabatan wajib diisi.',
-            'positionTypeStatus.required' => 'Status jabatan wajib diisi.',
+            // 'positionTypeStatus.required' => 'Status jabatan wajib diisi.',
             'positionName.required' => 'Nama jabatan wajib diisi.',
             'siltap.required' => 'Siltap wajib diisi.',
             'tunjangan.required' => 'Tunjangan wajib diisi.',
@@ -62,6 +62,7 @@ class VillagePositionTypeForm extends Form
     public function store() 
     {
         $this->validate();
+        dd("asd");
  
         // $tunjangan = \format_price($this->tunjangan);
         // $siltap = \format_price($this->siltap);
@@ -70,7 +71,7 @@ class VillagePositionTypeForm extends Form
         $payload = [
             'village_id' => $this->village,
             'position_type_id' => $this->positionType,
-            'position_type_status_id' => $this->positionTypeStatus,
+            // 'position_type_status_id' => $this->positionTypeStatus,
             'position_name' => $this->positionName,
             // 'siltap' => $siltap,
             // 'tunjangan' => $tunjangan,
@@ -82,24 +83,6 @@ class VillagePositionTypeForm extends Form
         $model = VillagePositionType::updateOrCreate([
             'id' => $this->id
         ], $payload);
-
-        // $history = $model->staffHistory;
-        // if (!$history) return $model;
-
-        // $staff = $history->villageStaff;
-
-        /* ambil data seperti no_sk, date_of sk, dll dari old history. */
-        // $params = [
-        //     'no_sk' => $history->no_sk,
-        //     'date_of_sk' => $history->date_of_sk,
-        //     'date_of_appointment' => $history->date_of_appointment,
-        //     'enddate_of_office' => $history->enddate_of_office,
-        //     'is_active' => $history->is_active,
-        // ];
-        
-        /* update data history user */
-        // $historyService = new StaffHistoriesService($model, $staff);
-        // $historyService->store($params, null);
 
         return $model;
     }

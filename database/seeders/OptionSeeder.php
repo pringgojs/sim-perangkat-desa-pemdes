@@ -156,9 +156,9 @@ class OptionSeeder extends Seeder
                 [
                     'id' => Str::uuid(),
                     'type_id' => $item->id,
-                    'max_kasi' => $max_kasi[$i], // TODO: perlu disesuaikan 
-                    'max_kaur' => $max_kasi[$i], // TODO: perlu disesuaikan 
-                    'is_swakarya' => $i == 1 ? true : false
+                    'max_kasi' => $item->name == 'Swasembada' || $item->name == 'Swakarya' ? 3 : 2,
+                    'max_kaur' => $item->name == 'Swasembada' || $item->name == 'Swakarya' ? 3 : 2,
+                    'is_swakarya' => $item->name == 'Swakarya' ? true : false
                 ]
             );
         }
