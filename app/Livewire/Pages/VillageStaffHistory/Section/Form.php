@@ -46,7 +46,6 @@ class Form extends Component
         if ($staffId) {
             $this->staff = VillageStaff::findOrFail($staffId);
             $this->form->setStaffId($staffId);
-
         }
 
         $this->villagePositionTypes = VillagePositionType::doesntHave('staffHistory')->with(['positionType', 'positionTypeStatus'])->villageId($this->staff->village_id)->get();
@@ -77,7 +76,10 @@ class Form extends Component
         
         $this->form->reset();
         $this->alert('success', 'Success!');
-        $this->redirectRoute('village-staff.edit', ['id' => $this->staff->id], navigate: true);
+        $this->redirectRoute('village-staff.edit', [
+            'id' => $this->staff->id,
+            'tab' => 'history',
+        ], navigate: true);
 
     }
 

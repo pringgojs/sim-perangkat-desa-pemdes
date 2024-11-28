@@ -79,6 +79,7 @@
                             </div>
                             <!-- End Col -->
 
+                            {{-- @dd($form) --}}
                             <div class="sm:col-span-9">
                                 <div class="flex items-center mb-4">
                                     <input id="default-checkbox" type="checkbox" wire:model="form.isParkir"

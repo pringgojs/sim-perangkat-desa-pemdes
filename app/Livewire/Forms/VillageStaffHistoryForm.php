@@ -19,7 +19,7 @@ class VillageStaffHistoryForm extends Form
     
     public $villagePositionType;
     public $positionTypeStatus;
-    public $isParkir;
+    public $isParkir = false;
     public $skNumber;
     public $skTmt;
     public $skDate;
@@ -121,7 +121,7 @@ class VillageStaffHistoryForm extends Form
         $this->villagePositionType = $model->village_position_type_id;
         $this->positionTypeStatus = $model->position_type_status_id;
         $this->skNumber = $model->no_sk;
-        $this->isParkir = $model->is_parkir;
+        $this->isParkir = $model->is_parkir ? true : false;
         $this->skDate = $model->date_of_sk ? $model->date_of_sk->format('Y-m-d') : null;
         $this->dateOfAppointment = $model->date_of_appointment ? $model->date_of_appointment->format('Y-m-d') : null;
         $this->enddateOfOffice = $model->enddate_of_office ? $model->enddate_of_office->format('Y-m-d') : null;

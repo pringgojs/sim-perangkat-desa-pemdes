@@ -32,6 +32,7 @@ class VillageStaffHistory extends Model
         'no_sk',
         'date_of_sk',
         'is_active',
+        'is_parkir',
         'date_of_appointment',
         'enddate_of_office',
         'non_active_at'
