@@ -62,8 +62,6 @@ class VillagePositionTypeForm extends Form
     public function store() 
     {
         $this->validate();
-        dd("asd");
- 
         // $tunjangan = \format_price($this->tunjangan);
         // $siltap = \format_price($this->siltap);
         // $thp = $tunjangan + $siltap;
