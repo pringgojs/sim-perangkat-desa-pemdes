@@ -91,11 +91,12 @@ class VillageStaffHistoryForm extends Form
             'id' => $this->id
         ], $payload);
 
-        /* update village siltap */
-        $villageSiltap = VillageSiltap::villageId($villagePositionType->village_id)->positionTypeId($villagePositionType->position_type_id)->first();
-        $villageSiltap->tunjangan = $tunjangan;
-        $villageSiltap->siltap = $siltap;
-        $villageSiltap->save();
+        /* update village position type */
+        $villagePositionType->tunjangan = $tunjangan;
+        $villagePositionType->siltap = $siltap;
+        $villagePositionType->is_parkir = $this->isParkir;
+        $villagePositionType->position_type_status_id =$this->positionTypeStatus;
+        $villagePositionType->save();
         
         /* update staff */
         if (option_is_match('definitif', $villagePositionType->position_type_id)) {
