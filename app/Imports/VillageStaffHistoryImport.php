@@ -56,8 +56,8 @@ class VillageStaffHistoryImport implements ToCollection
             $staff = VillageStaff::withoutGlobalScope(VillageStaffScope::class)->where('position_code', $kode_jabatan)->orWhere('position_plt_code', $kode_jabatan)->first();
             if (!$staff) continue;
 
-            $village_postition_type = VillagePositionType::code($kode_jabatan)->first();
-            if (!$village_postition_type) continue;
+            $village_position_type = VillagePositionType::code($kode_jabatan)->first();
+            if (!$village_position_type) continue;
             
             echo $i; echo "\n";
             $tanggal_sk = trim(str_replace("'", "", $tanggal_sk));
@@ -91,15 +91,16 @@ class VillageStaffHistoryImport implements ToCollection
 
             $history = new VillageStaffHistory;
             $history->village_staff_id = $staff->id;
-            $history->village_position_type_id = $village_postition_type->id;
-            $history->village_id = $village_postition_type->village_id;
+            $history->village_position_type_id = $village_position_type->id;
+            $history->village_id = $village_position_type->village_id;
             $history->position_code = $kode_jabatan;
-            $history->position_type_id = $village_postition_type->position_type_id;
-            $history->position_name = $village_postition_type->position_name;
-            $history->position_type_status_id = $village_postition_type->position_type_status_id;
-            $history->siltap = $village_postition_type->siltap;
-            $history->tunjangan = $village_postition_type->tunjangan;
-            $history->thp = $village_postition_type->thp;
+            $history->position_type_id = $village_position_type->position_type_id;
+            $history->position_name = $village_position_type->position_name;
+            $history->position_type_status_id = $village_position_type->position_type_status_id;
+            $history->siltap = $village_position_type->siltap;
+            $history->tunjangan = $village_position_type->tunjangan;
+            $history->thp = $village_position_type->thp;
+            $history->is_parkir = $village_position_type->is_parkir;
             $history->no_sk = $no_sk;
             if ($tanggal_sk) {
                 $history->date_of_sk = $tanggal_sk ?? null;
@@ -116,8 +117,8 @@ class VillageStaffHistoryImport implements ToCollection
             $history->save();
 
             /* update status terisi position type */
-            // $village_postition_type->is_null_position = true;
-            // $village_postition_type->save();
+            // $village_position_type->is_null_position = true;
+            // $village_position_type->save();
         }
     }
 }

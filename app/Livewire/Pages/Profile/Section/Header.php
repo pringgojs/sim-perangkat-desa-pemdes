@@ -4,6 +4,7 @@ namespace App\Livewire\Pages\Profile\Section;
 
 use App\Models\Option;
 use Livewire\Component;
+use Livewire\Attributes\On;
 use App\Livewire\Forms\VillageStaffForm;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
@@ -63,6 +64,12 @@ class Header extends Component
         $this->alert('success', 'Success!');
         $this->dispatch('refreshComponent');
         $this->dispatch('modal-close');
+    }
+
+    #[On('download')]
+    public function download($id = null)
+    {
+        $this->alert('error', 'Fitur ini sedang dikembangkan!');
     }
 
     public function render()

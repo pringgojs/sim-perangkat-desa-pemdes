@@ -19,7 +19,7 @@
         'useArea' => true,
         'usePositionType' => true,
         // 'usePositionStatus' => true,
-        // 'usePositionParkir' => true,
+        'usePositionParkir' => true,
     ])
     @livewire('pages.village-position-type.section.table')
 </div>
