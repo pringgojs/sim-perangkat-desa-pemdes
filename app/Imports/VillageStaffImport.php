@@ -59,14 +59,18 @@ class VillageStaffImport implements ToCollection
             $position_type_plt = VillagePositionType::code($jabatan_plt)->first();
             $village = $position_type_definitif ? $position_type_definitif->village : null;
             
+            $position_type_is_active = false;
             $position_type_id = null;
             if ($position_type_definitif) {
+                $position_type_is_active = true;
                 $position_type_id = $position_type_definitif->position_type_id;
             }
             
+            $position_type_plt_is_active = false; 
             $position_type_plt_status_id = null; 
             $position_type_plt_id = null;
             if ($position_type_plt) {
+                $position_type_plt_is_active = true; 
                 $position_type_plt_id = $position_type_plt->position_type_id;
                 $position_type_plt_status_id = $position_type_plt->positionTypeStatus->id;
             }
@@ -118,6 +122,9 @@ class VillageStaffImport implements ToCollection
             $staff->position_code = $jabatan_definitif;
             $staff->position_plt_code = $jabatan_plt;
             $staff->position_plt_status_id = $position_type_plt_status_id;
+            $staff->position_is_active = $position_type_is_active;
+            $staff->position_plt_is_active = $position_type_plt_is_active;
+
             $staff->save();
 
         }

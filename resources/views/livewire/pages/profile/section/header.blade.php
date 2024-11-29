@@ -18,12 +18,12 @@
                             {!! $staff->labelDataStatus() !!}</p>
                         <p class="text-sm font-medium text-gray-600">
                             @if ($staff->position_is_active)
-                                {{ $staff->position_name ? $staff->position_name . ' (' . $staff->position_code . ')' : '' }}
+                                {!! $staff->position_name ? $staff->position_name . ' (' . $staff->position_code . ')<br>' : '' !!}
                             @endif
                             @if ($staff->position_plt_is_active)
-                                {!! $staff->position_plt_name ? '<br>' . $staff->position_plt_name . ' (' . $staff->position_plt_code . ')' : '' !!}
+                                {!! $staff->position_plt_name ? $staff->position_plt_name . ' (' . $staff->position_plt_code . ')<br>' : '' !!}
                             @endif
-                            <br>{{ $staff->village->name ?? '' }} - {{ $staff->village->district->name ?? '' }}
+                            {{ $staff->village->name ?? '' }} - {{ $staff->village->district->name ?? '' }}
                         </p>
                     </div>
                 </div>

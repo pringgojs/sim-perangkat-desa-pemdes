@@ -4,7 +4,7 @@
         <!-- Table Content -->
         <x-slot:table>
             @foreach ($village_position_types as $index => $item)
-                <tr>
+                <tr class="@if (isset($item->staffHistory->villageStaff)) @else bg-red-300 @endif">
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
                         @php
                             $menuItems = [];
@@ -36,7 +36,10 @@
                                 ],
                             ];
 
-                            $menuItems = array_merge($menuItems, $menu);
+                            if (!isset($item->staffHistory->villageStaff)) {
+                                $menuItems = array_merge($menuItems, $menu);
+                            }
+
                         @endphp
 
                         <x-utils.dropdown-menu-action :id="$item->id" :items="$menuItems"

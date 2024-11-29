@@ -107,15 +107,15 @@ class Village extends Model
     {
         $status = $this->type;
         
-        if ($status->key == 'desa_swadaya') {
+        if ($status->key == 'swadaya') {
             return '<span class="inline-flex items-center rounded-md bg-green-200 px-2 py-1 text-xs font-medium text-green-700">'.$status->name.'</span>';
         }
 
-        if ($status->key == 'desa_swakarya') {
+        if ($status->key == 'swakarya') {
             return '<span class="inline-flex items-center rounded-md bg-blue-200 px-2 py-1 text-xs font-medium text-blue-700">'.$status->name.'</span>';
         }
 
-        if ($status->key == 'desa_swasembada') {
+        if ($status->key == 'swasembada') {
             return '<span class="inline-flex items-center rounded-md bg-yellow-200 px-2 py-1 text-xs font-medium text-yellow-700">'.$status->name.'</span>';
         }
     }
