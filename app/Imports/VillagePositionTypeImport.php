@@ -63,7 +63,7 @@ class VillagePositionTypeImport implements ToCollection
             $model = new VillagePositionType;
             $model->code = $code;
             $model->village_id = $villageId;
-            $model->villag_siltap_id = $villageSiltap->id;
+            $model->village_siltap_id = $villageSiltap->id;
             $model->position_name = $position_name;
             $model->position_type_id = $position_type_id;
             $model->position_type_status_id = $status->id;

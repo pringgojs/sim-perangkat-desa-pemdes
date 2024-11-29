@@ -29,7 +29,7 @@ return new class extends Migration
 
             // Foreign key constraints
             $table->foreign('village_id')->references('id')->on('villages')->onDelete('cascade');
-            $table->foreign('village_siltap_id')->references('id')->on('village_siltaps')->onDelete('cascade');
+            $table->foreign('village_siltap_id')->references('id')->on('village_siltap')->onDelete('cascade');
             $table->foreign('position_type_id')->references('id')->on('options')->onDelete('cascade');
             $table->foreign('position_type_status_id')->references('id')->on('options')->onDelete('cascade');
         });
