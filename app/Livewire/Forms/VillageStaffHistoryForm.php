@@ -108,7 +108,7 @@ class VillageStaffHistoryForm extends Form
         } else {
             $staff->position_plt_id = $villagePositionType->position_type_id;
             $staff->position_plt_name = $villagePositionType->position_name;
-            $staff->position_code = $villagePositionType->code;
+            $staff->position_plt_code = $villagePositionType->code;
             $staff->position_plt_is_active = true;
             $staff->save();
         }

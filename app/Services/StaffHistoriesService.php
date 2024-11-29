@@ -38,7 +38,7 @@ class StaffHistoriesService
         } else {
             $staff->position_plt_id = null;
             $staff->position_plt_name = null;
-            $staff->position_code = null;
+            $staff->position_plt_code = null;
             $staff->position_plt_is_active = false;
             $staff->save();
         }
@@ -62,7 +62,7 @@ class StaffHistoriesService
             /* ubah status staff jika jabatan plt */
             $staff->position_plt_id = $history->villagePositionType->position_type_id;
             $staff->position_plt_name = $history->villagePositionType->position_name;
-            $staff->position_code = $history->villagePositionType->code;
+            $staff->position_plt_code = $history->villagePositionType->code;
             $staff->position_plt_is_active = true;
             $staff->save();
         }
