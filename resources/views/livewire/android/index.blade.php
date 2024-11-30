@@ -89,6 +89,9 @@
                 ];
             @endphp
             {{-- header --}}
+            <span class="block pt-2 pb-1 px-3 text-2xl font-bold text-green-600 dark:text-neutral-500">
+                PamongApp
+            </span>
             <div class="p-4">
 
                 <div class="md:flex md:items-center md:justify-between md:space-x-5">
@@ -163,6 +166,18 @@
                             </svg>
                             ',
                     ],
+
+                    [
+                        'label' => 'Keluar',
+                        'value' => 'Keluar dari aplikasi',
+                        'icon' =>
+                            '<svg ' .
+                            $iconClass .
+                            ' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+</svg>
+',
+                    ],
                 ];
             @endphp
             @foreach ($items as $item)
@@ -179,28 +194,6 @@
                     </div>
                 </div>
             @endforeach
-        </div>
-        <div class="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-            <a href="#"
-                class="flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-100">
-                <svg class="size-5 flex-none text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
-                    data-slot="icon">
-                    <path fill-rule="evenodd"
-                        d="M2 10a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm6.39-2.908a.75.75 0 0 1 .766.027l3.5 2.25a.75.75 0 0 1 0 1.262l-3.5 2.25A.75.75 0 0 1 8 12.25v-4.5a.75.75 0 0 1 .39-.658Z"
-                        clip-rule="evenodd" />
-                </svg>
-                Watch demo
-            </a>
-            <a href="#"
-                class="flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-100">
-                <svg class="size-5 flex-none text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
-                    data-slot="icon">
-                    <path fill-rule="evenodd"
-                        d="M2 3.5A1.5 1.5 0 0 1 3.5 2h1.148a1.5 1.5 0 0 1 1.465 1.175l.716 3.223a1.5 1.5 0 0 1-1.052 1.767l-.933.267c-.41.117-.643.555-.48.95a11.542 11.542 0 0 0 6.254 6.254c.395.163.833-.07.95-.48l.267-.933a1.5 1.5 0 0 1 1.767-1.052l3.223.716A1.5 1.5 0 0 1 18 15.352V16.5a1.5 1.5 0 0 1-1.5 1.5H15c-1.149 0-2.263-.15-3.326-.43A13.022 13.022 0 0 1 2.43 8.326 13.019 13.019 0 0 1 2 5V3.5Z"
-                        clip-rule="evenodd" />
-                </svg>
-                Contact sales
-            </a>
         </div>
     </div>
 </div>
