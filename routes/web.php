@@ -9,6 +9,7 @@ use App\Livewire\Pages\Database\UserAccount;
 use App\Livewire\Pages\VillageStaff\History;
 use App\Livewire\Pages\VillageStaff\Pensiun;
 use App\Http\Controllers\CheckRoleController;
+use App\Livewire\Android\Index as AndroidIndex;
 use App\Livewire\Pages\Role\Index as RoleIndex;
 use App\Livewire\Pages\VillagePositionType\Edit;
 use App\Livewire\Pages\VillagePositionType\Create;
@@ -35,6 +36,7 @@ Route::get('/', function () {
     return redirect('check-role');
     // return view('welcome');
 });
+Route::get('android', AndroidIndex::class)->name('android.index');
 
 Route::middleware([
     'auth:sanctum',
