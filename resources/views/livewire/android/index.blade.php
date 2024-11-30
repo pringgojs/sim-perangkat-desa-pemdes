@@ -1,7 +1,7 @@
 <div>
     <div
         class="items-center justify-center  z-10 overflow-y-scroll h-screen rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
-        <div class="p-4">
+        <div class="p-0">
             @php
                 $iconClass = 'class="size-6 text-gray-600 group-hover:text-green-600"';
                 $items = [
@@ -76,8 +76,8 @@
                         ',
                     ],
                     [
-                        'label' => 'No.HP',
-                        'value' => 'Pringgo',
+                        'label' => 'No. HP',
+                        'value' => '085676678876',
                         'icon' =>
                             '<svg ' .
                             $iconClass .
@@ -89,37 +89,85 @@
                 ];
             @endphp
             {{-- header --}}
-            <div class="md:flex md:items-center md:justify-between md:space-x-5">
-                <div class="flex items-start space-x-5 border-solid border-b-2 border-b-gray-200 pb-2">
-                    <div class="shrink-0">
-                        <div class="relative">
-                            <img class="size-16 rounded-full"
-                                src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80"
-                                alt="">
-                            <span class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></span>
+            <div class="p-4">
+
+                <div class="md:flex md:items-center md:justify-between md:space-x-5">
+                    <div class="flex items-start space-x-5 border-solid border-b-2 border-b-gray-200 pb-5">
+                        <div class="shrink-0">
+                            <div class="relative">
+                                <img class="size-16 rounded-full"
+                                    src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80"
+                                    alt="">
+                                <span class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></span>
+                            </div>
                         </div>
-                    </div>
-                    <!--
-                    Use vertical padding to simulate center alignment when both lines of text are one line,
-                    but preserve the same layout if the text wraps without making the image jump around.
-                  -->
-                    <div class="pt-1.5">
-                        <h1 class="text-2xl font-bold text-gray-900">Pringgo Juni Saputro</h1>
-                        <p class="text-sm font-medium text-gray-500">Kepala Desa Janti</p>
-                        <p class="text-sm font-medium text-gray-500">Kepala Seksi Keuangan</p>
+                        <!--
+                        Use vertical padding to simulate center alignment when both lines of text are one line,
+                        but preserve the same layout if the text wraps without making the image jump around.
+                      -->
+                        <div class="pt-1.5">
+                            <h1 class="text-2xl font-bold text-gray-900">Pringgo Juni Saputro</h1>
+                            <p class="text-sm font-medium text-gray-500">Kepala Desa Janti</p>
+                            <p class="text-sm font-medium text-gray-500">Kepala Seksi Keuangan</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class=""></div>
 
-            <span class="block pt-2 pb-1 px-3 text-xs font-medium uppercase text-gray-400 dark:text-neutral-500">
+            <span class="block pt-2 pb-1 px-3 text-sm font-medium uppercase text-gray-400 dark:text-neutral-500">
                 Data diri
             </span>
             {{-- end  --}}
             @foreach ($items as $item)
                 <div class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50">
-                    <div
-                        class="flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                    <div class="flex size-11 flex-none items-center justify-center rounded-lg  ">
+                        {!! $item['icon'] !!}
+                    </div>
+                    <div class="flex-auto">
+                        <a href="#" class="block font-semibold text-gray-900">
+                            {{ $item['label'] }}
+                            <span class="absolute inset-0"></span>
+                        </a>
+                        <p class="mt-1 text-gray-600">{{ $item['value'] }}</p>
+                    </div>
+                </div>
+            @endforeach
+
+            {{-- account --}}
+            <span class="block pt-2 pb-1 px-3 text-sm font-medium uppercase text-gray-400 dark:text-neutral-500">
+                Akun
+            </span>
+            @php
+                $iconClass = 'class="size-6 text-gray-600 group-hover:text-green-600"';
+                $items = [
+                    [
+                        'label' => 'Username',
+                        'value' => 'pringgojs',
+                        'icon' =>
+                            '<svg ' .
+                            $iconClass .
+                            ' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" />
+                            </svg>
+                            ',
+                    ],
+                    [
+                        'label' => 'Reset Password',
+                        'value' => 'Ubah password Anda secara berkala',
+                        'icon' =>
+                            '<svg ' .
+                            $iconClass .
+                            ' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                            </svg>
+                            ',
+                    ],
+                ];
+            @endphp
+            @foreach ($items as $item)
+                <div class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50">
+                    <div class="flex size-11 flex-none items-center justify-center rounded-lg  ">
                         {!! $item['icon'] !!}
                     </div>
                     <div class="flex-auto">
