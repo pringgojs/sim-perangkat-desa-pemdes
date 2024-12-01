@@ -1,6 +1,5 @@
 <div>
-    <div
-        class="items-center justify-center  z-10 overflow-y-scroll h-screen rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
+    <div class="items-center justify-center  z-10  rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
         <div class="p-0">
             @php
                 $iconClass = 'class="size-6 text-gray-600 group-hover:text-green-600"';
