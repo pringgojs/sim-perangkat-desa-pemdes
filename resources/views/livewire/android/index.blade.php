@@ -1,4 +1,6 @@
 <div>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <div class="items-center justify-center  z-10  rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
         <div class="p-0">
             @php
@@ -93,7 +95,7 @@
             </span>
             <div class="p-4">
 
-                {{-- <div class="md:flex md:items-center md:justify-between md:space-x-5">
+                <div class="md:flex md:items-center md:justify-between md:space-x-5">
                     <div class="flex items-start space-x-5 border-solid border-b-2 border-b-gray-200 pb-5">
                         <div class="shrink-0">
                             <div class="relative">
@@ -113,7 +115,7 @@
                             <p class="text-sm font-medium text-gray-500">Kepala Seksi Keuangan</p>
                         </div>
                     </div>
-                </div> --}}
+                </div>
             </div>
 
             <span class="block pt-2 pb-1 px-3 text-sm font-medium uppercase text-gray-400 dark:text-neutral-500">
