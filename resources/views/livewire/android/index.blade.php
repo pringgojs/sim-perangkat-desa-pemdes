@@ -1,4 +1,8 @@
-<div>
+<div x-data="{
+    activeLabel: '',
+    activeValue: '',
+    inputType: ''
+}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <div class="items-center justify-center  z-10  rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
@@ -123,7 +127,9 @@
             </span>
             {{-- end  --}}
             @foreach ($items as $item)
-                <div class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50">
+                <div aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-offcanvas-bottom"
+                    data-hs-overlay="#hs-offcanvas-bottom"
+                    class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50">
                     <div class="flex size-11 flex-none items-center justify-center rounded-lg  ">
                         {!! $item['icon'] !!}
                     </div>
@@ -147,6 +153,8 @@
                     [
                         'label' => 'Username',
                         'value' => 'pringgojs',
+                        'useDrawer' => true,
+                        'input-type' => 'text',
                         'icon' =>
                             '<svg ' .
                             $iconClass .
@@ -157,6 +165,7 @@
                     ],
                     [
                         'label' => 'Reset Password',
+                        'useDrawer' => true,
                         'value' => 'Ubah password Anda secara berkala',
                         'icon' =>
                             '<svg ' .
@@ -171,18 +180,22 @@
                     [
                         'label' => 'Keluar',
                         'value' => 'Keluar dari aplikasi',
+                        'useDrawer' => false,
                         'icon' =>
                             '<svg ' .
                             $iconClass .
                             ' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
-</svg>
-',
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                            </svg>
+                        ',
                     ],
                 ];
             @endphp
             @foreach ($items as $item)
-                <div class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50">
+                <div @if ($item['useDrawer']) aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-offcanvas-bottom"
+                    data-hs-overlay="#hs-offcanvas-bottom" 
+                    @click="activeLabel='{{ $item['label'] }}'" @endif
+                    class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50">
                     <div class="flex size-11 flex-none items-center justify-center rounded-lg  ">
                         {!! $item['icon'] !!}
                     </div>
@@ -195,6 +208,35 @@
                     </div>
                 </div>
             @endforeach
+        </div>
+    </div>
+
+    {{-- offcanvas --}}
+
+    <div id="hs-offcanvas-bottom"
+        class="hs-overlay hs-overlay-open:translate-y-0 translate-y-full fixed bottom-0 inset-x-0 transition-all duration-300 transform max-h-40 size-full z-[80] bg-white border-b dark:bg-neutral-800 dark:border-neutral-700 hidden"
+        role="dialog" tabindex="-1" aria-labelledby="hs-offcanvas-bottom-label">
+        <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
+            <h3 id="hs-offcanvas-bottom-label" class="font-bold text-gray-800 dark:text-white" x-text="activeLabel">
+                {{-- Offcanvas title --}}
+            </h3>
+            <button type="button"
+                class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-400 dark:focus:bg-neutral-600"
+                aria-label="Close" data-hs-overlay="#hs-offcanvas-bottom">
+                <span class="sr-only">Close</span>
+                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M18 6 6 18"></path>
+                    <path d="m6 6 12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="p-4">
+            <p class="text-gray-800 dark:text-neutral-400">
+                Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images,
+                lists, etc.
+            </p>
         </div>
     </div>
 </div>
