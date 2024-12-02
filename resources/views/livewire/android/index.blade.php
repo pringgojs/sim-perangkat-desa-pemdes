@@ -1,9 +1,16 @@
 <div x-data="{
     activeLabel: '',
     activeValue: '',
-    inputType: ''
+    inputType: '',
+    inputKey: '',
+    inputValue: '',
+    action: '',
+    setFocus() {
+        {{-- alert('asds'); --}}
+        {{-- $refs.refInput.focus() --}}
+    }
 }">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> --}}
 
     <div class="items-center justify-center  z-10  rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
         <div class="p-0">
@@ -152,9 +159,10 @@
                 $items = [
                     [
                         'label' => 'Username',
-                        'value' => 'pringgojs',
+                        'value' => $user->username,
                         'useDrawer' => true,
                         'input-type' => 'text',
+                        'action' => 'update-username',
                         'icon' =>
                             '<svg ' .
                             $iconClass .
@@ -165,8 +173,10 @@
                     ],
                     [
                         'label' => 'Reset Password',
-                        'useDrawer' => true,
                         'value' => 'Ubah password Anda secara berkala',
+                        'useDrawer' => true,
+                        'input-type' => 'password',
+                        'action' => 'resetPassword',
                         'icon' =>
                             '<svg ' .
                             $iconClass .
@@ -181,6 +191,8 @@
                         'label' => 'Keluar',
                         'value' => 'Keluar dari aplikasi',
                         'useDrawer' => false,
+                        'input-type' => '',
+                        'action' => 'logout',
                         'icon' =>
                             '<svg ' .
                             $iconClass .
@@ -194,7 +206,7 @@
             @foreach ($items as $item)
                 <div @if ($item['useDrawer']) aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-offcanvas-bottom"
                     data-hs-overlay="#hs-offcanvas-bottom" 
-                    @click="activeLabel='{{ $item['label'] }}'" @endif
+                    @click="activeLabel='{{ $item['label'] }}'; inputValue='{{ $item['value'] }}'; inputType='{{ $item['input-type'] }}'; action='{{ $item['action'] }}'; setFocus()" @endif
                     class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50">
                     <div class="flex size-11 flex-none items-center justify-center rounded-lg  ">
                         {!! $item['icon'] !!}
@@ -213,14 +225,14 @@
 
     {{-- offcanvas --}}
 
-    <div id="hs-offcanvas-bottom"
+    <div id="hs-offcanvas-bottom" wire:ignore
         class="hs-overlay hs-overlay-open:translate-y-0 translate-y-full fixed bottom-0 inset-x-0 transition-all duration-300 transform max-h-40 size-full z-[80] bg-white border-b dark:bg-neutral-800 dark:border-neutral-700 hidden"
         role="dialog" tabindex="-1" aria-labelledby="hs-offcanvas-bottom-label">
-        <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
+        <div class="flex justify-between items-center py-3 px-4 ">
             <h3 id="hs-offcanvas-bottom-label" class="font-bold text-gray-800 dark:text-white" x-text="activeLabel">
                 {{-- Offcanvas title --}}
             </h3>
-            <button type="button"
+            {{-- <button type="button"
                 class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-400 dark:focus:bg-neutral-600"
                 aria-label="Close" data-hs-overlay="#hs-offcanvas-bottom">
                 <span class="sr-only">Close</span>
@@ -230,13 +242,27 @@
                     <path d="M18 6 6 18"></path>
                     <path d="m6 6 12 12"></path>
                 </svg>
-            </button>
+            </button> --}}
         </div>
-        <div class="p-4">
-            <p class="text-gray-800 dark:text-neutral-400">
-                Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images,
-                lists, etc.
-            </p>
-        </div>
+        <template x-if="inputType=='text'">
+
+
+            <div class="p-4 pt-0">
+                <input x-ref="refInput" type="text" x-model="inputValue"
+                    class="pl-0 peer block w-full bg-transparent border-t-transparent border-b-2 border-x-transparent border-b-green-500 text-sm focus:border-t-transparent focus:border-x-transparent focus:border-b-green-500 focus:ring-0 disabled:opacity-50 disabled:pointer-events-none dark:border-b-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 dark:focus:border-b-neutral-600"
+                    placeholder="">
+                @if ($error)
+                    <p class="text-red-500 text-sm">{{ $error }}</p>
+                @endif
+                <div class="w-full max-w-screen-lg mx-auto">
+                    <div class="flex justify-end space-x-4">
+                        <a aria-label="Close" data-hs-overlay="#hs-offcanvas-bottom"
+                            class="py-3 px-4 cursor-pointer inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent text-green-600 hover:text-green-800 focus:outline-none focus:text-green-800 disabled:opacity-50 disabled:pointer-events-none dark:text-green-500 dark:hover:text-green-400 dark:focus:text-green-400">Batal</a>
+                        <a @click="$dispatch(action, {value: inputValue}); console.log('kepanggil gak')"
+                            class="py-3 px-4 cursor-pointer inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent text-green-600 hover:text-green-800 focus:outline-none focus:text-green-800 disabled:opacity-50 disabled:pointer-events-none dark:text-green-500 dark:hover:text-green-400 dark:focus:text-green-400">Simpan</a>
+                    </div>
+                </div>
+            </div>
+        </template>
     </div>
 </div>

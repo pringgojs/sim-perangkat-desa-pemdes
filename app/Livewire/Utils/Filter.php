@@ -28,6 +28,7 @@ class Filter extends Component
     public $usePositionStatus = false;
     public $usePositionParkir = false;
     public $useNullPerson = false;
+    public $useDate = false;
     
     public function mount($table, $positionType = null)
     {

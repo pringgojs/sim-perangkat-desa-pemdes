@@ -59,3 +59,21 @@ function date_format_view($date)
     // Format datetime menjadi 'd F Y H:i' (contoh: 24 Januari 2024 25:56)
     return $carbonDate->translatedFormat('d F Y');
 }
+
+function months() {
+    return [
+        ['name' => 'januari', 'value' => 1],
+        ['name' => 'februari', 'value' => 2],
+        ['name' => 'maret', 'value' => 3],
+        ['name' => 'april', 'value' => 4],
+        ['name' => 'mei', 'value' => 5],
+        ['name' => 'juni', 'value' => 6],
+        ['name' => 'juli', 'value' => 7],
+        ['name' => 'agustus', 'value' => 8],
+        ['name' => 'september', 'value' => 9],
+        ['name' => 'oktober', 'value' => 10],
+        ['name' => 'november', 'value' => 11],
+        ['name' => 'desember', 'value' => 12],
+    ];
+
+}

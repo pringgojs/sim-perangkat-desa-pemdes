@@ -16,6 +16,7 @@
         "vite": "^5.0"
     },
     "dependencies": {
+        "@alpinejs/anchor": "^3.14.5",
         "@preline/overlay": "^2.5.0",
         "@ryangjchandler/alpine-clipboard": "^2.3.0",
         "apexcharts": "^3.53.0",

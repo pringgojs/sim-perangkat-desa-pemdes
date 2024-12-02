@@ -57,7 +57,7 @@ class Table extends Component
 
     /* mendengarkan acara daril filter alpine */
     #[On('filter')] 
-    public function filter($area = null, $search = null, $positionType = null, $selectedDistrict = [], $selectedVillage = [], $positionStatus = null, $isParkir = false, $isNullPerson = false, $statusData= null)
+    public function filter($area = null, $search = null, $positionType = null, $selectedDistrict = [], $selectedVillage = [], $positionStatus = null, $isParkir = false, $isNullPerson = false, $statusData= null, $dateType = null, $month = null, $year = null)
     {
         $params = [
             'area' => $area,
@@ -69,6 +69,9 @@ class Table extends Component
             'positionStatus' => $positionStatus,
             'isNullPerson' => $isNullPerson,
             'statusData' => $statusData,
+            'dateType' => $dateType,
+            'month' => $month,
+            'year' => $year,
         ];
 
         $this->filter = $params;
