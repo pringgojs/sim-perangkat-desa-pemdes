@@ -56,7 +56,7 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
                         {{ format_rupiah($item->tunjangan) }}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                        {{ $item->positionTypeStatus->name }}
+                        {{ $item->positionTypeStatus->name ?? '-' }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
                         {{ $item->is_parkir ? 'Ya' : 'Tidak' }}
