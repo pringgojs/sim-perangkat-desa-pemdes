@@ -235,7 +235,7 @@
                             <div class="p-1 space-y-0.5">
                                 <span
                                     class="block pt-2 pb-1 px-3 text-xs font-medium uppercase text-gray-400 dark:text-neutral-500">
-                                    Tanggal
+                                    Tanggal Pensiun
                                 </span>
                                 <a @click="dateType == 'today' ? dateType = '' : dateType='today';doFilter()"
                                     class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
@@ -287,7 +287,7 @@
                                                     bulan
                                                 </x-label>
                                                 <select name='month' x-model="month"
-                                                    class="bg-gray-50 border px-4 capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    class="bg-gray-50 border px-4 capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
                                                     required>
                                                     <option value="" selected disabled>pilih bulan</option>
                                                     @foreach (months() as $month)
@@ -333,15 +333,17 @@
                                             <div class="block p-4 text-sm text-gray-700" role="menuitem"
                                                 tabindex="-1" id="menu-item-1">
                                                 <x-label for=""
-                                                    class="text-xs font-medium text-gray-700 dark:text-gray-200">
+                                                    class="text-xs mb-2 font-medium text-gray-700 dark:text-gray-200">
                                                     Tanggal awal
                                                 </x-label>
-                                                <input id="datepicker-range-start" name="start" type="text" />
+                                                <x-input class="w-full py-2 focus:border-green-500"
+                                                    id="datepicker-range-start" name="start" type="date" />
                                                 <x-label for=""
-                                                    class="mt-4 text-xs text-gray-700 dark:text-gray-200">
+                                                    class="mt-4 text-xs mb-2 text-gray-700 dark:text-gray-200">
                                                     Tanggal akhir
                                                 </x-label>
-                                                <input id="datepicker-range-end" name="end" type="text" />
+                                                <x-input class="w-full py-2 focus:border-green-500"
+                                                    id="datepicker-range-end" name="end" type="date" />
 
                                                 <x-button class="w-full mt-3 text-sm" @click="doFilter()"><span
                                                         class="mx-auto">Simpan</span></x-button>
@@ -350,20 +352,6 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- <a @click="dateType='date-range'"
-                        class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
-                        :class="dateType == 'date-range' ? 'bg-green-100' : ''" href="#">
-                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M6.75 2.994v2.25m10.5-2.25v2.25m-14.252 13.5V7.491a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v11.251m-18 0a2.25 2.25 0 0 0 2.25 2.25h13.5a2.25 2.25 0 0 0 2.25-2.25m-18 0v-7.5a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v7.5m-6.75-6h2.25m-9 2.25h4.5m.002-2.25h.005v.006H12v-.006Zm-.001 4.5h.006v.006h-.006v-.005Zm-2.25.001h.005v.006H9.75v-.006Zm-2.25 0h.005v.005h-.006v-.005Zm6.75-2.247h.005v.005h-.005v-.005Zm0 2.247h.006v.006h-.006v-.006Zm2.25-2.248h.006V15H16.5v-.005Z" />
-                        </svg>
-
-                        Range Tanggal
-                    </a> --}}
-
-
-
                         @endif
                     </div>
                 </div>
@@ -375,7 +363,7 @@
                                 <x-bi-search class="w-4 h-4 text-gray-500 dark:text-gray-400" />
                             </div>
                             <input type="text" x-model="search" id="simple-search" @change="doFilter()"
-                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                class="bg-white border border-gray-300 text-gray-900 text-sm rounded focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
                                 placeholder="Cari ... " required>
                         </div>
                     </div>
@@ -419,10 +407,10 @@
             {{-- Filter: --}}
             <template x-if="positionTypeName">
                 <span
-                    class="inline-flex items-center gap-x-1.5 py-1.5 ps-3 pe-2 mr-1 rounded-md text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500">
+                    class="inline-flex items-center gap-x-1.5 py-1.5 ps-3 pe-2 mr-1 rounded-md text-xs font-medium bg-green-100 text-green-800 dark:bg-green-800/30 dark:text-green-500">
                     <p x-html="positionTypeName"></p>
                     <button type="button" @click="positionType = '';setPositionTypeName(positionTypeName);doFilter()"
-                        class="shrink-0 size-4 inline-flex items-center justify-center rounded-md hover:bg-blue-200 focus:outline-none focus:bg-blue-200 focus:text-blue-500 dark:hover:bg-blue-900">
+                        class="shrink-0 size-4 inline-flex items-center justify-center rounded-md hover:bg-green-200 focus:outline-none focus:bg-green-200 focus:text-green-500 dark:hover:bg-green-900">
                         <span class="sr-only">Remove badge</span>
                         <x-ionicon-close-outline class="shrink-0 size-3" />
                     </button>
@@ -430,11 +418,11 @@
             </template>
             <template x-if="positionStatusName">
                 <span
-                    class="inline-flex items-center gap-x-1.5 py-1.5 ps-3 pe-2 mr-1 rounded-md text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500">
+                    class="inline-flex items-center gap-x-1.5 py-1.5 ps-3 pe-2 mr-1 rounded-md text-xs font-medium bg-green-100 text-green-800 dark:bg-green-800/30 dark:text-green-500">
                     <p x-html="positionStatusName"></p>
                     <button type="button"
                         @click="positionStatus = '';setPositionStatusName(positionStatus);doFilter()"
-                        class="shrink-0 size-4 inline-flex items-center justify-center rounded-md hover:bg-blue-200 focus:outline-none focus:bg-blue-200 focus:text-blue-500 dark:hover:bg-blue-900">
+                        class="shrink-0 size-4 inline-flex items-center justify-center rounded-md hover:bg-green-200 focus:outline-none focus:bg-green-200 focus:text-green-500 dark:hover:bg-green-900">
                         <span class="sr-only">Remove badge</span>
                         <x-ionicon-close-outline class="shrink-0 size-3" />
                     </button>
@@ -444,10 +432,10 @@
 
             <template x-if="statusDataName">
                 <span
-                    class="inline-flex items-center gap-x-1.5 py-1.5 ps-3 pe-2 mr-1 rounded-md text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500">
+                    class="inline-flex items-center gap-x-1.5 py-1.5 ps-3 pe-2 mr-1 rounded-md text-xs font-medium bg-green-100 text-green-800 dark:bg-green-800/30 dark:text-green-500">
                     <p x-html="statusDataName"></p>
                     <button type="button" @click="statusData = '';setStatusDataName(statusData);doFilter()"
-                        class="shrink-0 size-4 inline-flex items-center justify-center rounded-md hover:bg-blue-200 focus:outline-none focus:bg-blue-200 focus:text-blue-500 dark:hover:bg-blue-900">
+                        class="shrink-0 size-4 inline-flex items-center justify-center rounded-md hover:bg-green-200 focus:outline-none focus:bg-green-200 focus:text-green-500 dark:hover:bg-green-900">
                         <span class="sr-only">Remove badge</span>
                         <x-ionicon-close-outline class="shrink-0 size-3" />
                     </button>
@@ -456,10 +444,10 @@
 
             <template x-if="isParkir">
                 <span
-                    class="inline-flex items-center gap-x-1.5 py-1.5 ps-3 pe-2 mr-1 rounded-md text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500">
+                    class="inline-flex items-center gap-x-1.5 py-1.5 ps-3 pe-2 mr-1 rounded-md text-xs font-medium bg-green-100 text-green-800 dark:bg-green-800/30 dark:text-green-500">
                     Jabatan parkir Ya
                     <button @click="isParkir = !isParkir;doFilter()" type="button"
-                        class="shrink-0 size-4 inline-flex items-center justify-center rounded-md hover:bg-blue-200 focus:outline-none focus:bg-blue-200 focus:text-blue-500 dark:hover:bg-blue-900">
+                        class="shrink-0 size-4 inline-flex items-center justify-center rounded-md hover:bg-green-200 focus:outline-none focus:bg-green-200 focus:text-green-500 dark:hover:bg-green-900">
                         <span class="sr-only">Remove badge</span>
                         <x-ionicon-close-outline class="shrink-0 size-3" />
                     </button>
@@ -468,10 +456,10 @@
 
             <template x-if="isNullPerson">
                 <span
-                    class="inline-flex items-center gap-x-1.5 py-1.5 ps-3 pe-2 mr-1 rounded-md text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500">
+                    class="inline-flex items-center gap-x-1.5 py-1.5 ps-3 pe-2 mr-1 rounded-md text-xs font-medium bg-green-100 text-green-800 dark:bg-green-800/30 dark:text-green-500">
                     Jabatan kosong Ya
                     <button @click="isNullPerson = !isNullPerson;doFilter()" type="button"
-                        class="shrink-0 size-4 inline-flex items-center justify-center rounded-md hover:bg-blue-200 focus:outline-none focus:bg-blue-200 focus:text-blue-500 dark:hover:bg-blue-900">
+                        class="shrink-0 size-4 inline-flex items-center justify-center rounded-md hover:bg-green-200 focus:outline-none focus:bg-green-200 focus:text-green-500 dark:hover:bg-green-900">
                         <span class="sr-only">Remove badge</span>
                         <x-ionicon-close-outline class="shrink-0 size-3" />
                     </button>
@@ -483,10 +471,10 @@
             {{-- <template x-show="selectedDistrictName"> --}}
             <template x-for="dst in selectedDistrictName">
                 <span
-                    class="inline-flex items-center gap-x-1.5 py-1.5 ps-3 pe-2 mr-1 rounded-md text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500">
+                    class="inline-flex items-center gap-x-1.5 py-1.5 ps-3 pe-2 mr-1 rounded-md text-xs font-medium bg-green-100 text-green-800 dark:bg-green-800/30 dark:text-green-500">
                     <p x-html="dst.name"></p>
                     <button type="button" @click="addSelectedDistrict(dst);doFilter()"
-                        class="shrink-0 size-4 inline-flex items-center justify-center rounded-md hover:bg-blue-200 focus:outline-none focus:bg-blue-200 focus:text-blue-500 dark:hover:bg-blue-900">
+                        class="shrink-0 size-4 inline-flex items-center justify-center rounded-md hover:bg-green-200 focus:outline-none focus:bg-green-200 focus:text-green-500 dark:hover:bg-green-900">
                         <span class="sr-only">Remove badge</span>
                         <x-ionicon-close-outline class="shrink-0 size-3" />
                     </button>
@@ -497,10 +485,10 @@
 
             <template x-for="vlg in selectedVillageName">
                 <span
-                    class="inline-flex items-center gap-x-1.5 py-1.5 ps-3 pe-2 mr-1 rounded-md text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500">
+                    class="inline-flex items-center gap-x-1.5 py-1.5 ps-3 pe-2 mr-1 rounded-md text-xs font-medium bg-green-100 text-green-800 dark:bg-green-800/30 dark:text-green-500">
                     <p x-html="vlg.name"></p>
                     <button type="button" @click="addSelectedVillage(vlg);doFilter()"
-                        class="shrink-0 size-4 inline-flex items-center justify-center rounded-md hover:bg-blue-200 focus:outline-none focus:bg-blue-200 focus:text-blue-500 dark:hover:bg-blue-900">
+                        class="shrink-0 size-4 inline-flex items-center justify-center rounded-md hover:bg-green-200 focus:outline-none focus:bg-green-200 focus:text-green-500 dark:hover:bg-green-900">
                         <span class="sr-only">Remove badge</span>
                         <x-ionicon-close-outline class="shrink-0 size-3" />
                     </button>
@@ -647,9 +635,11 @@
             }
         </script>
 
-        <script>
-            window.HSStaticMethods.autoInit();
-            initFlowbite()
-        </script>
+        @script
+            <script>
+                window.HSStaticMethods.autoInit();
+                initFlowbite()
+            </script>
+        @endscript
     </div>
 </div>
