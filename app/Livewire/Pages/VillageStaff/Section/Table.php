@@ -2,14 +2,15 @@
 
 namespace App\Livewire\Pages\VillageStaff\Section;
 
-use App\Exports\VillageStaffExport;
 use App\Models\User;
-use App\Models\VillageStaff;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
-use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\Attributes\On;
+use App\Models\VillageStaff;
 use Livewire\WithPagination;
+use Livewire\Attributes\Computed;
+use App\Exports\VillageStaffExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Table extends Component
 {
@@ -57,9 +58,13 @@ class Table extends Component
 
     public function render()
     {
-        return view('livewire.pages.village-staff.section.table', [
-            'staffs' => VillageStaff::filter($this->filter)->with(['village.district', 'positionType', 'dataStatus', 'educationLevel'])->orderByDefault()->paginate(),
-        ]);
+        return view('livewire.pages.village-staff.section.table');
+    }
+
+    #[Computed]
+    public function staffs()
+    {
+        return VillageStaff::filter($this->filter)->with(['village.district', 'positionType', 'dataStatus', 'educationLevel'])->orderByDefault()->paginate();
     }
 
     /* mendengarkan acara daril filter alpine */
