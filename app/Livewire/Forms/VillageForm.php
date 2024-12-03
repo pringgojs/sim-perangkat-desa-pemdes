@@ -2,9 +2,10 @@
 
 namespace App\Livewire\Forms;
 
-use App\Models\Village;
-use Livewire\Attributes\Validate;
 use Livewire\Form;
+use App\Models\Village;
+use App\Rules\UniqueVillageCode;
+use Livewire\Attributes\Validate;
 
 class VillageForm extends Form
 {
@@ -21,6 +22,8 @@ class VillageForm extends Form
 
     // #[Validate('required|string|email')]
     public $phone = '';
+    
+    public $code = '';
 
     // #[Validate('required|string|min:6')]
     public $type = '';
@@ -36,6 +39,11 @@ class VillageForm extends Form
     public function rules()
     {
         return [
+            'code' => [
+                'required',
+                'max:250',
+                new UniqueVillageCode($this->code, $this->village),
+            ],
             'name' => 'required|max:250',
             'address' => 'required|max:255',
             'phone' => 'required|max:20',
@@ -49,6 +57,8 @@ class VillageForm extends Form
     public function messages()
     {
         return [
+            'code.required' => 'Kode desa wajib diisi.',
+            'code.max' => 'Kode desa tidak boleh lebih dari 250 karakter.',
             'name.required' => 'Nama wajib diisi.',
             'name.max' => 'Nama tidak boleh lebih dari 250 karakter.',
             'address.required' => 'Alamat wajib diisi.',
@@ -66,6 +76,7 @@ class VillageForm extends Form
 
         $payload = [
             'name' => $this->name,
+            'code' => $this->code,
             'district_id' => $this->district,
             'address' => $this->address,
             'phone' => $this->phone,
@@ -87,6 +98,7 @@ class VillageForm extends Form
 
         $this->id = $village->id;
         $this->name = $village->name;
+        $this->code = $village->code;
         $this->address = $village->address;
         $this->phone = $village->phone;
         $this->type_id = $village->type_id;
