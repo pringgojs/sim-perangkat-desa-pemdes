@@ -64,7 +64,7 @@ class Table extends Component
     #[Computed]
     public function staffs()
     {
-        return VillageStaff::filter($this->filter)->with(['village.district', 'positionType', 'dataStatus', 'educationLevel'])->orderByDefault()->paginate();
+        return VillageStaff::filter($this->filter)->with(['village.district', 'positionType', 'dataStatus', 'educationLevel', 'histories.positionTypeStatus'])->orderByDefault()->paginate();
     }
 
     /* mendengarkan acara daril filter alpine */

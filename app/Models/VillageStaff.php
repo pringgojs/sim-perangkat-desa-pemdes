@@ -69,6 +69,11 @@ class VillageStaff extends Model
         return $this->belongsTo(Option::class, 'position_id');
     }
 
+    public function histories()
+    {
+        return $this->hasMany(VillageStaffHistory::class, 'village_staff_id')->where('is_active', true);
+    }
+
     public function educationLevel()
     {
         return $this->belongsTo(Option::class, 'education_level_id');

@@ -23,7 +23,7 @@
                                 <tr>
                                     @foreach ($headers as $item)
                                         <th scope="col"
-                                            class="px-6 py-3 text-start text-xs font-bold text-black uppercase dark:text-neutral-500">
+                                            class="px-6 py-3 text-xs text-center font-bold text-black uppercase dark:text-neutral-500">
                                             {{ $item }}</th>
                                     @endforeach
                                 </tr>

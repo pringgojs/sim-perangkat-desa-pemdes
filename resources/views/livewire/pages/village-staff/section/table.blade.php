@@ -4,14 +4,17 @@
         'Desa - Kecamatan',
         'Nama 1,2',
         'Status Data',
-        'Jabatan Definitif',
-        'Jabatan PLT/PLH/PJ',
         'Tempat, Tgl. Lahir',
         'Pendidikan',
+        'Jabatan',
+        'THP',
     ]" title="Data Perangkat Desa">
         <!-- Table Content -->
         <x-slot:table>
             @foreach ($this->staffs as $index => $item)
+                @php
+                    $histories = $item->histories;
+                @endphp
                 <tr>
                     <td>
                         <div class="m-5">
@@ -73,15 +76,6 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
                         {{ $item->name }} <br> {{ $item->another_name }}</td>
                     <td>{!! $item->labelDataStatus() !!}</td>
-
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                        {{ $item->position_name }} <br> {{ $item->position_code }}
-                        {{-- <br> {!! $item->labelDifinitifStatus() !!} --}}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                        {{ $item->position_plt_name }} <br> {{ $item->position_plt_code }} <br>
-                        {{-- {!! $item->labelPltStatus() !!} --}}
-                    </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
                         {{ $item->place_of_birth }}{{ $item->place_of_birth ? ', ' . $item->date_of_birth : '' }}
                     </td>
@@ -89,6 +83,24 @@
                         {{ $item->educationLevel->name ?? '-' }}
                     </td>
 
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-800 dark:text-neutral-200">
+                        @foreach ($histories as $history)
+                            <p>({{ $history->positionTypeStatus->name }}) {{ $history->position_name }} </p>
+                        @endforeach
+                        <br>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-800 dark:text-neutral-200">
+                        @php
+                            $total = 0;
+                        @endphp
+                        @foreach ($histories as $history)
+                            <p>{{ format_rupiah($history->thp) }}</p>
+                            @php
+                                $total += $history->thp;
+                            @endphp
+                        @endforeach
+                        <p class="font-bold border-t-2">{{ format_rupiah($total) }}</p>
+                    </td>
                 </tr>
             @endforeach
         </x-slot:table>
