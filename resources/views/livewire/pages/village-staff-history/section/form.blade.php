@@ -2,7 +2,7 @@
     <div class="w-full px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
         <!-- Card -->
         <div class="bg-gradient-to-bl from-blue-100 via-transparent rounded-md p-4 sm:p-7 dark:bg-neutral-900">
-            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div class="grid grid-cols-2 gap-4">
                 <div class=" text-white p-4 rounded">
                     <!-- Konten kolom pertama -->
                     <form wire:submit="store">
@@ -241,6 +241,68 @@
                             </button>
                         </div>
                     </form>
+                </div>
+
+                <div x-data="{ copied: '' }">
+                    <x-table :headers="['Desa', 'Jabatan', 'Siltap', 'Tunjangan']" title="Data Referensi Siltap & Tunjangan">
+                        <!-- Table Content -->
+                        <x-slot:table>
+                            @foreach ($this->siltapTable as $index => $item)
+                                <tr x-data="{ siltap: '{{ $item->siltap }}', tunjangan: '{{ $item->tunjangan }}' }">
+                                    <td
+                                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
+                                        {{ $item->village->name }}
+                                    <td
+                                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
+                                        {{ $item->positionType->name }}</td>
+
+                                    <td
+                                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                                        <div class="flex items-center space-x-2">
+                                            <span
+                                                class="text-gray-700 font-medium">{{ format_rupiah($item->siltap) }}</span>
+                                            <div x-clipboard="siltap" @click="copied = 'siltap-{{ $item->id }}'">
+                                                <svg class="w-6 h-6"
+                                                    :class="copied == 'siltap-{{ $item->id }}' ?
+                                                        'text-green-500 dark:text-green-400' :
+                                                        'text-gray-800 dark:text-white'"
+                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                    width="24" height="24" fill="none"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke="currentColor" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M9 8v3a1 1 0 0 1-1 1H5m11 4h2a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-7a1 1 0 0 0-1 1v1m4 3v10a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-7.13a1 1 0 0 1 .24-.65L7.7 8.35A1 1 0 0 1 8.46 8H13a1 1 0 0 1 1 1Z" />
+                                                </svg>
+                                            </div>
+
+                                        </div>
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                                        <div class="flex items-center space-x-2">
+                                            <span
+                                                class="text-gray-700 font-medium">{{ format_rupiah($item->tunjangan) }}</span>
+                                            <div x-clipboard="tunjangan"
+                                                @click="copied = 'tunjangan-{{ $item->id }}'">
+                                                <svg class="w-6 h-6"
+                                                    :class="copied == 'tunjangan-{{ $item->id }}' ?
+                                                        'text-green-500 dark:text-green-400' :
+                                                        'text-gray-800 dark:text-white'"
+                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                    width="24" height="24" fill="none"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke="currentColor" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M9 8v3a1 1 0 0 1-1 1H5m11 4h2a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-7a1 1 0 0 0-1 1v1m4 3v10a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-7.13a1 1 0 0 1 .24-.65L7.7 8.35A1 1 0 0 1 8.46 8H13a1 1 0 0 1 1 1Z" />
+                                                </svg>
+                                            </div>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </x-slot:table>
+                    </x-table>
                 </div>
             </div>
         </div>

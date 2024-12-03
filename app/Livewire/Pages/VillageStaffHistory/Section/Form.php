@@ -2,15 +2,16 @@
 
 namespace App\Livewire\Pages\VillageStaffHistory\Section;
 
-use App\Livewire\Forms\VillageStaffHistoryForm;
 use App\Models\Option;
-use App\Models\VillagePositionType;
-use App\Models\VillageSiltap;
-use App\Models\VillageStaff;
-use App\Models\VillageStaffHistory;
-use Illuminate\Support\Facades\DB;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
+use App\Models\VillageStaff;
+use App\Models\VillageSiltap;
+use Livewire\Attributes\Computed;
+use Illuminate\Support\Facades\DB;
+use App\Models\VillagePositionType;
+use App\Models\VillageStaffHistory;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+use App\Livewire\Forms\VillageStaffHistoryForm;
 
 class Form extends Component
 {
@@ -62,6 +63,14 @@ class Form extends Component
         if ($id) {
             $this->villagePositionTypes->push(VillagePositionType::find($model->village_position_type_id));
         }
+    }
+
+    #[Computed]
+    public function siltapTable()
+    {
+        if (!$this->staff) return [];
+        
+        return VillageSiltap::villageId($this->staff->village_id)->with(['positionType', 'village'])->get();
     }
 
     public function checkSiltap()
