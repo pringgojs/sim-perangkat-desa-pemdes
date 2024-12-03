@@ -2,10 +2,10 @@
 
 namespace App\Livewire\Forms;
 
-use Livewire\Form;
 use App\Models\User;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Validate;
+use Livewire\Form;
 use Spatie\Permission\Models\Role;
 
 class UserForm extends Form
@@ -29,17 +29,19 @@ class UserForm extends Form
 
     // #[Validate('required_with:password|same:password|min:6')]
     // public $repassword = '';
- 
+
     // #[Validate('required')]
     public $role = '';
 
     public $is_create_cpanel_account = false;
+
     public $is_create_db_account = false;
-    
 
     /* database */
     public $database = '';
+
     public $database_username = '';
+
     public $database_password = '';
     // public $database_repassword = '';
 
@@ -58,7 +60,7 @@ class UserForm extends Form
                 'required',
                 'string',
                 'email',
-                Rule::unique('users')->ignore($this->user), 
+                Rule::unique('users')->ignore($this->user),
             ],
             // 'database' => $this->database ? 'string|max:40' : 'nullable',
             // 'database_username' => !$this->is_create_db_account ? 'nullable' : 'required|max:50',
@@ -68,7 +70,7 @@ class UserForm extends Form
 
     }
 
-    public function messages() 
+    public function messages()
     {
         $password_message = 'must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.';
 
@@ -78,10 +80,10 @@ class UserForm extends Form
         ];
     }
 
-    public function store() 
+    public function store()
     {
         $this->validate();
- 
+
         $payload = [
             'name' => $this->name,
             'username' => $this->username,
@@ -95,7 +97,7 @@ class UserForm extends Form
 
         /* proses simpan */
         $user = User::updateOrCreate([
-            'id' => $this->id
+            'id' => $this->id,
         ], $payload);
 
         $role = Role::first();

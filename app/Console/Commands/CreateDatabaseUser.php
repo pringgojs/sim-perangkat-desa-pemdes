@@ -4,11 +4,11 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class CreateDatabaseUser extends Command
 {
     protected $signature = 'db:create-user {username} {password} {dbname}';
+
     protected $description = 'Create a new MySQL user and database with necessary permissions';
 
     public function __construct()
@@ -32,12 +32,12 @@ class CreateDatabaseUser extends Command
             if ($dbname) {
                 DB::connection('mysql2')->statement("GRANT ALL PRIVILEGES ON {$dbname}.* TO '{$username}'@'{$ip}'");
                 DB::connection('mysql2')->statement("GRANT ALL PRIVILEGES ON {$dbname}.* TO '{$username}'@'{$ip_localhost}'");
-                DB::connection('mysql2')->statement("FLUSH PRIVILEGES");
+                DB::connection('mysql2')->statement('FLUSH PRIVILEGES');
             }
 
             $this->info("Database '{$dbname}' and user '{$username}' created successfully.");
         } catch (\Exception $e) {
-            $this->error("Error: " . $e->getMessage());
+            $this->error('Error: '.$e->getMessage());
         }
     }
 }

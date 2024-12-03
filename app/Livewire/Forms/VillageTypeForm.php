@@ -2,12 +2,10 @@
 
 namespace App\Livewire\Forms;
 
-use Livewire\Form;
 use App\Models\Option;
-use App\Models\Village;
-use Illuminate\Validation\Rule;
 use App\Models\VillageTypeDetail;
 use Livewire\Attributes\Validate;
+use Livewire\Form;
 
 class VillageTypeForm extends Form
 {
@@ -34,7 +32,7 @@ class VillageTypeForm extends Form
 
     }
 
-    public function messages() 
+    public function messages()
     {
         return [
             'name.required' => 'Nama wajib diisi.',
@@ -46,7 +44,7 @@ class VillageTypeForm extends Form
         ];
     }
 
-    public function store() 
+    public function store()
     {
         $this->validate();
 
@@ -54,18 +52,18 @@ class VillageTypeForm extends Form
         $payload = [
             'name' => $this->name,
             'type' => 'village_type',
-            'key' => str_replace(' ', '_', strtolower($this->name))
+            'key' => str_replace(' ', '_', strtolower($this->name)),
         ];
 
         /* proses simpan */
         $model = Option::updateOrCreate([
-            'id' => $this->id
+            'id' => $this->id,
         ], $payload);
 
         $payload = [
             'type_id' => $model->id,
             'max_kasi' => $this->maxKasi,
-            'max_kaur' => $this->maxKaur
+            'max_kaur' => $this->maxKaur,
         ];
 
         /* proses simpan */
@@ -75,6 +73,7 @@ class VillageTypeForm extends Form
         }
 
         VillageTypeDetail::create($payload);
+
         return $model;
     }
 

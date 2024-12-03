@@ -3,22 +3,23 @@
 namespace App\Models;
 
 use App\Traits\GenerateUuid;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Option extends Model
 {
-    use HasFactory, HasUuids, GenerateUuid;
+    use GenerateUuid, HasFactory, HasUuids;
 
     // UUID sebagai primary key
     protected $keyType = 'string';
+
     public $incrementing = false;
 
     protected $fillable = [
         'name',
         'type',
-        'key'
+        'key',
     ];
 
     // Relasi ke tabel villages (jika diperlukan)
@@ -31,7 +32,7 @@ class Option extends Model
     {
         return $this->hasOne(VillageTypeDetail::class, 'type_id');
     }
-    
+
     // Relasi ke tabel village_staff (jika diperlukan)
     public function villageStaff()
     {
@@ -39,7 +40,7 @@ class Option extends Model
             ->orWhere('position_plt_id', $this->id);
     }
 
-     // Relasi ke tabel village_staff (jika diperlukan)
+    // Relasi ke tabel village_staff (jika diperlukan)
     public function villageStaffStatusData()
     {
         return $this->hasMany(VillageStaff::class, 'data_status_id');
@@ -79,10 +80,12 @@ class Option extends Model
     {
         $q->orderBy('name');
     }
-    
+
     public function scopeSearch($q, $search = null)
     {
-        if (!$search) return;
+        if (! $search) {
+            return;
+        }
 
         $q->where('name', 'like', '%'.$search.'%');
     }
@@ -91,6 +94,7 @@ class Option extends Model
     public function getCode()
     {
         $unserialize = unserialize($this->extra);
+
         return $unserialize['code'];
     }
 }

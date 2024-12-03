@@ -2,29 +2,28 @@
 
 namespace App\Livewire\Modals;
 
-use App\Models\User;
-use Livewire\Component;
-use App\Services\CpanelService;
 use App\Livewire\Forms\UserForm;
-use App\Services\DatabaseService;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Role;
-use LivewireUI\Modal\ModalComponent;
-use App\Http\Requests\StoreUserRequest;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Computed;
+use Livewire\Component;
+use LivewireUI\Modal\ModalComponent;
+use Spatie\Permission\Models\Role;
 
 class FormUser extends ModalComponent
 {
     use LivewireAlert;
 
-    public UserForm $form; 
+    public UserForm $form;
 
     public $roles;
 
     public $user_id;
+
     // public $password;
     public $is_create_db_account;
+
     public $is_create_cpanel_account;
 
     public function mount()
@@ -46,9 +45,9 @@ class FormUser extends ModalComponent
         DB::beginTransaction();
 
         $user = $this->form->store();
-        
+
         DB::commit();
-        
+
         $this->form->reset();
         $this->alert('success', 'Success!');
         $this->dispatch('refreshComponent'); // semua yg punya refresh component akan ke trigger
@@ -68,17 +67,18 @@ class FormUser extends ModalComponent
     }
 
     #[Computed]
-    public function generatePassword($length = 18){
-        $chars =  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.
+    public function generatePassword($length = 18)
+    {
+        $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.
                   '0123456789-=~!@#$%^&*()_+/<>?;:[]{}\|';
-      
+
         $str = '';
         $max = strlen($chars) - 1;
-      
-        for ($i=0; $i < $length; $i++)
-          $str .= $chars[random_int(0, $max)];
-        
+
+        for ($i = 0; $i < $length; $i++) {
+            $str .= $chars[random_int(0, $max)];
+        }
+
         return $str;
     }
-
 }

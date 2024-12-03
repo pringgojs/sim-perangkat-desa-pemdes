@@ -2,27 +2,32 @@
 
 namespace App\Livewire\Modals;
 
-use Livewire\Component;
 use App\Constants\Constants;
-use LivewireUI\Modal\ModalComponent;
 use App\Services\EcmpCustomerService;
-use App\Livewire\Pages\Dashboard\Index;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
+use LivewireUI\Modal\ModalComponent;
 
 class ApproveRejectEntitlement extends ModalComponent
 {
     use LivewireAlert;
 
-    public $action = 'approve';// approve, reject
-    public $target;// action to method controller
+    public $action = 'approve'; // approve, reject
+
+    public $target; // action to method controller
+
     public $title = 'Anda yakin ingin menyetujui entitlement ini?';
+
     public $reason_rejection;
+
     public $pending_plan_name;
+
     public $entitlement_id;
+
     public $procurement_id;
+
     public $state;
 
-    
     public function mount()
     {
         if ($this->action == 'approve' && ($this->state == Constants::ENTITLEMENT_ACTIVATION_REQUESTED)) {
@@ -54,8 +59,9 @@ class ApproveRejectEntitlement extends ModalComponent
         }
 
         if ($this->action == 'reject' && ($this->state == Constants::ENTITLEMENT_ACTIVATION_REQUESTED)) {
-            if (!$this->reason_rejection) {
+            if (! $this->reason_rejection) {
                 $this->alert('error', 'Kolom alasan penolakan tidak boleh kosong!');
+
                 return;
             }
 
@@ -66,9 +72,8 @@ class ApproveRejectEntitlement extends ModalComponent
             $response = $service->approveEntitlementPlanChange($this->entitlement_id, $this->pending_plan_name);
         }
 
-
-        $status = $response->object()->status ?? 'failed'; 
-        $this->alert($status == 'failed' ? 'error': 'success', $status == 'failed' ? 'Error!': 'Success!');
+        $status = $response->object()->status ?? 'failed';
+        $this->alert($status == 'failed' ? 'error' : 'success', $status == 'failed' ? 'Error!' : 'Success!');
         $this->dispatch('refreshComponent'); // semua yg punya refresh component akan ke trigger
         $this->closeModal();
     }

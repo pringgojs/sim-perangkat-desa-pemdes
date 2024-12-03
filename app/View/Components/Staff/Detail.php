@@ -9,6 +9,7 @@ use Illuminate\View\Component;
 class Detail extends Component
 {
     public $staff;
+
     /**
      * Create a new component instance.
      */

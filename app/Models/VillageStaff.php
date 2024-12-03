@@ -2,28 +2,28 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use App\Models\AutoUuid;
 use App\Constants\Constants;
-use App\Traits\GenerateUuid;
 use App\Scopes\VillageStaffScope;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\GenerateUuid;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class VillageStaff extends Model
 {
-    use HasFactory, HasUuids, GenerateUuid;
+    use GenerateUuid, HasFactory, HasUuids;
     use SoftDeletes;
 
     protected static function booted()
     {
         static::addGlobalScope(new VillageStaffScope);
     }
-    
+
     // UUID sebagai primary key
     protected $keyType = 'string';
+
     public $incrementing = false;
 
     protected $fillable = [
@@ -48,7 +48,7 @@ class VillageStaff extends Model
         'sk_tmt',
         'gender',
         'sk_date',
-        'date_of_pensiun'
+        'date_of_pensiun',
     ];
 
     // Relasi ke tabel users
@@ -103,7 +103,9 @@ class VillageStaff extends Model
         // dd($params);
         info($params);
 
-        if (!isset($params['area'])) return;
+        if (! isset($params['area'])) {
+            return;
+        }
 
         if ($params['search']) {
             $q->search($params['search']);
@@ -122,21 +124,21 @@ class VillageStaff extends Model
 
         if ($params['positionStatus'] && $params['positionType']) {
             $is_definitif = option_is_match('definitif', $params['positionStatus']);
-            if (!$is_definitif) {
+            if (! $is_definitif) {
                 /* jika bukan definitf, cari berdasarkan kolom position_plt_id */
                 $q->where('position_plt_status_id', $params['positionStatus']);
                 $q->where('position_plt_id', $params['positionType']);
             } else {
                 $q->where('position_id', $params['positionType']);
             }
-        } else if (!$params['positionType'] && $params['positionStatus']) {
+        } elseif (! $params['positionType'] && $params['positionStatus']) {
             $q->where('position_plt_status_id', $params['positionStatus']);
-        }  else if ($params['positionType'] && !$params['positionStatus']) {
-                $q->where(function ($t) use ($params) {
-                    $t->where('position_id', $params['positionType'])
-                        ->orWhere('position_plt_id', $params['positionType']);
-                    
-                });
+        } elseif ($params['positionType'] && ! $params['positionStatus']) {
+            $q->where(function ($t) use ($params) {
+                $t->where('position_id', $params['positionType'])
+                    ->orWhere('position_plt_id', $params['positionType']);
+
+            });
         }
 
         if ($params['isParkir']) {
@@ -161,12 +163,12 @@ class VillageStaff extends Model
 
     public function scopePending($q)
     {
-        $q->where('data_status_id', key_option('diajukan') );
+        $q->where('data_status_id', key_option('diajukan'));
     }
 
     public function scopeFinal($q)
     {
-        $q->where('data_status_id', key_option('final') );
+        $q->where('data_status_id', key_option('final'));
     }
 
     public function scopeIsParkir($q)
@@ -176,7 +178,9 @@ class VillageStaff extends Model
 
     public function scopeDataStatusId($q, $id = null)
     {
-        if (!$id) return;
+        if (! $id) {
+            return;
+        }
         $q->where('data_status_id', $id);
     }
 
@@ -215,7 +219,7 @@ class VillageStaff extends Model
 
         // Query untuk mencari jumlah perangkat desa yang akan pensiun dalam 6 bulan
         return $staffRetiringSoon = VillageStaffHistory::active()->whereBetween(
-            'enddate_of_office', 
+            'enddate_of_office',
             [$now, $sixMonthsFromNow]
         )->groupBy('village_staff_id')->pluck('village_staff_id')->count();
 
@@ -224,7 +228,9 @@ class VillageStaff extends Model
     /* scope pensiun */
     public function scopePensiun($q, $filter = [])
     {
-        if ($filter['dateType'] == '' || $filter['dateType'] == null) return;
+        if ($filter['dateType'] == '' || $filter['dateType'] == null) {
+            return;
+        }
 
         /* mencari ID */
         $staff_ids = VillageStaffHistory::filter($filter)->active()->where(function ($q) use ($filter) {
@@ -251,8 +257,8 @@ class VillageStaff extends Model
     public function scopePensiunToday($q)
     {
         return [
-            'start' =>date('Y-m-d'),
-            'end' =>date('Y-m-d'),
+            'start' => date('Y-m-d'),
+            'end' => date('Y-m-d'),
         ];
     }
 
@@ -260,16 +266,18 @@ class VillageStaff extends Model
     {
         return [
             'start' => date('Y-m-01'),
-            'end' =>date('Y-m-d'),
+            'end' => date('Y-m-d'),
         ];
     }
 
     public function scopeSearch($q, $search = null)
     {
-        if (!$search) return;
+        if (! $search) {
+            return;
+        }
 
         $q->where('name', 'like', '%'.$search.'%')
-            ->orWhere('address', 'like', '%' . $search . '%');
+            ->orWhere('address', 'like', '%'.$search.'%');
     }
 
     public function scopeOrderByDefault($q)
@@ -280,7 +288,7 @@ class VillageStaff extends Model
     public static function empty(): array
     {
         return [
-            "id" => '',
+            'id' => '',
             'user_id' => 0,
         ];
     }
@@ -307,17 +315,22 @@ class VillageStaff extends Model
 
     public function labelDifinitifStatus()
     {
-        if (!$this->position_id) return '';
+        if (! $this->position_id) {
+            return '';
+        }
 
         if ($this->position_is_active) {
             return '<span class="inline-flex items-center rounded-md bg-green-200 px-2 py-1 text-xs font-medium text-green-700">Aktif</span>';
         }
+
         return '<span class="inline-flex items-center rounded-md bg-red-200 px-2 py-1 text-xs font-medium text-red-700">Non-aktif</span>';
     }
 
     public function labelPltStatus()
     {
-        if (!$this->position_plt_id) return '';
+        if (! $this->position_plt_id) {
+            return '';
+        }
 
         if ($this->position_plt_is_active) {
             return '<span class="inline-flex items-center rounded-md bg-green-200 px-2 py-1 text-xs font-medium text-green-700">Aktif</span>';

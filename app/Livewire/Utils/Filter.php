@@ -9,31 +9,46 @@ use Livewire\Component;
 class Filter extends Component
 {
     public $districts;
+
     public $villages;
+
     public $positionTypes;
+
     public $listStatusData;
-    
+
     public $statusData;
+
     public $statusDataName;
+
     public $positionType;
+
     public $positionTypeName;
+
     public $positionTypeStatus;
+
     public $table;
+
     public $params;
-    
+
     /* use utilitas filter */
     public $useArea = false;
+
     public $useStatusData = false;
+
     public $usePositionType = false;
+
     public $usePositionStatus = false;
+
     public $usePositionParkir = false;
+
     public $useNullPerson = false;
+
     public $useDate = false;
-    
+
     public function mount($table, $positionType = null)
     {
         $statusData = request()->input('statusData');
-        $this->statusData = $statusData ? : null;
+        $this->statusData = $statusData ?: null;
         $this->districts = Option::districts()->get();
         $this->positionTypes = Option::positionTypes()->get();
         $this->listStatusData = Option::statusData()->get();

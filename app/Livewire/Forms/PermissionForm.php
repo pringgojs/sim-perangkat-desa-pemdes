@@ -2,10 +2,9 @@
 
 namespace App\Livewire\Forms;
 
-use Livewire\Form;
 use App\Rules\UniquePermission;
-use Illuminate\Validation\Rule;
 use Livewire\Attributes\Validate;
+use Livewire\Form;
 use Spatie\Permission\Models\Permission;
 
 class PermissionForm extends Form
@@ -24,30 +23,30 @@ class PermissionForm extends Form
                 'required',
                 'max:250',
                 new UniquePermission($this->name, $this->permission),
-            ]
+            ],
         ];
     }
 
-    public function messages() 
+    public function messages()
     {
         return [
             'name.required' => 'Nama wajib diisi.',
-            'name.max' => 'Nama permission maksimal 250 karakter.'
+            'name.max' => 'Nama permission maksimal 250 karakter.',
         ];
     }
 
-    public function store() 
+    public function store()
     {
         $this->validate();
- 
+
         $payload = [
             'name' => $this->name,
-            'guard_name' => 'web'
+            'guard_name' => 'web',
         ];
 
         /* proses simpan */
         $model = Permission::updateOrCreate([
-            'id' => $this->id
+            'id' => $this->id,
         ], $payload);
 
         return $model;

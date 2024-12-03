@@ -2,19 +2,18 @@
 
 namespace App\Models;
 
-use App\Models\AutoUuid;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class UserDatabase extends Model
 {
-    use HasFactory, HasUuids, AutoUuid;
+    use AutoUuid, HasFactory, HasUuids;
+
     protected $fillable = [
         'user_id',
         'user',
         'password',
         'db_name',
     ];
-
 }

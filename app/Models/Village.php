@@ -2,22 +2,22 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use App\Constants\Constants;
 use App\Traits\GenerateUuid;
-use App\Models\VillageStaffHistory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Village extends Model
 {
-    use HasFactory, HasUuids, GenerateUuid;
+    use GenerateUuid, HasFactory, HasUuids;
     use SoftDeletes;
 
     // UUID sebagai primary key
     protected $keyType = 'string';
+
     public $incrementing = false;
 
     protected $fillable = [
@@ -48,32 +48,40 @@ class Village extends Model
     {
         return $this->hasMany(VillageStaff::class, 'village_id');
     }
-    
+
     public function scopeSearch($q, $search = null)
     {
-        if (!$search) return;
+        if (! $search) {
+            return;
+        }
 
         $q->where('name', 'like', '%'.$search.'%')
-            ->orWhere('address', 'like', '%' . $search . '%');
+            ->orWhere('address', 'like', '%'.$search.'%');
     }
 
     public function scopeDistrict($q, $district = null)
     {
-        if (!$district) return;
+        if (! $district) {
+            return;
+        }
 
         $q->where('district_id', $district);
     }
 
     public function scopeCode($q, $code = null)
     {
-        if (!$code) return;
+        if (! $code) {
+            return;
+        }
 
         $q->where('code', $code);
     }
 
     public function scopeType($q, $type = null)
     {
-        if (!$type) return;
+        if (! $type) {
+            return;
+        }
 
         $q->where('type_id', $type);
     }
@@ -106,7 +114,7 @@ class Village extends Model
     public function labelType()
     {
         $status = $this->type;
-        
+
         if ($status->key == 'swadaya') {
             return '<span class="inline-flex items-center rounded-md bg-green-200 px-2 py-1 text-xs font-medium text-green-700">'.$status->name.'</span>';
         }
@@ -119,6 +127,7 @@ class Village extends Model
             return '<span class="inline-flex items-center rounded-md bg-yellow-200 px-2 py-1 text-xs font-medium text-yellow-700">'.$status->name.'</span>';
         }
     }
+
     /* menghitung yang 6 bulan lagi pensiun */
     public function totalStaffRetiringSoon()
     {
@@ -128,7 +137,7 @@ class Village extends Model
 
         // Query untuk mencari jumlah perangkat desa yang akan pensiun dalam 6 bulan
         return $staffRetiringSoon = VillageStaffHistory::where('village_id', $this->id)->active()->whereBetween(
-            'enddate_of_office', 
+            'enddate_of_office',
             [$now, $sixMonthsFromNow]
         )->groupBy('village_staff_id')->count();
 
@@ -141,9 +150,10 @@ class Village extends Model
         $sixMonthsFromNow = Carbon::now()->addMonths(6)->format('Y-m-d');
 
         $bpd = key_option('bpd');
+
         // Query untuk mencari jumlah perangkat desa yang akan pensiun dalam 6 bulan
         return $staffRetiringSoon = VillageStaff::where('village_id', $this->id)->active()->whereBetween(
-            'date_of_pensiun', 
+            'date_of_pensiun',
             [$now, $sixMonthsFromNow]
         )->type($bpd)->count();
     }

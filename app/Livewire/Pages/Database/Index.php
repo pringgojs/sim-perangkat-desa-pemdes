@@ -2,17 +2,18 @@
 
 namespace App\Livewire\Pages\Database;
 
-use Livewire\Component;
-use Livewire\WithPagination;
 use App\Services\DatabaseService;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Request as FacadeRequest;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
     // use WithPagination;
 
     public $search = '';
+
     protected $listeners = ['refreshComponent' => '$refresh'];
 
     public function render()
@@ -22,13 +23,13 @@ class Index extends Component
         $databases = self::paginator($databases);
 
         return view('livewire.pages.database.index', [
-            'databases' => $databases
+            'databases' => $databases,
         ]);
     }
 
     public function paginator($items)
     {
-        $currentPage = request()->input('page') ? : 1;
+        $currentPage = request()->input('page') ?: 1;
         $perPage = 20;
         $offset = ($currentPage - 1) * $perPage;
         $paginatedItems = $items->slice($offset, $perPage)->values();

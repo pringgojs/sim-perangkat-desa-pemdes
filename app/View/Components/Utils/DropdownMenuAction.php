@@ -9,7 +9,9 @@ use Illuminate\View\Component;
 class DropdownMenuAction extends Component
 {
     public $items;
+
     public $id;
+
     public $modalName;
 
     public function __construct($id, $items = [], $modalName = 'modalConfirm')

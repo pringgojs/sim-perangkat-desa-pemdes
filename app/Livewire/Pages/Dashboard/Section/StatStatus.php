@@ -3,13 +3,15 @@
 namespace App\Livewire\Pages\Dashboard\Section;
 
 use App\Models\Option;
-use Livewire\Component;
 use App\Models\VillageStaff;
+use Livewire\Component;
 
 class StatStatus extends Component
 {
     public $stats;
+
     public $status_data;
+
     public function mount()
     {
         $total_staff_retiring_soon = VillageStaff::totalStaffRetiringSoon();

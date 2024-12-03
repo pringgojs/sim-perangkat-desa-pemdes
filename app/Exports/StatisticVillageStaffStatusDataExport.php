@@ -4,25 +4,27 @@ namespace App\Exports;
 
 use App\Models\Option;
 use App\Models\Village;
-use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
 
 class StatisticVillageStaffStatusDataExport implements FromCollection, WithHeadings, WithMapping
 {
     public $i = 0;
-    public $search;
-    public $district;
-    public $statusData;
 
+    public $search;
+
+    public $district;
+
+    public $statusData;
 
     public function __construct($params = [])
     {
-        if(isset($params['district'])) {
+        if (isset($params['district'])) {
             $this->district = $params['district'];
         }
 
-        if(isset($params['search'])) {
+        if (isset($params['search'])) {
             $this->search = $params['search'];
         }
 
@@ -30,8 +32,8 @@ class StatisticVillageStaffStatusDataExport implements FromCollection, WithHeadi
     }
 
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function collection()
     {
         return Village::with(['district:id,name', 'type'])->search($this->search)->district($this->district)->orderByDefault()->get();
@@ -42,10 +44,10 @@ class StatisticVillageStaffStatusDataExport implements FromCollection, WithHeadi
         $array = ['#', 'Desa'];
         foreach ($this->statusData as $item) {
             $array[] = $item->name;
-        } 
+        }
 
         $array[] = 'Total';
-        
+
         return $array;
     }
 
@@ -59,12 +61,12 @@ class StatisticVillageStaffStatusDataExport implements FromCollection, WithHeadi
         foreach ($this->statusData as $status) {
             $count = $village->totalStaffByStatus($status->id);
             $total += $count;
-            
+
             $array[] = $count;
         }
 
         $array[] = $total;
-        
+
         return $array;
     }
 }

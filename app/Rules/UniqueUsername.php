@@ -2,13 +2,14 @@
 
 namespace App\Rules;
 
-use Closure;
 use App\Models\User;
+use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
 class UniqueUsername implements ValidationRule
 {
     protected $user;
+
     protected $username;
 
     public function __construct($username, $user = null)

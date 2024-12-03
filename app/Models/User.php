@@ -4,26 +4,24 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Scopes\VillageStaffScope;
-use Laravel\Sanctum\HasApiTokens;
-use Laravel\Jetstream\HasProfilePhoto;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Laravel\Fortify\TwoFactorAuthenticatable;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Jetstream\HasProfilePhoto;
+use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
-    use Notifiable;
-    use TwoFactorAuthenticatable;
     use HasRoles;
+    use Notifiable;
     use SoftDeletes;
-
+    use TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -73,10 +71,12 @@ class User extends Authenticatable
 
     public function scopeSearch($q, $search = null)
     {
-        if (!$search) return;
+        if (! $search) {
+            return;
+        }
 
         $q->where('name', 'like', '%'.$search.'%')
-            ->orWhere('email', 'like', '%' . $search . '%');
+            ->orWhere('email', 'like', '%'.$search.'%');
     }
 
     public function scopeOrderByDefault($q)

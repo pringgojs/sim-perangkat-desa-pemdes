@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Services\DatabaseService;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Console\Command;
 
 class ListTables extends Command
 {
@@ -18,7 +17,7 @@ class ListTables extends Command
 
         $service = new DatabaseService;
         $tables = $service->getTables('database');
-        
+
         $this->info("Tables in database '{$database}':");
 
         foreach ($tables as $table) {

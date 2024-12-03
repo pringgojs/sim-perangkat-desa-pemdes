@@ -2,15 +2,16 @@
 
 namespace App\Rules;
 
-use Closure;
-use App\Models\User;
 use App\Models\VillageStaffHistory;
+use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
 class UniquePositionStatusHistory implements ValidationRule
 {
     protected $staffId;
+
     protected $positionStatusId;
+
     protected $ignoreId;
 
     public function __construct($positionStatusId, $staffId, $ignoreId = null)
@@ -22,7 +23,9 @@ class UniquePositionStatusHistory implements ValidationRule
 
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (!$this->positionStatusId) return;
+        if (! $this->positionStatusId) {
+            return;
+        }
 
         $definitif = key_option('definitif');
         $positionStatus = $this->positionStatusId;
@@ -36,7 +39,7 @@ class UniquePositionStatusHistory implements ValidationRule
                     $q->where('position_type_status_id', '!=', $definitif);
                 }
             });
-            
+
         if ($this->ignoreId) {
             $query->where('id', '!=', $this->ignoreId);
         }

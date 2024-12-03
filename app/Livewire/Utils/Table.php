@@ -11,13 +11,13 @@ class Table extends Component
     /**
      * Create a new component instance.
      *
-     * @param array $headers
+     * @param  array  $headers
      */
     public function __construct($headers = [])
     {
         $this->headers = $headers;
     }
-    
+
     public function render()
     {
         return view('livewire.utils.table');

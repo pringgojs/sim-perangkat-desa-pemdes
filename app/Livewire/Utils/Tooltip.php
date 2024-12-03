@@ -6,7 +6,9 @@ use Livewire\Component;
 
 class Tooltip extends Component
 {
-    public $id, $title;
+    public $id;
+
+    public $title;
 
     public function mount($id = null, $title = null)
     {

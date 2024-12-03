@@ -2,17 +2,19 @@
 
 namespace App\Livewire\Pages\Role;
 
-use Livewire\Component;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RolePermission extends Component
 {
     use LivewireAlert;
 
     public $role;
+
     public $permissions;
+
     protected $listeners = ['refreshComponent' => '$refresh', 'update'];
 
     public function mount($id)
@@ -36,7 +38,7 @@ class RolePermission extends Component
     public function render()
     {
         return view('livewire.pages.role.role-permission', [
-            'groups' => Permission::select('group')->orderBy('group')->groupBy('group')->get()
+            'groups' => Permission::select('group')->orderBy('group')->groupBy('group')->get(),
         ]);
     }
 }

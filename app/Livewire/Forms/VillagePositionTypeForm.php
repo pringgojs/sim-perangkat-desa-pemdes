@@ -2,25 +2,32 @@
 
 namespace App\Livewire\Forms;
 
-use Livewire\Form;
-use Livewire\Attributes\Validate;
 use App\Models\VillagePositionType;
-use App\Services\StaffHistoriesService;
 use App\Rules\UniqueVillagePositionType;
+use Livewire\Form;
 
 class VillagePositionTypeForm extends Form
 {
     public $id;
 
     public $district;
+
     public $village;
+
     public $positionType;
+
     public $positionTypeStatus;
+
     public $positionName;
+
     public $siltap;
+
     public $tunjangan;
+
     public $thp;
+
     public $isParkir;
+
     public $code;
 
     public $villagePositionType;
@@ -44,7 +51,7 @@ class VillagePositionTypeForm extends Form
 
     }
 
-    public function messages() 
+    public function messages()
     {
         return [
             'village.required' => 'Desa wajib diisi.',
@@ -59,7 +66,7 @@ class VillagePositionTypeForm extends Form
         ];
     }
 
-    public function store() 
+    public function store()
     {
         $this->validate();
         // $tunjangan = \format_price($this->tunjangan);
@@ -79,7 +86,7 @@ class VillagePositionTypeForm extends Form
 
         /* proses simpan */
         $model = VillagePositionType::updateOrCreate([
-            'id' => $this->id
+            'id' => $this->id,
         ], $payload);
 
         return $model;

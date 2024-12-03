@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids; // Untuk UUID
+use Illuminate\Database\Eloquent\Model; // Untuk UUID
 
 class VillageSiltap extends Model
 {
@@ -21,6 +21,7 @@ class VillageSiltap extends Model
     ];
 
     public $incrementing = false;
+
     protected $keyType = 'uuid';
 
     public function village()
@@ -37,19 +38,21 @@ class VillageSiltap extends Model
     {
         $q->where('village_id', $id);
     }
-    
+
     public function scopePositionTypeId($q, $id)
     {
         $q->where('position_type_id', $id);
     }
-    
-    public function scopeFilter($q,$params = [])
+
+    public function scopeFilter($q, $params = [])
     {
-        if (!isset($params['area'])) return;
+        if (! isset($params['area'])) {
+            return;
+        }
 
         if ($params['search']) {
             $q->search($params['search']);
-            
+
             return;
         }
 

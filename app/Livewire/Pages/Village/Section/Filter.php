@@ -4,15 +4,17 @@ namespace App\Livewire\Pages\Village\Section;
 
 use App\Models\Option;
 use Livewire\Component;
-use App\Livewire\Pages\Village\Section\Table;
 
 class Filter extends Component
 {
     public $village_types;
+
     public $districts = [];
-    
+
     public $search;
+
     public $district;
+
     public $type;
 
     public function mount()
@@ -41,7 +43,7 @@ class Filter extends Component
             'search' => $this->search,
         ];
 
-        $this->dispatch('filter', $params )->to(Table::class);
+        $this->dispatch('filter', $params)->to(Table::class);
     }
 
     public function export()

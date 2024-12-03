@@ -4,15 +4,12 @@ namespace App\Imports;
 
 use App\Models\Option;
 use App\Models\Village;
-use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
 class VillageImport implements ToCollection
 {
-    /**
-    * @param Collection $collection
-    */
     public function collection(Collection $collection)
     {
         // 0 => "KECAMATAN"
@@ -23,8 +20,10 @@ class VillageImport implements ToCollection
         // 5 => "JUMLAH KAUR"
         // 6 => "KLASIFIKASI"
         foreach ($collection as $i => $item) {
-            if ($i == 0) continue;
-            
+            if ($i == 0) {
+                continue;
+            }
+
             $district_name = $item[0];
             $village_name = ucwords(strtolower($item[2]));
             $village_code = $item[3];
@@ -46,7 +45,7 @@ class VillageImport implements ToCollection
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
-        
+
             Village::insert($data);
         }
     }

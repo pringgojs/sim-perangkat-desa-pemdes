@@ -2,23 +2,16 @@
 
 namespace App\Imports;
 
-use App\Models\User;
-use App\Models\Village;
-use App\Models\VillageStaff;
-use App\Models\VillageSiltap;
-use Illuminate\Support\Carbon;
-use App\Scopes\VillageStaffScope;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use App\Models\VillagePositionType;
+use App\Models\VillageStaff;
 use App\Models\VillageStaffHistory;
+use App\Scopes\VillageStaffScope;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
 class VillageStaffHistoryImport implements ToCollection
 {
-    /**
-    * @param Collection $collection
-    */
     public function collection(Collection $collection)
     {
 
@@ -33,7 +26,9 @@ class VillageStaffHistoryImport implements ToCollection
 
         // dd($collection);
         foreach ($collection as $i => $item) {
-            if ($i == 0) continue;
+            if ($i == 0) {
+                continue;
+            }
 
             $username = $item[0];
             $kode_jabatan = $item[1];
@@ -44,7 +39,7 @@ class VillageStaffHistoryImport implements ToCollection
             $tanggal_sk = str_replace('-', '/', $item[5]);
             $tanggal_pelantikan = str_replace('-', '/', $item[6]);
             $tanggal_masa_jabatan = str_replace('-', '/', $item[7]);
-            
+
             $tanggal_sk = str_replace(' ', '', $tanggal_sk);
             $tanggal_pelantikan = str_replace(' ', '', $tanggal_pelantikan);
             $tanggal_masa_jabatan = str_replace(' ', '', $tanggal_masa_jabatan);
@@ -54,14 +49,19 @@ class VillageStaffHistoryImport implements ToCollection
             $tanggal_masa_jabatan = str_replace('//', '/', $tanggal_masa_jabatan);
 
             $staff = VillageStaff::withoutGlobalScope(VillageStaffScope::class)->where('position_code', $kode_jabatan)->orWhere('position_plt_code', $kode_jabatan)->first();
-            if (!$staff) continue;
+            if (! $staff) {
+                continue;
+            }
 
             $village_position_type = VillagePositionType::code($kode_jabatan)->first();
-            if (!$village_position_type) continue;
-            
-            echo $i; echo "\n";
-            $tanggal_sk = trim(str_replace("'", "", $tanggal_sk));
-            
+            if (! $village_position_type) {
+                continue;
+            }
+
+            echo $i;
+            echo "\n";
+            $tanggal_sk = trim(str_replace("'", '', $tanggal_sk));
+
             try {
                 if ($tanggal_sk) {
                     $tanggal_sk = Carbon::createFromFormat('d/m/Y', $tanggal_sk);
@@ -71,7 +71,7 @@ class VillageStaffHistoryImport implements ToCollection
                 $tanggal_sk = null;
             }
 
-            $tanggal_pelantikan = trim(str_replace("'", "", $tanggal_pelantikan));
+            $tanggal_pelantikan = trim(str_replace("'", '', $tanggal_pelantikan));
             try {
                 if ($tanggal_pelantikan) {
                     $tanggal_pelantikan = Carbon::createFromFormat('d/m/Y', $tanggal_pelantikan);
@@ -81,7 +81,7 @@ class VillageStaffHistoryImport implements ToCollection
             }
 
             try {
-                $tanggal_masa_jabatan = trim(str_replace("'", "", $tanggal_masa_jabatan));
+                $tanggal_masa_jabatan = trim(str_replace("'", '', $tanggal_masa_jabatan));
                 if ($tanggal_masa_jabatan) {
                     $tanggal_masa_jabatan = Carbon::createFromFormat('d/m/Y', $tanggal_masa_jabatan);
                 }

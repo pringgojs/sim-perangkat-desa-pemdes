@@ -2,12 +2,12 @@
 
 namespace App\Console\Commands;
 
-use Carbon\Carbon;
 use App\Constants\Constants;
 use App\Services\CpanelService;
-use Illuminate\Console\Command;
-use App\Services\EncryptService;
 use App\Services\DatabaseService;
+use App\Services\EncryptService;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
 
 class Test extends Command
 {
@@ -40,23 +40,26 @@ class Test extends Command
     {
         $retirementAge = 8;
         $dateOfBirth = '2024-06-19';
-        if (!$dateOfBirth) return null;
-        
+        if (! $dateOfBirth) {
+            return null;
+        }
+
         // Mengubah tanggal lahir menjadi objek Carbon
         $dob = Carbon::createFromFormat('Y-m-d', $dateOfBirth);
-        
+
         // Menghitung tanggal ulang tahun ke-60
         $sixtiethBirthday = $dob->addYears($retirementAge);
 
         /* jika BPD maka kembalikan tanggal dari TMT */
         if ($retirementAge == Constants::STAFF_KADES_BPD_PENSIUN) {
             echo $sixtiethBirthday->toDateString();
+
             return;
         }
-        
+
         // Mengambil tanggal 1 bulan setelah ulang tahun ke-60
         $retirementDate = $sixtiethBirthday->addMonth()->startOfMonth();
-        
+
         // Mengembalikan tanggal pensiun dalam format Y-m-d
         echo $retirementDate->toDateString();
         // dd($pensiun);

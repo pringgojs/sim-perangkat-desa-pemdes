@@ -5,14 +5,17 @@ namespace App\Livewire\Pages\VillagePositionType\Section;
 use App\Models\Option;
 use App\Models\Village;
 use Livewire\Component;
-use App\Livewire\Pages\VillagePositionType\Section\Table;
 
 class Filter extends Component
 {
     public $districts;
+
     public $villages;
+
     public $positionTypes;
+
     public $positionTypeStatus;
+
     public function mount()
     {
         $this->districts = Option::districts()->get();
@@ -33,7 +36,7 @@ class Filter extends Component
             'positionStatus' => $positionStatus,
         ];
 
-        $this->dispatch('filter', $params )->to(Table::class);
+        $this->dispatch('filter', $params)->to(Table::class);
     }
 
     public function render()

@@ -2,20 +2,19 @@
 
 namespace App\Livewire\Modals;
 
-use App\Models\Option;
-use App\Models\Village;
-use Livewire\Component;
-use Livewire\Attributes\Computed;
-use Illuminate\Support\Facades\DB;
-use LivewireUI\Modal\ModalComponent;
 use App\Livewire\Forms\VillageTypeForm;
+use App\Models\Option;
+use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
+use LivewireUI\Modal\ModalComponent;
 
 class FormVillageType extends ModalComponent
 {
     use LivewireAlert;
 
-    public VillageTypeForm $form; 
+    public VillageTypeForm $form;
+
     public $id;
 
     public function mount()
@@ -36,9 +35,9 @@ class FormVillageType extends ModalComponent
         DB::beginTransaction();
 
         $model = $this->form->store();
-        
+
         DB::commit();
-        
+
         $this->form->reset();
         $this->alert('success', 'Success!');
         $this->dispatch('refreshComponent'); // semua yg punya refresh component akan ke trigger
@@ -56,5 +55,4 @@ class FormVillageType extends ModalComponent
     {
         return false;
     }
-
 }

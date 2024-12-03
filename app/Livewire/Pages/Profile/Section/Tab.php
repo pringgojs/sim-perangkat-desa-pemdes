@@ -7,17 +7,22 @@ use Livewire\Component;
 class Tab extends Component
 {
     public $isReadonly;
+
     public $from;
+
     public $staff;
+
     public $form;
+
     public $tabActive;
+
     public function mount($form, $staff, $isReadonly = false, $from = null)
     {
         $this->staff = $staff;
         $this->form = $form;
         $this->isReadonly = $isReadonly;
         $this->from = $from;
-        $this->tabActive = request()->input('tab') ? : 'identity';
+        $this->tabActive = request()->input('tab') ?: 'identity';
     }
 
     public function setActive($v)

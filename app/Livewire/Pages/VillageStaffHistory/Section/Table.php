@@ -2,21 +2,23 @@
 
 namespace App\Livewire\Pages\VillageStaffHistory\Section;
 
-use Livewire\Component;
 use App\Models\VillageStaffHistory;
 use App\Services\StaffHistoriesService;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-
+use Livewire\Component;
 
 class Table extends Component
 {
     use LivewireAlert;
 
     public $staff;
+
     public $from;
+
     public $histories;
+
     public $modalConfirmDelete = false;
-    
+
     public function mount($staff, $from = null)
     {
         $this->staff = $staff;
@@ -33,7 +35,7 @@ class Table extends Component
 
         /* update data history */
         $history->delete();
-        
+
         $this->alert('success', 'Success!');
         $this->redirectRoute('village-staff.edit', ['id' => $this->staff->id, 'tab' => 'history'], navigate: true);
     }
@@ -44,8 +46,8 @@ class Table extends Component
     public function setActive($id)
     {
         $history = VillageStaffHistory::findOrFail($id);
-        $service = new StaffHistoriesService();
-        
+        $service = new StaffHistoriesService;
+
         if ($history->is_active) {
             /* non aktifkan */
             $service->setNonActive($history);
@@ -53,12 +55,12 @@ class Table extends Component
             $check = VillageStaffHistory::active()->where('village_position_type_id', $history->village_position_type_id)->first();
             if ($check) {
                 $this->alert('error', 'Operasi gagal. Jabatan yang dipilih tidak sedang kosong.');
+
                 return;
             }
 
             $service->setActive($history);
         }
-
 
         $this->alert('success', 'Success!');
         $this->redirectRoute('village-staff.edit', ['id' => $this->staff->id, 'tab' => 'history'], navigate: true);

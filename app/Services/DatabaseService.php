@@ -3,12 +3,11 @@
 namespace App\Services;
 
 use App\Models\User;
-use Illuminate\Support\Str;
 use App\Models\UserDatabase;
-use App\Services\EncryptService;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class DatabaseService
 {
@@ -46,7 +45,7 @@ class DatabaseService
         Artisan::call('db:create-user', [
             'username' => $username,
             'password' => $password,
-            'dbname' => $dbname ?? null
+            'dbname' => $dbname ?? null,
         ]);
 
         $params = ['id' => Str::uuid(), 'user_id' => $user->id, 'username' => $username, 'password' => EncryptService::encrypt($password), 'db_name' => $dbname];
@@ -73,6 +72,7 @@ class DatabaseService
             '.$where.' 
             GROUP BY 
                 table_schema;';
+
         return DB::select($query);
     }
 
@@ -130,6 +130,7 @@ class DatabaseService
         }
 
         $query = 'SELECT User, Host FROM mysql.user';
+
         return DB::select($query);
     }
 }

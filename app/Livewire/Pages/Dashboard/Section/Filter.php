@@ -2,17 +2,20 @@
 
 namespace App\Livewire\Pages\Dashboard\Section;
 
-use Livewire\Component;
 use App\Constants\Constants;
 use App\Livewire\Pages\Dashboard\Index;
+use Livewire\Component;
 
 class Filter extends Component
 {
     public $entitlements = [];
+
     public $plans = ['small', 'medium', 'large'];
+
     public $state;
+
     public $plan;
-    
+
     public function mount()
     {
         $this->entitlements = Constants::ENTITLEMENTS;
@@ -31,8 +34,8 @@ class Filter extends Component
     public function export()
     {
         info('export nya ke triger');
-        info('state:' . $this->state);
-        info('plan:' . $this->plan);
+        info('state:'.$this->state);
+        info('plan:'.$this->plan);
         $this->dispatch('export', state: $this->state, plan: $this->plan)->to(Index::class);
     }
 }

@@ -2,18 +2,18 @@
 
 namespace App\Providers;
 
-use App\Models\User;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Laravel\Fortify\Fortify;
-use Illuminate\Support\Facades\Hash;
 use App\Actions\Fortify\CreateNewUser;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Cache\RateLimiting\Limit;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
-use Illuminate\Support\Facades\RateLimiter;
 use App\Actions\Fortify\UpdateUserProfileInformation;
+use App\Models\User;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
+use Laravel\Fortify\Fortify;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -51,7 +51,7 @@ class FortifyServiceProvider extends ServiceProvider
     {
         Fortify::authenticateUsing(function (Request $request) {
             $field = 'email';
-            if (!self::isValidEmail($request->email)) {
+            if (! self::isValidEmail($request->email)) {
                 $field = 'username';
             }
 
@@ -63,12 +63,12 @@ class FortifyServiceProvider extends ServiceProvider
         });
     }
 
-    public function isValidEmail($email) {
+    public function isValidEmail($email)
+    {
         // Regex pattern untuk email
         $pattern = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
-        
+
         // Menggunakan preg_match untuk mencocokkan pattern
-        return preg_match($pattern, $email)? true : false;
+        return preg_match($pattern, $email) ? true : false;
     }
-    
 }

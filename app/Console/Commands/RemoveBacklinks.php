@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 
 class RemoveBacklinks extends Command
 {
@@ -38,10 +38,10 @@ class RemoveBacklinks extends Command
         ]);
 
         DB::setDefaultConnection('dynamic');
-        
+
         $keywords = ['judi', 'slot', 'gacor', 'maxwin', 'zeus'];
         $keyword = implode('|', $keywords);
-        
+
         // Regex pattern to match anchor tags containing specific keywords
         $backlinkPattern = '/<a[^>]*href=["\']?https?:\/\/[^\s>]*["\']?[^>]*>(?:[^<]*('.$keyword.')[^<]*)<\/a>/i';
         $hiddenContentPattern = '/<div[^>]*style=["\']?display\s*:\s*none["\']?[^>]*>.*?<\/div>/is';
@@ -53,17 +53,16 @@ class RemoveBacklinks extends Command
             // Remove hidden content
             $cleanContent = preg_replace($hiddenContentPattern, '', $contentWithoutBacklinks);
 
-
             if ($cleanContent !== $post->$column) {
                 try {
                     //code...
                     DB::table($table)
                         ->where('ID', $post->ID)
                         ->update([$column => $cleanContent]);
-    
+
                     $this->info("Backlinks removed from post ID: {$post->ID}");
                 } catch (\Throwable $th) {
-                    $this->info("Ini bukan Wordpress");
+                    $this->info('Ini bukan Wordpress');
                     //throw $th;
                 }
             }

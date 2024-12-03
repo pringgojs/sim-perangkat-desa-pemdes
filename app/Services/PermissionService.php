@@ -6,26 +6,25 @@ use Spatie\Permission\Models\Permission;
 
 class PermissionService
 {
-    public static function create($group = null,  $permissions = [])
+    public static function create($group = null, $permissions = [])
     {
         foreach ($permissions as $item) {
             $groupMask = str_replace(' ', '.', $group);
             $name = strtolower($groupMask.'.'.$item);
             $payload = [
                 'name' => $name,
-                'group' => strtolower($group)
+                'group' => strtolower($group),
             ];
 
-
             $permission = Permission::updateOrCreate([
-                'name' => $name
+                'name' => $name,
             ], $payload);
         }
     }
 
     public static function getName($input = null)
     {
-         // Memecah string berdasarkan titik
+        // Memecah string berdasarkan titik
         $parts = explode('.', $input);
 
         // Mengambil bagian terakhir dari array
@@ -33,5 +32,4 @@ class PermissionService
 
         return $result;
     }
-
 }

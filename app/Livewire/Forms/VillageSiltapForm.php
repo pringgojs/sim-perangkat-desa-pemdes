@@ -2,22 +2,24 @@
 
 namespace App\Livewire\Forms;
 
-use Livewire\Form;
 use App\Models\VillageSiltap;
-use Livewire\Attributes\Validate;
 use App\Rules\UniqueVillageSiltap;
-use App\Models\VillagePositionType;
-use App\Services\StaffHistoriesService;
+use Livewire\Form;
 
 class VillageSiltapForm extends Form
 {
     public $id;
 
     public $district;
+
     public $village;
+
     public $positionType;
+
     public $siltap;
+
     public $tunjangan;
+
     public $thp;
 
     public $villagePositionType;
@@ -38,7 +40,7 @@ class VillageSiltapForm extends Form
 
     }
 
-    public function messages() 
+    public function messages()
     {
         return [
             'village.required' => 'Desa wajib diisi.',
@@ -48,10 +50,10 @@ class VillageSiltapForm extends Form
         ];
     }
 
-    public function store() 
+    public function store()
     {
         $this->validate();
- 
+
         $tunjangan = \format_price($this->tunjangan);
         $siltap = \format_price($this->siltap);
         $thp = $tunjangan + $siltap;
@@ -65,10 +67,9 @@ class VillageSiltapForm extends Form
             'code' => $this->code,
         ];
 
-
         /* proses simpan */
         $model = VillageSiltap::updateOrCreate([
-            'id' => $this->id
+            'id' => $this->id,
         ], $payload);
 
         return $model;

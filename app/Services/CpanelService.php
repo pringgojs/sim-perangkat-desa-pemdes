@@ -4,23 +4,23 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Models\UserCpanel;
-use App\Services\EncryptService;
 use Illuminate\Support\Facades\Http;
 
 class CpanelService
 {
     private $base_url;
+
     private $headers;
 
     public function __construct()
     {
         $this->base_url = env('WHM_BASE_URL');
         $this->headers = [
-            'Authorization' => 'whm '.env('WHM_USERNAME').':'.env('WHM_USERNAME_TOKEN')
+            'Authorization' => 'whm '.env('WHM_USERNAME').':'.env('WHM_USERNAME_TOKEN'),
         ];
     }
 
-    public function createAccount(User $user, string $username, string $domain, string $contact_email = '', string $password, string $package_name = 'all website')
+    public function createAccount(User $user, string $username, string $domain, string $contact_email, string $password, string $package_name = 'all website')
     {
         $params = [
             'api.version' => 1,

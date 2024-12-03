@@ -3,15 +3,16 @@
 namespace App\Livewire\Android;
 
 use App\Models\User;
-use Livewire\Component;
-use Livewire\Attributes\On;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Attributes\On;
+use Livewire\Component;
 
 class Index extends Component
 {
     use LivewireAlert;
 
     public $error;
+
     public $user;
 
     public function mount()
@@ -27,14 +28,16 @@ class Index extends Component
     #[On('update-username')]
     public function updateUsername($value = null)
     {
-        if (!$value) {
+        if (! $value) {
             $this->error = 'Kolom username tidak boleh kosong';
+
             return;
         }
 
         $check = User::where('username', $value)->where('id', '!=', $this->user->id)->first();
         if ($check) {
             $this->error = 'Username ini sudah dipakai, silahkan tulis yang lain!';
+
             return;
         }
 

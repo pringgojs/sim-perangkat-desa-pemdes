@@ -2,31 +2,38 @@
 
 namespace App\Livewire\Modals;
 
+use App\Constants\Constants;
+use App\Livewire\Forms\VillageStaffForm;
 use App\Models\Option;
 use App\Models\Village;
-use Livewire\Component;
-use App\Constants\Constants;
-use App\Models\VillageStaff;
-use Livewire\Attributes\Computed;
-use Illuminate\Support\Facades\DB;
 use App\Models\VillagePositionType;
 use App\Models\VillageStaffHistory;
-use LivewireUI\Modal\ModalComponent;
-use App\Livewire\Forms\VillageStaffForm;
+use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Attributes\Computed;
+use Livewire\Component;
+use LivewireUI\Modal\ModalComponent;
 
 class FormVillageStaff extends ModalComponent
 {
     use LivewireAlert;
 
-    public VillageStaffForm $form; 
+    public VillageStaffForm $form;
+
     public $id;
+
     public $position_type_id;
+
     public $position_types;
+
     public $position_type_status;
+
     public $village_position_types = [];
+
     public $districts = [];
+
     public $villages = [];
+
     public $positionNow;
 
     public function mount()
@@ -49,9 +56,9 @@ class FormVillageStaff extends ModalComponent
         DB::beginTransaction();
 
         $model = $this->form->store(Constants::FROM_PAGE_STAFF);
-        
+
         DB::commit();
-        
+
         $this->form->reset();
         $this->alert('success', 'Success!');
         $this->dispatch('refreshComponent'); // semua yg punya refresh component akan ke trigger
@@ -70,22 +77,21 @@ class FormVillageStaff extends ModalComponent
         return false;
     }
 
-    
     #[Computed]
     public function generatePassword($length = 18)
     {
-        $chars =  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.
+        $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.
                   '0123456789-=~!@#$%^&*()_+/<>?;:[]{}\|';
-      
+
         $str = '';
         $max = strlen($chars) - 1;
-      
-        for ($i=0; $i < $length; $i++)
-          $str .= $chars[random_int(0, $max)];
-        
+
+        for ($i = 0; $i < $length; $i++) {
+            $str .= $chars[random_int(0, $max)];
+        }
+
         return $str;
     }
-
 
     public function getVillages()
     {
@@ -104,7 +110,7 @@ class FormVillageStaff extends ModalComponent
 
     public function ifOperator()
     {
-        $user = auth()->user(); 
+        $user = auth()->user();
         if ($user->hasRole('operator')) {
             $village = $user->staff()->village;
             $this->form->village = $village->id;
@@ -114,7 +120,4 @@ class FormVillageStaff extends ModalComponent
             self::getVillagePositionType();
         }
     }
-
-
-
 }

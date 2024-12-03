@@ -2,33 +2,42 @@
 
 namespace App\Livewire\Pages\VillageStaffHistory\Section;
 
-use App\Models\Option;
-use Livewire\Component;
-use App\Models\VillageStaff;
-use App\Models\VillageSiltap;
-use Illuminate\Support\Facades\DB;
-use App\Models\VillagePositionType;
-use App\Models\VillageStaffHistory;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Livewire\Forms\VillageStaffHistoryForm;
+use App\Models\Option;
+use App\Models\VillagePositionType;
+use App\Models\VillageSiltap;
+use App\Models\VillageStaff;
+use App\Models\VillageStaffHistory;
+use Illuminate\Support\Facades\DB;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
 
 class Form extends Component
 {
     use LivewireAlert;
 
     public VillageStaffHistoryForm $form;
-    
+
     public $id;
+
     public $staff;
+
     public $staffId;
+
     public $districts;
+
     public $villages = [];
+
     public $positionTypes;
+
     public $positionTypeStatus;
+
     public $villagePositionTypes;
-    
+
     public $errorCheckingPositionByStatus = false;
+
     public $positionNow;
+
     public function mount($staffId = null, $id = null)
     {
         $this->id = $id;
@@ -57,11 +66,13 @@ class Form extends Component
 
     public function checkSiltap()
     {
-        if (!$this->form->villagePositionType) return;
+        if (! $this->form->villagePositionType) {
+            return;
+        }
 
         $positionType = VillagePositionType::find($this->form->villagePositionType);
         $siltap = VillageSiltap::villageId($this->staff->village_id)->positionTypeId($positionType->position_type_id)->first();
-        
+
         $this->form->siltap = $siltap->siltap ?? 0;
         $this->form->tunjangan = $siltap->tunjangan ?? 0;
     }
@@ -73,7 +84,7 @@ class Form extends Component
         $model = $this->form->store();
 
         DB::commit();
-        
+
         $this->form->reset();
         $this->alert('success', 'Success!');
         $this->redirectRoute('village-staff.edit', [

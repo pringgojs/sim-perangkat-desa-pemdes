@@ -7,6 +7,7 @@ use Livewire\Component;
 class Edit extends Component
 {
     public $id;
+
     public function mount($id)
     {
         $this->id;

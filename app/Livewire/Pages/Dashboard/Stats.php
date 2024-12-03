@@ -13,6 +13,7 @@ class Stats extends Component
     {
         $this->options = Option::positionTypes()->get();
     }
+
     public function render()
     {
         return view('livewire.pages.dashboard.stats');

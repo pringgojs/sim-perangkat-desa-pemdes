@@ -2,27 +2,33 @@
 
 namespace App\Livewire\Pages\Profile\Section;
 
-use App\Models\Option;
-use Livewire\Component;
 use App\Constants\Constants;
-use Livewire\WithFileUploads;
-use Illuminate\Support\Facades\DB;
 use App\Livewire\Forms\VillageStaffForm;
+use App\Models\Option;
+use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Form extends Component
 {
     use LivewireAlert;
     use WithFileUploads;
+
     protected $listeners = ['refreshComponent'];
-    
-    
-    public VillageStaffForm $form; 
+
+    public VillageStaffForm $form;
+
     public $staff;
+
     public $modalPreview = false;
+
     public $position_type;
+
     public $positions;
+
     public $isReadonly = false;
+
     public $from;
 
     public function mount($form, $staff, $isReadonly = false, $from = null)
@@ -53,12 +59,12 @@ class Form extends Component
 
         // dd($this->from);
         $model = $this->form->store(Constants::FROM_PAGE_PROFILE);
-        
+
         DB::commit();
-        
+
         // $this->form->reset();
         $this->alert('success', 'Success!');
-        $this->dispatch('refreshComponent'); 
+        $this->dispatch('refreshComponent');
     }
 
     public function updatedFormKtp()
@@ -73,7 +79,7 @@ class Form extends Component
 
     public function refreshComponent()
     {
-        $this->dispatch('$refresh'); 
+        $this->dispatch('$refresh');
         $this->isReadonly = $this->form->village_staff->isReadonly();
     }
 

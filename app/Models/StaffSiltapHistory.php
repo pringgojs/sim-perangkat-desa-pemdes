@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Str;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class StaffSiltapHistory extends Model
 {
     use HasFactory;
+
     protected $table = 'village_staff_siltap_histories';
 
     public $incrementing = false; // For UUID
+
     protected $keyType = 'uuid';
 
     protected $fillable = [
@@ -48,5 +50,4 @@ class StaffSiltapHistory extends Model
     {
         return $this->belongsTo(VillageStaffHistory::class);
     }
-
 }

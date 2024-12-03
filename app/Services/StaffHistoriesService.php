@@ -2,21 +2,16 @@
 
 namespace App\Services;
 
-use Exception;
-use App\Models\VillageStaff;
-use Illuminate\Support\Facades\DB;
 use App\Models\VillagePositionType;
-use App\Models\VillageStaffHistory;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-
 
 class StaffHistoriesService
 {
     use LivewireAlert;
-    
-    private $villagePositionType; 
-    
-    private $staff; 
+
+    private $villagePositionType;
+
+    private $staff;
 
     public function __construct()
     {

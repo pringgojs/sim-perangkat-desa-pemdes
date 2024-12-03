@@ -2,14 +2,16 @@
 
 namespace App\Rules;
 
-use Closure;
 use App\Models\VillageSiltap;
+use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
 class UniqueVillageSiltap implements ValidationRule
 {
     protected $village_id;
+
     protected $staff_position_id;
+
     protected $ignore_id;
 
     public function __construct($village_id, $staff_position_id, $ignore_id = null)

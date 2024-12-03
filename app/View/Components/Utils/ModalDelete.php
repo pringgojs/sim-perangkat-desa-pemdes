@@ -9,7 +9,9 @@ use Illuminate\View\Component;
 class ModalDelete extends Component
 {
     public $id;
+
     public $desc;
+
     /**
      * Create a new component instance.
      */

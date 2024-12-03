@@ -2,30 +2,36 @@
 
 namespace App\Livewire\Forms;
 
-use Livewire\Form;
-use App\Models\VillageStaff;
-use App\Models\VillageSiltap;
-use Livewire\Attributes\Validate;
 use App\Models\VillagePositionType;
+use App\Models\VillageStaff;
 use App\Models\VillageStaffHistory;
-use App\Services\StaffHistoriesService;
-use App\Rules\UniqueVillagePositionType;
 use App\Rules\UniquePositionStatusHistory;
+use Livewire\Form;
 
 class VillageStaffHistoryForm extends Form
 {
     public $id;
+
     public $staffId;
-    
+
     public $villagePositionType;
+
     public $positionTypeStatus;
+
     public $isParkir = false;
+
     public $skNumber;
+
     public $skTmt;
+
     public $skDate;
+
     public $dateOfAppointment;
+
     public $enddateOfOffice;
+
     public $siltap;
+
     public $tunjangan;
 
     public function rules()
@@ -36,13 +42,13 @@ class VillageStaffHistoryForm extends Form
             'tunjangan' => 'required',
             'positionTypeStatus' => [
                 'required',
-                new UniquePositionStatusHistory($this->positionTypeStatus, $this->staffId, $this->id)
+                new UniquePositionStatusHistory($this->positionTypeStatus, $this->staffId, $this->id),
             ],
         ];
 
     }
 
-    public function messages() 
+    public function messages()
     {
         return [
             'villagePositionType.required' => 'Jenis jabatan wajib diisi.',
@@ -50,16 +56,16 @@ class VillageStaffHistoryForm extends Form
         ];
     }
 
-    public function store() 
+    public function store()
     {
         $this->validate();
- 
+
         $tunjangan = \format_price($this->tunjangan);
         $siltap = \format_price($this->siltap);
         $thp = $tunjangan + $siltap;
 
         // dd($tunjangan);
-        
+
         $villagePositionType = VillagePositionType::findOrFail($this->villagePositionType);
         $staff = VillageStaff::findOrFail($this->staffId);
 
@@ -83,21 +89,21 @@ class VillageStaffHistoryForm extends Form
             'tunjangan' => $tunjangan,
             'thp' => $thp,
             'is_parkir' => $this->isParkir,
-            'position_type_status_id' => $this->positionTypeStatus
+            'position_type_status_id' => $this->positionTypeStatus,
         ];
 
         /* proses simpan */
         $model = VillageStaffHistory::updateOrCreate([
-            'id' => $this->id
+            'id' => $this->id,
         ], $payload);
 
         /* update village position type */
         $villagePositionType->tunjangan = $tunjangan;
         $villagePositionType->siltap = $siltap;
         $villagePositionType->is_parkir = $this->isParkir;
-        $villagePositionType->position_type_status_id =$this->positionTypeStatus;
+        $villagePositionType->position_type_status_id = $this->positionTypeStatus;
         $villagePositionType->save();
-        
+
         /* update staff */
         if (option_is_match('definitif', $villagePositionType->position_type_id)) {
             $staff->position_id = $villagePositionType->position_type_id;

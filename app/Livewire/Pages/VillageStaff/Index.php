@@ -2,26 +2,32 @@
 
 namespace App\Livewire\Pages\VillageStaff;
 
-use App\Models\User;
-use App\Models\Option;
-use Livewire\Component;
-use App\Models\VillageStaff;
-use Livewire\WithPagination;
 use App\Livewire\Forms\VillageStaffForm;
+use App\Models\Option;
+use App\Models\VillageStaff;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
     use LivewireAlert;
     use WithPagination;
 
-    public VillageStaffForm $form; 
+    public VillageStaffForm $form;
+
     public $option;
+
     public $search;
+
     public $type;
+
     public $staff;
+
     public $modalPreview = false;
+
     public $modalConfirm = false;
+
     public $modalConfirmRevisi = false;
 
     protected $listeners = ['refreshComponent' => '$refresh', 'detail', 'processToUpdateStatus'];
@@ -36,7 +42,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.pages.village-staff.index', [
-            'staffs' => VillageStaff::search($this->search)->type($this->type)->with(['village', 'positionType'])->paginate()
+            'staffs' => VillageStaff::search($this->search)->type($this->type)->with(['village', 'positionType'])->paginate(),
         ]);
     }
 }

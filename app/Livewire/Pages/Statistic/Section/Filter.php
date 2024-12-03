@@ -2,24 +2,31 @@
 
 namespace App\Livewire\Pages\Statistic\Section;
 
+use App\Livewire\Pages\Statistic\Index;
 use App\Models\Option;
 use App\Models\Village;
 use Livewire\Component;
-use App\Livewire\Pages\Statistic\Index;
-use App\Livewire\Pages\Statistic\Section\Table;
 
 class Filter extends Component
 {
     public $position_types;
+
     public $districts = [];
+
     public $status_data = [];
+
     public $villages = [];
-    
+
     public $search;
+
     public $district_id;
+
     public $status_data_id;
+
     public $position_type_id;
+
     public $village_id;
+
     public $isOperator = false;
 
     public function mount()
@@ -47,9 +54,9 @@ class Filter extends Component
             'search' => $this->search,
         ];
 
-        $this->dispatch('filter', $params )->to(Table::class);
+        $this->dispatch('filter', $params)->to(Table::class);
         if ($this->district_id) {
-            $this->dispatch('initChart', $this->district_id )->to(Index::class);
+            $this->dispatch('initChart', $this->district_id)->to(Index::class);
         }
     }
 
@@ -60,7 +67,7 @@ class Filter extends Component
 
     public function ifOperator()
     {
-        $user = auth()->user(); 
+        $user = auth()->user();
         $this->isOperator = $user->hasRole('operator') ? true : false;
     }
 

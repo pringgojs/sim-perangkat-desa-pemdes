@@ -3,14 +3,16 @@
 namespace App\Exports;
 
 use App\Models\VillageStaff;
-use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
 
 class VillageStaffExport implements FromCollection, WithHeadings, WithMapping
 {
     public $i = 0;
+
     public $filter;
+
     public $isWillRetire;
 
     public function __construct($filter = [], $isWillRetire = false)
@@ -18,9 +20,10 @@ class VillageStaffExport implements FromCollection, WithHeadings, WithMapping
         $this->filter = $filter;
         $this->isWillRetire = $isWillRetire;
     }
+
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function collection()
     {
         return VillageStaff::filter($this->filter)->pensiun($this->filter, $this->isWillRetire)->with(['village.district', 'positionType', 'dataStatus', 'educationLevel'])->orderByDefault()->get();
@@ -83,7 +86,4 @@ class VillageStaffExport implements FromCollection, WithHeadings, WithMapping
             $item->position_plt_is_active ? 'Aktif' : 'Tidak Aktif',
         ];
     }
-
-
-
 }

@@ -2,22 +2,20 @@
 
 namespace App\Livewire\Forms;
 
-use Carbon\Carbon;
-use Livewire\Form;
-use App\Models\User;
-use App\Models\Option;
-use App\Models\Village;
 use App\Constants\Constants;
-use App\Models\VillageStaff;
-use App\Rules\UniqueUsername;
-use Illuminate\Validation\Rule;
-use Livewire\Attributes\Validate;
-use Spatie\Permission\Models\Role;
+use App\Models\Option;
+use App\Models\User;
+use App\Models\Village;
 use App\Models\VillagePositionType;
-use App\Services\StaffHistoriesService;
-use Illuminate\Support\Facades\Storage;
-use Spatie\LivewireFilepond\WithFilePond;
+use App\Models\VillageStaff;
 use App\Rules\UniqueStaffPositionInVillage;
+use App\Rules\UniqueUsername;
+use App\Services\StaffHistoriesService;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
+use Livewire\Form;
+use Spatie\LivewireFilepond\WithFilePond;
 
 class VillageStaffForm extends Form
 {
@@ -26,30 +24,53 @@ class VillageStaffForm extends Form
     public $id; // digunakan untuk edit
 
     public $name;
+
     public $address;
+
     public $place_of_birth;
+
     public $date_of_birth;
+
     public $ktp;
+
     public $phone;
+
     public $position_name;
+
     public $sk_number;
+
     public $sk_tmt;
+
     public $sk_date;
+
     public $pensiun;
+
     public $username;
+
     public $password;
+
     public $email;
+
     public $gender;
 
     public $tmpUrl; // temporary URL img upload
+
     public $district;
+
     public $village;
+
     public $village_staff;
+
     public $position_type;
+
     public $position_type_status;
+
     public $village_position_type;
+
     public $data_status;
+
     public $user;
+
     public $ktp_old;
 
     public $from;
@@ -61,7 +82,7 @@ class VillageStaffForm extends Form
             'username' => [
                 $this->from == Constants::FROM_PAGE_STAFF ? 'required' : 'nullable',
                 'max:250',
-                new UniqueUsername($this->username, $this->user)
+                new UniqueUsername($this->username, $this->user),
             ],
             'name' => 'required|max:250',
             'gender' => $this->isMyAccount() ? 'required' : 'nullable',
@@ -87,13 +108,13 @@ class VillageStaffForm extends Form
                 'nullable',
                 'string',
                 'email',
-                Rule::unique('users')->ignore($this->user), 
+                Rule::unique('users')->ignore($this->user),
             ],
         ];
 
     }
 
-    public function messages() 
+    public function messages()
     {
         return [
             'village_position_type.required' => 'Jabatan wajib diisi.',
@@ -121,7 +142,7 @@ class VillageStaffForm extends Form
     }
 
     /* $from = admin, maka jangan rubah statusnya */
-    public function store($from = null) 
+    public function store($from = null)
     {
         $this->from = $from;
 
@@ -130,7 +151,6 @@ class VillageStaffForm extends Form
 
         $this->validate();
 
-        
         $user = self::createUser();
 
         $payload = [
@@ -150,7 +170,6 @@ class VillageStaffForm extends Form
             // 'date_of_pensiun' => $this->pensiun ?? null,
         ];
 
-
         /* jika dari mode tinjau admin, status tidak perlu di rubah ke draft */
         if ($from != 'admin') {
             $payload['data_status_id'] = key_option('draft');
@@ -158,7 +177,7 @@ class VillageStaffForm extends Form
 
         if ($this->ktp) {
             /* jika ktp is string, maka data ktp di load dari DB, kalau bukan, berarti dari Object Livewire Upload */
-            if (!is_string($this->ktp)) {
+            if (! is_string($this->ktp)) {
                 /* remove old file */
                 if ($this->ktp_old) {
                     // ktp/QnvSbHox97cW0RChaEOI1pmRB6xJJLgAI6k1qAIr.png
@@ -172,9 +191,8 @@ class VillageStaffForm extends Form
 
         /* proses simpan */
         $model = VillageStaff::updateOrCreate([
-            'id' => $this->id
+            'id' => $this->id,
         ], $payload);
-
 
         /* jika bukan dari halaman form staff, maka abaikan fungsi simpan history  */
         if ($this->from == Constants::FROM_PAGE_STAFF) {
@@ -221,11 +239,11 @@ class VillageStaffForm extends Form
         }
 
         $user = User::updateOrCreate([
-            'id' => $this->user->id ?? null
+            'id' => $this->user->id ?? null,
         ], $payload);
 
         $user->assignRole('operator');
-        
+
         return $user;
     }
 
@@ -280,7 +298,9 @@ class VillageStaffForm extends Form
     /* validasi inputan file */
     public function isKtp()
     {
-        if (is_string($this->ktp)) return false; // user tidak upload KTP (isi ktp string path)
+        if (is_string($this->ktp)) {
+            return false;
+        } // user tidak upload KTP (isi ktp string path)
 
         return $this->isMyAccount() ? true : false;
     }
@@ -288,7 +308,10 @@ class VillageStaffForm extends Form
     /* validasi untuk beberapa field yang required adalah jika dia mengedit data dia sendiri */
     public function isMyAccount()
     {
-        if (!$this->user) return false;
+        if (! $this->user) {
+            return false;
+        }
+
         return $this->user->id == auth()->user()->id;
     }
 
@@ -319,19 +342,22 @@ class VillageStaffForm extends Form
      * Fungsi untuk menghitung tanggal pensiun berdasarkan tanggal lahir.
      * Pensiun akan jatuh pada tanggal 1 bulan setelah ulang tahun ke-60.
      *
-     * 
+     *
      * Jika ternyata staff adalah BPD atau kades, maka 8 tahun
-     * @param string $dateOfBirth Tanggal lahir (format: Y-m-d)
-     * @param int $retirementAge Usia pensiun (default 60 tahun)
+     *
+     * @param  string  $dateOfBirth  Tanggal lahir (format: Y-m-d)
+     * @param  int  $retirementAge  Usia pensiun (default 60 tahun)
      * @return string Tanggal pensiun (format: Y-m-d)
      */
-    function calculateRetirementDate($dateOfBirth = null, $retirementAge = 60)
+    public function calculateRetirementDate($dateOfBirth = null, $retirementAge = 60)
     {
-        if (!$dateOfBirth) return null;
+        if (! $dateOfBirth) {
+            return null;
+        }
 
         // Mengubah tanggal lahir menjadi objek Carbon
         $dob = Carbon::createFromFormat('Y-m-d', $dateOfBirth);
-        
+
         // Menghitung tanggal ulang tahun ke-60
         $sixtiethBirthday = $dob->addYears($retirementAge);
 
@@ -339,10 +365,10 @@ class VillageStaffForm extends Form
         if ($retirementAge == Constants::STAFF_KADES_BPD_PENSIUN) {
             return $sixtiethBirthday->toDateString();
         }
-        
+
         // Mengambil tanggal 1 bulan setelah ulang tahun ke-60
         $retirementDate = $sixtiethBirthday->addMonth()->startOfMonth();
-        
+
         // Mengembalikan tanggal pensiun dalam format Y-m-d
         return $retirementDate->toDateString();
     }

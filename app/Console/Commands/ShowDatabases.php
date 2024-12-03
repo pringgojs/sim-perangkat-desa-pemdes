@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Services\DatabaseService;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Console\Command;
 
 class ShowDatabases extends Command
 {

@@ -3,19 +3,19 @@
 namespace App\Livewire\Pages\User;
 
 use App\Models\User;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
-use Illuminate\Routing\Controllers\Middleware;
-use Illuminate\Routing\Controllers\HasMiddleware;
 
-class Index extends Component implements HasMiddleware 
+class Index extends Component implements HasMiddleware
 {
     use LivewireAlert;
-
     use WithPagination;
 
     public $search;
+
     protected $listeners = ['refreshComponent' => '$refresh'];
 
     public static function middleware(): array
@@ -24,11 +24,11 @@ class Index extends Component implements HasMiddleware
             new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('user.view,web')),
         ];
     }
-    
+
     public function render()
     {
         return view('livewire.pages.user.index', [
-            'users' => User::search($this->search)->orderByDefault()->paginate()
+            'users' => User::search($this->search)->orderByDefault()->paginate(),
         ]);
     }
 
@@ -37,13 +37,13 @@ class Index extends Component implements HasMiddleware
         $user = User::findOrFail($id);
         if (auth()->user()->id == $id) {
             $this->alert('error', 'You can\'t delete yourself!');
+
             return;
 
         }
         $user->delete();
-        
+
         $this->alert('success', 'Success!');
         $this->dispatch('refreshComponent')->self();
     }
-
 }

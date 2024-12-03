@@ -3,20 +3,15 @@
 namespace App\Imports;
 
 use App\Models\User;
-use App\Models\Village;
+use App\Models\VillagePositionType;
 use App\Models\VillageStaff;
-use App\Models\VillageSiltap;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use App\Models\VillagePositionType;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
 class VillageStaffImport implements ToCollection
 {
-    /**
-    * @param Collection $collection
-    */
     public function collection(Collection $collection)
     {
         // 0 => "Username"
@@ -35,9 +30,12 @@ class VillageStaffImport implements ToCollection
         // DB::beginTransaction();
 
         foreach ($collection as $i => $item) {
-            if ($i == 0) continue;
+            if ($i == 0) {
+                continue;
+            }
 
-            echo $i; echo "\n";
+            echo $i;
+            echo "\n";
 
             $username = $item[0];
             $jabatan_definitif = $item[1];
@@ -52,39 +50,42 @@ class VillageStaffImport implements ToCollection
             $jenis_kelamin = $item[10];
             $ket = $item[11];
             $kode_desa = explode('-', $jabatan_definitif);
-            
-            if (!$nama) return;
-            
+
+            if (! $nama) {
+                return;
+            }
+
             $position_type_definitif = VillagePositionType::code($jabatan_definitif)->first();
             $position_type_plt = VillagePositionType::code($jabatan_plt)->first();
             $village = $position_type_definitif ? $position_type_definitif->village : null;
-            
+
             $position_type_is_active = false;
             $position_type_id = null;
             if ($position_type_definitif) {
                 $position_type_is_active = true;
                 $position_type_id = $position_type_definitif->position_type_id;
             }
-            
-            $position_type_plt_is_active = false; 
-            $position_type_plt_status_id = null; 
+
+            $position_type_plt_is_active = false;
+            $position_type_plt_status_id = null;
             $position_type_plt_id = null;
             if ($position_type_plt) {
-                $position_type_plt_is_active = true; 
+                $position_type_plt_is_active = true;
                 $position_type_plt_id = $position_type_plt->position_type_id;
                 $position_type_plt_status_id = $position_type_plt->positionTypeStatus->id;
             }
 
-            if (!$village) {
+            if (! $village) {
                 $village = $position_type_plt ? $position_type_plt->village : null;
             }
 
-            if (!$village) return;
-            
+            if (! $village) {
+                return;
+            }
 
             $education_level_id = key_option($pendidikan);
 
-            $date = str_replace("'", "", $tanggal_lahir);
+            $date = str_replace("'", '', $tanggal_lahir);
             $carbon = null;
             if ($date) {
                 $carbon = Carbon::createFromFormat('d/m/Y', $date);
@@ -97,7 +98,7 @@ class VillageStaffImport implements ToCollection
                 'email' => $username.'@gmail.com',
                 'password' => bcrypt('password'),
             ]);
-    
+
             $user->assignRole('operator');
 
             $staff = new VillageStaff;

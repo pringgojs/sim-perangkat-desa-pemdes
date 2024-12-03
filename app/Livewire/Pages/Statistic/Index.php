@@ -2,20 +2,22 @@
 
 namespace App\Livewire\Pages\Statistic;
 
-use App\Models\Option;
-use App\Models\Village;
-use Livewire\Component;
-use App\Models\VillageStaff;
 use App\Livewire\Utils\BarChart;
+use App\Models\Option;
+use App\Models\VillageStaff;
+use Livewire\Component;
 use Pringgojs\LivewireCharts\BarChartComponent;
 
 class Index extends Component
 {
     public $legend = [];
+
     public $series = [];
+
     public $title;
+
     protected $listeners = ['refreshComponent' => '$refresh', 'initChart'];
-    
+
     public function mount()
     {
         self::initChart();
@@ -24,12 +26,12 @@ class Index extends Component
     public function initChart($districtId = null)
     {
         $this->title = 'Grafik Jumlah Perangkat Berdasarkan Jenis Jabatan ';
-        
+
         $district = Option::find($districtId);
         if ($district) {
             $this->title .= '(Kec.'.$district->name.')';
         }
-        
+
         $this->legend = Option::positionTypes()->orderByDefault()->pluck('name')->toArray();
 
         $data_male = [];
@@ -51,12 +53,12 @@ class Index extends Component
         $this->series = [
             [
                 'name' => 'Laki-laki',
-                'data' => $data_male
+                'data' => $data_male,
             ],
             [
                 'name' => 'Perempuan',
-                'data' => $data_famale
-            ]
+                'data' => $data_famale,
+            ],
 
         ];
 

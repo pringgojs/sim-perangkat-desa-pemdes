@@ -7,8 +7,11 @@ use Livewire\Component;
 class SelectSearch extends Component
 {
     public $callback;
+
     public $options = [];
+
     public $search = '';
+
     public $value = ''; // Properti baru untuk binding dari parent
 
     public function mount($options = [])
@@ -22,7 +25,9 @@ class SelectSearch extends Component
     {
         if ($this->value) {
             $find = $this->options->find($this->value);
-            if ($find) $this->value = $find->name;
+            if ($find) {
+                $this->value = $find->name;
+            }
         }
     }
 
@@ -41,7 +46,7 @@ class SelectSearch extends Component
     public function render()
     {
         return view('livewire.utils.select-search', [
-            'options' => $this->options
+            'options' => $this->options,
         ]);
     }
 }

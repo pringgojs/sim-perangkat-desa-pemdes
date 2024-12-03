@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class VillagePositionType extends Model
 {
@@ -28,6 +28,7 @@ class VillagePositionType extends Model
     ];
 
     public $incrementing = false;
+
     protected $keyType = 'uuid';
 
     public function village()
@@ -73,16 +74,18 @@ class VillagePositionType extends Model
     public function scopeSearch($q, $search = null)
     {
         $q->where('code', 'like', '%'.$search.'%');
-            // ->orWhere('address', 'like', '%' . $search . '%');
+        // ->orWhere('address', 'like', '%' . $search . '%');
     }
 
-    public function scopeFilter($q,$params = [])
+    public function scopeFilter($q, $params = [])
     {
-        if (!isset($params['area'])) return;
+        if (! isset($params['area'])) {
+            return;
+        }
 
         if ($params['search']) {
             $q->search($params['search']);
-            
+
             return;
         }
 
@@ -103,14 +106,13 @@ class VillagePositionType extends Model
         if ($params['positionStatus']) {
             $q->where('position_type_status_id', $params['positionStatus']);
         }
-        
+
         if ($params['isParkir']) {
             $q->where('is_parkir', $params['isParkir']);
         }
 
         if ($params['isNullPerson']) {
-            $q->doesntHave('staffHistory') ;
+            $q->doesntHave('staffHistory');
         }
     }
-    
 }

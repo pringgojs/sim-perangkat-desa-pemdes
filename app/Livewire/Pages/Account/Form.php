@@ -2,17 +2,20 @@
 
 namespace App\Livewire\Pages\Account;
 
-use Livewire\Component;
-use Livewire\Attributes\Computed;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Attributes\Computed;
+use Livewire\Component;
 
 class Form extends Component
 {
     use LivewireAlert;
 
     public $from;
+
     public $staff;
+
     public $password;
+
     public $username;
 
     public function mount()
@@ -27,8 +30,9 @@ class Form extends Component
 
     public function store()
     {
-        if (!$this->password) {
+        if (! $this->password) {
             $this->alert('error', 'Lengkapi kolom password!');
+
             return;
         }
 
@@ -39,19 +43,20 @@ class Form extends Component
         $this->password = null;
         $this->alert('success', 'Success!');
     }
-    
+
     #[Computed]
     public function generatePassword($length = 18)
     {
-        $chars =  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.
+        $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.
                   '0123456789-=~!@#$%^&*()_+/<>?;:[]{}\|';
-      
+
         $str = '';
         $max = strlen($chars) - 1;
-      
-        for ($i=0; $i < $length; $i++)
-          $str .= $chars[random_int(0, $max)];
-        
+
+        for ($i = 0; $i < $length; $i++) {
+            $str .= $chars[random_int(0, $max)];
+        }
+
         return $str;
     }
 }

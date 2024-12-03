@@ -2,18 +2,17 @@
 
 namespace App\Rules;
 
-use Closure;
-use App\Models\Option;
 use App\Models\Village;
-use App\Models\VillageStaff;
-use App\Models\VillageTypeDetail;
 use App\Models\VillagePositionType;
+use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
 class UniqueVillagePositionType implements ValidationRule
 {
     protected $village_id;
+
     protected $staff_position_id;
+
     protected $ignore_id;
 
     public function __construct($village_id, $staff_position_id, $ignore_id = null)
@@ -47,8 +46,9 @@ class UniqueVillagePositionType implements ValidationRule
                 /* validasi maksimal jumlah kasi/kaur adalah 3 */
                 if ($is_kasi) {
                     if ($total_kasi == 3) {
-                        info("1");
+                        info('1');
                         $fail('Untuk jabatan ini di desa ini sudah melebihi maksimal.');
+
                         return;
                     }
 
@@ -57,13 +57,15 @@ class UniqueVillagePositionType implements ValidationRule
                 if ($is_kaur) {
                     if ($total_kaur == 3) {
                         $fail('Untuk jabatan ini di desa ini sudah melebihi maksimal.');
+
                         return;
                     }
                 }
 
                 /* maksimal jumlah kasi dan kaur adalah 5 */
-                if (($total_kasi + $total_kaur) >= 5 ) {
+                if (($total_kasi + $total_kaur) >= 5) {
                     $fail('Untuk jabatan ini di desa ini sudah melebihi maksimal.');
+
                     return;
                 }
 
@@ -71,11 +73,13 @@ class UniqueVillagePositionType implements ValidationRule
                 /* desa biasa sesuai jumlah maksimal */
                 if ($is_kasi && $total_kasi == $village_type_detail->max_kasi) {
                     $fail('Untuk jabatan ini di desa ini sudah melebihi maksimal.');
+
                     return;
                 }
 
                 if ($is_kaur && $total_kaur == $village_type_detail->max_kaur) {
                     $fail('Untuk jabatan ini di desa ini sudah melebihi maksimal.');
+
                     return;
                 }
 
@@ -91,10 +95,10 @@ class UniqueVillagePositionType implements ValidationRule
             key_option('kepala_desa'),
         ];
 
-        if (!in_array($this->staff_position_id, $positions)) {
+        if (! in_array($this->staff_position_id, $positions)) {
             return;
         }
-    
+
         /* jika jabatan sekdes, kepala. pastikan hanya ada 1 */
         $query = VillagePositionType::where('village_id', $this->village_id)
             ->where('position_type_id', $this->staff_position_id);
@@ -121,7 +125,6 @@ class UniqueVillagePositionType implements ValidationRule
                 }
             })->get()
             ->count();
-
 
         return $query;
     }

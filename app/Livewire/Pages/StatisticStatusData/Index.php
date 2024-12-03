@@ -3,19 +3,20 @@
 namespace App\Livewire\Pages\StatisticStatusData;
 
 use App\Models\Option;
-use App\Models\Village;
-use Livewire\Component;
 use App\Models\VillageStaff;
-use App\Livewire\Utils\BarChart;
+use Livewire\Component;
 use Pringgojs\LivewireCharts\BarChartComponent;
 
 class Index extends Component
 {
     public $legend = [];
+
     public $series = [];
+
     public $title;
+
     protected $listeners = ['refreshComponent' => '$refresh', 'initChart'];
-    
+
     public function mount()
     {
         self::initChart();
@@ -24,12 +25,12 @@ class Index extends Component
     public function initChart($districtId = null)
     {
         $this->title = 'Grafik Jumlah Perangkat Berdasarkan Status Data ';
-        
+
         $district = Option::find($districtId);
         if ($district) {
             $this->title .= '(Kec.'.$district->name.')';
         }
-        
+
         $this->legend = Option::positionTypes()->orderByDefault()->pluck('name')->toArray();
         $statusData = Option::statusData()->orderByDefault()->get();
 
@@ -48,7 +49,7 @@ class Index extends Component
 
             $series[] = [
                 'name' => $status->name,
-                'data' => $data
+                'data' => $data,
             ];
         }
 

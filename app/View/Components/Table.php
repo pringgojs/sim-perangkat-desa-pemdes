@@ -9,7 +9,9 @@ use Illuminate\View\Component;
 class Table extends Component
 {
     public $headers;
+
     public $title;
+
     /**
      * Create a new component instance.
      */

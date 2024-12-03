@@ -7,19 +7,18 @@ use Livewire\Component;
 
 class BarChart extends Component
 {
-    #[Reactive] 
+    #[Reactive]
     public $title;
-    
-    #[Reactive] 
+
+    #[Reactive]
     public $legend = [];
 
-    #[Reactive] 
+    #[Reactive]
     public $series = [];
-    
+
     public $id;
 
     protected $listeners = ['refreshComponent' => '$refresh', 'updateChart'];
-    
 
     public function updateChart()
     {

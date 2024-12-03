@@ -3,12 +3,13 @@
 namespace App\Rules;
 
 use Closure;
-use Spatie\Permission\Models\Permission;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Spatie\Permission\Models\Permission;
 
 class UniquePermission implements ValidationRule
 {
     protected $permission;
+
     protected $name;
 
     public function __construct($name, $permission = null)

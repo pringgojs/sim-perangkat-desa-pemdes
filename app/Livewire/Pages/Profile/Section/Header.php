@@ -2,25 +2,30 @@
 
 namespace App\Livewire\Pages\Profile\Section;
 
-use App\Models\Option;
-use Livewire\Component;
-use Livewire\Attributes\On;
 use App\Livewire\Forms\VillageStaffForm;
+use App\Models\Option;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Attributes\On;
+use Livewire\Component;
 
 class Header extends Component
 {
     use LivewireAlert;
 
     protected $listeners = ['refreshComponent' => '$refresh'];
-    public VillageStaffForm $form; 
+
+    public VillageStaffForm $form;
 
     public $staff;
+
     public $from;
+
     public $modalConfirmDelete = false;
+
     public $modalFormRevision = false;
 
     public $notes;
+
     public $error = false;
 
     public function mount($staff, $form, $from = false)
@@ -39,28 +44,29 @@ class Header extends Component
         $this->dispatch('refreshComponent');
         $this->dispatch('modal-close');
     }
-    
+
     public function updateStatus($status)
     {
         $model = Option::findOrFail($status);
         $this->staff->data_status_id = $status;
         $this->staff->save();
-        
+
         $this->alert('success', 'Success!');
         $this->dispatch('refreshComponent');
     }
 
     public function revision()
     {
-        if (!$this->notes) {
+        if (! $this->notes) {
             $this->error = true;
+
             return;
         }
 
         $this->staff->data_status_id = key_option('revisi');
         $this->staff->reason_note = $this->notes;
         $this->staff->save();
-        
+
         $this->alert('success', 'Success!');
         $this->dispatch('refreshComponent');
         $this->dispatch('modal-close');

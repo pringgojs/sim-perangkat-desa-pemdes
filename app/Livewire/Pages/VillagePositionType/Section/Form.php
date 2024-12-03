@@ -2,28 +2,33 @@
 
 namespace App\Livewire\Pages\VillagePositionType\Section;
 
+use App\Livewire\Forms\VillagePositionTypeForm;
 use App\Models\Option;
 use App\Models\Village;
-use Livewire\Component;
+use App\Models\VillagePositionType;
 use App\Models\VillageSiltap;
 use Illuminate\Support\Facades\DB;
-use App\Models\VillagePositionType;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use App\Livewire\Forms\VillagePositionTypeForm;
+use Livewire\Component;
 
 class Form extends Component
 {
     use LivewireAlert;
 
     public VillagePositionTypeForm $form;
-    
+
     public $id;
+
     public $districts;
+
     public $villages = [];
+
     public $positionTypes;
+
     public $positionTypeStatus;
+
     public $villagePositionType;
-    
+
     public function mount($id = null)
     {
         $this->districts = Option::districts()->get();
@@ -41,14 +46,20 @@ class Form extends Component
 
     public function getVillage($id)
     {
-        if (!$id) return;
+        if (! $id) {
+            return;
+        }
         $this->villages = Village::where('district_id', $id)->with(['district'])->orderByDefault()->get();
     }
 
     public function getSiltap()
     {
-        if (!$this->form->positionType) return;
-        if (!$this->form->village) return;
+        if (! $this->form->positionType) {
+            return;
+        }
+        if (! $this->form->village) {
+            return;
+        }
 
         $villageSiltap = VillageSiltap::where('village_id', $this->form->village)->where('position_type_id', $this->form->positionType)->first();
 
@@ -61,12 +72,12 @@ class Form extends Component
         DB::beginTransaction();
 
         $model = $this->form->store();
-        
+
         DB::commit();
-        
+
         $this->alert('success', 'Success!');
         $this->redirectRoute('village-position-type.index', navigate: true);
-        
+
     }
 
     public function render()

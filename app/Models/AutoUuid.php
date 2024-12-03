@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Support\Str;
 
-trait AutoUuid {
+trait AutoUuid
+{
     protected static function boot()
     {
         parent::boot();

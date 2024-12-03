@@ -4,19 +4,16 @@ namespace App\Imports;
 
 use App\Models\Option;
 use App\Models\Village;
+use App\Models\VillagePositionType;
 use App\Models\VillageSiltap;
 use Illuminate\Support\Collection;
-use App\Models\VillagePositionType;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
 class VillagePositionTypeImport implements ToCollection
 {
-    /**
-    * @param Collection $collection
-    */
     public function collection(Collection $collection)
     {
-        #items: array:10 [
+        //items: array:10 [
         //     0 => "Kode Jabatan"
         //     1 => "NO URUT JABATAN"
         //     2 => "DESA"
@@ -31,10 +28,14 @@ class VillagePositionTypeImport implements ToCollection
         // ]
 
         foreach ($collection as $i => $item) {
-            if ($i == 0) continue;
+            if ($i == 0) {
+                continue;
+            }
 
             $villageId = Village::code($item[3])->first()->id;
-            if (!$villageId) dd($item);
+            if (! $villageId) {
+                dd($item);
+            }
 
             $code = $item[0];
             $position_name = $item[4];
@@ -46,19 +47,35 @@ class VillagePositionTypeImport implements ToCollection
             $is_parkir = $item[10];
             // dd($item);
 
-            if ($position_type == 'Staf Seksi') $key = 'staf';
-            if ($position_type == 'Staf Urusan') $key = 'staf';
-            if ($position_type == 'Kepala Urusan') $key = 'kaur';
-            if ($position_type == 'Kepala Seksi') $key = 'kasi';
-            if ($position_type == 'Kepala Desa') $key = 'kepala_desa';
-            if ($position_type == 'Kepala Wilayah') $key = 'kepala_wilayah';
-            if ($position_type == 'Sekretaris Desa') $key = 'sekretaris_desa';
+            if ($position_type == 'Staf Seksi') {
+                $key = 'staf';
+            }
+            if ($position_type == 'Staf Urusan') {
+                $key = 'staf';
+            }
+            if ($position_type == 'Kepala Urusan') {
+                $key = 'kaur';
+            }
+            if ($position_type == 'Kepala Seksi') {
+                $key = 'kasi';
+            }
+            if ($position_type == 'Kepala Desa') {
+                $key = 'kepala_desa';
+            }
+            if ($position_type == 'Kepala Wilayah') {
+                $key = 'kepala_wilayah';
+            }
+            if ($position_type == 'Sekretaris Desa') {
+                $key = 'sekretaris_desa';
+            }
 
             $position_type_id = key_option($key);
             $status = Option::search($status)->first();
-            
+
             $villageSiltap = VillageSiltap::where('village_id', $villageId)->where('position_type_id', $position_type_id)->first();
-            if (!$villageSiltap) return;
+            if (! $villageSiltap) {
+                return;
+            }
 
             $model = new VillagePositionType;
             $model->code = $code;

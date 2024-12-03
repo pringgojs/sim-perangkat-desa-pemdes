@@ -3,18 +3,19 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 
 class VillageStaffHistory extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $table = 'village_staff_histories';
-    
+
     public $incrementing = false; // For UUID
+
     protected $keyType = 'uuid';
 
     protected $fillable = [
@@ -35,7 +36,7 @@ class VillageStaffHistory extends Model
         'is_parkir',
         'date_of_appointment',
         'enddate_of_office',
-        'non_active_at'
+        'non_active_at',
     ];
 
     protected $casts = [
@@ -98,7 +99,9 @@ class VillageStaffHistory extends Model
 
     public function scopeFilter($q, $params = [])
     {
-        if (!isset($params['area'])) return;
+        if (! isset($params['area'])) {
+            return;
+        }
 
         /* filter berdasarkan array village_id */
         if ($params['area'] == 'village' && $params['selectedVillage']) {
@@ -112,8 +115,8 @@ class VillageStaffHistory extends Model
 
         if ($params['positionStatus']) {
             $q->where('position_type_status_id', $params['positionStatus']);
-        } 
-        
+        }
+
         if ($params['positionType']) {
             $q->where('position_type_id', $params['positionType']);
         }
@@ -132,7 +135,9 @@ class VillageStaffHistory extends Model
 
     public function scopePensiunOtherMonth($q, $month = null, $year = null)
     {
-        if (!$month || !$year) return;
+        if (! $month || ! $year) {
+            return;
+        }
 
         $q->whereMonth('enddate_of_office', $month);
         $q->whereYear('enddate_of_office', $year);
@@ -140,35 +145,40 @@ class VillageStaffHistory extends Model
 
     public function scopePensiunDateRange($q, $dateStart = null, $dateEnd = null)
     {
-        if (!$dateStart || !$dateEnd) return;
+        if (! $dateStart || ! $dateEnd) {
+            return;
+        }
 
         $start = Carbon::parse($dateStart)->format('Y-m-d');
         $end = Carbon::parse($dateEnd)->format('Y-m-d');
-        
+
         $q->whereBetween('enddate_of_office', [$start, $end]);
     }
 
-
-
     public function getDateOfApp()
     {
-        if (!$this->date_of_appointment) return '-';
+        if (! $this->date_of_appointment) {
+            return '-';
+        }
 
         return date_format_view($this->date_of_appointment);
     }
 
     public function getEndDateOfOff()
     {
-        if (!$this->enddate_of_office) return '-';
+        if (! $this->enddate_of_office) {
+            return '-';
+        }
 
         return date_format_view($this->enddate_of_office);
     }
 
     public function getNonActiveAt()
     {
-        if (!$this->non_active_at) return '-';
+        if (! $this->non_active_at) {
+            return '-';
+        }
 
         return date_format_view($this->non_active_at);
     }
-
 }

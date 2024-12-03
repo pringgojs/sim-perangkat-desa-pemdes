@@ -15,27 +15,29 @@ class SSOTokenController extends Controller
         $token = $user->createToken('SSO Token')->plainTextToken;
 
         $url = 'https://sinau.ponorogo.go.id/mbulrp?token='.$token;
+
         return Redirect::to($url);
     }
 
     public function validateToken(Request $request)
     {
         $token = $request->bearerToken();
-        
-        info('TOKEN DARI MYSQL'. $token);
+
+        info('TOKEN DARI MYSQL'.$token);
 
         $tokenData = PersonalAccessToken::findToken($token);
 
-        if (!$tokenData) {
+        if (! $tokenData) {
             return response()->json(['error' => 'Invalid token'], 401);
         }
 
         $user = $tokenData->tokenable;
+
         return response()->json([
             'user' => [
-                'username' => env('DB_USERNAME'), 
-                'password' => env('DB_PASSWORD')  
-            ]
+                'username' => env('DB_USERNAME'),
+                'password' => env('DB_PASSWORD'),
+            ],
         ]);
     }
 }

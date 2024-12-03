@@ -9,9 +9,6 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 
 class VillageSiltapImport implements ToCollection
 {
-    /**
-    * @param Collection $collection
-    */
     public function collection(Collection $collection)
     {
         // 0 => "No"
@@ -33,10 +30,12 @@ class VillageSiltapImport implements ToCollection
         // 16 => "Tunjangan Staf"
 
         foreach ($collection as $i => $item) {
-            if ($i == 0) continue;
+            if ($i == 0) {
+                continue;
+            }
 
             $villageId = Village::code($item[4])->first()->id;
-            
+
             $siltap_kades = $item[5];
             $siltap_sekdes = $item[6];
             $siltap_kaur = $item[7];

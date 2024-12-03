@@ -2,40 +2,42 @@
 
 namespace App\Livewire\Pages\VillageStaff\Section;
 
-use Carbon\Carbon;
-use App\Models\User;
-use Livewire\Component;
-use Livewire\Attributes\On;
-use App\Constants\Constants;
-use App\Models\VillageStaff;
-use Livewire\WithPagination;
 use App\Exports\VillageStaffExport;
-use App\Models\VillagePositionType;
-use App\Models\VillageStaffHistory;
-use Maatwebsite\Excel\Facades\Excel;
+use App\Models\User;
+use App\Models\VillageStaff;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Attributes\On;
+use Livewire\Component;
+use Livewire\WithPagination;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Table extends Component
 {
-    use WithPagination;
     use LivewireAlert;
+    use WithPagination;
 
     public $search;
+
     public $filter;
+
     public $type;
+
     public $modalConfirm;
+
     public $modalConfirmDelete;
+
     public $statusData;
+
     public $isWillRetire; // akan pensiun
 
     protected $listeners = [
-        'refreshComponent' => '$refresh'
+        'refreshComponent' => '$refresh',
     ];
-    
+
     public function mount($type = null)
     {
         $statusData = request()->input('statusData');
-        $this->statusData = $this->statusData ? : $statusData;
+        $this->statusData = $this->statusData ?: $statusData;
         $this->filter = [
             'area' => '',
             'search' => '',
@@ -61,8 +63,8 @@ class Table extends Component
     }
 
     /* mendengarkan acara daril filter alpine */
-    #[On('filter')] 
-    public function filter($area = null, $search = null, $positionType = null, $selectedDistrict = [], $selectedVillage = [], $positionStatus = null, $isParkir = false, $isNullPerson = false, $statusData= null, $dateType = null, $month = null, $year = null, $dateStart = null, $dateEnd = null)
+    #[On('filter')]
+    public function filter($area = null, $search = null, $positionType = null, $selectedDistrict = [], $selectedVillage = [], $positionStatus = null, $isParkir = false, $isNullPerson = false, $statusData = null, $dateType = null, $month = null, $year = null, $dateStart = null, $dateEnd = null)
     {
         $params = [
             'area' => $area,
@@ -85,21 +87,21 @@ class Table extends Component
         $this->resetPage();
     }
 
-    #[On('export')] 
+    #[On('export')]
     public function export()
     {
         return Excel::download(new VillageStaffExport($this->filter, $this->isWillRetire), 'perangakat-daerah-'.date('Ymd').'.xlsx');
     }
-    
+
     public function delete($id)
     {
         $model = VillageStaff::findOrFail($id);
         $userId = $model->user_id;
         $model->delete();
-        
+
         $user = User::findOrFail($userId);
         $user->delete();
-        
+
         $this->alert('success', 'Success!');
         $this->redirectRoute('village-staff.index', navigate: true);
     }
