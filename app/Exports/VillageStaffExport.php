@@ -26,7 +26,7 @@ class VillageStaffExport implements FromCollection, WithHeadings, WithMapping
      */
     public function collection()
     {
-        return VillageStaff::filter($this->filter)->pensiun($this->filter, $this->isWillRetire)->with(['village.district', 'positionType', 'dataStatus', 'educationLevel'])->orderByDefault()->get();
+        return VillageStaff::filter($this->filter)->pensiun($this->filter, $this->isWillRetire)->with(['village.district', 'positionType', 'dataStatus', 'educationLevel', 'histories.positionTypeStatus'])->orderByDefault()->get();
     }
 
     public function headings(): array
@@ -47,20 +47,26 @@ class VillageStaffExport implements FromCollection, WithHeadings, WithMapping
             'Pendidikan',
             'Status Data',
             /* jabatan definitif */
-            'Kode Jabatan Definitif',
-            'Nama Jabatan Definitif',
-            'Status Jabatan Definitif',
+            'Kode Jabatan 1',
+            'Nama Jabatan 1',
+            'Status Jabatan 1',
+            'Siltap Jabatan 1',
+            'Tunjangan Jabatan 1',
+            'THP Jabatan 1',
             /* jabatan plt */
-            'Kode Jabatan Plt/Plh/Pj',
-            'Nama Jabatan Plt/Plh/Pj',
-            'Status Jabatan Plt/Plh/Pj',
-
+            'Kode Jabatan 2',
+            'Nama Jabatan 2',
+            'Status Jabatan 2',
+            'Siltap Jabatan 2',
+            'Tunjangan Jabatan 2',
+            'THP Jabatan Jabatan 2',
+            'Total THP',
         ];
     }
 
     public function map($item): array
     {
-        return [
+        $data = [
             ++$this->i,
             $item->village->district->getCode(),
             $item->village->district->name,
@@ -75,15 +81,23 @@ class VillageStaffExport implements FromCollection, WithHeadings, WithMapping
             $item->address,
             $item->educationLevel->name ?? '-',
             $item->dataStatus->name,
-            /* jabatan definitif */
-            $item->position_code,
-            $item->position_name,
-            $item->position_is_active ? 'Aktif' : 'Tidak Aktif',
-            /* jabatan plt */
-            /* jabatan definitif */
-            $item->position_plt_code,
-            $item->position_plt_name,
-            $item->position_plt_is_active ? 'Aktif' : 'Tidak Aktif',
         ];
+
+        $histories = $item->histories;
+        $total = 0;
+        foreach ($histories as $history) {
+            
+            $data[] = $history->position_code;
+            $data[] = $history->position_name;
+            $data[] = $history->positionTypeStatus->name;
+            $data[] = $history->siltap;
+            $data[] = $history->tunjangan;
+            $data[] = $history->thp;
+
+            $total += $history->thp;
+        } 
+
+        $data[] = $total;
+        return $data;
     }
 }
