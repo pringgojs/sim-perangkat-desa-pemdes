@@ -32,13 +32,6 @@ class Index extends Component
 
     protected $listeners = ['refreshComponent' => '$refresh', 'detail', 'processToUpdateStatus'];
 
-    public function mount()
-    {
-        /* tampilkan data staff berdasarkan jenis. jika kosong maka defaultkan skretaris desa */
-        $this->type = request()->type ?? key_option('sekretaris_desa');
-        $this->option = Option::find($this->type);
-    }
-
     public function render()
     {
         return view('livewire.pages.village-staff.index', [
