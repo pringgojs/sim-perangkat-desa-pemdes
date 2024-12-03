@@ -100,12 +100,6 @@ class VillageStaffHistory extends Model
     {
         if (!isset($params['area'])) return;
 
-        if ($params['search']) {
-            $q->search($params['search']);
-            
-            return;
-        }
-
         /* filter berdasarkan array village_id */
         if ($params['area'] == 'village' && $params['selectedVillage']) {
             $q->whereIn('village_id', $params['selectedVillage']);
@@ -124,6 +118,37 @@ class VillageStaffHistory extends Model
             $q->where('position_type_id', $params['positionType']);
         }
     }
+
+    public function scopePensiunToday($q)
+    {
+        $q->whereDate('enddate_of_office', date('Y-m-d'));
+    }
+
+    public function scopePensiunThisMonth($q)
+    {
+        $q->whereMonth('enddate_of_office', date('m'))
+            ->whereYear('enddate_of_office', date('Y'));
+    }
+
+    public function scopePensiunOtherMonth($q, $month = null, $year = null)
+    {
+        if (!$month || !$year) return;
+
+        $q->whereMonth('enddate_of_office', $month);
+        $q->whereYear('enddate_of_office', $year);
+    }
+
+    public function scopePensiunDateRange($q, $dateStart = null, $dateEnd = null)
+    {
+        if (!$dateStart || !$dateEnd) return;
+
+        $start = Carbon::parse($dateStart)->format('Y-m-d');
+        $end = Carbon::parse($dateEnd)->format('Y-m-d');
+        
+        $q->whereBetween('enddate_of_office', [$start, $end]);
+    }
+
+
 
     public function getDateOfApp()
     {

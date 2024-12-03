@@ -98,7 +98,7 @@ class VillageStaff extends Model
         }
     }
 
-    public function scopeFilter($q,$params = [])
+    public function scopeFilter($q, $params = [])
     {
         // dd($params);
         info($params);
@@ -107,8 +107,7 @@ class VillageStaff extends Model
 
         if ($params['search']) {
             $q->search($params['search']);
-            
-            return;
+            // return;
         }
 
         /* filter berdasarkan array village_id */
@@ -141,13 +140,11 @@ class VillageStaff extends Model
         }
 
         if ($params['isParkir']) {
-
-            $q->where('is_parkir', $params['isParkir']);
+            $q->isParkir();
         }
 
-        if ($params['statusData']) {
-            $q->where('data_status_id', $params['statusData']);
-        }
+        $q->dataStatusId($params['statusData']);
+        $q->pensiun($params);
     }
 
     // public function getDateOfBirthAttribute($value)
@@ -170,6 +167,17 @@ class VillageStaff extends Model
     public function scopeFinal($q)
     {
         $q->where('data_status_id', key_option('final') );
+    }
+
+    public function scopeIsParkir($q)
+    {
+        $q->where('is_parkir', true);
+    }
+
+    public function scopeDataStatusId($q, $id = null)
+    {
+        if (!$id) return;
+        $q->where('data_status_id', $id);
     }
 
     public function scopeActive($q)
@@ -214,25 +222,48 @@ class VillageStaff extends Model
     }
 
     /* scope pensiun */
-    public function scopePensiun($q, $filter = [], $isWillRetire = false)
+    public function scopePensiun($q, $filter = [])
     {
-        if (!$isWillRetire) return;
-        
-        $now = Carbon::now()->format('Y-m-d');
-        $sixMonthsFromNow = Carbon::now()->addMonths(Constants::COMMING_SOON_PENSIUN)->format('Y-m-d');
-        
-        /* menyeleksi staff yg akan pensiun */
-        if ($isWillRetire) {
-            /* cari data berdasarkan table history */
-            $staff_ids = VillageStaffHistory::filter($filter)->active()->whereBetween(
-                'enddate_of_office', 
-                [$now, $sixMonthsFromNow]
-            )->groupBy('village_staff_id')->pluck('village_staff_id');
+        if ($filter['dateType'] == '' || $filter['dateType'] == null) return;
 
-            $q->whereIn('id', $staff_ids);
-        }
+        /* mencari ID */
+        $staff_ids = VillageStaffHistory::filter($filter)->active()->where(function ($q) use ($filter) {
+            if ($filter['dateType'] == 'today') {
+                $q->pensiunToday();
+            }
+
+            if ($filter['dateType'] == 'this-month') {
+                $q->pensiunThisMonth();
+            }
+
+            if ($filter['dateType'] == 'other-month') {
+                $q->pensiunOtherMonth($filter['month'], $filter['year']);
+            }
+
+            if ($filter['dateType'] == 'date-range') {
+                $q->pensiunDateRange($filter['dateStart'], $filter['dateEnd']);
+            }
+        })->groupBy('village_staff_id')->pluck('village_staff_id');
+
+        $q->whereIn('id', $staff_ids);
     }
-    
+
+    public function scopePensiunToday($q)
+    {
+        return [
+            'start' =>date('Y-m-d'),
+            'end' =>date('Y-m-d'),
+        ];
+    }
+
+    public function scopePensiunThisMonth($q)
+    {
+        return [
+            'start' => date('Y-m-01'),
+            'end' =>date('Y-m-d'),
+        ];
+    }
+
     public function scopeSearch($q, $search = null)
     {
         if (!$search) return;

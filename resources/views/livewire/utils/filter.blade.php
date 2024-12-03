@@ -261,8 +261,7 @@
                                 </a>
                                 {{-- bulan tertentu --}}
                                 <div x-data="{ showOptionMonth: false }">
-                                    <a x-ref="btnOtherMonth"
-                                        @click="dateType == 'other-month' ? dateType = '' : dateType='other-month';showOptionMonth=!showOptionMonth;"
+                                    <a x-ref="btnOtherMonth" @click="showOptionMonth=!showOptionMonth;"
                                         class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
                                         :class="dateType == 'other-month' ? 'bg-green-100' : ''" href="#">
                                         <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg"
@@ -302,7 +301,8 @@
                                                 <x-input x-mask="9999" x-model="year" type="text"
                                                     class="w-full py-2.5" name='year' placeholder="Tahun"
                                                     required />
-                                                <x-button class="w-full mt-3 text-sm" @click="doFilter()"><span
+                                                <x-button class="w-full mt-3 text-sm"
+                                                    @click="dateType == 'other-month' ? dateType = '' : dateType='other-month';doFilter()"><span
                                                         class="mx-auto">Simpan</span></x-button>
                                             </div>
                                         </div>
@@ -334,15 +334,16 @@
                                                 tabindex="-1" id="menu-item-1">
                                                 <x-label for=""
                                                     class="text-xs mb-2 font-medium text-gray-700 dark:text-gray-200">
-                                                    Tanggal awal
+                                                    Tanggal awalnya
                                                 </x-label>
                                                 <x-input class="w-full py-2 focus:border-green-500"
-                                                    id="datepicker-range-start" name="start" type="date" />
+                                                    x-model="dateStart" id="datepicker-range-start" name="start"
+                                                    type="date" />
                                                 <x-label for=""
                                                     class="mt-4 text-xs mb-2 text-gray-700 dark:text-gray-200">
                                                     Tanggal akhir
                                                 </x-label>
-                                                <x-input class="w-full py-2 focus:border-green-500"
+                                                <x-input class="w-full py-2 focus:border-green-500" x-model="dateEnd"
                                                     id="datepicker-range-end" name="end" type="date" />
 
                                                 <x-button class="w-full mt-3 text-sm" @click="doFilter()"><span
@@ -398,7 +399,7 @@
                 </div>
                 <div class="relative flex items-center space-x-1">
                     <button class="hidden" x-ref="btnFilter"
-                        wire:click="$dispatchTo('{{ $table }}','filter', {area, search, positionType, selectedDistrict, selectedVillage, positionStatus, isParkir, isNullPerson, statusData, dateType, search, month, year})"></button>
+                        wire:click="$dispatchTo('{{ $table }}','filter', {area, search, positionType, selectedDistrict, selectedVillage, positionStatus, isParkir, isNullPerson, statusData, dateType, search, month, year, dateStart, dateEnd})"></button>
                     {{-- @click="$wire.filter(area, search, positionType, selectedDistrict, selectedVillage, positionStatus, isParkir, isNullPerson, statusData)"></button> --}}
                 </div>
             </div>
@@ -466,6 +467,24 @@
                 </span>
             </template>
 
+
+            <template x-if="dateType">
+                <span
+                    class="inline-flex items-center gap-x-1.5 py-1.5 ps-3 pe-2 mr-1 rounded-md text-xs font-medium bg-green-100 text-green-800 dark:bg-green-800/30 dark:text-green-500">
+                    Pensiun: <div
+                        x-html="dateType =='today' ? 'hari ini': dateType == 'this-month' ? 'bulan ini' : dateType == 'other-month' ? '' : ''">
+                    </div>
+                    <div
+                        x-html="dateType == 'other-month' ? month +'/'+ year : dateType == 'date-range' ? dateStart +' - '+ dateEnd : ''">
+                    </div>
+                    <button @click="dateType = '';doFilter()" type="button"
+                        class="shrink-0 size-4 inline-flex items-center justify-center rounded-md hover:bg-green-200 focus:outline-none focus:bg-green-200 focus:text-green-500 dark:hover:bg-green-900">
+                        <span class="sr-only">Remove badge</span>
+                        <x-ionicon-close-outline class="shrink-0 size-3" />
+                    </button>
+                </span>
+            </template>
+
             {{-- <x-bi-dot v-show="selectedDistrictName.length > 0" class="size-8 shrink-0" /> --}}
 
             {{-- <template x-show="selectedDistrictName"> --}}
@@ -526,6 +545,8 @@
                     showSelectMonth: false,
                     month: '',
                     year: '',
+                    dateStart: '',
+                    dateEnd: '',
                     init() {
                         // Livewire.hook('morph.updating', () => this.loading = true);
                         // Livewire.hook('morph.updated', () => this.loading = false);

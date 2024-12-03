@@ -45,19 +45,24 @@ class Table extends Component
             'isParkir' => '',
             'positionStatus' => '',
             'statusData' => $this->statusData,
+            'dateType' => '',
+            'month' => '',
+            'year' => '',
+            'dateStart' => '',
+            'dateEnd' => '',
         ];
     }
 
     public function render()
     {
         return view('livewire.pages.village-staff.section.table', [
-            'staffs' => VillageStaff::filter($this->filter)->pensiun($this->filter, $this->isWillRetire)->with(['village.district', 'positionType', 'dataStatus', 'educationLevel'])->orderByDefault()->paginate(),
+            'staffs' => VillageStaff::filter($this->filter)->with(['village.district', 'positionType', 'dataStatus', 'educationLevel'])->orderByDefault()->paginate(),
         ]);
     }
 
     /* mendengarkan acara daril filter alpine */
     #[On('filter')] 
-    public function filter($area = null, $search = null, $positionType = null, $selectedDistrict = [], $selectedVillage = [], $positionStatus = null, $isParkir = false, $isNullPerson = false, $statusData= null, $dateType = null, $month = null, $year = null)
+    public function filter($area = null, $search = null, $positionType = null, $selectedDistrict = [], $selectedVillage = [], $positionStatus = null, $isParkir = false, $isNullPerson = false, $statusData= null, $dateType = null, $month = null, $year = null, $dateStart = null, $dateEnd = null)
     {
         $params = [
             'area' => $area,
@@ -72,6 +77,8 @@ class Table extends Component
             'dateType' => $dateType,
             'month' => $month,
             'year' => $year,
+            'dateStart' => $dateStart,
+            'dateEnd' => $dateEnd,
         ];
 
         $this->filter = $params;
