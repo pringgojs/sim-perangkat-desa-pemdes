@@ -28,6 +28,11 @@ class Option extends Model
         return $this->hasMany(Village::class, 'district_id');
     }
 
+    public function villageByTypes()
+    {
+        return $this->hasMany(Village::class, 'type_id');
+    }
+
     public function villageTypeDetail()
     {
         return $this->hasOne(VillageTypeDetail::class, 'type_id');

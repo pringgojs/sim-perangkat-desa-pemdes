@@ -49,6 +49,11 @@ class Village extends Model
         return $this->hasMany(VillageStaff::class, 'village_id');
     }
 
+    public function positionTypes()
+    {
+        return $this->hasMany(VillagePositionType::class, 'village_id');
+    }
+
     public function scopeSearch($q, $search = null)
     {
         if (! $search) {

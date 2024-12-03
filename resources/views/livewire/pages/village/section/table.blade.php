@@ -33,25 +33,29 @@
                             class="inline-flex rounded-lg p-2 bg-purple-50 text-purple-700 ring-4 ring-white">
                             <x-heroicon-o-pencil class="h-5 w-5" />
                         </a>
-                        <a id="dropdownDefaultButton-{{ $item->id }}"
-                            data-dropdown-toggle="dropdown-{{ $item->id }}"
-                            class="inline-flex rounded-lg p-2 bg-red-50 text-red-700 ring-4 ring-white cursor-pointer">
-                            <x-heroicon-o-trash class="h-5 w-5" />
-                        </a>
 
-                        <div id="dropdown-{{ $item->id }}"
-                            class="z-10 hidden  mr-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-64 dark:bg-gray-700">
-                            <div
-                                class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                        @if ($item->positionTypes->count() == 0)
+                            <a id="dropdownDefaultButton-{{ $item->id }}"
+                                data-dropdown-toggle="dropdown-{{ $item->id }}"
+                                class="inline-flex rounded-lg p-2 bg-red-50 text-red-700 ring-4 ring-white cursor-pointer">
+                                <x-heroicon-o-trash class="h-5 w-5" />
+                            </a>
 
-                                <p class="mb-3 font-normal text-sm text-gray-500 dark:text-gray-400">Anda yakin ingin
-                                    menghapus <b>{{ ucwords(strtolower($item->name)) }}</b>?</p>
-                                <a wire:key="item-{{ $item->id }}" wire:click="delete('{{ $item->id }}')"
-                                    class="cursor-pointer item-right rounded-md bg-red-50 px-2.5 py-1.5 text-sm font-semibold text-red-900 shadow-sm ring-1 ring-inset ring-red-300 hover:bg-red-50">
-                                    Ya, hapus!
-                                </a>
+                            <div id="dropdown-{{ $item->id }}"
+                                class="z-10 hidden  mr-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-64 dark:bg-gray-700">
+                                <div
+                                    class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+
+                                    <p class="mb-3 font-normal text-sm text-gray-500 dark:text-gray-400">Anda yakin
+                                        ingin
+                                        menghapus <b>{{ ucwords(strtolower($item->name)) }}</b>?</p>
+                                    <a wire:key="item-{{ $item->id }}" wire:click="delete('{{ $item->id }}')"
+                                        class="cursor-pointer item-right rounded-md bg-red-50 px-2.5 py-1.5 text-sm font-semibold text-red-900 shadow-sm ring-1 ring-inset ring-red-300 hover:bg-red-50">
+                                        Ya, hapus!
+                                    </a>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </li>
             @endforeach

@@ -25,7 +25,7 @@ class Table extends Component
     public function render()
     {
         return view('livewire.pages.village.section.table', [
-            'villages' => Village::search($this->search)->type($this->type)->district($this->district)->orderByDefault()->paginate(),
+            'villages' => Village::search($this->search)->type($this->type)->district($this->district)->with('positionTypes')->orderByDefault()->paginate(),
         ]);
     }
 

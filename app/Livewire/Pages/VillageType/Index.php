@@ -19,7 +19,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.pages.village-type.index', [
-            'types' => Option::search($this->search)->villageTypes()->paginate(),
+            'types' => Option::search($this->search)->villageTypes()->with('villageByTypes')->paginate(),
         ]);
     }
 
