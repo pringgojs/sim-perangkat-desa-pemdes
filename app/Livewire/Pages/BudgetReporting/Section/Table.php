@@ -3,12 +3,15 @@
 namespace App\Livewire\Pages\BudgetReporting\Section;
 
 use DateTime;
+use Exception;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
 use Livewire\Attributes\Computed;
 use Illuminate\Support\Facades\DB;
 use App\Models\VillageStaffHistory;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\BudgetReportingExport;
 
 class Table extends Component
 {
@@ -22,6 +25,12 @@ class Table extends Component
     public function render()
     {
         return view('livewire.pages.budget-reporting.section.table');
+    }
+
+    #[On('export')]
+    public function export()
+    {
+        return Excel::download(new BudgetReportingExport($this->filter), 'budget-anggaran-'.date('YmdHis').'.xlsx');
     }
 
     #[Computed]
