@@ -41,6 +41,15 @@ class StaffHistoriesService
         $history->is_active = false;
         $history->non_active_at = date('Y-m-d H:i:s');
         $history->save();
+
+        /* update village position type */
+        $villagePositionType = VillagePositionType::find($history->village_position_type_id);
+        $villagePositionType->position_type_status_id = null;
+        $villagePositionType->is_parkir = 0;
+        $villagePositionType->siltap = 0;
+        $villagePositionType->tunjangan = 0;
+        $villagePositionType->save();
+
     }
 
     public function setActive($history)
