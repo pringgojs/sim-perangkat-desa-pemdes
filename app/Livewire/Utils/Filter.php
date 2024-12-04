@@ -22,6 +22,8 @@ class Filter extends Component
 
     public $positionType;
 
+    public $dateType;
+
     public $positionTypeName;
 
     public $positionTypeStatus;
@@ -56,6 +58,7 @@ class Filter extends Component
     public function mount($table, $positionType = null)
     {
         $statusData = request()->input('statusData');
+        $this->dateType = request()->input('dateType') ? : '';
         $this->statusData = $statusData ?: null;
         $this->districts = Option::districts()->get();
         $this->positionTypes = Option::positionTypes()->get();
@@ -66,6 +69,7 @@ class Filter extends Component
         $this->positionType = $positionType;
         $this->positionTypeName = $positionType ? Option::findOrFail($positionType)->name : '';
         $this->statusDataName = $this->statusData ? Option::findOrFail($this->statusData)->name : '';
+
     }
 
     // public function filter($area = null, $search = null, $positionType = null, $selectedDistrict = [], $selectedVillage = [], $positionStatus = null, $isParkir = false, $isNullPerson = false, $statusData= null)

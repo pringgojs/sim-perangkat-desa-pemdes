@@ -28,7 +28,7 @@ class Table extends Component
     public $modalConfirmDelete;
 
     public $statusData;
-
+    
     public $isWillRetire; // akan pensiun
 
     protected $listeners = [
@@ -39,6 +39,7 @@ class Table extends Component
     {
         $statusData = request()->input('statusData');
         $type = $type ? : request()->input('type');
+        $dateType = request()->input('dateType') ? : '';
         $this->statusData = $this->statusData ?: $statusData;
         $this->filter = [
             'area' => '',
@@ -49,12 +50,13 @@ class Table extends Component
             'isParkir' => '',
             'positionStatus' => '',
             'statusData' => $this->statusData,
-            'dateType' => '',
+            'dateType' => $dateType,
             'month' => '',
             'year' => '',
             'dateStart' => '',
             'dateEnd' => '',
         ];
+
     }
 
     public function render()

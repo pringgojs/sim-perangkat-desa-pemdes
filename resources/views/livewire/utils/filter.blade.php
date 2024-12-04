@@ -526,6 +526,7 @@
                 </span>
             </template>
         </div>
+
         {{-- <span x-html="JSON.stringify(selectedDistrictName)"></span> --}}
 
         <script>
@@ -553,7 +554,7 @@
                     selectedVillage: [],
                     selectedVillageName: [],
                     /* date */
-                    dateType: '',
+                    dateType: @entangle('dateType'),
                     showSelectMonth: false,
                     month: '',
                     year: '',
