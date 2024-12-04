@@ -245,6 +245,26 @@
                     @enderror
                 </div>
                 <!-- End Col -->
+                <div class="sm:col-span-3">
+                    <label for="af-account-bio"
+                        class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
+                        Jenis pendidikan
+                    </label>
+                </div>
+                <!-- End Col -->
+
+                <div class="sm:col-span-9">
+                    <select id="educationLevels" wire:model="form.education_level"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
+                        <option selected>Pilih jenis pendidikan</option>
+                        @foreach ($educationLevels as $item)
+                            <option value="{{ $item->id }}">{{ ucfirst($item->name) }}</option>
+                        @endforeach
+                    </select>
+                    @error('form.education_level')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
             </div>
             <!-- End Grid -->
 

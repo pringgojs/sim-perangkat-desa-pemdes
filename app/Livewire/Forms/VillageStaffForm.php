@@ -63,12 +63,15 @@ class VillageStaffForm extends Form
 
     public $position_type;
 
+    public $education_level;
+
     public $position_type_status;
 
     public $village_position_type;
 
     public $data_status;
-
+    
+    
     public $user;
 
     public $ktp_old;
@@ -163,6 +166,7 @@ class VillageStaffForm extends Form
             'date_of_birth' => $this->date_of_birth ?? null,
             'place_of_birth' => $this->place_of_birth ?? null,
             'gender' => $this->gender ?? 'L',
+            'education_level_id' => $this->education_level,
             // 'position_name' => $this->position_name ?? null,
             // 'sk_number' => $this->sk_number ?? null,
             // 'sk_tmt' => $this->sk_tmt ?? null,
@@ -266,6 +270,7 @@ class VillageStaffForm extends Form
         $this->place_of_birth = $village_staff->place_of_birth;
         $this->ktp = $village_staff->ktp_scan;
         $this->position_name = $village_staff->position_name;
+        $this->education_level = $village_staff->education_level_id;
         $this->sk_number = $village_staff->sk_number;
         $this->sk_tmt = $village_staff->sk_tmt;
         $this->sk_date = $village_staff->sk_date;

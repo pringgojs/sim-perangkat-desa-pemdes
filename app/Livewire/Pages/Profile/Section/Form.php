@@ -26,6 +26,8 @@ class Form extends Component
     public $position_type;
 
     public $positions;
+    
+    public $educationLevels;
 
     public $isReadonly = false;
 
@@ -36,6 +38,7 @@ class Form extends Component
         $this->staff = $staff;
         $this->form = $form;
         $this->position_type = Option::find($staff->position_id);
+        $this->educationLevels = Option::educationLevels()->get();
         $this->positions = Option::positionTypes()->get();
         $this->from = $from; // isinya 'admin
 
@@ -49,8 +52,6 @@ class Form extends Component
         if ($from == 'admin' && $staff->dataStatus->key == 'final') {
             $this->isReadonly = true;
         }
-
-        self::calculatePensiunDate();
     }
 
     public function store()
@@ -70,11 +71,6 @@ class Form extends Component
     public function updatedFormKtp()
     {
         $this->form->validateFilePhoto(); // Memvalidasi hanya field file_photo
-    }
-
-    public function calculatePensiunDate()
-    {
-        $this->form->calculatePensiunDate(); // Memvalidasi hanya field file_photo
     }
 
     public function refreshComponent()

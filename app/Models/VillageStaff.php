@@ -44,6 +44,7 @@ class VillageStaff extends Model
         'position_plt_code',
         'position_plt_status_id',
         'data_status_id',
+        'education_level_id',
         'sk_number',
         'sk_tmt',
         'gender',
