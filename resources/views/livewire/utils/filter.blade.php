@@ -483,7 +483,7 @@
             <template x-if="dateType">
                 <span
                     class="inline-flex items-center gap-x-1.5 py-1.5 ps-3 pe-2 mr-1 rounded-md text-xs font-medium bg-green-100 text-green-800 dark:bg-green-800/30 dark:text-green-500">
-                    Pensiun: <div
+                    Tanggal: <div
                         x-html="dateType =='today' ? 'hari ini': dateType == 'this-month' ? 'bulan ini' : dateType == 'other-month' ? '' : ''">
                     </div>
                     <div
