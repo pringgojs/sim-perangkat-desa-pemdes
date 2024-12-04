@@ -14,7 +14,7 @@
                     ->count();
             @endphp
             @if ($notif)
-                <a href="{{ route('village-staff.index', ['dateType' => 'this-month']) }}"
+                <a href="{{ route('village-staff.index', ['dateType' => 'this-month']) }}" wire:navigate
                     class="relative rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
                     <span class="absolute -inset-1.5"></span>
                     <span class="sr-only">View notifications</span>
@@ -33,7 +33,7 @@
                 $notif = \App\Models\VillageStaff::pending()->count();
             @endphp
             @if ($notif)
-                <a href="{{ route('village-staff.index', ['statusData' => key_option('diajukan')]) }}"
+                <a href="{{ route('village-staff.index', ['statusData' => key_option('diajukan')]) }}" wire:navigate
                     class="relative rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
                     <span class="absolute -inset-1.5"></span>
                     <span class="sr-only">View notifications</span>
