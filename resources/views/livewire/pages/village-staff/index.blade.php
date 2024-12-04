@@ -16,6 +16,6 @@
 
     {{-- panggil component table.staff --}}
     {{-- <x-staff.table :$staffs :$staff /> --}}
-    @livewire('utils.filter', ['table' => 'pages.village-staff.section.table', 'useStatusData' => true, 'useArea' => true, 'usePositionType' => true, 'usePositionStatus' => true, 'useDate' => true])
+    @livewire('utils.filter', ['table' => 'pages.village-staff.section.table', 'useStatusData' => true, 'useArea' => true, 'usePositionType' => true, 'usePositionStatus' => true, 'useDate' => true, 'useDateToday' => true, 'useDateThisMonth' => true, 'useDateOtherMonth' => true, 'useDateRange' => true])
     @livewire('pages.village-staff.section.table')
 </div>

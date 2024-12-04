@@ -237,121 +237,133 @@
                                     class="block pt-2 pb-1 px-3 text-xs font-medium uppercase text-gray-400 dark:text-neutral-500">
                                     Tanggal
                                 </span>
-                                <a @click="dateType == 'today' ? dateType = '' : dateType='today';doFilter()"
-                                    class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
-                                    :class="dateType == 'today' ? 'bg-green-100' : ''" href="#">
-                                    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
-                                    </svg>
-
-                                    Hari ini
-                                </a>
-                                <a @click="dateType == 'this-month' ? dateType = '' : dateType='this-month';doFilter()"
-                                    class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
-                                    :class="dateType == 'this-month' ? 'bg-green-100' : ''" href="#">
-                                    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
-                                    </svg>
-
-                                    Bulan ini
-                                </a>
-                                {{-- bulan tertentu --}}
-                                <div x-data="{ showOptionMonth: false }">
-                                    <a x-ref="btnOtherMonth" @click="showOptionMonth=!showOptionMonth;"
+                                @if ($useDateToday)
+                                    <a @click="dateType == 'today' ? dateType = '' : dateType='today';doFilter()"
                                         class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
-                                        :class="dateType == 'other-month' ? 'bg-green-100' : ''" href="#">
+                                        :class="dateType == 'today' ? 'bg-green-100' : ''" href="#">
                                         <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg"
                                             fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                             stroke="currentColor" class="size-6">
                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                 d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
                                         </svg>
-                                        Bulan Tertentu
+
+                                        Hari ini
                                     </a>
-                                    {{-- select bulan --}}
-                                    <div x-show='showOptionMonth' x-anchor.right-end="$refs.btnOtherMonth" x-cloak
-                                        x-transition @click.away="showOptionMonth= !showOptionMonth"
-                                        class="inline-flex z-10 w-48 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                        role="menu" aria-orientation="vertical" aria-labelledby="menu-button"
-                                        tabindex="-1">
-                                        <div class="py-1 capitalize" role="none">
-                                            <div class="block p-4 text-sm text-gray-700" role="menuitem"
-                                                tabindex="-1" id="menu-item-1">
-                                                <x-label for=""
-                                                    class="text-xs font-medium text-gray-700 dark:text-gray-200">
-                                                    bulan
-                                                </x-label>
-                                                <select name='month' x-model="month"
-                                                    class="bg-gray-50 border px-4 capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
-                                                    required>
-                                                    <option value="" selected disabled>pilih bulan</option>
-                                                    @foreach (months() as $month)
-                                                        <option value="{{ $month['value'] }}">{{ $month['name'] }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <x-label for=""
-                                                    class="mt-4 text-xs text-gray-700 dark:text-gray-200">
-                                                    tahun
-                                                </x-label>
-                                                <x-input x-mask="9999" x-model="year" type="text"
-                                                    class="w-full py-2.5" name='year' placeholder="Tahun"
-                                                    required />
-                                                <x-button class="w-full mt-3 text-sm"
-                                                    @click="dateType == 'other-month' ? dateType = '' : dateType='other-month';doFilter()"><span
-                                                        class="mx-auto">Simpan</span></x-button>
+                                @endif
+                                @if ($useDateThisMonth)
+                                    <a @click="dateType == 'this-month' ? dateType = '' : dateType='this-month';doFilter()"
+                                        class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
+                                        :class="dateType == 'this-month' ? 'bg-green-100' : ''" href="#">
+                                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg"
+                                            fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                            stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
+                                        </svg>
+
+                                        Bulan ini
+                                    </a>
+                                @endif
+                                @if ($useDateOtherMonth)
+                                    {{-- bulan tertentu --}}
+                                    <div x-data="{ showOptionMonth: false }">
+                                        <a x-ref="btnOtherMonth" @click="showOptionMonth=!showOptionMonth;"
+                                            class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
+                                            :class="dateType == 'other-month' ? 'bg-green-100' : ''" href="#">
+                                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg"
+                                                fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                                stroke="currentColor" class="size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
+                                            </svg>
+                                            Bulan Tertentu
+                                        </a>
+                                        {{-- select bulan --}}
+                                        <div x-show='showOptionMonth' x-anchor.right-end="$refs.btnOtherMonth" x-cloak
+                                            x-transition @click.away="showOptionMonth= !showOptionMonth"
+                                            class="inline-flex z-10 w-48 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                            role="menu" aria-orientation="vertical" aria-labelledby="menu-button"
+                                            tabindex="-1">
+                                            <div class="py-1 capitalize" role="none">
+                                                <div class="block p-4 text-sm text-gray-700" role="menuitem"
+                                                    tabindex="-1" id="menu-item-1">
+                                                    <x-label for=""
+                                                        class="text-xs font-medium text-gray-700 dark:text-gray-200">
+                                                        bulan
+                                                    </x-label>
+                                                    <select name='month' x-model="month"
+                                                        class="bg-gray-50 border px-4 capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+                                                        required>
+                                                        <option value="" selected disabled>pilih bulan</option>
+                                                        @foreach (months() as $month)
+                                                            <option value="{{ $month['value'] }}">{{ $month['name'] }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <x-label for=""
+                                                        class="mt-4 text-xs text-gray-700 dark:text-gray-200">
+                                                        tahun
+                                                    </x-label>
+                                                    <x-input x-mask="9999" x-model="year" type="text"
+                                                        class="w-full py-2.5" name='year' placeholder="Tahun"
+                                                        required />
+                                                    <x-button class="w-full mt-3 text-sm"
+                                                        @click="dateType == 'other-month' ? dateType = '' : dateType='other-month';doFilter()"><span
+                                                            class="mx-auto">Simpan</span></x-button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endif
 
-                                {{-- date range --}}
-                                <div x-data="{ showOptionDaterange: false }">
-                                    <a x-ref="btnDateRange"
-                                        @click="dateType == 'date-range' ? dateType = '' : dateType='date-range';showOptionDaterange=!showOptionDaterange;"
-                                        class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
-                                        :class="dateType == 'date-range' ? 'bg-green-100' : ''" href="#">
-                                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg"
-                                            fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                            stroke="currentColor" class="size-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
-                                        </svg>
-                                        Range tanggal
-                                    </a>
+                                @if ($useDateRange)
                                     {{-- date range --}}
-                                    <div x-show='showOptionDaterange' x-anchor.right-end="$refs.btnDateRange" x-cloak
-                                        x-transition @click.away="showOptionDaterange= !showOptionDaterange"
-                                        class="inline-flex z-10 w-48 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                        role="menu" aria-orientation="vertical" aria-labelledby="menu-button"
-                                        tabindex="-1">
-                                        <div class="py-1 capitalize" date-rangepicker role="none">
-                                            <div class="block p-4 text-sm text-gray-700" role="menuitem"
-                                                tabindex="-1" id="menu-item-1">
-                                                <x-label for=""
-                                                    class="text-xs mb-2 font-medium text-gray-700 dark:text-gray-200">
-                                                    Tanggal awalnya
-                                                </x-label>
-                                                <x-input class="w-full py-2 focus:border-green-500"
-                                                    x-model="dateStart" id="datepicker-range-start" name="start"
-                                                    type="date" />
-                                                <x-label for=""
-                                                    class="mt-4 text-xs mb-2 text-gray-700 dark:text-gray-200">
-                                                    Tanggal akhir
-                                                </x-label>
-                                                <x-input class="w-full py-2 focus:border-green-500" x-model="dateEnd"
-                                                    id="datepicker-range-end" name="end" type="date" />
+                                    <div x-data="{ showOptionDaterange: false }">
+                                        <a x-ref="btnDateRange"
+                                            @click="dateType == 'date-range' ? dateType = '' : dateType='date-range';showOptionDaterange=!showOptionDaterange;"
+                                            class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
+                                            :class="dateType == 'date-range' ? 'bg-green-100' : ''" href="#">
+                                            <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg"
+                                                fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                                stroke="currentColor" class="size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
+                                            </svg>
+                                            Range tanggal
+                                        </a>
+                                        {{-- date range --}}
+                                        <div x-show='showOptionDaterange' x-anchor.right-start="$refs.btnDateRange"
+                                            x-cloak x-transition
+                                            @click.away="showOptionDaterange= !showOptionDaterange"
+                                            class="inline-flex z-10 w-48 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                            role="menu" aria-orientation="vertical" aria-labelledby="menu-button"
+                                            tabindex="-1">
+                                            <div class="py-1 capitalize" date-rangepicker role="none">
+                                                <div class="block p-4 text-sm text-gray-700" role="menuitem"
+                                                    tabindex="-1" id="menu-item-1">
+                                                    <x-label for=""
+                                                        class="text-xs mb-2 font-medium text-gray-700 dark:text-gray-200">
+                                                        Tanggal awalnya
+                                                    </x-label>
+                                                    <x-input class="w-full py-2 focus:border-green-500"
+                                                        x-model="dateStart" id="datepicker-range-start"
+                                                        name="start" type="date" />
+                                                    <x-label for=""
+                                                        class="mt-4 text-xs mb-2 text-gray-700 dark:text-gray-200">
+                                                        Tanggal akhir
+                                                    </x-label>
+                                                    <x-input class="w-full py-2 focus:border-green-500"
+                                                        x-model="dateEnd" id="datepicker-range-end" name="end"
+                                                        type="date" />
 
-                                                <x-button class="w-full mt-3 text-sm" @click="doFilter()"><span
-                                                        class="mx-auto">Simpan</span></x-button>
+                                                    <x-button class="w-full mt-3 text-sm" @click="doFilter()"><span
+                                                            class="mx-auto">Simpan</span></x-button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endif
                             </div>
                         @endif
                     </div>

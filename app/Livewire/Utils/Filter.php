@@ -45,6 +45,14 @@ class Filter extends Component
 
     public $useDate = false;
 
+    public $useDateToday = false;
+    
+    public $useDateThisMonth = false;
+    
+    public $useDateOtherMonth = false;
+    
+    public $useDateRange = false;
+    
     public function mount($table, $positionType = null)
     {
         $statusData = request()->input('statusData');

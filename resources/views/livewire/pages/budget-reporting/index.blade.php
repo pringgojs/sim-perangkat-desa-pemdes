@@ -4,6 +4,6 @@
             <h1 class="text-base font-semibold leading-6 text-gray-900">Budget Anggaran</h1>
         </div>
     </div>
-    @livewire('utils.filter', ['table' => 'pages.budget-reporting.section.table', 'useArea' => true, 'useDate' => true])
+    @livewire('utils.filter', ['table' => 'pages.budget-reporting.section.table', 'useArea' => true, 'useDate' => true, 'useDateRange' => true])
     @livewire('pages.budget-reporting.section.table')
 </div>
