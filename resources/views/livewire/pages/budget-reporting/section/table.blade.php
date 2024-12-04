@@ -1,5 +1,9 @@
 <div>
-    <x-table :headers="['Desa', 'Total Anggaran Perbulan', 'Total Anggaran ' . $counter . ' Bulan']" title="Data Anggaran Setiap Desa">
+    <x-table :headers="[
+        'Desa',
+        'Dana Yang Dibutuhkan Bulan ' . date('M') . ' ' . date('Y'),
+        'Dana Yang Dibutuhkan ' . $counter . ' Bulan',
+    ]" title="Data Anggaran Setiap Desa">
         <!-- Table Content -->
         <x-slot:table>
             @foreach ($this->items as $index => $item)
