@@ -1,6 +1,13 @@
 <div>
     <h3 class="text-base font-semibold leading-6 text-gray-900">Total Perangkat Desa Berdasarkan Jenis Jabatan</h3>
-    <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+    <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4">
+        <a href="{{ route('village-staff.index') }}" wire:navigate
+            class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+            <dt class="truncate text-sm font-medium text-gray-500">Total </dt>
+            <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
+                {{ \App\Models\VillageStaffHistory::active()->groupBy('village_staff_id')->pluck('village_staff_id')->count() }}
+            </dd>
+        </a>
         @foreach ($options as $item)
             <a href="{{ route('village-staff.index', ['type' => $item->id]) }}" wire:navigate
                 wire:key="stats-staff-{{ $item->id }}"

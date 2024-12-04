@@ -243,8 +243,11 @@
                     </form>
                 </div>
 
+                @php
+                    $title = 'Data Referensi Siltap & Tunjangan Desa ' . $staff->village->name;
+                @endphp
                 <div x-data="{ copied: '' }">
-                    <x-table :headers="['Desa', 'Jabatan', 'Siltap', 'Tunjangan']" title="Data Referensi Siltap & Tunjangan">
+                    <x-table :headers="['Jabatan', 'Siltap', 'Tunjangan']" :title="$title">
                         <!-- Table Content -->
                         <x-slot:table>
                             @foreach ($this->siltapTable as $index => $item)

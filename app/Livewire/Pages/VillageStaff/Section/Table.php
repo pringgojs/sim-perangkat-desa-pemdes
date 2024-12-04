@@ -38,6 +38,7 @@ class Table extends Component
     public function mount($type = null)
     {
         $statusData = request()->input('statusData');
+        $type = $type ? : request()->input('type');
         $this->statusData = $this->statusData ?: $statusData;
         $this->filter = [
             'area' => '',
