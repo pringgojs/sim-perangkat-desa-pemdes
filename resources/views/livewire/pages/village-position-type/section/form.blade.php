@@ -28,7 +28,8 @@
                         <div class="sm:flex">
                             <div class="p-1 space-y-1">
                                 <div class="max-w-sm" @on-item-selected="$wire.getVillage($event.detail)">
-                                    <livewire:utils.select-search wire:model="form.district" callback="on-item-selected"
+                                    <livewire:utils.select-search wire:model="form.district"
+                                        isReadonly="{{ $form->id ? true : false }}" callback="on-item-selected"
                                         value="{{ $form->district }}" :options="$districts" />
                                 </div>
                             </div>
@@ -47,8 +48,9 @@
                     <div class="sm:col-span-9">
                         <div class="sm:flex p-1 space-y-1 ">
                             <select id="villages" wire:model="form.village"
+                                @if ($form->id) disabled @endif @change="$wire.getCode"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
-                                <option selected>Choose a village</option>
+                                <option selected>pilih desa</option>
                                 @foreach ($villages as $item)
                                     <option value="{{ $item->id }}">{{ ucfirst($item->name) }}</option>
                                 @endforeach
@@ -72,9 +74,9 @@
 
                     <div class="sm:col-span-9">
                         <div class="sm:flex p-1 space-y-1 ">
-                            <select id="positionTypes" wire:model="form.positionType" @change="$wire.getSiltap"
+                            <select id="positionTypes" wire:model="form.positionType"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
-                                <option selected>Choose a position type</option>
+                                <option selected>pilih jenis jabatan</option>
                                 @foreach ($positionTypes as $item)
                                     <option value="{{ $item->id }}">{{ ucfirst($item->name) }}</option>
                                 @endforeach
@@ -138,7 +140,7 @@
                         </div>
                     </div>
                     <div class="sm:col-span-9">
-                        <input wire:model="form.code" type="text"
+                        <input wire:model="form.code" type="text" readonly
                             class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:border-green-500 focus:ring-green-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
                         <div>
                             @error('form.code')

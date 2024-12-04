@@ -2,14 +2,15 @@
 
 namespace App\Livewire\Pages\VillagePositionType\Section;
 
-use App\Livewire\Forms\VillagePositionTypeForm;
 use App\Models\Option;
 use App\Models\Village;
-use App\Models\VillagePositionType;
-use App\Models\VillageSiltap;
-use Illuminate\Support\Facades\DB;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
+use App\Models\VillageSiltap;
+use Livewire\Attributes\Computed;
+use Illuminate\Support\Facades\DB;
+use App\Models\VillagePositionType;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+use App\Livewire\Forms\VillagePositionTypeForm;
 
 class Form extends Component
 {
@@ -41,7 +42,7 @@ class Form extends Component
             $this->form->setModel($model);
             self::getVillage($model->village->district_id);
         }
-
+        
     }
 
     public function getVillage($id)
@@ -50,21 +51,6 @@ class Form extends Component
             return;
         }
         $this->villages = Village::where('district_id', $id)->with(['district'])->orderByDefault()->get();
-    }
-
-    public function getSiltap()
-    {
-        if (! $this->form->positionType) {
-            return;
-        }
-        if (! $this->form->village) {
-            return;
-        }
-
-        $villageSiltap = VillageSiltap::where('village_id', $this->form->village)->where('position_type_id', $this->form->positionType)->first();
-
-        $this->form->tunjangan = $villageSiltap->tunjangan;
-        $this->form->siltap = $villageSiltap->siltap;
     }
 
     public function store()
@@ -77,7 +63,40 @@ class Form extends Component
 
         $this->alert('success', 'Success!');
         $this->redirectRoute('village-position-type.index', navigate: true);
+    }
 
+    public function getCode()
+    {
+        if ($this->form->id) {
+            return $this->form->code;
+        }
+
+        /* generator */
+        if ($this->form->village) {
+
+
+            $village = Village::find($this->form->village);
+
+            $positinTypes = VillagePositionType::villageId($this->form->village)->get();
+            
+            /* kembalikan prefix -1 */
+            if (!$positinTypes) {
+                $this->form->code = $village->code.'-1';
+                return;
+            }
+            
+            $index = [];
+            foreach ($positinTypes as $item) {
+                $explode = explode('-', $item->code);
+                if (isset($explode[1])) {
+                    $index[] = $explode[1];
+                }
+            }
+
+            $newIndex = $index ? max($index) + 1 : 1;
+
+            $this->form->code = $village->code.'-'.$newIndex; 
+        }
     }
 
     public function render()

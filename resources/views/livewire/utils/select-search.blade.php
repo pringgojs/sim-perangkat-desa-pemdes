@@ -4,6 +4,7 @@
         value: @entangle('value'),
         options: @js($options),
         filteredOptions: [],
+        isReadonly: @entangle('isReadonly'),
         isDropdownVisible: false,
     
         // Inisialisasi dan filterisasi
@@ -24,8 +25,8 @@
     }" x-init="search = value;
     filterOptions()" class="relative" @click.away="isDropdownVisible = false">
         <!-- Kotak Pencarian -->
-        <input type="text" x-model="search" @focus="isDropdownVisible = true" @input="filterOptions()"
-            @change="value = search"
+        <input type="text" x-model="search" :readonly="isReadonly ? true : false" @focus="isDropdownVisible = true"
+            @input="filterOptions()" @change="value = search"
             class="bg-white border  pe-11 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
             placeholder="Cari..." />
 

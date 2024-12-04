@@ -7,6 +7,8 @@ use Livewire\Component;
 class SelectSearch extends Component
 {
     public $callback;
+    
+    public $isReadonly = false;
 
     public $options = [];
 
