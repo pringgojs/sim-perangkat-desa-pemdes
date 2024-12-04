@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('position_code')->nullable();
             $table->uuid('position_type_id');
             $table->string('position_name')->nullable();
+            $table->string('authorized signature')->nullable();
             $table->uuid('position_type_status_id');
             $table->decimal('siltap', 15, 2)->default(0);
             $table->boolean('is_active')->default(1);

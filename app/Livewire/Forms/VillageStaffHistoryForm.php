@@ -34,6 +34,8 @@ class VillageStaffHistoryForm extends Form
 
     public $tunjangan;
 
+    public $authorizedSignature;
+
     public function rules()
     {
         return [
@@ -89,6 +91,7 @@ class VillageStaffHistoryForm extends Form
             'tunjangan' => $tunjangan,
             'thp' => $thp,
             'is_parkir' => $this->isParkir,
+            'authorized_signature' => $this->authorizedSignature,
             'position_type_status_id' => $this->positionTypeStatus,
         ];
 
@@ -135,6 +138,7 @@ class VillageStaffHistoryForm extends Form
         $this->staffId = $model->village_staff_id;
         $this->siltap = $model->siltap;
         $this->tunjangan = $model->tunjangan;
+        $this->authorizedSignature = $model->authorized_signature;
         // dd($this);
     }
 

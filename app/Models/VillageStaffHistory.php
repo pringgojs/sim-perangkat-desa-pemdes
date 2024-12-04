@@ -37,6 +37,7 @@ class VillageStaffHistory extends Model
         'date_of_appointment',
         'enddate_of_office',
         'non_active_at',
+        'authorized_signature',
     ];
 
     protected $casts = [

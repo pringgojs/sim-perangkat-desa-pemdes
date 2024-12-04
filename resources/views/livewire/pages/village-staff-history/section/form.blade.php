@@ -139,6 +139,23 @@
                                 @enderror
                             </div>
 
+
+                            <div class="sm:col-span-3">
+                                <label for="af-account-bio-1"
+                                    class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
+                                    Pejabatan Penanda-tangan SK
+                                </label>
+                            </div>
+
+                            <div class="sm:col-span-9">
+                                <input id="af-account-bio-1" wire:model="form.authorizedSignature"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+                                    placeholder=""></input>
+                                @error('form.authorizedSignature')
+                                    <span class="text-red-500">{{ $message }}</span>
+                                @enderror
+                            </div>
+
                             <div class="sm:col-span-3">
                                 <label for="input-date-appointment"
                                     class="inline-block text-sm text-gray-800 mt-2.5 dark:text-neutral-200">
