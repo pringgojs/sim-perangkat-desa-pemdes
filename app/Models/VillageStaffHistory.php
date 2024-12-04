@@ -87,6 +87,11 @@ class VillageStaffHistory extends Model
         $q->where('village_staff_id', $id);
     }
 
+    public function scopeVillageId($q, $id)
+    {
+        $q->where('village_id', $id);
+    }
+
     public function scopeActive($q)
     {
         $q->where('is_active', true);

@@ -179,6 +179,12 @@
                                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">PD
                                         Akan Pensiun</a>
                                 </li>
+
+                                <li>
+                                    <a href="{{ route('budget-reporting.index') }}" wire:navigate
+                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Budget
+                                        Anggaran</a>
+                                </li>
                             </ul>
                         </div>
                     </li>

@@ -24,6 +24,7 @@ use App\Livewire\Pages\VillageType\Index as VillageTypeIndex;
 use App\Livewire\Pages\Notification\Index as NotificationIndex;
 use App\Livewire\Pages\VillageStaff\Index as VillageStaffIndex;
 use App\Livewire\Pages\VillageSiltap\Index as VillageSiltapIndex;
+use App\Livewire\Pages\BudgetReporting\Index as BudgetReportingIndex;
 use App\Livewire\Pages\PendingApproval\Index as PendingApprovalIndex;
 use App\Livewire\Pages\VillageSiltap\Section\Form as VillageSiltapForm;
 use App\Livewire\Pages\Tools\RemoveBacklinks\Index as RemoveBacklinksIndex;
@@ -47,6 +48,7 @@ Route::middleware([
     // Route::middleware([
     //     'role:administrator'
     // ])->group(function () {
+        Route::get('budget-reporting', BudgetReportingIndex::class)->name('budget-reporting.index');
         Route::get('village-staff-history/{id}/edit', VillageStaffHistoryForm::class)->name('village-staff-history.edit');
         Route::get('village-staff-history/{staffId}/create', VillageStaffHistoryForm::class)->name('village-staff-history.create');
         Route::get('village-position-type/{id}/edit', Edit::class)->name('village-position-type.edit');
