@@ -271,9 +271,6 @@
                                 <tr x-data="{ siltap: '{{ $item->siltap }}', tunjangan: '{{ $item->tunjangan }}' }">
                                     <td
                                         class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
-                                        {{ $item->village->name }}
-                                    <td
-                                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
                                         {{ $item->positionType->name }}</td>
 
                                     <td
