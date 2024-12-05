@@ -108,7 +108,7 @@ class VillageStaffHistoryForm extends Form
         $villagePositionType->save();
 
         /* update staff */
-        if (option_is_match('definitif', $villagePositionType->position_type_id)) {
+        if (option_is_match('definitif', $this->positionTypeStatus)) {
             $staff->position_id = $villagePositionType->position_type_id;
             $staff->position_name = $villagePositionType->position_name;
             $staff->position_code = $villagePositionType->code;
