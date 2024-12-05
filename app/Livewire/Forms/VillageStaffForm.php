@@ -99,7 +99,7 @@ class VillageStaffForm extends Form
             //     'exists:options,id',
             //     new UniqueStaffPositionInVillage($this->village, $this->position_type, $this->id),
             // ],
-            // 'position_type_status' => 'required',
+            'position_type_status' => $this->from == Constants::FROM_PAGE_STAFF ? 'required' : 'nullable',
             'district' => $this->from == Constants::FROM_PAGE_STAFF ? 'required' : 'nullable',
             'village' => $this->from == Constants::FROM_PAGE_STAFF ? 'required' : 'nullable',
             // 'position_name' => $this->isMyAccount() ? 'required|max:250': 'nullable',
@@ -198,20 +198,7 @@ class VillageStaffForm extends Form
             'id' => $this->id,
         ], $payload);
 
-        /* jika bukan dari halaman form staff, maka abaikan fungsi simpan history  */
-        if ($this->from == Constants::FROM_PAGE_STAFF) {
-            self::storeHistory($model);
-        }
-
         return $model;
-    }
-
-    public function storeHistory($staff)
-    {
-        $villagePositionType = VillagePositionType::findOrFail($this->village_position_type);
-
-        $historyService = new StaffHistoriesService($villagePositionType, $staff);
-        $historyService->store([], $this->id);
     }
 
     /* untuk jabatan tertentu tidak perlu ngisi nama jabatan */

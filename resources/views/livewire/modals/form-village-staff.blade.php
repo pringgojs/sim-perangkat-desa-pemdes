@@ -45,7 +45,7 @@
                         @enderror
                     </div>
                 </div>
-                <div>
+                {{-- <div>
                     <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                         Email (Optional)
                     </label>
@@ -57,55 +57,58 @@
                             <span class="text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
+                </div> --}}
+
+                {{-- @if (auth()->user()->hasRole('administrator')) --}}
+
+                <div>
+                    <label for="districts"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kecamatan</label>
+                    <select id="districts" wire:model="form.district" wire:change="getVillages"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
+                        <option selected>Pilih kecamatan</option>
+                        @foreach ($districts as $item)
+                            <option value="{{ $item->id }}">{{ ucfirst($item->name) }}</option>
+                        @endforeach
+                    </select>
+                    <div>
+                        @error('form.district')
+                            <span class="text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
 
-                @if (auth()->user()->hasRole('administrator'))
-
+                <div>
+                    <label for="villages"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Desa</label>
+                    <select id="villages" wire:model="form.village" wire:change="getVillagePositionType"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
+                        <option selected>Pilih desa</option>
+                        @foreach ($villages as $item)
+                            <option value="{{ $item->id }}">{{ ucfirst($item->name) }}</option>
+                        @endforeach
+                    </select>
                     <div>
-                        <label for="districts"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kecamatan</label>
-                        <select id="districts" wire:model="form.district" wire:change="getVillages"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
-                            <option selected>Pilih kecamatan</option>
-                            @foreach ($districts as $item)
-                                <option value="{{ $item->id }}">{{ ucfirst($item->name) }}</option>
-                            @endforeach
-                        </select>
-                        <div>
-                            @error('form.district')
-                                <span class="text-red-500">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        @error('form.village')
+                            <span class="text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
-
-                    <div>
-                        <label for="villages"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Desa</label>
-                        <select id="villages" wire:model="form.village" wire:change="getVillagePositionType"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
-                            <option selected>Pilih desa</option>
-                            @foreach ($villages as $item)
-                                <option value="{{ $item->id }}">{{ ucfirst($item->name) }}</option>
-                            @endforeach
-                        </select>
-                        <div>
-                            @error('form.village')
-                                <span class="text-red-500">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                @endif
+                </div>
+                {{-- @endif --}}
 
                 <div>
                     <label for="positionTypes"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jabatan</label>
                     <select id="villagePositionTypes" wire:model="form.village_position_type"
-                        wire:change="getPositionNow"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
                         <option selected>Pilih jenis jabatan</option>
                         @foreach ($village_position_types as $item)
-                            <option value="{{ $item->id }}">{{ ucfirst($item->position_name) }} -
-                                {{ $item->code }} ({{ $item->positionTypeStatus->name }})</option>
+                            @php
+                                info($item);
+                            @endphp
+
+                            <option value="{{ $item->id }}">{{ ucfirst($item->positionType->name) }} -
+                                {{ $item->code }}</option>
                         @endforeach
                     </select>
                     <div>
@@ -115,35 +118,22 @@
                     </div>
                 </div>
 
-                @if ($positionNow)
+                <div>
+                    <label for="positionTypes"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status Jabatan</label>
+                    <select id="villagePositionTypes" wire:model="form.position_type_status"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500">
+                        <option selected>Pilih jenis jabatan</option>
+                        @foreach ($position_type_status as $item)
+                            <option value="{{ $item->id }}">{{ ucfirst($item->name) }}</option>
+                        @endforeach
+                    </select>
                     <div>
-                        <div class="flex p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400"
-                            role="alert">
-                            <svg class="flex-shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                <path
-                                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                            </svg>
-                            <span class="sr-only">Info</span>
-                            <div>
-                                <span class="font-medium">Informasi:</span>
-                                <ul class="mt-1.5 list-disc list-inside">
-                                    <li>Jabatan yang dipilih sudah diisi oleh {{ $positionNow->villageStaff->name }}
-                                    </li>
-                                    <li>Apabila jabatan yang dipilih sudah diisi oleh perangkat dengan
-                                        status aktif, maka perangkat tersebut akan dinon-aktifkan dari
-                                        jabatan yang dipilih.</li>
-                                    <li>Apabila jabatan yang dipilih merupakan jabatan definitif, maka akan
-                                        mengganti status jabatan definitif saat ini dari
-                                        {{ $positionNow->villageStaff->name }}.</li>
-                                    <li>Apabila jabatan yang dipilih merupakan jabatan Plt/Plh/Pj, maka akan
-                                        mengganti status jabatan Plt/Plh/Pj saat ini dari
-                                        {{ $positionNow->villageStaff->name }}.</li>
-                                </ul>
-                            </div>
-                        </div>
+                        @error('form.position_type_status')
+                            <span class="text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
-                @endif
+                </div>
 
                 {{-- generate password --}}
                 <div>

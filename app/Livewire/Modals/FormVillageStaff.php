@@ -2,17 +2,18 @@
 
 namespace App\Livewire\Modals;
 
-use App\Constants\Constants;
-use App\Livewire\Forms\VillageStaffForm;
 use App\Models\Option;
 use App\Models\Village;
+use Livewire\Component;
+use App\Constants\Constants;
+use Livewire\Attributes\Computed;
+use Illuminate\Support\Facades\DB;
 use App\Models\VillagePositionType;
 use App\Models\VillageStaffHistory;
-use Illuminate\Support\Facades\DB;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
-use Livewire\Attributes\Computed;
-use Livewire\Component;
 use LivewireUI\Modal\ModalComponent;
+use App\Services\StaffHistoriesService;
+use App\Livewire\Forms\VillageStaffForm;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class FormVillageStaff extends ModalComponent
 {
@@ -56,6 +57,8 @@ class FormVillageStaff extends ModalComponent
         DB::beginTransaction();
 
         $model = $this->form->store(Constants::FROM_PAGE_STAFF);
+        $service = new StaffHistoriesService;
+        $service->initStore($this->form->village_position_type, $model->id, $this->form->position_type_status);
 
         DB::commit();
 
@@ -100,7 +103,7 @@ class FormVillageStaff extends ModalComponent
 
     public function getVillagePositionType()
     {
-        $this->village_position_types = VillagePositionType::with('positionTypeStatus')->villageId($this->form->village)->get();
+        $this->village_position_types = VillagePositionType::doesntHave('staffHistory')->with(['positionType'])->villageId($this->form->village)->get();
     }
 
     public function getPositionNow()

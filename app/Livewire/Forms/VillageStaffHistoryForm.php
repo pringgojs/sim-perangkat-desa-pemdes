@@ -2,11 +2,12 @@
 
 namespace App\Livewire\Forms;
 
-use App\Models\VillagePositionType;
-use App\Models\VillageStaff;
-use App\Models\VillageStaffHistory;
-use App\Rules\UniquePositionStatusHistory;
 use Livewire\Form;
+use App\Models\VillageStaff;
+use App\Models\VillagePositionType;
+use App\Models\VillageStaffHistory;
+use App\Services\StaffHistoriesService;
+use App\Rules\UniquePositionStatusHistory;
 
 class VillageStaffHistoryForm extends Form
 {
@@ -100,27 +101,8 @@ class VillageStaffHistoryForm extends Form
             'id' => $this->id,
         ], $payload);
 
-        /* update village position type */
-        $villagePositionType->tunjangan = $tunjangan;
-        $villagePositionType->siltap = $siltap;
-        $villagePositionType->is_parkir = $this->isParkir;
-        $villagePositionType->position_type_status_id = $this->positionTypeStatus;
-        $villagePositionType->save();
-
-        /* update staff */
-        if (option_is_match('definitif', $this->positionTypeStatus)) {
-            $staff->position_id = $villagePositionType->position_type_id;
-            $staff->position_name = $villagePositionType->position_name;
-            $staff->position_code = $villagePositionType->code;
-            $staff->position_is_active = true;
-            $staff->save();
-        } else {
-            $staff->position_plt_id = $villagePositionType->position_type_id;
-            $staff->position_plt_name = $villagePositionType->position_name;
-            $staff->position_plt_code = $villagePositionType->code;
-            $staff->position_plt_is_active = true;
-            $staff->save();
-        }
+        $service = new StaffHistoriesService;
+        $service->setActive($model);
 
         return $model;
     }
