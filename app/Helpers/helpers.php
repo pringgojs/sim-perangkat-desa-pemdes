@@ -93,3 +93,29 @@ function months()
     ];
 
 }
+
+function docs()
+{
+    return [
+        [
+            'label' => 'Alur Proses Sistem',
+            'link' => 'https://drive.google.com/drive/folders/1yfeCxvw7zPOtVO7FhMs8dWNBnv1pY34E?usp=drive_link',
+        ],
+        [
+            'label' => 'Tambah Desa',
+            'link' => 'https://drive.google.com/drive/folders/1xITeTZW8V3o--HxMboSjYYntzCpzMWVQ?usp=drive_link',
+        ],[
+            'label' => 'Tambah Jabatan',
+            'link' => 'https://drive.google.com/drive/folders/1UAl37EWKXOEt1PRA01kjRFAvidZx4t2X?usp=drive_link',
+        ],[
+            'label' => 'Tambah Perangkat',
+            'link' => 'https://drive.google.com/drive/folders/1tQl3oZvgnSQ13nJemw2tOZPPWnEcSj4X?usp=drive_link',
+        ],[
+            'label' => 'Login Sekdes dan Tambah Perangkat',
+            'link' => 'https://drive.google.com/drive/folders/1CcGbNHuwLEX2J9aTmVW-SG3guazX3cJj?usp=drive_link',
+        ],[
+            'label' => 'Ubah/Tambah Jabatannya Perangkat',
+            'link' => 'https://drive.google.com/drive/folders/1XaRjpU8Jo0OwQR6fK2OXnoD8nj1NCUVV?usp=drive_link'
+        ]
+    ];
+}
