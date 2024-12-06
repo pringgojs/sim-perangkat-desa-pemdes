@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
+use App\Scopes\VillageStaffScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class VillageStaffHistory extends Model
 {
@@ -55,6 +56,11 @@ class VillageStaffHistory extends Model
         static::creating(function ($model) {
             $model->id = (string) Str::uuid(); // Generate UUID
         });
+    }
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new VillageStaffScope);
     }
 
     // Define relationships
