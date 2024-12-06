@@ -108,7 +108,7 @@
                             @endphp
 
                             <option value="{{ $item->id }}">{{ ucfirst($item->positionType->name) }} -
-                                {{ $item->code }}</option>
+                                {{ $item->position_name }} - {{ $item->code }}</option>
                         @endforeach
                     </select>
                     <div>
