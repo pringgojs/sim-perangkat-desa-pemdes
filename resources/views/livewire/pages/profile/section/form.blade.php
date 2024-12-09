@@ -150,7 +150,7 @@
                         <input type="text" wire:model="form.place_of_birth"
                             class="inline-flex w-2/3 min-w-0 bg-gray-50 rounded-l-md border-r-0 border-gray-300 p-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-green-500 focus:border-green-500 sm:text-sm "
                             placeholder="Ex. Ponorogo">
-                        <input type="date" wire:model="form.date_of_birth" wire:change="calculatePensiunDate"
+                        <input type="date" wire:model="form.date_of_birth"
                             class="block w-1/3 min-w-0 flex-1 bg-gray-50 rounded-none rounded-r-md border-0 p-2.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-green-500 focus:border-green-500 sm:text-sm "
                             placeholder="03-08-1986">
 
