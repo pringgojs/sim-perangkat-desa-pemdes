@@ -248,11 +248,14 @@
                         </div>
                     </li>
                 @endif
-                @if (auth()->user()->hasRole('operator'))
+                @php
+                    $user = auth()->user();
+                @endphp
+                @if ($user->hasRole('operator'))
                     <li>
                         <a href="{{ route('profile.index') }}" wire:navigate
                             class="block py-2 pl-3 pr-4 @if (request()->segment(1) == 'profile') text-blue-700 @else text-gray-900 @endif rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                            Profil</a>
+                            Profil {!! $user->staff()->labelDataStatus() !!}</a>
                     </li>
                 @endif
             </ul>
